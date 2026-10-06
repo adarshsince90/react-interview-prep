@@ -1,0 +1,38 @@
+{
+  "name": "portal",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "manifest": "node scripts/generate-manifest.mjs",
+    "predev": "npm run manifest",
+    "dev": "vite",
+    "prebuild": "npm run manifest",
+    "build": "tsc -b && vite build",
+    "build:pages": "npm run manifest && tsc -b && vite build --base=/react-interview-prep/",
+    "test": "node scripts/test-manifest-integrity.mjs",
+    "test:integrity": "node scripts/test-manifest-integrity.mjs",
+    "lint": "oxlint",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "dompurify": "^3.4.16",
+    "lucide-react": "^1.52.0",
+    "marked": "^18.0.14",
+    "mermaid": "^12.1.0",
+    "prismjs": "^1.30.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  },
+  "devDependencies": {
+    "@types/dompurify": "^3.0.5",
+    "@types/node": "^24.13.3",
+    "@types/prismjs": "^1.26.6",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "@vitejs/plugin-react": "^6.1.1",
+    "oxlint": "^1.81.0",
+    "typescript": "~6.0.2",
+    "vite": "^8.3.0"
+  }
+}
