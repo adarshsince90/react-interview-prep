@@ -113,9 +113,10 @@
 
 ### Epic 5: Phase 06 Full Publication (Next.js & Full-Stack React Architecture)
 *Location:* `notes/phase-06-nextjs-fullstack-react/` | *Format:* 20-Section Standard
-- [ ] Topic 01: Next.js App Router Architecture & Server-First Mental Model
-- [ ] Topic 02: React Server Components (RSC) Wire Format & Payload Streaming
-- [ ] Topic 03: Server Actions & Form Mutations
+- [x] Topic 00: Architectural Companion: Next.js Full-Stack Directory, Syntax & Primitives Rosetta Stone (`00-nextjs-syntax-conventions-architecture.md`)
+- [x] Topic 01: Next.js App Router Architecture & Server-First Mental Model (`01-nextjs-app-router-architecture.md`)
+- [x] Topic 02: React Server Components (RSC) Wire Format & Payload Streaming (`02-rsc-wire-format-streaming.md`)
+- [x] Topic 03: Server Actions & Form Mutations (`03-server-actions-form-mutations.md`)
 - [ ] Topic 04: Static Site Generation (SSG) vs Incremental Static Regeneration (ISR)
 - [ ] Topic 05: Middleware & Edge Runtime Mechanics
 - [ ] Topic 06: Authentication & Session Management in Full-Stack Next.js

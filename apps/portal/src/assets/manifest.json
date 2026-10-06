@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-10-06T16:56:19.055Z",
+  "generatedAt": "2026-10-06T19:44:57.181Z",
   "totalPhases": 12,
-  "totalTopics": 41,
+  "totalTopics": 45,
   "phases": [
     {
       "id": "phase-01",
@@ -3722,8 +3722,333 @@
       "badge": "Next.js & RSC",
       "description": "React Server Components (RSC), App Router, streaming SSR hydration, and edge infrastructure.",
       "dirName": "phase-06-nextjs-fullstack-react",
-      "topicCount": 0,
-      "topics": []
+      "topicCount": 4,
+      "topics": [
+        {
+          "id": "00-nextjs-syntax-conventions-architecture",
+          "filename": "00-nextjs-syntax-conventions-architecture.md",
+          "phaseId": "phase-06",
+          "title": "Architectural Companion: Next.js Full-Stack Directory, Syntax & Primitives Rosetta Stone",
+          "relativePath": "notes/phase-06-nextjs-fullstack-react/00-nextjs-syntax-conventions-architecture.md",
+          "wordCount": 2045,
+          "readingTimeMin": 10,
+          "headings": [
+            {
+              "title": "1. How to Use This Companion: Concept First vs. Syntax First",
+              "anchor": "1-how-to-use-this-companion-concept-first-vs-syntax-first"
+            },
+            {
+              "title": "2. Compiler Pragmas & Boundary Directives",
+              "anchor": "2-compiler-pragmas-boundary-directives"
+            },
+            {
+              "title": "3. The app/ Directory Hierarchy & Special Reserved File Conventions",
+              "anchor": "3-the-app-directory-hierarchy-special-reserved-file-conventions"
+            },
+            {
+              "title": "4. Full-Stack Navigation & Routing Primitives (next/navigation)",
+              "anchor": "4-full-stack-navigation-routing-primitives-nextnavigation"
+            },
+            {
+              "title": "5. Full-Stack Mutation & Action Primitives",
+              "anchor": "5-full-stack-mutation-action-primitives"
+            },
+            {
+              "title": "6. Caching & Revalidation Primitives (next/cache)",
+              "anchor": "6-caching-revalidation-primitives-nextcache"
+            },
+            {
+              "title": "7. Route Segment Configuration Options",
+              "anchor": "7-route-segment-configuration-options"
+            },
+            {
+              "title": "8. The .NET & Angular Architectural Rosetta Stone",
+              "anchor": "8-the-net-angular-architectural-rosetta-stone"
+            },
+            {
+              "title": "9. Full-Stack Curriculum Roadmap: Where to Go Next",
+              "anchor": "9-full-stack-curriculum-roadmap-where-to-go-next"
+            }
+          ],
+          "lab": null
+        },
+        {
+          "id": "01-nextjs-app-router-architecture",
+          "filename": "01-nextjs-app-router-architecture.md",
+          "phaseId": "phase-06",
+          "title": "Chapter 01: Next.js App Router Architecture & Server-First Mental Model",
+          "relativePath": "notes/phase-06-nextjs-fullstack-react/01-nextjs-app-router-architecture.md",
+          "wordCount": 5012,
+          "readingTimeMin": 23,
+          "headings": [
+            {
+              "title": "1. Why This Topic Exists",
+              "anchor": "1-why-this-topic-exists"
+            },
+            {
+              "title": "2. Learning Objectives",
+              "anchor": "2-learning-objectives"
+            },
+            {
+              "title": "3. Historical Evolution",
+              "anchor": "3-historical-evolution"
+            },
+            {
+              "title": "4. First Principles & Intuitive Physical Analogies (Layer 1)",
+              "anchor": "4-first-principles-intuitive-physical-analogies-layer-1"
+            },
+            {
+              "title": "5. Internal Working & Engine Architecture (Layer 2)",
+              "anchor": "5-internal-working-engine-architecture-layer-2"
+            },
+            {
+              "title": "6. Runtime Flow & Execution Traces",
+              "anchor": "6-runtime-flow-execution-traces"
+            },
+            {
+              "title": "7. Memory Model & Heap Layout",
+              "anchor": "7-memory-model-heap-layout"
+            },
+            {
+              "title": "8. Visual Diagrams (ASCII / Text)",
+              "anchor": "8-visual-diagrams-ascii-text"
+            },
+            {
+              "title": "9. Real World Usage & Production Patterns",
+              "anchor": "9-real-world-usage-production-patterns"
+            },
+            {
+              "title": "10. Angular Comparison",
+              "anchor": "10-angular-comparison"
+            },
+            {
+              "title": "11. .NET Comparison",
+              "anchor": "11-net-comparison"
+            },
+            {
+              "title": "12. Enterprise Perspective & Production Risks (Layer 4)",
+              "anchor": "12-enterprise-perspective-production-risks-layer-4"
+            },
+            {
+              "title": "13. Performance Considerations",
+              "anchor": "13-performance-considerations"
+            },
+            {
+              "title": "14. Tradeoffs",
+              "anchor": "14-tradeoffs"
+            },
+            {
+              "title": "15. Common Mistakes & Interview Traps",
+              "anchor": "15-common-mistakes-interview-traps"
+            },
+            {
+              "title": "16. Interview Questions & Architectural Answers (Senior, Lead, Architect - Layer 5)",
+              "anchor": "16-interview-questions-architectural-answers-senior-lead-architect-layer-5"
+            },
+            {
+              "title": "17. Senior-Level Mental Model & \"How to Remember This Forever\" (Memory Anchors - Layer 3)",
+              "anchor": "17-senior-level-mental-model-how-to-remember-this-forever-memory-anchors-layer-3"
+            },
+            {
+              "title": "18. Core Vocabulary & \"Aha!\" Breakthrough Insights (Refresher)",
+              "anchor": "18-core-vocabulary-aha-breakthrough-insights-refresher"
+            },
+            {
+              "title": "19. Key Takeaways",
+              "anchor": "19-key-takeaways"
+            },
+            {
+              "title": "20. Revision Sheet",
+              "anchor": "20-revision-sheet"
+            }
+          ],
+          "lab": null
+        },
+        {
+          "id": "02-rsc-wire-format-streaming",
+          "filename": "02-rsc-wire-format-streaming.md",
+          "phaseId": "phase-06",
+          "title": "Chapter 02: React Server Components (RSC) Wire Format & Payload Streaming",
+          "relativePath": "notes/phase-06-nextjs-fullstack-react/02-rsc-wire-format-streaming.md",
+          "wordCount": 4195,
+          "readingTimeMin": 20,
+          "headings": [
+            {
+              "title": "1. Why This Topic Exists",
+              "anchor": "1-why-this-topic-exists"
+            },
+            {
+              "title": "2. Learning Objectives",
+              "anchor": "2-learning-objectives"
+            },
+            {
+              "title": "3. Historical Evolution",
+              "anchor": "3-historical-evolution"
+            },
+            {
+              "title": "4. First Principles & Intuitive Physical Analogies (Layer 1)",
+              "anchor": "4-first-principles-intuitive-physical-analogies-layer-1"
+            },
+            {
+              "title": "5. Internal Working & Engine Architecture (Layer 2)",
+              "anchor": "5-internal-working-engine-architecture-layer-2"
+            },
+            {
+              "title": "6. Runtime Flow & Execution Traces",
+              "anchor": "6-runtime-flow-execution-traces"
+            },
+            {
+              "title": "7. Memory Model & Heap Layout",
+              "anchor": "7-memory-model-heap-layout"
+            },
+            {
+              "title": "8. Visual Diagrams (ASCII / Text)",
+              "anchor": "8-visual-diagrams-ascii-text"
+            },
+            {
+              "title": "9. Real World Usage & Production Patterns",
+              "anchor": "9-real-world-usage-production-patterns"
+            },
+            {
+              "title": "10. Angular Comparison",
+              "anchor": "10-angular-comparison"
+            },
+            {
+              "title": "11. .NET Comparison",
+              "anchor": "11-net-comparison"
+            },
+            {
+              "title": "12. Enterprise Perspective & Production Risks (Layer 4)",
+              "anchor": "12-enterprise-perspective-production-risks-layer-4"
+            },
+            {
+              "title": "13. Performance Considerations",
+              "anchor": "13-performance-considerations"
+            },
+            {
+              "title": "14. Tradeoffs",
+              "anchor": "14-tradeoffs"
+            },
+            {
+              "title": "15. Common Mistakes & Interview Traps",
+              "anchor": "15-common-mistakes-interview-traps"
+            },
+            {
+              "title": "16. Interview Questions & Architectural Answers (Senior, Lead, Architect - Layer 5)",
+              "anchor": "16-interview-questions-architectural-answers-senior-lead-architect-layer-5"
+            },
+            {
+              "title": "17. Senior-Level Mental Model & \"How to Remember This Forever\" (Memory Anchors - Layer 3)",
+              "anchor": "17-senior-level-mental-model-how-to-remember-this-forever-memory-anchors-layer-3"
+            },
+            {
+              "title": "18. Core Vocabulary & \"Aha!\" Breakthrough Insights (Refresher)",
+              "anchor": "18-core-vocabulary-aha-breakthrough-insights-refresher"
+            },
+            {
+              "title": "19. Key Takeaways",
+              "anchor": "19-key-takeaways"
+            },
+            {
+              "title": "20. Revision Sheet",
+              "anchor": "20-revision-sheet"
+            }
+          ],
+          "lab": null
+        },
+        {
+          "id": "03-server-actions-form-mutations",
+          "filename": "03-server-actions-form-mutations.md",
+          "phaseId": "phase-06",
+          "title": "Chapter 03: Server Actions & Form Mutations (Full-Stack Mutations, Progressive Enhancement & The Enterprise BFF)",
+          "relativePath": "notes/phase-06-nextjs-fullstack-react/03-server-actions-form-mutations.md",
+          "wordCount": 4221,
+          "readingTimeMin": 20,
+          "headings": [
+            {
+              "title": "1. Why This Topic Exists",
+              "anchor": "1-why-this-topic-exists"
+            },
+            {
+              "title": "2. Learning Objectives",
+              "anchor": "2-learning-objectives"
+            },
+            {
+              "title": "3. Historical Evolution",
+              "anchor": "3-historical-evolution"
+            },
+            {
+              "title": "4. First Principles & Intuitive Physical Analogies (Layer 1)",
+              "anchor": "4-first-principles-intuitive-physical-analogies-layer-1"
+            },
+            {
+              "title": "5. Internal Working & Engine Architecture (Layer 2)",
+              "anchor": "5-internal-working-engine-architecture-layer-2"
+            },
+            {
+              "title": "6. Runtime Flow & Execution Traces",
+              "anchor": "6-runtime-flow-execution-traces"
+            },
+            {
+              "title": "7. Memory Model & Heap Layout",
+              "anchor": "7-memory-model-heap-layout"
+            },
+            {
+              "title": "8. Visual Diagrams (ASCII / Text)",
+              "anchor": "8-visual-diagrams-ascii-text"
+            },
+            {
+              "title": "9. Real World Usage & Production Patterns",
+              "anchor": "9-real-world-usage-production-patterns"
+            },
+            {
+              "title": "10. Angular Comparison",
+              "anchor": "10-angular-comparison"
+            },
+            {
+              "title": "11. .NET Comparison",
+              "anchor": "11-net-comparison"
+            },
+            {
+              "title": "12. Enterprise Perspective & Production Risks (Layer 4)",
+              "anchor": "12-enterprise-perspective-production-risks-layer-4"
+            },
+            {
+              "title": "13. Performance Considerations",
+              "anchor": "13-performance-considerations"
+            },
+            {
+              "title": "14. Tradeoffs",
+              "anchor": "14-tradeoffs"
+            },
+            {
+              "title": "15. Common Mistakes & Interview Traps",
+              "anchor": "15-common-mistakes-interview-traps"
+            },
+            {
+              "title": "16. Interview Questions & Architectural Answers (Senior, Lead, Architect - Layer 5)",
+              "anchor": "16-interview-questions-architectural-answers-senior-lead-architect-layer-5"
+            },
+            {
+              "title": "17. Senior-Level Mental Model & \"How to Remember This Forever\" (Memory Anchors - Layer 3)",
+              "anchor": "17-senior-level-mental-model-how-to-remember-this-forever-memory-anchors-layer-3"
+            },
+            {
+              "title": "18. Core Vocabulary & \"Aha!\" Breakthrough Insights (Refresher)",
+              "anchor": "18-core-vocabulary-aha-breakthrough-insights-refresher"
+            },
+            {
+              "title": "19. Key Takeaways",
+              "anchor": "19-key-takeaways"
+            },
+            {
+              "title": "20. Revision Sheet",
+              "anchor": "20-revision-sheet"
+            }
+          ],
+          "lab": null
+        }
+      ]
     },
     {
       "id": "phase-07",

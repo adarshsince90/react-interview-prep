@@ -69,9 +69,9 @@ react-interview-prep/
 ## 2. Phase Completion & Curriculum Status
 
 ### A. Active Deep-Dive Mentorship Focus
-- **Current Active Topic:** **Phase 03: React Foundations → Topic 06: Props vs. State Immutability & Structural Sharing**
+- **Current Active Topic:** **Phase 06: Next.js & Full-Stack React Architecture → Topic 04: Static Site Generation (SSG) vs Incremental Static Regeneration (ISR)**
 - **Discussion Cadence:** Layered 5-Level First-Principles & Interview Drills
-- **Next Interactive Simulation Lab:** Lab 12: The 3-Phase Render Cycle Stepper (`RenderCycleLab.tsx`)
+- **Next Interactive Simulation Lab:** Lab 15: Server Actions & Single-Flight Mutation Simulator (`ServerActionsLab.tsx`)
 
 ### B. Curriculum Publication Summary (Handbook Availability)
 ```text
@@ -80,7 +80,7 @@ react-interview-prep/
 [Phase 03: React Foundations & Core Mechanics]    [==========] 100% (11/11 Core Chapters Published) 🚀 Mastered!
 [Phase 04: React Rendering Internals & Fiber]     [==========] 100% (10/10 Core Chapters Published) 🚀 Mastered!
 [Phase 05: Advanced State & Data Architecture]    [==========] 100% (10/10 Chapters Published) 🚀 Mastered!
-[Phase 06: Next.js & Full-Stack React]            [----------]   0% (0/10 Chapters Planned)
+[Phase 06: Next.js & Full-Stack React]            [===-------]  30% (3/10 Chapters Published) 🚀 Active
 [Phase 07: Enterprise Security, Auth & Identity]  [----------]   0% (0/8 Chapters Planned)
 [Phase 08: Performance Engineering & Web Vitals]  [----------]   0% (0/8 Chapters Planned)
 [Phase 09: Clean Architecture, Monorepos & MFEs]  [----------]   0% (0/8 Chapters Planned)
@@ -203,10 +203,15 @@ react-interview-prep/
 
 ---
 
-### Phase 06: Next.js & Full-Stack React Architecture
-- [ ] **01: Next.js App Router Architecture & Server-First Mental Model**
-- [ ] **02: React Server Components (RSC) Wire Format & Payload Streaming**
-- [ ] **03: Server Actions & Form Mutations**
+### Phase 06: Next.js & Full-Stack React Architecture — 30% Published
+- [x] **00: Architectural Companion: Next.js Full-Stack Directory, Syntax & Primitives Rosetta Stone** ([00-nextjs-syntax-conventions-architecture.md](notes/phase-06-nextjs-fullstack-react/00-nextjs-syntax-conventions-architecture.md))
+  *Core concepts:* Comprehensive full-stack directory hierarchy (`layout.tsx`, `template.tsx`, `page.tsx`, `loading.tsx`, `error.tsx`, `route.ts`), compiler pragmas (`'use client'`, `'use server'`, `server-only`), modern routing hooks (`next/navigation`), cache eviction primitives (`next/cache`), and direct 1-to-1 .NET & Angular Rosetta Stone comparison table.
+- [x] **01: Next.js App Router Architecture & Server-First Mental Model** ([01-nextjs-app-router-architecture.md](notes/phase-06-nextjs-fullstack-react/01-nextjs-app-router-architecture.md))
+  *Core concepts:* Paradigm shift from client-heavy SPAs to server-first UI projection, Heterogeneous Component Graph, `'use client'` customs gate ($M client reference), RSC Flight wire format, directory conventions (`layout.tsx`, `template.tsx`, `page.tsx`), Hollow Doughnut pattern, URL searchParams state synchronization, and 4-way comparison against ASP.NET Core Razor Pages, Blazor Server, and Angular SSR.
+- [x] **02: React Server Components (RSC) Wire Format & Payload Streaming** ([02-rsc-wire-format-streaming.md](notes/phase-06-nextjs-fullstack-react/02-rsc-wire-format-streaming.md))
+  *Core concepts:* The Flight Wire Protocol (`text/x-component`), `M` (Module Reference), `J` (JSON Element Tree), `S` (Suspense), and `$@` (Deferred Promise) chunks, client deserialization via `ReadableStreamDefaultReader`, Out-of-Order Suspense streaming over single HTTP chunked connection, `<template id="B:0">` and inline `$RC()` swapping scripts, prop serialization security audits (DTO sanitization), and comparison with Angular `@defer` and ASP.NET Core Blazor Server SignalR circuits.
+- [x] **03: Server Actions & Form Mutations** ([03-server-actions-form-mutations.md](notes/phase-06-nextjs-fullstack-react/03-server-actions-form-mutations.md))
+  *Core concepts:* `'use server'` as an RPC export directive, cryptographic Action ID hashing, Single-Flight Mutation & Revalidation protocol (`revalidatePath` returning action result + updated Flight tree in 1 round-trip), Progressive Enhancement over native HTML POST, React 19 action primitives (`useActionState`, `useFormStatus`, `useOptimistic`), enterprise Safe Action Pipeline (RBAC + Zod), Next.js as the enterprise BFF orchestrating .NET microservices, and static hosting constraints (Docker/ACA vs GitHub Pages).
 - [ ] **04: Static Site Generation (SSG) vs Incremental Static Regeneration (ISR)**
 - [ ] **05: Middleware & Edge Runtime Mechanics**
 - [ ] **06: Authentication & Session Management in Full-Stack Next.js**
@@ -425,7 +430,7 @@ The portal development is executed incrementally in parallel with our handbook c
 ---
 
 ## 6. Next Immediate Steps
-1. **Advance Phase 05 Handbook Curriculum:** Deep-dive and generate Topic 02: `notes/phase-05-advanced-state-architecture/02-redux-toolkit-rtk-vs-ngrx.md` (Redux Toolkit vs Angular NgRx Architecture) with full 20 sections, quarantined comparative architecture, and embedded Mermaid diagrams.
-2. **Continue Phase 05 Topics 03 through 10:** Zustand, TanStack Query, Cache Invalidation, Selector Memoization, URL state, WebSockets, XState, and Offline-First state.
+1. **Advance Phase 06 Full-Stack Curriculum:** Socratic Deep-Dive and author Topic 04: `notes/phase-06-nextjs-fullstack-react/04-ssg-vs-isr.md` (Static Site Generation vs Incremental Static Regeneration, Time-Based Revalidation, On-Demand Tag Revalidation, and Caching Topologies).
+2. **Continue Phase 06 Topics 05 through 10:** Middleware & Edge Runtime, Next.js Authentication, Route Handlers, Caching Layers, Bundling/Splitting, and Enterprise Deployment (Docker/Vercel/Azure).
 
 
