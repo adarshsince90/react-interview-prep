@@ -1,19 +1,28 @@
 # Unplanned Backlog
 
-All prior items have been resolved and moved to [`backlog.md`](./backlog.md).
-
-| Item Reference | Topic / Component | Status | Target Destination |
-| :--- | :--- | :--- | :--- |
-| `image-5.png` | Dashboard Phase Card Fixed Heights & Internal Scrollbar | ✅ Resolved | [`backlog.md`](./backlog.md) |
-| `image-6.png` | Mermaid Diagram Box `1. Browser Network` Excessive Height | ✅ Resolved | [`backlog.md`](./backlog.md) |
-| `image-7.png` | Section 3 `main.tsx` Code Block Left Margin Alignment | ✅ Resolved | [`backlog.md`](./backlog.md) |
+> 📥 **Intake Queue:** Log raw defects, ad-hoc UX requests, or unplanned architectural improvements here as they arise during walkthroughs, live usage, or testing. Once triaged and resolved, items are promoted to [`backlog.md`](./backlog.md) with detailed root-cause analyses, code resolutions, and acceptance criteria.
 
 ---
 
-### Dashboard URL Navigation & Refresh Desynchronization
-- **Reported Issue:**
-  Once we move to Dashboard from any guides page (e.g., `http://localhost:5173/?topic=00-react-application-lifecycle-architecture#17-senior-level-mental-model-how-to-remember-this-forever-layer-3`), the browser URL does not change. When we hit refresh in dashboard, it takes us back to the guide page.
-- **Root Cause:**
-  1. Navbar logo click and Dashboard tab button were calling `setActiveView('dashboard')` without updating `window.history` or stripping query params/hashes.
-  2. `handleNavigateHome()` only removed `searchParams.delete('topic')` on the existing URL, leaving the hash `#17-...` intact.
-- **Status:** ✅ Resolved & Moved to [`docs/sdlc/backlog/backlog.md#item-ui-06-url-routing-synchronization-on-dashboard-navigation--refresh`](./backlog.md#item-ui-06-url-routing-synchronization-on-dashboard-navigation--refresh)
+### Active Intake Queue
+
+*(No active unplanned issues currently. All previous items have been resolved and promoted to [`backlog.md`](./backlog.md).)*
+
+---
+
+### Intake Template
+
+When capturing a new unplanned issue or bug, copy and fill out the template below:
+
+```markdown
+### [UNPLANNED-ID]: <Descriptive Issue Title>
+- **Date Reported:** YYYY-MM-DD
+- **Affected Area / Route:** (e.g., Dashboard, TopicReader, Lab 04, Search Modal)
+- **Observed Behavior:**
+  - <What is happening vs what should happen>
+- **Reproduction Steps:**
+  1. <Step 1>
+  2. <Step 2>
+- **Proposed Resolution / Notes:**
+  - <Initial thoughts, files or components involved>
+```

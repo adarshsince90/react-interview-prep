@@ -4,6 +4,9 @@ import type { ManifestData, TopicItem } from './core/types/manifest';
 import { Dashboard } from './features/dashboard/Dashboard';
 import { TopicReader } from './features/topic-reader/TopicReader';
 import { VisualizerHub } from './features/visualizers/VisualizerHub';
+import { FlashcardsArena } from './features/flashcards/FlashcardsArena';
+import { QuizArena } from './features/quizzes/QuizArena';
+import { GlobalSearchModal } from './features/search/GlobalSearchModal';
 import {
   LayoutDashboard,
   BookOpen,
@@ -14,7 +17,8 @@ import {
   Sparkles,
   Sun,
   Moon,
-  CheckCircle2
+  CheckCircle2,
+  Award
 } from 'lucide-react';
 import {
   getStoredTheme,
@@ -26,9 +30,10 @@ import { formatTopicBadgeAndTitle } from './core/utils/slugify';
 const manifest = manifestData as unknown as ManifestData;
 
 export function App() {
-  const [activeView, setActiveView] = useState<'dashboard' | 'reader' | 'labs'>('dashboard');
+  const [activeView, setActiveView] = useState<'dashboard' | 'reader' | 'labs' | 'flashcards' | 'quizzes'>('dashboard');
   const [theme, setTheme] = useState<'light' | 'dark'>(() => getStoredTheme());
   const [completedIds, setCompletedIds] = useState<string[]>(() => getCompletedTopicIds());
+  const [isSearchModalOpen, setIsSearchModalOpen] = useState<boolean>(false);
 
   // Default to first topic in Phase 03 or first available topic
   const initialTopic = useMemo(() => {
@@ -91,6 +96,16 @@ export function App() {
         return;
       }
 
+      if (view === 'flashcards') {
+        setActiveView('flashcards');
+        return;
+      }
+
+      if (view === 'quizzes') {
+        setActiveView('quizzes');
+        return;
+      }
+
       setActiveView('dashboard');
     };
 
@@ -99,6 +114,18 @@ export function App() {
     window.addEventListener('popstate', syncFromUrl);
     return () => window.removeEventListener('popstate', syncFromUrl);
   }, [allTopics]);
+
+  // Global Ctrl+K / Cmd+K listener to open search modal
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        setIsSearchModalOpen(prev => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   // Listen to progress update events from TopicReader/Dashboard
   useEffect(() => {
@@ -201,6 +228,30 @@ export function App() {
     url.searchParams.set('lab', activeLab);
     url.hash = '';
     window.history.pushState({ view: 'labs', labId: activeLab }, '', url.pathname + '?' + url.searchParams.toString());
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleSwitchToFlashcards = () => {
+    setActiveView('flashcards');
+    setSearchQuery('');
+    const url = new URL(window.location.href);
+    url.searchParams.delete('topic');
+    url.searchParams.delete('lab');
+    url.searchParams.set('view', 'flashcards');
+    url.hash = '';
+    window.history.pushState({ view: 'flashcards' }, '', url.pathname + '?' + url.searchParams.toString());
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleSwitchToQuizzes = () => {
+    setActiveView('quizzes');
+    setSearchQuery('');
+    const url = new URL(window.location.href);
+    url.searchParams.delete('topic');
+    url.searchParams.delete('lab');
+    url.searchParams.set('view', 'quizzes');
+    url.hash = '';
+    window.history.pushState({ view: 'quizzes' }, '', url.pathname + '?' + url.searchParams.toString());
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -309,12 +360,15 @@ export function App() {
             <Search size={16} style={{ position: 'absolute', left: '0.75rem', color: 'var(--text-muted)' }} />
             <input
               type="text"
-              placeholder="Search concepts, chapters, V8 topics..."
+              placeholder="Search 110 chapters (Ctrl+K)..."
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
+              onFocus={() => {
+                if (!searchQuery) setIsSearchModalOpen(true);
+              }}
               style={{
                 width: '100%',
-                padding: '0.45rem 0.75rem 0.45rem 2.25rem',
+                padding: '0.45rem 4.5rem 0.45rem 2.25rem',
                 background: 'var(--bg-tertiary)',
                 border: '1px solid var(--border-subtle)',
                 borderRadius: '8px',
@@ -323,6 +377,24 @@ export function App() {
                 outline: 'none'
               }}
             />
+            <button
+              onClick={() => setIsSearchModalOpen(true)}
+              title="Global Full-Text Search (Ctrl+K)"
+              style={{
+                position: 'absolute',
+                right: '0.5rem',
+                background: 'var(--bg-primary)',
+                border: '1px solid var(--border-subtle)',
+                borderRadius: '4px',
+                padding: '0.15rem 0.45rem',
+                fontSize: '0.7rem',
+                color: 'var(--text-muted)',
+                fontFamily: 'monospace',
+                cursor: 'pointer'
+              }}
+            >
+              Ctrl K
+            </button>
           </div>
 
           {/* Search Dropdown Results */}
@@ -424,6 +496,46 @@ export function App() {
               }}
             >
               <Layers size={15} /> Labs
+            </button>
+
+            <button
+              onClick={handleSwitchToFlashcards}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.4rem',
+                padding: '0.45rem 0.85rem',
+                borderRadius: '6px',
+                background: activeView === 'flashcards' ? 'var(--bg-secondary)' : 'transparent',
+                color: activeView === 'flashcards' ? '#c084fc' : 'var(--text-secondary)',
+                border: 'none',
+                fontWeight: 600,
+                fontSize: '0.82rem',
+                cursor: 'pointer',
+                boxShadow: activeView === 'flashcards' ? 'var(--shadow-sm)' : 'none'
+              }}
+            >
+              <Sparkles size={15} /> Flashcards
+            </button>
+
+            <button
+              onClick={handleSwitchToQuizzes}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.4rem',
+                padding: '0.45rem 0.85rem',
+                borderRadius: '6px',
+                background: activeView === 'quizzes' ? 'var(--bg-secondary)' : 'transparent',
+                color: activeView === 'quizzes' ? 'var(--amber-warning, #f59e0b)' : 'var(--text-secondary)',
+                border: 'none',
+                fontWeight: 600,
+                fontSize: '0.82rem',
+                cursor: 'pointer',
+                boxShadow: activeView === 'quizzes' ? 'var(--shadow-sm)' : 'none'
+              }}
+            >
+              <Award size={15} /> Quizzes
             </button>
           </div>
 
@@ -613,8 +725,23 @@ export function App() {
           {activeView === 'labs' && (
             <VisualizerHub initialLabId={selectedLabId} />
           )}
+
+          {activeView === 'flashcards' && (
+            <FlashcardsArena />
+          )}
+
+          {activeView === 'quizzes' && (
+            <QuizArena />
+          )}
         </main>
       </div>
+
+      {/* Global Search Modal */}
+      <GlobalSearchModal
+        isOpen={isSearchModalOpen}
+        onClose={() => setIsSearchModalOpen(false)}
+        onSelectTopic={handleSelectTopic}
+      />
     </div>
   );
 }

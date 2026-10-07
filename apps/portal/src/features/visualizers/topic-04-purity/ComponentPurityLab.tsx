@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { GitCompare, Flame, ShieldCheck, RefreshCw, AlertCircle, Cpu } from 'lucide-react';
 
 interface Transaction {
@@ -19,12 +19,10 @@ export const ComponentPurityLab: React.FC = () => {
   const [strategy, setStrategy] = useState<'impure' | 'pure'>('pure');
   const [strictModeActive, setStrictModeActive] = useState<boolean>(true);
   const [renderCount, setRenderCount] = useState<number>(1);
+  const [heapPointer, setHeapPointer] = useState<string>('0x7FFF001');
   const [logMessages, setLogMessages] = useState<string[]>([
     'System Initialized. Master heap pointer: 0x7FFF001'
   ]);
-
-  // Simulated heap memory address pointer
-  const heapPointerRef = useRef<string>('0x7FFF001');
 
   const addLog = (msg: string) => {
     setLogMessages(prev => [msg, ...prev.slice(0, 5)]);
@@ -39,12 +37,12 @@ export const ComponentPurityLab: React.FC = () => {
       setRenderCount(c => c + multiplier);
       
       addLog(
-        `❌ IMPURE SORT: Array.prototype.sort() mutated heap memory at ${heapPointerRef.current} directly! StrictMode invocations: ${multiplier}.`
+        `❌ IMPURE SORT: Array.prototype.sort() mutated heap memory at ${heapPointer} directly! StrictMode invocations: ${multiplier}.`
       );
     } else {
       // ✅ PURE ES2023: Allocates brand new shallow copy!
       const nextHeapPointer = '0x' + Math.floor(Math.random() * 16777215).toString(16).toUpperCase();
-      heapPointerRef.current = nextHeapPointer;
+      setHeapPointer(nextHeapPointer);
       
       const sorted = (dataStore as any).toSorted 
         ? (dataStore as any).toSorted((a: Transaction, b: Transaction) => b.amount - a.amount)
@@ -61,7 +59,7 @@ export const ComponentPurityLab: React.FC = () => {
   };
 
   const resetData = () => {
-    heapPointerRef.current = '0x7FFF001';
+    setHeapPointer('0x7FFF001');
     setDataStore([...INITIAL_TRANSACTIONS]);
     setRenderCount(1);
     setLogMessages(['Reset to initial state. Heap address: 0x7FFF001']);
@@ -224,7 +222,7 @@ export const ComponentPurityLab: React.FC = () => {
           </div>
 
           <div style={{ background: 'var(--bg-secondary)', padding: '0.75rem', borderRadius: '6px', marginBottom: '0.75rem', fontFamily: 'var(--font-mono)', fontSize: '0.85rem' }}>
-            <div><strong>Active Pointer:</strong> <span style={{ color: strategy === 'impure' ? 'var(--rose-danger)' : 'var(--emerald-success)' }}>{heapPointerRef.current}</span></div>
+            <div><strong>Active Pointer:</strong> <span style={{ color: strategy === 'impure' ? 'var(--rose-danger)' : 'var(--emerald-success)' }}>{heapPointer}</span></div>
             <div><strong>Referential Equality:</strong> {strategy === 'impure' ? 'prev === next (TRUE, MUTATED)' : 'prev !== next (FALSE, NEW ALLOCATION)'}</div>
             <div><strong>StrictMode Invocation:</strong> {strictModeActive ? '2x Speculative Executions' : '1x Synchronous Execution'}</div>
           </div>

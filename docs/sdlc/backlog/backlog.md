@@ -11,7 +11,6 @@
 ## 1. Active Sprint Backlog (Sprint 3: Portal UI/UX Modernization & Critical Fixes)
 
 ### Item UI-01: Right Panel Table of Contents Navigation & Sticky ScrollSpy
-![alt text](image.png)
 - **User Problem:**
   - The right panel navigation is not working when clicking on section headings.
   - The right panel should stay fixed/sticky in the viewport and not scroll out of view with the page, so the reader can easily navigate across different sections at any time.
@@ -27,7 +26,6 @@
 ---
 
 ### Item UI-02: Responsive Diagram Sizing & Aspect-Ratio Clamping
-![alt text](image-1.png)
 - **User Problem:**
   - The diagrams (Mermaid boxes and runtime schematics) are vertically stretched, causing an excessively long page scroll and preventing a single-screen view of the diagram.
 - **Root Cause:**
@@ -40,7 +38,6 @@
 ---
 
 ### Item UI-03: Sidebar Title Consistency & Badge Numbering
-![alt text](image-2.png)
 - **User Problem:**
   - In the left sidebar panel, titles are inconsistent: some show `Phase-Chapter`, others show pure numerical digits, and the last section shows `Phase - XX`.
 - **Root Cause:**
@@ -111,39 +108,145 @@
 
 ---
 
-### Epic 5: Phase 06 Full Publication (Next.js & Full-Stack React Architecture)
+### Epic 5: Phase 06 Full Publication (Next.js & Full-Stack React Architecture) — Complete (11/11)
 *Location:* `notes/phase-06-nextjs-fullstack-react/` | *Format:* 20-Section Standard
 - [x] Topic 00: Architectural Companion: Next.js Full-Stack Directory, Syntax & Primitives Rosetta Stone (`00-nextjs-syntax-conventions-architecture.md`)
 - [x] Topic 01: Next.js App Router Architecture & Server-First Mental Model (`01-nextjs-app-router-architecture.md`)
 - [x] Topic 02: React Server Components (RSC) Wire Format & Payload Streaming (`02-rsc-wire-format-streaming.md`)
 - [x] Topic 03: Server Actions & Form Mutations (`03-server-actions-form-mutations.md`)
-- [ ] Topic 04: Static Site Generation (SSG) vs Incremental Static Regeneration (ISR)
-- [ ] Topic 05: Middleware & Edge Runtime Mechanics
-- [ ] Topic 06: Authentication & Session Management in Full-Stack Next.js
-- [ ] Topic 07: Route Handlers & REST/GraphQL API Design
-- [ ] Topic 08: Caching Architecture (Request Memoization, Data Cache, Full Route Cache)
-- [ ] Topic 09: Dynamic Imports, Bundling & Code Splitting Optimization
-- [ ] Topic 10: Enterprise Next.js Deployment & Observability (Docker, Vercel, Azure)
+- [x] Topic 04: Static Site Generation (SSG) vs Incremental Static Regeneration (ISR) (`04-ssg-vs-isr.md`)
+- [x] Topic 05: Middleware & Edge Runtime Mechanics (`05-middleware-edge-runtime.md`)
+- [x] Topic 06: Authentication & Session Management in Full-Stack Next.js (`06-authentication-session-management.md`)
+- [x] Topic 07: Route Handlers & REST/GraphQL API Design (`07-route-handlers-api-design.md`)
+- [x] Topic 08: Caching Architecture (Request Memoization, Data Cache, Full Route Cache) (`08-caching-architecture.md`)
+- [x] Topic 09: Dynamic Imports, Bundling & Code Splitting Optimization (`09-dynamic-imports-bundling-optimization.md`)
+- [x] Topic 10: Enterprise Next.js Deployment & Observability (Docker, Vercel, Azure) (`10-enterprise-deployment-observability.md`)
 
 ---
 
-### Epic 6: Phase 07 Capstone Synthesis (Angular ➔ React Enterprise Playbook)
-*Location:* `notes/phase-07-angular-to-react-enterprise-synthesis/` | *Format:* 20-Section Standard
+### Epic 6: Phase 02 Dedicated Browser Platform Engine — Complete (10/10)
+*Location:* `notes/phase-02-browser-platform-web-apis/` | *Format:* 20-Section Standard
+- [x] Topic 01: Browser Architecture & Multi-Process Model (`01-browser-architecture-multi-process.md`)
+- [x] Topic 02: DOM & CSSOM Tree Construction (`02-dom-cssom-tree-construction.md`)
+- [x] Topic 03: The Critical Rendering Path (`03-critical-rendering-path.md`)
+- [x] Topic 04: Layout Thrashing & Forced Synchronous Reflow (`04-layout-thrashing-reflow.md`)
+- [x] Topic 05: Browser Event Architecture & Event Propagation (`05-browser-event-architecture.md`)
+- [x] Topic 06: Event Delegation & Memory Optimization (`06-event-delegation-memory-optimization.md`)
+- [x] Topic 07: Browser Networking & Network Stack (`07-browser-networking-stack.md`)
+- [x] Topic 08: Same-Origin Policy, CORS & Security Headers (`08-cors-csp-security-headers.md`)
+- [x] Topic 09: Browser Storage Architecture (`09-browser-storage-architecture.md`)
+- [x] Topic 10: Service Workers, PWA & Background Synchronization (`10-service-workers-pwa-offline.md`)
+
+---
+
+### Epic 7: Phase 07 Enterprise Security, Auth & Identity — Complete (8/8)
+*Location:* `notes/phase-07-enterprise-security-auth-identity/` | *Format:* 20-Section Standard
+- [x] Topic 01: Enterprise Authentication & Identity Landscape (`01-enterprise-authentication-identity-landscape.md`)
+- [x] Topic 02: The PKCE Flow in Modern SPAs & Next.js (`02-pkce-flow-spa-nextjs.md`)
+- [x] Topic 03: Microsoft Entra ID (Azure AD) Enterprise Integration (`03-entra-id-azure-ad-integration.md`)
+- [x] Topic 04: JWT Storage Architecture & Security Vectors (`04-jwt-storage-security-vectors.md`)
+- [x] Topic 05: Session Management & Refresh Token Rotation (`05-session-management-refresh-token-rotation.md`)
+- [x] Topic 06: Role-Based Access Control (RBAC) & Route Protection (`06-rbac-route-protection.md`)
+- [x] Topic 07: Content Security Policy (CSP) & Nonce Generation (`07-csp-nonce-generation.md`)
+- [x] Topic 08: OWASP Top 10 for Frontend Applications (`08-owasp-top-10-frontend.md`)
+
+---
+
+### Epic 8: Phase 08 Performance Engineering, Web Vitals & Production Profiling — Complete (8/8)
+*Location:* `notes/phase-08-performance-engineering-web-vitals/` | *Format:* 20-Section Standard
+- [x] Topic 01: Core Web Vitals Deep Dive (`01-core-web-vitals-deep-dive.md`)
+- [x] Topic 02: Chrome DevTools Performance Profiling (`02-chrome-devtools-performance-profiling.md`)
+- [x] Topic 03: Memory Leak Diagnosis & V8 Heap Snapshots (`03-memory-leak-diagnosis-v8-heap-snapshots.md`)
+- [x] Topic 04: Long Task Optimization & Main Thread Yielding (`04-long-task-optimization-main-thread-yielding.md`)
+- [x] Topic 05: Advanced Bundle Optimization & Tree-Shaking (`05-advanced-bundle-optimization-tree-shaking.md`)
+- [x] Topic 06: Image, Asset & Font Optimization Pipelines (`06-image-asset-font-optimization-pipelines.md`)
+- [x] Topic 07: List & Table Virtualization at 60 FPS (`07-list-table-virtualization-60fps.md`)
+- [x] Topic 08: Real-User Monitoring (RUM) & Performance Observability (`08-rum-performance-observability.md`)
+
+---
+
+### Epic 9: Phase 09 Clean Architecture, Monorepos & Micro-Frontends — Complete (8/8)
+*Location:* `notes/phase-09-enterprise-architecture-monorepos/` | *Format:* 20-Section Standard
+- [x] Topic 01: Domain-Driven Design (DDD) in Frontend (`01-domain-driven-design-frontend.md`)
+- [x] Topic 02: Monorepo Architecture: Nx vs Turborepo (`02-monorepo-architecture-nx-turborepo.md`)
+- [x] Topic 03: Shared Libraries & Enterprise Package Governance (`03-shared-libraries-package-governance.md`)
+- [x] Topic 04: Micro-Frontends & Module Federation (`04-micro-frontends-module-federation.md`)
+- [x] Topic 05: Design System Architecture & Component Libraries (`05-design-system-architecture-component-libraries.md`)
+- [x] Topic 06: Feature-Sliced Design (FSD) Architectural Standard (`06-feature-sliced-design-architecture.md`)
+- [x] Topic 07: Scalable State & Service Scaffolding (`07-scalable-state-service-scaffolding.md`)
+- [x] Topic 08: Case Study: Refactoring Monolithic SPAs to Modular Clean Architecture (`08-refactoring-monolith-to-clean-architecture.md`)
+
+---
+
+### Epic 10: Phase 10 Modern Testing Strategy & Quality Assurance — Complete (8/8)
+*Location:* `notes/phase-10-testing-strategy/` | *Format:* 20-Section Standard
+- [x] Topic 01: The Modern Frontend Testing Pyramid & Testing Trophy (`01-modern-frontend-testing-pyramid.md`)
+- [x] Topic 02: Vitest & Jest Runner Architecture (`02-vitest-jest-runner-architecture.md`)
+- [x] Topic 03: React Testing Library Philosophy & User-Centric Testing (`03-react-testing-library-philosophy.md`)
+- [x] Topic 04: Mock Service Worker (MSW v2) Network Mocking Architecture (`04-msw-mock-service-worker-architecture.md`)
+- [x] Topic 05: Testing Asynchronous React Hooks & Stores (`05-testing-async-react-hooks-stores.md`)
+- [x] Topic 06: Integration Testing Complex User Workflows (`06-integration-testing-complex-workflows.md`)
+- [x] Topic 07: Playwright End-to-End (E2E) Testing Architecture (`07-playwright-e2e-testing-architecture.md`)
+- [x] Topic 08: Visual Regression Testing & CI Quality Gates (`08-visual-regression-testing-ci-quality-gates.md`)
+
+---
+
+### Epic 11: Phase 11 Frontend System Design at Scale — Complete (8/8) ✅
+*Location:* `notes/phase-11-frontend-system-design/` | *Format:* 20-Section Standard
+- [x] Topic 01: The Frontend System Design Interview Framework (Requirements, Data Modeling, Resilience)
+- [x] Topic 02: System Design: Real-Time Collaborative Canvas (Figma-Style CRDTs, WebSockets)
+- [x] Topic 03: System Design: High-Frequency Trading & Telemetry Terminal (1,000 msgs/sec, Virtualization)
+- [x] Topic 04: System Design: Multi-Tenant Enterprise SaaS Dashboard (Dynamic Theming, RBAC Entitlements)
+- [x] Topic 05: System Design: Global Streaming Media Player (Adaptive HLS/DASH, Offline Buffering)
+- [x] Topic 06: System Design: Backend-For-Frontend (BFF) vs API Gateway (Node/Next BFF vs ASP.NET YARP)
+- [x] Topic 07: System Design: Resilient Offline-First Mobile Field Worker App (IndexedDB, FIFO Outbox)
+- [x] Topic 08: System Design: Global CDN Edge Compute & Caching Strategy (Cloudflare Workers, Cache Headers)
+
+---
+
+### Epic 12: Phase 12 Angular to React Enterprise Synthesis (Capstone) — Complete (9/9) ✅
+*Location:* `notes/phase-12-angular-to-react-enterprise-synthesis/` | *Format:* 20-Section Standard
 - [x] Topic 00: Angular vs. React Mental Model (`00-angular-vs-react-mental-model.md`)
-- [ ] Topic 01: Angular to React Architectural Mapping Guide
-- [ ] Topic 02: Change Detection (Zone.js/Signals) vs React Reconciliation (Fiber)
-- [ ] Topic 03: RxJS Reactive Streams vs React Hooks & State Primitives
-- [ ] Topic 04: Angular Hierarchical Dependency Injection vs React Composition & Context
-- [ ] Topic 05: NgRx Store Architecture vs Redux Toolkit & Zustand
-- [ ] Topic 06: Angular Route Guards & Interceptors vs React Routers & Middleware
-- [ ] Topic 07: Angular Signals (Fine-Grained) vs React State & React Compiler
-- [ ] Topic 08: Enterprise Clean Architecture: Scalable Angular vs Scalable React Applications
+- [x] Topic 01: Angular to React Architectural Mapping Guide (`01-angular-to-react-architectural-mapping-guide.md`)
+- [x] Topic 02: Angular Change Detection (Zone.js/Signals) vs React Reconciliation (Fiber) (`02-angular-change-detection-vs-react-reconciliation.md`)
+- [x] Topic 03: RxJS Reactive Streams vs React Hooks & State Primitives (`03-rxjs-reactive-streams-vs-react-hooks.md`)
+- [x] Topic 04: Angular Hierarchical Dependency Injection vs React Composition & Context (`04-angular-di-vs-react-composition-context.md`)
+- [x] Topic 05: NgRx Store Architecture vs Redux Toolkit & Zustand (`05-ngrx-store-vs-redux-toolkit-zustand.md`)
+- [x] Topic 06: Angular Route Guards & Interceptors vs React Routers & Middleware (`06-angular-route-guards-interceptors-vs-react.md`)
+- [x] Topic 07: Angular Signals (Fine-Grained) vs React State & React Compiler (`07-angular-signals-vs-react-state-compiler.md`)
+- [x] Topic 08: Enterprise Clean Architecture: Scalable Angular vs Scalable React Applications (`08-enterprise-clean-architecture-angular-vs-react.md`)
+
+---
+
+### Epic 13: Interactive Simulation Labs Expansion (Complete - v0.12.0) ✅
+*Location:* `apps/portal/src/features/visualizers/`
+- [x] Lab 04: The 4-Lane Event Loop & INP Latency Simulator (`topic-04-event-loop/EventLoopLab.tsx`)
+- [x] Lab 14: React Fiber Work Loop & Key Diffing Visualizer (`topic-14-fiber/FiberReconciliationLab.tsx`)
+- [x] Lab 19: RSC Flight Wire Format Stream Parser (`topic-19-rsc/RscFlightLab.tsx`)
+- [x] Registered and tested in `VisualizerHub.tsx`, `generate-manifest.mjs`, and `test-manifest-integrity.mjs`
+
+---
+
+### Epic 14: Learning Engine & Assessment Hub (Complete - v0.13.0) ✅
+*Location:* `apps/portal/src/features/`
+- [x] `FEAT-LEARN-01`: Flashcards Arena with Layer 3 Memory Anchors (`flashcards/FlashcardsArena.tsx`)
+- [x] `FEAT-LEARN-02`: Staff Architect Scenario Quizzes & Code Puzzles (`quizzes/QuizArena.tsx`)
+- [x] `FEAT-LEARN-03`: Global Instant Full-Text Search Modal with `Ctrl+K` (`search/GlobalSearchModal.tsx`)
+- [x] App header view switcher tabs and URL parameter sync (`?view=flashcards`, `?view=quizzes`)
+
+---
+
+### Epic 15: CI/CD Automation & GitHub Pages Deployment (Complete - v0.14.0) ✅
+*Location:* `.github/workflows/deploy.yml`
+- [x] `FEAT-LEARN-04`: Automated GitHub Actions workflow testing manifest, integrity, TypeScript compiler, and Vite build
+- [x] Static build packaging and GitHub Pages automated deployment artifact pipeline
+- [x] Universal asset path configuration (`base: './'`) in `vite.config.ts`
 
 ---
 
 ## 3. Completed Backlog Items
 
-![alt text](image-3.png)
+### Item FIX-01: KaTeX Formula Greedy Regex Boundary Collision (`$$typeof`)
 - **Issue**: The symbol at right in Chapter 01 (Learning Objectives) is not properly understood:
   `typeof, type, key, ref, props, children`).`
   Rendered with a stray math formula box below it.
@@ -155,7 +258,7 @@
 
 ---
 
-![alt text](image-4.png)
+### Item FIX-02: Dashboard Phase Roadmap Cards Uneven Stretch
 - **Issue**: Excessive vertical gaps in Phase 01 and Phase 02 roadmap cards on Dashboard.
 - **Root Cause**:
   1. In `Dashboard.tsx`, the roadmap card grid used default CSS Grid stretch alignment (`align-items: stretch`). Because Phase 03 contains 11 topics while Phase 01 contains 4 topics, Phase 01's card was stretched to match the height of Phase 03.
@@ -167,7 +270,7 @@
 
 ---
 
-![alt text](image-5.png)
+### Item FIX-03: Dashboard Grid Layout Fixed Card Heights & Internal Scrollbar
 - **Issue**: Roadmap phase cards had uneven heights across rows when using `align-items: start`, creating large empty gaps between cards on row 1 and row 2.
 - **Root Cause**:
   Cards with few or zero authored topics (such as Phase 02) stopped early, while cards with many topics (Phase 03) extended deep. In CSS Grid, this resulted in an irregular staggered grid layout with uneven vertical voids between cards.
@@ -179,7 +282,7 @@
 
 ---
 
-![alt text](image-6.png)
+### Item FIX-04: Mermaid SVG Diagram Root Container Height Collision
 - **Issue**: In `00-react-application-lifecycle-architecture.md`, the box `1. Browser Network & HTML Bootstrap` stretched excessively tall (~1000px high with massive blank vertical space), distorting the SVG aspect ratio and shrinking the entire Mermaid diagram into an unreadable, narrow vertical column.
 - **Root Cause**:
   1. The Mermaid label contained `&lt;div id='root'&gt;`, which Mermaid decoded into `<div id='root'>` when injecting HTML into the SVG `<foreignObject>`.
@@ -193,7 +296,7 @@
 
 ---
 
-![alt text](image-7.png)
+### Item FIX-05: Markdown Code Block Left Baseline Indentation in Lists
 - **Issue**: In Section 3 ("Phase 2: V8 Compilation & Module Resolution") of `00-react-application-lifecycle-architecture.md`, the `main.tsx` code snippet box was indented inwards to the right, misaligned with the section heading, intro prose, and other code boxes.
 - **Root Cause**:
   The code block was indented under list item `3. Module Graph Execution:`, causing marked to nest `<pre>` inside `<ol><li>`. This added list indentation (`padding-left: 1.75rem`) and list item marker margins, breaking the clean left vertical baseline of the document.

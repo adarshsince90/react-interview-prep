@@ -75,7 +75,7 @@ function cleanMarkdownFormatting(text: string): string {
       return `\n\n> 📐 **Formula:** \`${clean}\`\n\n`;
     })
     // Replace inline LaTeX ($...$) ONLY containing LaTeX escape tokens and not ordinary code/currency
-    .replace(/(?<![`\$\w])\$([^\$\n]+?)\$(?![`\$\w])/g, (match, inner) => {
+    .replace(/(?<![`$\w])\$([^$\n]+?)\$(?![`$\w])/g, (match, inner) => {
       if (inner.includes('\\')) {
         return inner
           .replace(/\\text\{([^}]+)\}/g, '$1')
@@ -168,7 +168,10 @@ export const TopicReader: React.FC<TopicReaderProps> = ({
     setLoading(true);
     setError(null);
 
-    const noteUrl = `/${topic.relativePath}`;
+    const baseUrl = import.meta.env.BASE_URL.endsWith('/') 
+      ? import.meta.env.BASE_URL 
+      : `${import.meta.env.BASE_URL}/`;
+    const noteUrl = `${baseUrl}${topic.relativePath.replace(/^\//, '')}`;
 
     fetch(noteUrl)
       .then(res => {

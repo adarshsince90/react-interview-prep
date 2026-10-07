@@ -42,6 +42,31 @@ const LAB_MAPPINGS = {
     labId: 'lab-04-event-loop',
     title: '4-Lane Event Loop & INP Budget Simulator',
     description: 'Simulate Microtasks, Macrotasks, requestAnimationFrame, and main-thread blocking affecting Core Web Vitals.'
+  },
+  '02-reconciliation-diffing-algorithm': {
+    labId: 'lab-14-fiber-reconciliation',
+    title: 'Fiber Work Loop & Key Diffing Visualizer',
+    description: 'Inspect list reconciliation, lastPlacedIndex watermark movements, and the state-bleed bug with index as keys.'
+  },
+  '03-fiber-architecture': {
+    labId: 'lab-14-fiber-reconciliation',
+    title: 'Fiber Work Loop & Key Diffing Visualizer',
+    description: 'Inspect list reconciliation, lastPlacedIndex watermark movements, and the state-bleed bug with index as keys.'
+  },
+  '09-rsc-internals': {
+    labId: 'lab-19-rsc-flight',
+    title: 'RSC Flight Wire Format Stream Parser',
+    description: 'Inspect streaming M:, J:, and S: Flight chunks and observe progressive client rehydration live.'
+  },
+  '01-frontend-system-design-interview-framework': {
+    labId: 'topic-11-system-design',
+    title: 'Collaborative Canvas & HFT Telemetry Simulator',
+    description: 'Interactive simulation of CRDT concurrent edits, QuadTree frustum culling, and HFT Ring Buffer batching.'
+  },
+  '02-realtime-collaborative-canvas-crdts': {
+    labId: 'topic-11-system-design',
+    title: 'Collaborative Canvas & HFT Telemetry Simulator',
+    description: 'Interactive simulation of CRDT concurrent edits, QuadTree frustum culling, and HFT Ring Buffer batching.'
   }
 };
 
@@ -52,10 +77,10 @@ const phaseMetadata = {
     badge: 'Core Engine (100%)',
     description: 'V8 internals, memory models, event loop, closures, and garbage collection mechanics.'
   },
-  'phase-02-browser-platform': {
+  'phase-02-browser-platform-web-apis': {
     id: 'phase-02',
     title: 'Phase 02: Browser Platform & Web APIs',
-    badge: 'Browser Core',
+    badge: 'Browser Core (100%)',
     description: 'DOM/CSSOM trees, rendering pipeline, hardware compositing, event bubbling/delegation, and storage.'
   },
   'phase-03-react-foundations': {
@@ -79,8 +104,14 @@ const phaseMetadata = {
   'phase-06-nextjs-fullstack-react': {
     id: 'phase-06',
     title: 'Phase 06: Next.js & Full-Stack React Architecture',
-    badge: 'Next.js & RSC',
+    badge: 'Next.js & RSC (100%)',
     description: 'React Server Components (RSC), App Router, streaming SSR hydration, and edge infrastructure.'
+  },
+  'phase-07-enterprise-security-auth-identity': {
+    id: 'phase-07',
+    title: 'Phase 07: Enterprise Security, Authentication & Identity',
+    badge: 'Security & Auth',
+    description: 'OAuth 2.0, OIDC PKCE flow, Entra ID (Azure AD), JWT storage, XSS/CSRF, and CSP.'
   },
   'phase-07-enterprise-security-and-auth': {
     id: 'phase-07',

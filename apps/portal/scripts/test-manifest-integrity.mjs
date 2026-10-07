@@ -7,7 +7,6 @@ const __dirname = path.dirname(__filename);
 
 const PORTAL_ROOT = path.resolve(__dirname, '..');
 const MANIFEST_PATH = path.resolve(PORTAL_ROOT, 'src/assets/manifest.json');
-const PUBLIC_NOTES_DIR = path.resolve(PORTAL_ROOT, 'public/notes');
 const VISUALIZERS_DIR = path.resolve(PORTAL_ROOT, 'src/features/visualizers');
 
 console.log('🧪 Running Manifest & Portal Integrity Test Suite...');
@@ -54,7 +53,11 @@ if (manifestData) {
   const LAB_COMPONENT_MAP = {
     'lab-10-jsx-compiler': 'topic-03-jsx/JsxCompilerLab.tsx',
     'lab-11-component-purity': 'topic-04-purity/ComponentPurityLab.tsx',
-    'lab-12-render-cycle-stepper': 'topic-05-render/RenderCycleLab.tsx'
+    'lab-12-render-cycle-stepper': 'topic-05-render/RenderCycleLab.tsx',
+    'lab-04-event-loop': 'topic-04-event-loop/EventLoopLab.tsx',
+    'lab-14-fiber-reconciliation': 'topic-14-fiber/FiberReconciliationLab.tsx',
+    'lab-19-rsc-flight': 'topic-19-rsc/RscFlightLab.tsx',
+    'topic-11-system-design': 'topic-11-system-design/CanvasDesignLab.tsx'
   };
 
   for (const [labId, relativePath] of Object.entries(LAB_COMPONENT_MAP)) {

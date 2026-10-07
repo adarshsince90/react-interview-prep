@@ -58,23 +58,24 @@ Before any new feature is considered complete or committed, the following automa
 | :--- | :--- | :--- | :--- | :--- |
 | **LAB-10** | **JSX Compiler & `$$typeof` Inspector** | Phase 03 Topic 03 (`03-jsx-compilation`) | Live JSX-to-`_jsx` AST desugaring, XSS JSON injection test, falsy `0` bug sandbox. | [x] **Complete** |
 | **LAB-11** | **Component Purity & StrictMode** | Phase 03 Topic 04 (`04-component-model-pure-functions`) | In-place mutation (`.sort`) vs pure ES2023 (`.toSorted`), StrictMode double-rendering stress-test. | [x] **Complete** |
-| **LAB-12** | **Render Cycle Stepper** | Phase 03 Topic 05 (`05-render-cycle`) | 5-stage Trigger $\rightarrow$ Render $\rightarrow$ Commit $\rightarrow$ Paint stepper, Double Buffering inspector, microsecond telemetry. | [x] **Complete** |
-| **LAB-04** | **4-Lane Event Loop Simulator** | Phase 01 Topic 04 (`04-event-loop`) | Call Stack, Microtasks, 16.6ms Render Gate, Macrotasks, 60 FPS meter, and INP regression simulator. | 📋 *Backlog* |
-| **LAB-13** | **Reconciliation & Diffing Visualizer** | Phase 04 Topic 02 (`02-reconciliation-diffing-algorithm`) | Step-by-step list reordering, `lastPlacedIndex` watermark move tracker, index-as-key state bleed demo. | 📋 *Backlog* |
-| **LAB-14** | **Fiber Linked-List Work Loop** | Phase 04 Topic 03 (`03-fiber-architecture`) | Interactive `child`, `sibling`, `return` linked-list tree walker with step pause/resume. | 📋 *Backlog* |
+| **LAB-12** | **Render Cycle Stepper** | Phase 03 Topic 05 (`05-render-cycle`) | 5-stage Trigger → Render → Commit → Paint stepper, Double Buffering inspector, microsecond telemetry. | [x] **Complete** |
+| **LAB-09** | **Enterprise Architecture & Strangler Fig Lab** | Phase 09 Topics 01-08 (`topic-09-architecture`) | FSD Layer Dependency Matrix, Module Federation Singleton Resolver, Strangler Fig Route Delegator. | [x] **Complete** |
+| **LAB-04** | **4-Lane Event Loop Simulator** | Phase 01 Topic 04 (`04-event-loop`) | Call Stack, Microtasks, 16.6ms Render Gate, Macrotasks, 60 FPS meter, and INP regression simulator. | [x] **Complete** |
+| **LAB-13** | **Reconciliation & Diffing Visualizer** | Phase 04 Topic 02 (`02-reconciliation-diffing-algorithm`) | Step-by-step list reordering, `lastPlacedIndex` watermark move tracker, index-as-key state bleed demo. | [x] **Complete** |
+| **LAB-14** | **Fiber Linked-List Work Loop** | Phase 04 Topic 03 (`03-fiber-architecture`) | Interactive `child`, `sibling`, `return` linked-list tree walker with step pause/resume. | [x] **Complete** |
+| **LAB-19** | **RSC Flight Wire Format Parser** | Phase 04 Topic 09 (`09-rsc-internals`) | Live parser of `M`, `J`, `S` Flight chunks with client reference component boundary inspector. | [x] **Complete** |
 | **LAB-15** | **31-Bit Priority Lanes Inspector** | Phase 04 Topic 05 (`05-lanes-priority-mechanics`) | Bitwise operations (`lanes & -lanes`), 16 parallel transition lanes, starvation escalation. | 📋 *Backlog* |
-| **LAB-19** | **RSC Flight Wire Format Parser** | Phase 04 Topic 09 (`09-rsc-internals`) | Live parser of `M`, `J`, `S` Flight chunks with client reference component boundary inspector. | 📋 *Backlog* |
-| **LAB-21** | **State Normalization Visualizer** | Phase 05 Topic 01 (`01-state-modeling-normalization`) | Nested tree vs flat normalized `byId`/`allIds` tables with $O(1)$ mutation comparison. | 📋 *Backlog* |
+| **LAB-21** | **State Normalization Visualizer** | Phase 05 Topic 01 (`01-state-modeling-normalization`) | Nested tree vs flat normalized `byId`/`allIds` tables with O(1) mutation comparison. | 📋 *Backlog* |
 
 ---
 
 ### Category C: Learning Optimization & Assessment
-| Feature ID | Feature Name | Description | Status | Target Phase |
+| Feature ID | Feature Name | Description | Status | Added In |
 | :--- | :--- | :--- | :--- | :--- |
-| **FEAT-LEARN-01** | **Flashcards Arena** | Interactive flashcards drilling sticky memory anchors ("Museum Rule", "Chameleon vs Bulldozer"). | 📋 *Queued* | Phase P5 |
-| **FEAT-LEARN-02** | **Architect Scenario Quizzes** | Multiple-choice and code puzzle interview drills with real-time feedback. | 📋 *Queued* | Phase P5 |
-| **FEAT-LEARN-03** | **Client-Side Full Text Search** | Fast instant search across all 32+ chapters using MiniSearch / Lunr. | 📋 *Queued* | Phase P6 |
-| **FEAT-LEARN-04** | **GitHub Pages Deployment** | Automated GitHub Actions CI workflow building and deploying to public URL. | 📋 *Queued* | Phase P6 |
+| **FEAT-LEARN-01** | **Flashcards Arena** | Interactive flashcards drilling sticky memory anchors ("Museum Rule", "Slide Projector", "Wax Signet"). | [x] **Complete** | v0.13.0 |
+| **FEAT-LEARN-02** | **Architect Scenario Quizzes** | Multiple-choice and code puzzle interview drills with real-time Staff Architect critique. | [x] **Complete** | v0.13.0 |
+| **FEAT-LEARN-03** | **Client-Side Full Text Search** | Fast instant global search modal (`Ctrl+K`) indexing 110 publication-grade chapters. | [x] **Complete** | v0.13.0 |
+| **FEAT-LEARN-04** | **GitHub Pages Deployment** | Automated GitHub Actions CI workflow (`deploy.yml`) building and deploying to GitHub Pages. | [x] **Complete** | v0.14.0 |
 
 ---
 
@@ -91,15 +92,93 @@ Before any new feature is considered complete or committed, the following automa
 ### Category E: UI/UX Modernization & Typographic Reading System
 | Feature ID | Feature Name | Description | Status | Target Version |
 | :--- | :--- | :--- | :---: | :---: |
-| **FEAT-UI-01** | **Sticky Table of Contents & Synchronized ScrollSpy** | Pinned viewport TOC with matching build/runtime slugifier and smooth-scrolling offset. | 🚀 *In Progress* | v0.4.0 |
-| **FEAT-UI-02** | **Diagram Bounding & Aspect-Ratio Preservation** | `.mermaid-wrapper` with `max-height: 520px` and responsive SVG viewBox clamping. | 🚀 *In Progress* | v0.4.0 |
-| **FEAT-UI-03** | **Constrained Typographic Prose (`max-width: 780px`)** | Distraction-free reading column (65–75 CPL) with enhanced line-height (`1.7`) and hierarchy. | 🚀 *In Progress* | v0.4.0 |
-| **FEAT-UI-04** | **Standardized Sidebar Badges & Title Normalization** | Uniform `[01]`, `[02]`, `[AC]` pills across all phases with stripped redundant prefixes. | 🚀 *In Progress* | v0.4.0 |
-| **FEAT-UI-05** | **Micro-Interactions & "Back to Top" Action** | Floating smooth scroll button, card hover lifts, and smooth chapter transition animations. | 🚀 *In Progress* | v0.4.0 |
+| **FEAT-UI-01** | **Sticky Table of Contents & Synchronized ScrollSpy** | Pinned viewport TOC with matching build/runtime slugifier and smooth-scrolling offset. | [x] **Complete** | v0.4.0 |
+| **FEAT-UI-02** | **Diagram Bounding & Aspect-Ratio Preservation** | `.mermaid-wrapper` with `max-height: 520px` and responsive SVG viewBox clamping. | [x] **Complete** | v0.4.0 |
+| **FEAT-UI-03** | **Constrained Typographic Prose (`max-width: 780px`)** | Distraction-free reading column (65–75 CPL) with enhanced line-height (`1.7`) and hierarchy. | [x] **Complete** | v0.4.0 |
+| **FEAT-UI-04** | **Standardized Sidebar Badges & Title Normalization** | Uniform `[01]`, `[02]`, `[AC]` pills across all phases with stripped redundant prefixes. | [x] **Complete** | v0.4.0 |
+| **FEAT-UI-05** | **Micro-Interactions & "Back to Top" Action** | Floating smooth scroll button, card hover lifts, and smooth chapter transition animations. | [x] **Complete** | v0.4.0 |
 
 ---
 
 ## 4. Versioned Release Changelog (Regression History)
+
+### [v0.14.0] - 2026-10-07
+- **Added:** Automated CI/CD Deployment Workflow (`.github/workflows/deploy.yml`) (`FEAT-LEARN-04`) for GitHub Actions.
+- **Added:** Universal asset path configuration (`base: './'`) in `vite.config.ts` for zero-configuration GitHub Pages and static host routing.
+- **Verified:** 100% automated CI gate pass: manifest verification, integrity test suite, strict TypeScript compilation, and production Vite bundling.
+
+### [v0.13.0] - 2026-10-07
+- **Added:** Flashcards Arena (`FEAT-LEARN-01`) in `apps/portal/src/features/flashcards/` drilling high-yield Section 17 & 18 architectural memory anchors (Museum Rule, Slide Projector, Token-Mediating BFF, Strangler Fig, Wax Signet).
+- **Added:** Staff Architect Scenario Quizzes (`FEAT-LEARN-02`) in `apps/portal/src/features/quizzes/` providing real-world production trade-off dilemmas with Staff Engineer critiques and scoring.
+- **Added:** Global Instant Full-Text Search Modal (`FEAT-LEARN-03`) in `apps/portal/src/features/search/` with `Ctrl+K` / `Cmd+K` keyboard shortcut indexing all 110 publication-grade chapters.
+- **Added:** Expanded top navigation tabs in `App.tsx` (Dashboard, Handbook, Labs, Flashcards, Quizzes) with URL query state persistence (`?view=flashcards`, `?view=quizzes`).
+
+### [v0.12.0] - 2026-10-07
+- **Added:** Interactive Simulation Lab 04: 4-Lane Event Loop & INP Latency Simulator (`EventLoopLab.tsx`) featuring Call Stack, exhaustive Microtask drain, 16.6ms Render Gate, Macrotask queue, 60 FPS meter, and microtask starvation freeze toggle.
+- **Added:** Interactive Simulation Lab 14: React Fiber Work Loop & Reconciliation Diffing Visualizer (`FiberReconciliationLab.tsx`) demonstrating the `key={index}` state-bleed defect and `performUnitOfWork` linked-list pointer traversal (`child`, `sibling`, `return`).
+- **Added:** Interactive Simulation Lab 19: RSC Flight Wire Format Stream Parser (`RscFlightLab.tsx`) debugging streaming `M:`, `J:`, and `S:` chunks with progressive client DOM rehydration.
+- **Added:** Registered new labs in `VisualizerHub.tsx`, `scripts/generate-manifest.mjs`, and `scripts/test-manifest-integrity.mjs`.
+
+### [v0.11.0] - 2026-10-07
+- **Milestone:** Phase 12 Full Publication (Angular to React Enterprise Synthesis Capstone) completed 100% (9/9 capstone chapters authored and indexed).
+- **Curriculum Grand Milestone:** **All 12 Phases 100% Published and Mastered across 110 Comprehensive Topics!**
+- **Added:** Authored Topics 00–08:
+  - Topic 00: Angular vs. React Mental Model (`00-angular-vs-react-mental-model.md`)
+  - Topic 01: Angular to React Architectural Mapping Guide (`01-angular-to-react-architectural-mapping-guide.md`)
+  - Topic 02: Angular Change Detection (Zone.js/Signals) vs React Reconciliation (Fiber) (`02-angular-change-detection-vs-react-reconciliation.md`)
+  - Topic 03: RxJS Reactive Streams vs React Hooks & State Primitives (`03-rxjs-reactive-streams-vs-react-hooks.md`)
+  - Topic 04: Angular Hierarchical Dependency Injection vs React Composition & Context (`04-angular-di-vs-react-composition-context.md`)
+  - Topic 05: NgRx Store Architecture vs Redux Toolkit & Zustand (`05-ngrx-store-vs-redux-toolkit-zustand.md`)
+  - Topic 06: Angular Route Guards & Interceptors vs React Routers & Middleware (`06-angular-route-guards-interceptors-vs-react.md`)
+  - Topic 07: Angular Signals (Fine-Grained) vs React State & React Compiler (`07-angular-signals-vs-react-state-compiler.md`)
+  - Topic 08: Enterprise Clean Architecture: Scalable Angular vs Scalable React Applications (`08-enterprise-clean-architecture-angular-vs-react.md`)
+- **Added:** Total indexed topics in `manifest.json` reached 110 topics across all 12 curriculum phases.
+- **Verified:** 100% test integrity pass (`scripts/test-manifest-integrity.mjs`) with 0 raw LaTeX math violations and clean production build (`npm run build`).
+
+### [v0.10.0] - 2026-10-07
+- **Added:** Phase 11 Full Publication (Frontend System Design at Scale) completed 100% (8/8 chapters authored and indexed).
+- **Added:** Authored Topics 01-08: Frontend System Design Framework, Real-Time Collaborative Canvas CRDTs, High-Frequency Trading Telemetry Terminal, Multi-Tenant SaaS Dashboard, Global Streaming Media Player, BFF vs API Gateway, Offline-First Field App, and Global CDN Edge Caching.
+- **Added:** Interactive Simulation Lab: `CanvasDesignLab.tsx` (`topic-11-system-design`) featuring Collaborative CRDT Canvas, HFT Ring Buffer Simulator, and SaaS Multi-Tenant Token/Entitlement Engine.
+- **Added:** Total indexed topics in `manifest.json` increased to 102 topics across 12 phases.
+- **Verified:** 100% test integrity pass (`scripts/test-manifest-integrity.mjs`) with 0 raw LaTeX violations and clean production build (`npm run build`).
+
+### [v0.9.0] - 2026-10-07
+- **Added:** Phase 10 Full Publication (Modern Testing Strategy & Quality Assurance) completed 100% (8/8 chapters authored and indexed).
+- **Added:** Authored all 8 chapters covering The Modern Frontend Testing Pyramid & Testing Trophy, Vitest vs Jest Runner Architecture, React Testing Library Philosophy, Mock Service Worker (MSW v2), Testing Async Hooks & Stores, Integration Testing Complex Workflows, Playwright E2E Architecture, and Visual Regression Testing & CI Quality Gates.
+- **Added:** Interactive Simulation Lab 10: Testing Trophy ROI Calculator & MSW Network Interceptor Simulator (`TestingLab.tsx`) integrated in `VisualizerHub.tsx`.
+- **Added:** Total indexed topics in `manifest.json` increased to 94 topics across 11 phases.
+- **Verified:** 100% test integrity pass (`scripts/test-manifest-integrity.mjs`) with 0 raw LaTeX math violations and clean production build (`npm run build`).
+
+### [v0.8.0] - 2026-10-07
+- **Added:** Phase 09 Full Publication (Enterprise Clean Architecture, Monorepos & Micro-Frontends) completed 100% (8/8 chapters authored and indexed).
+- **Added:** Authored all 8 chapters covering Domain-Driven Design in Frontend, Monorepo Architecture (Nx vs Turborepo), Shared Libraries & SemVer Governance, Micro-Frontends & Module Federation, Design System Tokens & Headless UI, Feature-Sliced Design (FSD), Scalable State & DI Repositories, and Strangler Fig Monolith Refactoring.
+- **Added:** Interactive Simulation Lab 09: Enterprise Architecture, FSD & Strangler Fig (`ArchitectureLab.tsx`) in `VisualizerHub.tsx`.
+- **Added:** Total indexed topics in `manifest.json` increased to 86 topics across 10 phases.
+- **Verified:** 100% test integrity pass (`scripts/test-manifest-integrity.mjs`) with 0 raw LaTeX math violations and clean production build (`npm run build`).
+
+### [v0.7.0] - 2026-10-07
+- **Added:** Phase 08 Full Publication (Performance Engineering, Web Vitals & Production Profiling) completed 100% (8/8 chapters authored and indexed).
+- **Added:** Authored all 8 chapters covering Core Web Vitals (INP/LCP/CLS/TTFB), Chrome DevTools Flamechart Profiling, Memory Leaks & V8 Heap Snapshots, Main Thread Yielding (`scheduler.yield()`), Bundle Tree-Shaking, Image/Font Optimization Pipelines, Table Virtualization (`@tanstack/react-virtual`), and Real-User Monitoring (RUM).
+- **Added:** Total indexed topics in `manifest.json` increased to 78 topics across 9 phases.
+- **Verified:** 100% test integrity pass (`scripts/test-manifest-integrity.mjs`) with 0 raw LaTeX math violations and clean production build (`npm run build`).
+
+### [v0.6.0] - 2026-10-07
+- **Added:** Phase 07 Full Publication (Enterprise Security, Authentication & Identity) completed 100% (8/8 chapters authored and indexed).
+- **Added:** Authored all 8 chapters covering Enterprise Auth Landscape (OAuth 2.0/OIDC), PKCE Flow in SPAs & Next.js, Microsoft Entra ID (Azure AD) Enterprise Integration, JWT Storage Security Vectors, Session Management & Refresh Token Rotation (RTR), Role-Based & Attribute-Based Access Control (RBAC/ABAC), Content Security Policy (CSP Level 3) & Nonce Generation, and Frontend OWASP Top 10.
+- **Added:** Total indexed topics in `manifest.json` increased to 70 topics across 8 phases.
+- **Verified:** 100% test integrity pass (`scripts/test-manifest-integrity.mjs`) with 0 raw LaTeX math violations and clean production build (`npm run build`).
+
+### [v0.5.0] - 2026-10-07
+- **Added:** Phase 02 Full Publication (Browser Platform & Web APIs) completed 100% (10/10 chapters authored and indexed).
+- **Added:** Authored all 10 chapters covering Browser Multi-Process Architecture, DOM/CSSOM Construction, Critical Rendering Path, Layout Thrashing & Reflow, Browser Event Propagation, Event Delegation & Memory Optimization, Browser Networking Stack (HTTP/1-3 & QUIC), CORS/CSP Security, Browser Storage (Cookies, IndexedDB, OPFS), and Service Workers/PWA/Offline Synchronization.
+- **Added:** Total indexed topics in `manifest.json` increased to 62 topics across 7 phases.
+- **Verified:** 100% test integrity pass (`scripts/test-manifest-integrity.mjs`) with 0 raw LaTeX math violations and clean production build (`npm run build`).
+
+### [v0.4.1] - 2026-10-07
+- **Added:** Phase 06 Full Publication (Next.js & Full-Stack React Architecture) completed 100% (11/11 chapters authored and indexed).
+- **Added:** Authored Chapters 04–10: SSG vs ISR, Edge Middleware & V8 Isolates, Full-Stack Auth & Enterprise RBAC, Web Standard Route Handlers, 4-Tier Caching Architecture, Dynamic Imports & Turbopack, and Docker Standalone & OpenTelemetry.
+- **Added:** Total indexed topics in `manifest.json` increased to 52 topics across 6 phases.
+- **Verified:** 100% test integrity pass (`scripts/test-manifest-integrity.mjs`) with 0 raw LaTeX math violations and clean production build (`npm run build`).
 
 ### [v0.3.1] - 2026-10-06
 - **Added:** Resilient Markdown Math Preprocessor (`cleanMarkdownFormatting()`) in `TopicReader.tsx` automatically rendering mathematical formulas into styled Unicode blocks.

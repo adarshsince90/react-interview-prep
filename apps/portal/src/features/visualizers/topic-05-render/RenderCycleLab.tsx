@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { 
   Play, 
   RotateCcw, 
@@ -62,7 +62,7 @@ export const RenderCycleLab: React.FC = () => {
 
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const addTelemetry = (
+  const addTelemetry = useCallback((
     phase: string, 
     durationUs: number, 
     detail: string, 
@@ -77,7 +77,7 @@ export const RenderCycleLab: React.FC = () => {
       type
     };
     setTelemetry(prev => [entry, ...prev.slice(0, 9)]);
-  };
+  }, []);
 
   // Phase Execution Logic
   const startCycle = (nextVal: number) => {
@@ -108,7 +108,7 @@ export const RenderCycleLab: React.FC = () => {
     );
   };
 
-  const advancePhase = () => {
+  const advancePhase = useCallback(() => {
     if (activePhase === 'TRIGGER') {
       // Step 2: RENDER (Virtual DOM / Fiber Reconciler)
       setActivePhase('RENDER');
@@ -169,8 +169,9 @@ export const RenderCycleLab: React.FC = () => {
       );
     } else if (activePhase === 'PASSIVE_EFFECTS') {
       setActivePhase('IDLE');
+      setAutoPlaying(false);
     }
-  };
+  }, [activePhase, targetVal, currentVal, addTelemetry]);
 
   // Auto-play stepper
   useEffect(() => {
@@ -178,13 +179,11 @@ export const RenderCycleLab: React.FC = () => {
       timerRef.current = setTimeout(() => {
         advancePhase();
       }, 900);
-    } else if (activePhase === 'IDLE') {
-      setAutoPlaying(false);
     }
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current);
     };
-  }, [autoPlaying, activePhase, isBailedOut]);
+  }, [autoPlaying, activePhase, isBailedOut, advancePhase]);
 
   const resetAll = () => {
     setCurrentVal(0);

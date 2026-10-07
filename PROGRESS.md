@@ -69,24 +69,26 @@ react-interview-prep/
 ## 2. Phase Completion & Curriculum Status
 
 ### A. Active Deep-Dive Mentorship Focus
-- **Current Active Topic:** **Phase 06: Next.js & Full-Stack React Architecture → Topic 04: Static Site Generation (SSG) vs Incremental Static Regeneration (ISR)**
-- **Discussion Cadence:** Layered 5-Level First-Principles & Interview Drills
-- **Next Interactive Simulation Lab:** Lab 15: Server Actions & Single-Flight Mutation Simulator (`ServerActionsLab.tsx`)
+- **Current Curriculum Status:** **All 12 Phases 100% Published & Mastered! (110 Total Topics)**
+- **Interactive Simulation Labs:** **9 Full Living Arena Laboratories** active in `apps/portal` (Event Loop, Fiber Reconciler, RSC Flight, JSX AST, Purity, Render Stepper, Architecture, Testing Trophy, System Design Canvas)
+- **Learning & Assessment Engine:** Flashcards Arena (`FEAT-LEARN-01`), Staff Scenario Quizzes (`FEAT-LEARN-02`), and Global Instant Full-Text Search (`FEAT-LEARN-03`)
+- **Automated CI/CD Pipeline:** GitHub Actions workflow (`deploy.yml`) with automated manifest checks, test suites, and GitHub Pages deployment (`FEAT-LEARN-04`)
+- **Active Focus:** Socratic Mentorship, Code Walkthroughs & Staff-Level Technical Mock Interviews
 
 ### B. Curriculum Publication Summary (Handbook Availability)
 ```text
 [Phase 01: JS Runtime Foundations]               [==========] 100% (9/9 Core Chapters Published) 🚀 Mastered!
-[Phase 02: Browser Platform & Web APIs]           [----------]   0% (0/10 Chapters Planned)
+[Phase 02: Browser Platform & Web APIs]           [==========] 100% (10/10 Chapters Published) 🚀 Mastered!
 [Phase 03: React Foundations & Core Mechanics]    [==========] 100% (11/11 Core Chapters Published) 🚀 Mastered!
 [Phase 04: React Rendering Internals & Fiber]     [==========] 100% (10/10 Core Chapters Published) 🚀 Mastered!
 [Phase 05: Advanced State & Data Architecture]    [==========] 100% (10/10 Chapters Published) 🚀 Mastered!
-[Phase 06: Next.js & Full-Stack React]            [===-------]  30% (3/10 Chapters Published) 🚀 Active
-[Phase 07: Enterprise Security, Auth & Identity]  [----------]   0% (0/8 Chapters Planned)
-[Phase 08: Performance Engineering & Web Vitals]  [----------]   0% (0/8 Chapters Planned)
-[Phase 09: Clean Architecture, Monorepos & MFEs]  [----------]   0% (0/8 Chapters Planned)
-[Phase 10: Modern Testing Strategy & QA]          [----------]   0% (0/8 Chapters Planned)
-[Phase 11: Frontend System Design at Scale]       [----------]   0% (0/8 Chapters Planned)
-[Phase 12: Angular -> React Enterprise Synthesis] [=---------]  11% (1/9 Capstone Chapters Published)
+[Phase 06: Next.js & Full-Stack React]            [==========] 100% (11/11 Core Chapters Published) 🚀 Mastered!
+[Phase 07: Enterprise Security, Auth & Identity]  [==========] 100% (8/8 Chapters Published) 🚀 Mastered!
+[Phase 08: Performance Engineering & Web Vitals]  [==========] 100% (8/8 Chapters Published) 🚀 Mastered!
+[Phase 09: Clean Architecture, Monorepos & MFEs]  [==========] 100% (8/8 Chapters Published) 🚀 Mastered!
+[Phase 10: Modern Testing Strategy & QA]          [==========] 100% (8/8 Chapters Published) 🚀 Mastered!
+[Phase 11: Frontend System Design at Scale]       [==========] 100% (8/8 Chapters Published) 🚀 Mastered!
+[Phase 12: Angular -> React Enterprise Synthesis] [==========] 100% (9/9 Capstone Chapters Published) 🚀 Mastered!
 ```
 
 ---
@@ -115,17 +117,27 @@ react-interview-prep/
 
 ---
 
-### Phase 02: Browser Platform & Web APIs (Dedicated Platform Engine) — 0% Published
-- [ ] **01: Browser Architecture & Multi-Process Model** (Browser, Renderer, GPU, Network processes, IPC, Site Isolation)
-- [ ] **02: DOM & CSSOM Tree Construction** (HTML/CSS Tokenization, Speculative Parsing, C++ Blink DOM Node allocation)
-- [ ] **03: The Critical Rendering Path** (Style Recalculation, Layout / Reflow, Paint, Compositing & GPU Layers)
-- [ ] **04: Layout Thrashing & Forced Synchronous Reflow** (Batching DOM reads/writes, `requestAnimationFrame`, FastDOM patterns)
-- [ ] **05: Browser Event Architecture & Event Propagation** (Bubbling, Capturing, `composedPath`, Passive event listeners)
-- [ ] **06: Event Delegation & Memory Optimization** (Ancestor event dispatch, why React 17/18 moved listeners from `document` to root)
-- [ ] **07: Browser Networking & Network Stack** (HTTP/1.1 vs HTTP/2 multiplexing, HTTP/3 QUIC, TCP Handshakes, Fetch Streams)
-- [ ] **08: Same-Origin Policy, CORS & Security Headers** (Preflight OPTIONS, CORS headers, Content Security Policy / CSP)
-- [ ] **09: Browser Storage Architecture** (Cookie Jars & SameSite, Quotas, IndexedDB transactional engine, OPFS)
-- [ ] **10: Service Workers, PWA & Background Synchronization** (Service Worker lifecycle, Cache Storage API, Background Sync, Push)
+### Phase 02: Browser Platform & Web APIs (Dedicated Platform Engine) — 100% Published & Mastered
+- [x] **01: Browser Architecture & Multi-Process Model** ([01-browser-architecture-multi-process.md](notes/phase-02-browser-platform-web-apis/01-browser-architecture-multi-process.md))
+  *Core concepts:* Browser/Renderer/GPU/Network processes, Mojo IPC, Site Isolation, OOPIFs, Spectre mitigations, crash isolation.
+- [x] **02: DOM & CSSOM Tree Construction** ([02-dom-cssom-tree-construction.md](notes/phase-02-browser-platform-web-apis/02-dom-cssom-tree-construction.md))
+  *Core concepts:* HTML byte stream parsing, state machine tokenization, speculative preload scanner, Blink C++ DOM Node allocation, CSSOM script blocking.
+- [x] **03: The Critical Rendering Path** ([03-critical-rendering-path.md](notes/phase-02-browser-platform-web-apis/03-critical-rendering-path.md))
+  *Core concepts:* Recalculate Style, Layout (Reflow), Paint, Compositing & GPU Layers, Render Tree vs DOM Tree, `will-change` layer promotion.
+- [x] **04: Layout Thrashing & Forced Synchronous Reflow** ([04-layout-thrashing-reflow.md](notes/phase-02-browser-platform-web-apis/04-layout-thrashing-reflow.md))
+  *Core concepts:* Geometry query invalidation, FastDOM read/write batching, `requestAnimationFrame`, `ResizeObserver`, CSS `contain: layout size`.
+- [x] **05: Browser Event Architecture & Event Propagation** ([05-browser-event-architecture.md](notes/phase-02-browser-platform-web-apis/05-browser-event-architecture.md))
+  *Core concepts:* Capturing -> Target -> Bubbling phases, `composedPath()`, `stopPropagation` vs `stopImmediatePropagation`, passive event listeners (`{ passive: true }`), event listener GC leaks.
+- [x] **06: Event Delegation & Memory Optimization** ([06-event-delegation-memory-optimization.md](notes/phase-02-browser-platform-web-apis/06-event-delegation-memory-optimization.md))
+  *Core concepts:* Ancestor event dispatch, `target` vs `currentTarget`, `closest()` selector matching, memory footprint reduction, React 17/18 root-level event delegation switch.
+- [x] **07: Browser Networking & Network Stack** ([07-browser-networking-stack.md](notes/phase-02-browser-platform-web-apis/07-browser-networking-stack.md))
+  *Core concepts:* HTTP/1.1 head-of-line blocking, HTTP/2 binary framing & multiplexing, HTTP/3 QUIC UDP streams, TCP/TLS handshakes, Fetch Streams API, connection pooling.
+- [x] **08: Same-Origin Policy, CORS & Security Headers** ([08-cors-csp-security-headers.md](notes/phase-02-browser-platform-web-apis/08-cors-csp-security-headers.md))
+  *Core concepts:* Same-Origin Policy (SOP), Preflight OPTIONS caching, CSP Level 3 nonces/hashes, HSTS, X-Frame-Options / `frame-ancestors`, Permissions-Policy.
+- [x] **09: Browser Storage Architecture** ([09-browser-storage-architecture.md](notes/phase-02-browser-platform-web-apis/09-browser-storage-architecture.md))
+  *Core concepts:* Cookies & SameSite/HttpOnly/Secure, LocalStorage/SessionStorage synchronous blocking, IndexedDB transactional LevelDB engine, Origin Private File System (OPFS) SQLite WASM, ITP cross-site tracking mitigations.
+- [x] **10: Service Workers, PWA & Background Synchronization** ([10-service-workers-pwa-offline.md](notes/phase-02-browser-platform-web-apis/10-service-workers-pwa-offline.md))
+  *Core concepts:* Dedicated WorkerGlobalScope, lifecycle (`install` -> `waiting` -> `activate`), Cache Storage API strategies (Cache-First, Stale-While-Revalidate), Background Sync API (`SyncManager`), Web Push & VAPID, Navigation Preload.
 
 ---
 
@@ -203,7 +215,7 @@ react-interview-prep/
 
 ---
 
-### Phase 06: Next.js & Full-Stack React Architecture — 30% Published
+### Phase 06: Next.js & Full-Stack React Architecture — 100% Published & Mastered
 - [x] **00: Architectural Companion: Next.js Full-Stack Directory, Syntax & Primitives Rosetta Stone** ([00-nextjs-syntax-conventions-architecture.md](notes/phase-06-nextjs-fullstack-react/00-nextjs-syntax-conventions-architecture.md))
   *Core concepts:* Comprehensive full-stack directory hierarchy (`layout.tsx`, `template.tsx`, `page.tsx`, `loading.tsx`, `error.tsx`, `route.ts`), compiler pragmas (`'use client'`, `'use server'`, `server-only`), modern routing hooks (`next/navigation`), cache eviction primitives (`next/cache`), and direct 1-to-1 .NET & Angular Rosetta Stone comparison table.
 - [x] **01: Next.js App Router Architecture & Server-First Mental Model** ([01-nextjs-app-router-architecture.md](notes/phase-06-nextjs-fullstack-react/01-nextjs-app-router-architecture.md))
@@ -212,87 +224,143 @@ react-interview-prep/
   *Core concepts:* The Flight Wire Protocol (`text/x-component`), `M` (Module Reference), `J` (JSON Element Tree), `S` (Suspense), and `$@` (Deferred Promise) chunks, client deserialization via `ReadableStreamDefaultReader`, Out-of-Order Suspense streaming over single HTTP chunked connection, `<template id="B:0">` and inline `$RC()` swapping scripts, prop serialization security audits (DTO sanitization), and comparison with Angular `@defer` and ASP.NET Core Blazor Server SignalR circuits.
 - [x] **03: Server Actions & Form Mutations** ([03-server-actions-form-mutations.md](notes/phase-06-nextjs-fullstack-react/03-server-actions-form-mutations.md))
   *Core concepts:* `'use server'` as an RPC export directive, cryptographic Action ID hashing, Single-Flight Mutation & Revalidation protocol (`revalidatePath` returning action result + updated Flight tree in 1 round-trip), Progressive Enhancement over native HTML POST, React 19 action primitives (`useActionState`, `useFormStatus`, `useOptimistic`), enterprise Safe Action Pipeline (RBAC + Zod), Next.js as the enterprise BFF orchestrating .NET microservices, and static hosting constraints (Docker/ACA vs GitHub Pages).
-- [ ] **04: Static Site Generation (SSG) vs Incremental Static Regeneration (ISR)**
-- [ ] **05: Middleware & Edge Runtime Mechanics**
-- [ ] **06: Authentication & Session Management in Full-Stack Next.js**
-- [ ] **07: Route Handlers & REST/GraphQL API Design**
-- [ ] **08: Caching Architecture (Request Memoization, Data Cache, Full Route Cache)**
-- [ ] **09: Dynamic Imports, Bundling & Code Splitting Optimization**
-- [ ] **10: Enterprise Next.js Deployment & Observability (Docker, Vercel, Azure)**
+- [x] **04: Static Site Generation (SSG) vs Incremental Static Regeneration (ISR)** ([04-ssg-vs-isr.md](notes/phase-06-nextjs-fullstack-react/04-ssg-vs-isr.md))
+  *Core concepts:* Pre-rendering build pipeline, `generateStaticParams`, RFC 5861 `stale-while-revalidate` protocol, background worker deduplication locks, atomic filesystem swaps (`fs.rename`), on-demand tag invalidation (`revalidateTag`), and distributed cache handlers with Redis.
+- [x] **05: Middleware & Edge Runtime Mechanics** ([05-middleware-edge-runtime.md](notes/phase-06-nextjs-fullstack-react/05-middleware-edge-runtime.md))
+  *Core concepts:* Edge V8 Isolates vs Node.js processes (<5ms cold start), Web Standards runtime constraints, `NextResponse.redirect` vs `NextResponse.rewrite` for multi-tenant subdomain mapping, request header mutation and propagation, cryptographic CSP nonce generation, and negative-lookahead matcher optimization.
+- [x] **06: Authentication & Session Management in Full-Stack Next.js** ([06-authentication-session-management.md](notes/phase-06-nextjs-fullstack-react/06-authentication-session-management.md))
+  *Core concepts:* 3-Tier Defense-in-Depth model (Edge Middleware -> Server Components -> Server Actions), `HttpOnly` `SameSite=Lax` cookie encryption via `jose`, cookie mutability rules (Server Components read-only, Server Actions read/write), hybrid instant revocation via Redis token epoch, and Auth.js / NextAuth v5 architecture.
+- [x] **07: Route Handlers & REST/GraphQL API Design** ([07-route-handlers-api-design.md](notes/phase-06-nextjs-fullstack-react/07-route-handlers-api-design.md))
+  *Core concepts:* Web Standard `Request` and `Response` interfaces in `route.ts`, route segment coexistence prohibition (`page.tsx` vs `route.ts`), static vs dynamic `GET` evaluation, Web Streams API `ReadableStream` for token-by-token AI streaming, raw body HMAC webhook verification (Stripe), and CORS preflight handling.
+- [x] **08: Caching Architecture (Request Memoization, Data Cache, Full Route Cache)** ([08-caching-architecture.md](notes/phase-06-nextjs-fullstack-react/08-caching-architecture.md))
+  *Core concepts:* The 4 distinct caching tiers (Request Memoization, Client Router Cache, Server Data Cache, Full Route Cache), React `cache()` single-render deduplication, Next.js 15 un-cached defaults (`no-store`), cascading tag invalidation, and multi-tenant cache leakage prevention.
+- [x] **09: Dynamic Imports, Bundling & Code Splitting Optimization** ([09-dynamic-imports-bundling-optimization.md](notes/phase-06-nextjs-fullstack-react/09-dynamic-imports-bundling-optimization.md))
+  *Core concepts:* V8 CPU compilation tax reduction, `next/dynamic` with `{ ssr: false }` for client-only libraries, Turbopack incremental computation graph vs Webpack SplitChunks, tree-shaking with `sideEffects: false`, barrel file pruning with `optimizePackageImports`, and bundle analysis.
+- [x] **10: Enterprise Next.js Deployment & Observability (Docker, Vercel, Azure)** ([10-enterprise-deployment-observability.md](notes/phase-06-nextjs-fullstack-react/10-enterprise-deployment-observability.md))
+  *Core concepts:* `output: 'standalone'` AST dependency tracing slashing Docker image from 1.5GB to 84MB, multi-stage Alpine Dockerfile with unprivileged `nextjs` user, Azure Container Apps (ACA) deployment, `instrumentation.ts` lifecycle hook, W3C `traceparent` distributed tracing across Next.js and ASP.NET Core, and Kubernetes `/api/healthz` probes.
 
 ---
 
-### Phase 07: Enterprise Security, Authentication & Identity — 0% Published
-- [ ] **01: Enterprise Authentication & Identity Landscape** (OAuth 2.0, OpenID Connect / OIDC protocols, identity providers)
-- [ ] **02: The PKCE Flow in Modern SPAs & Next.js** (Proof Key for Code Exchange, authorization code exchange, state parameters)
-- [ ] **03: Microsoft Entra ID (Azure AD) Enterprise Integration** (MSAL.js, tenant authority, app registrations, silent token acquisition)
-- [ ] **04: JWT Storage Architecture & Security Vectors** (HttpOnly cookies vs in-memory closures, XSS mitigation, CSRF double-submit cookies)
-- [ ] **05: Session Management & Refresh Token Rotation** (Sliding sessions, silent renewal, refresh token family revocation)
-- [ ] **06: Role-Based Access Control (RBAC) & Route Protection** (Permission matrix, claim verification, client & edge middleware guards)
-- [ ] **07: Content Security Policy (CSP) & Nonce Generation** (CSP level 3 directives, script nonces in Next.js, anti-tamper security)
-- [ ] **08: OWASP Top 10 for Frontend Applications** (XSS DOM sanitization, clickjacking frameguards, CORS preflight defense)
+### Phase 07: Enterprise Security, Authentication & Identity — 100% Published & Mastered
+- [x] **01: Enterprise Authentication & Identity Landscape** ([01-enterprise-authentication-identity-landscape.md](notes/phase-07-enterprise-security-auth-identity/01-enterprise-authentication-identity-landscape.md))
+  *Core concepts:* Authentication (OIDC) vs Authorization (OAuth 2.0), RFC 6749 roles, Token family anatomy (ID Token vs Access Token vs Refresh Token), Public vs Confidential clients, JWKS public key rotation (`jwks_uri`), and Backend-For-Frontend (BFF) architecture.
+- [x] **02: The PKCE Flow in Modern SPAs & Next.js** ([02-pkce-flow-spa-nextjs.md](notes/phase-07-enterprise-security-auth-identity/02-pkce-flow-spa-nextjs.md))
+  *Core concepts:* RFC 7636 Proof Key for Code Exchange, deprecation of Implicit Grant, `code_verifier` entropy, SHA-256 `code_challenge` (`S256`), CSRF `state` vs Replay `nonce`, Web Cryptography API generation, and server-side PKCE in Next.js App Router.
+- [x] **03: Microsoft Entra ID (Azure AD) Enterprise Integration** ([03-entra-id-azure-ad-integration.md](notes/phase-07-enterprise-security-auth-identity/03-entra-id-azure-ad-integration.md))
+  *Core concepts:* Entra ID architecture, Single vs Multi-Tenant authority URIs, MSAL.js `PublicClientApplication` cache engine, Delegated Scopes vs App Roles, `acquireTokenSilent` with interactive fallback (`interaction_required`), Continuous Access Evaluation (CAE), and On-Behalf-Of (OBO) downstream flow.
+- [x] **04: JWT Storage Architecture & Security Vectors** ([04-jwt-storage-security-vectors.md](notes/phase-07-enterprise-security-auth-identity/04-jwt-storage-security-vectors.md))
+  *Core concepts:* Client storage tiers (`localStorage` vs `sessionStorage` vs In-Memory vs `HttpOnly` cookies), XSS token exfiltration vs CSRF ambient credentials, the `__Host-` cookie prefix envelope (`HttpOnly; Secure; SameSite=Lax; Path=/`), Web Worker V8 isolate heap shielding, and Web Crypto non-extractable keys (`extractable: false`).
+- [x] **05: Session Management & Refresh Token Rotation** ([05-session-management-refresh-token-rotation.md](notes/phase-07-enterprise-security-auth-identity/05-session-management-refresh-token-rotation.md))
+  *Core concepts:* Refresh Token Rotation (RTR) protocol, Token Family tracking and automatic reuse intrusion revocation, Web Locks API (`navigator.locks.request`) solving multi-tab Thundering Herd race conditions, cross-tab `BroadcastChannel` synchronization, and sliding vs absolute session timeouts.
+- [x] **06: Role-Based Access Control (RBAC) & Route Protection** ([06-rbac-route-protection.md](notes/phase-07-enterprise-security-auth-identity/06-rbac-route-protection.md))
+  *Core concepts:* RBAC vs ABAC vs ReBAC, Bitwise permission masks, UI visibility vs API authorization ("UI hiding is NOT security"), declarative `<Can perform="...">` components, O(1) `Set` permission checks, and Next.js Edge Middleware route guards.
+- [x] **07: Content Security Policy (CSP) & Nonce Generation** ([07-csp-nonce-generation.md](notes/phase-07-enterprise-security-auth-identity/07-csp-nonce-generation.md))
+  *Core concepts:* CSP Level 3 directives, cryptographic per-request nonces (`script-src 'nonce-...' 'strict-dynamic'`), Next.js Edge Middleware nonce propagation via HTTP headers, Subresource Integrity (SRI) CDN defense, W3C Trusted Types API eliminating DOM-XSS sinks, and Clickjacking defense via `frame-ancestors 'none'`.
+- [x] **08: OWASP Top 10 for Frontend Applications** ([08-owasp-top-10-frontend.md](notes/phase-07-enterprise-security-auth-identity/08-owasp-top-10-frontend.md))
+  *Core concepts:* Frontend OWASP Top 10 matrix, DOM-based XSS sanitization via DOMPurify, Prototype Pollution prevention (`Map`, `Object.create(null)`), Client-side Open Redirect mitigation, tab-nabbing defense (`rel="noopener noreferrer"`), security headers (HSTS, Permissions-Policy, nosniff), and npm supply chain audit gates.
 
 ---
 
-### Phase 08: Performance Engineering, Web Vitals & Production Profiling — 0% Published
-- [ ] **01: Core Web Vitals Deep Dive** (INP Interaction to Next Paint, LCP Largest Contentful Paint, CLS, TTFB thresholds)
-- [ ] **02: Chrome DevTools Performance Profiling** (Flamecharts, Long Tasks >50ms, main thread blocking, CPU throttling)
-- [ ] **03: Memory Leak Diagnosis & V8 Heap Snapshots** (Detached DOM trees, retainer graphs, Ephemeron tracking, leak reproduction)
-- [ ] **04: Long Task Optimization & Main Thread Yielding** (`scheduler.yield()`, message passing, time slicing long loops)
-- [ ] **05: Advanced Bundle Optimization & Tree-Shaking** (Rollup/Webpack AST tree-shaking, sideEffects flags, bundle analyzer audits)
-- [ ] **06: Image, Asset & Font Optimization Pipelines** (AVIF/WebP formats, responsive picture sets, font subsetting, layout shift prevention)
-- [ ] **07: List & Table Virtualization at 60 FPS** (`@tanstack/react-virtual`, DOM node recycled windows, overscan buffers)
-- [ ] **08: Real-User Monitoring (RUM) & Performance Observability** (PerformanceObserver API, web-vitals telemetry beacons, Datadog/Sentry)
+### Phase 08: Performance Engineering, Web Vitals & Production Profiling — 100% Published & Mastered
+- [x] **01: Core Web Vitals Deep Dive** ([01-core-web-vitals-deep-dive.md](notes/phase-08-performance-engineering-web-vitals/01-core-web-vitals-deep-dive.md))
+  *Core concepts:* The 4 Core Web Vitals thresholds (INP <200ms, LCP <2.5s, CLS <0.1, TTFB <800ms), why INP permanently replaced FID in 2024, the 3 phases of INP (Input Delay, Processing Duration, Presentation Delay), LCP 4-phase breakdown, CLS Impact/Distance fraction calculation, and native `PerformanceObserver` implementation.
+- [x] **02: Chrome DevTools Performance Profiling** ([02-chrome-devtools-performance-profiling.md](notes/phase-08-performance-engineering-web-vitals/02-chrome-devtools-performance-profiling.md))
+  *Core concepts:* Deterministic profiling setups (4x/6x CPU Throttling, clean incognito), Main Thread Flamechart reading (width=time, depth=call stack), Long Tasks (>50ms red dogear warning), diagnosing Forced Synchronous Reflow (Layout Thrashing purple bars), User Timing API (`performance.mark/measure`), and React `<Profiler>` integration.
+- [x] **03: Memory Leak Diagnosis & V8 Heap Snapshots** ([03-memory-leak-diagnosis-v8-heap-snapshots.md](notes/phase-08-performance-engineering-web-vitals/03-memory-leak-diagnosis-v8-heap-snapshots.md))
+  *Core concepts:* V8 GC reachability from GC Roots, Shallow Size vs Retained Size, the Three-Snapshot Technique for deterministic leak isolation, Detached DOM Trees, Retainer graph navigation, the Meteor closure retention leak, and modern leak-proof caching via `WeakMap` and `FinalizationRegistry`.
+- [x] **04: Long Task Optimization & Main Thread Yielding** ([04-long-task-optimization-main-thread-yielding.md](notes/phase-08-performance-engineering-web-vitals/04-long-task-optimization-main-thread-yielding.md))
+  *Core concepts:* The 50ms Long Task problem and browser Rendering Opportunities, cooperative multitasking evolution (`setTimeout(0)` vs `MessageChannel` vs `scheduler.yield()`), native W3C `scheduler.yield()` continuation priority, microtask starvation pitfalls, time-budgeted chunked array processing, and React Concurrent time-slicing.
+- [x] **05: Advanced Bundle Optimization & Tree-Shaking** ([05-advanced-bundle-optimization-tree-shaking.md](notes/phase-08-performance-engineering-web-vitals/05-advanced-bundle-optimization-tree-shaking.md))
+  *Core concepts:* The dual cost of JavaScript (Network transfer vs V8 CPU parsing/compilation tax), static ESM syntax (`import`/`export`) prerequisites, `sideEffects: false` package contract, the Barrel File anti-pattern (`index.ts` bloat), deterministic vendor chunk splitting in Vite/Rollup, and Next.js 15 `optimizePackageImports`.
+- [x] **06: Image, Asset & Font Optimization Pipelines** ([06-image-asset-font-optimization-pipelines.md](notes/phase-08-performance-engineering-web-vitals/06-image-asset-font-optimization-pipelines.md))
+  *Core concepts:* Media payload weight on LCP/CLS (>60% of web bytes), Next-Gen image formats (JPEG vs WebP vs AVIF), responsive `<picture>` with `srcset` and `sizes`, `next/image` internal pipeline, FOIT vs FOUT, and Zero-CLS font metric overrides using CSS `@font-face` `size-adjust`.
+- [x] **07: List & Table Virtualization at 60 FPS** ([07-list-table-virtualization-60fps.md](notes/phase-08-performance-engineering-web-vitals/07-list-table-virtualization-60fps.md))
+  *Core concepts:* C++ Blink DOM node memory tax, the Sliding Window virtualization pattern, Fixed-height O(1) vs Dynamic-height `ResizeObserver` measurement, `@tanstack/react-virtual` deep dive, Overscan buffer tuning, GPU translation via `transform: translateY()`, CSS `contain: strict`, and accessibility preservation (`aria-rowcount`).
+- [x] **08: Real-User Monitoring (RUM) & Performance Observability** ([08-rum-performance-observability.md](notes/phase-08-performance-engineering-web-vitals/08-rum-performance-observability.md))
+  *Core concepts:* Synthetic (Lab) testing vs Real-User Monitoring (RUM), why Google ranks by Field Data (CrUX p75 over 28 days), `web-vitals/attribution` build integration, non-blocking beacon delivery via `navigator.sendBeacon()` on `visibilitychange`, telemetry sampling strategies, and full-stack distributed tracing via W3C `traceparent`.
 
 ---
 
-### Phase 09: Enterprise Clean Architecture, Monorepos & Micro-Frontends — 0% Published
-- [ ] **01: Domain-Driven Design (DDD) in Frontend** (Bounded contexts, entities, value objects, domain services, anti-corruption layers)
-- [ ] **02: Monorepo Architecture: Nx vs Turborepo** (Task execution pipelines, computation caching, dependency graphs, affected pruning)
-- [ ] **03: Shared Libraries & Enterprise Package Governance** (Publishable vs internal libs, semantic versioning, tsconfig path aliases)
-- [ ] **04: Micro-Frontends & Module Federation** (Webpack 5 / Rspack Module Federation, remote containers, shared runtime dependencies)
-- [ ] **05: Design System Architecture & Component Libraries** (Headless UI tokens, Radix UI primitives, design tokens with Style Dictionary)
-- [ ] **06: Feature-Sliced Design (FSD) Architectural Standard** (App, processes, pages, widgets, features, entities, shared layers)
-- [ ] **07: Scalable State & Service Scaffolding** (Multi-team state governance, service abstraction layers, clean dependency injection)
-- [ ] **08: Case Study: Refactoring Monolithic SPAs to Modular Clean Architecture**
+### Phase 09: Enterprise Clean Architecture, Monorepos & Micro-Frontends — 100% Published & Mastered
+- [x] **01: Domain-Driven Design (DDD) in Frontend** ([01-domain-driven-design-frontend.md](notes/phase-09-enterprise-architecture-monorepos/01-domain-driven-design-frontend.md))
+  *Core concepts:* Bounded contexts, Entities vs Value Objects, Aggregates & Invariants, Domain Services, and Anti-Corruption Layers (ACL).
+- [x] **02: Monorepo Architecture: Nx vs Turborepo** ([02-monorepo-architecture-nx-turborepo.md](notes/phase-09-enterprise-architecture-monorepos/02-monorepo-architecture-nx-turborepo.md))
+  *Core concepts:* Task execution pipelines, Computation Caching (Remote Cache), Dependency Graphs (Project Graph DAG), and Affected Task Pruning.
+- [x] **03: Shared Libraries & Enterprise Package Governance** ([03-shared-libraries-package-governance.md](notes/phase-09-enterprise-architecture-monorepos/03-shared-libraries-package-governance.md))
+  *Core concepts:* Publishable vs Internal workspace packages, SemVer 2.0.0, Changesets release automation, `peerDependencies` singleton invariants, and ESLint boundary rules.
+- [x] **04: Micro-Frontends & Module Federation** ([04-micro-frontends-module-federation.md](notes/phase-09-enterprise-architecture-monorepos/04-micro-frontends-module-federation.md))
+  *Core concepts:* Webpack 5 / Rspack Module Federation, Host vs Remote containers, `__webpack_share_scopes__`, strict React singletons, dynamic remote manifests, and Error Boundaries.
+- [x] **05: Design System Architecture & Component Libraries** ([05-design-system-architecture-component-libraries.md](notes/phase-09-enterprise-architecture-monorepos/05-design-system-architecture-component-libraries.md))
+  *Core concepts:* Three-tier design system, W3C Design Tokens Community Group (DTCG), Style Dictionary pipeline, Headless primitives (Radix UI), Slot (`asChild`) polymorphism, and WCAG 2.2 AA.
+- [x] **06: Feature-Sliced Design (FSD) Architectural Standard** ([06-feature-sliced-design-architecture.md](notes/phase-09-enterprise-architecture-monorepos/06-feature-sliced-design-architecture.md))
+  *Core concepts:* 6 standardized layers (App, Pages, Widgets, Features, Entities, Shared), Slices and Segments, Unidirectional Dependency Rule, and public API encapsulation.
+- [x] **07: Scalable State & Service Scaffolding** ([07-scalable-state-service-scaffolding.md](notes/phase-09-enterprise-architecture-monorepos/07-scalable-state-service-scaffolding.md))
+  *Core concepts:* Clean Architecture in frontend, Repository Pattern, Dependency Inversion with React Context, runtime boundary validation with Zod, and hermetic unit testing.
+- [x] **08: Case Study: Refactoring Monolithic SPAs to Modular Clean Architecture** ([08-refactoring-monolith-to-clean-architecture.md](notes/phase-09-enterprise-architecture-monorepos/08-refactoring-monolith-to-clean-architecture.md))
+  *Core concepts:* The Strangler Fig pattern for SPAs, Edge Reverse Proxy route delegation, automated AST codemods with jscodeshift, and cross-boundary state bridges via BroadcastChannel.
 
 ---
 
-### Phase 10: Modern Testing Strategy & Quality Assurance — 0% Published
-- [ ] **01: The Modern Frontend Testing Pyramid** (Unit vs Integration vs Component vs E2E cost/confidence distribution)
-- [ ] **02: Vitest & Jest Runner Architecture** (Vite-native execution, JSDOM vs Happy-DOM environments, snapshot assertions)
-- [ ] **03: React Testing Library (RTL) Philosophy** (Testing user behavior over implementation details, `getByRole` accessibility queries)
-- [ ] **04: Mock Service Worker (MSW) Network Mocking** (Service Worker request interception, declarative REST/GraphQL handlers)
-- [ ] **05: Testing Asynchronous React Hooks & Stores** (`renderHook`, act() mechanics, testing Zustand & RTK stores in isolation)
-- [ ] **06: Integration Testing Complex Workflows** (Multi-step forms, optimistic mutations, error boundaries, router integration)
-- [ ] **07: Playwright End-to-End (E2E) Testing Architecture** (Browser contexts, storage state auth reuse, parallel test shards)
-- [ ] **08: Visual Regression Testing & CI Quality Gates** (Pixel-diffing with Playwright, PR automated verification workflows)
+### Phase 10: Modern Testing Strategy & Quality Assurance — 100% Published & Mastered
+- [x] **01: The Modern Frontend Testing Pyramid & Testing Trophy** ([01-modern-frontend-testing-pyramid.md](notes/phase-10-testing-strategy/01-modern-frontend-testing-pyramid.md))
+  *Core concepts:* The Testing Pyramid vs Testing Trophy, Confidence vs Cost Distribution, Integration as the highest-ROI layer, test boundary definition, and risk-weighted testing in FinTech/HealthTech.
+- [x] **02: Vitest & Jest Runner Architecture** ([02-vitest-jest-runner-architecture.md](notes/phase-10-testing-strategy/02-vitest-jest-runner-architecture.md))
+  *Core concepts:* Vitest vs Jest compilation pipelines, native ESM execution, Happy-DOM vs JSDOM memory/speed benchmarks, thread worker pools (`isolate: true`), and module hoisting (`vi.hoisted`).
+- [x] **03: React Testing Library Philosophy & User-Centric Testing** ([03-react-testing-library-philosophy.md](notes/phase-10-testing-strategy/03-react-testing-library-philosophy.md))
+  *Core concepts:* User-observable behavior over implementation details, `getByRole` accessibility query hierarchy, `getBy` vs `queryBy` vs `findBy`, and `@testing-library/user-event` full event chains.
+- [x] **04: Mock Service Worker (MSW v2) Network Mocking Architecture** ([04-msw-mock-service-worker-architecture.md](notes/phase-10-testing-strategy/04-msw-mock-service-worker-architecture.md))
+  *Core concepts:* Network-level socket interception vs brittle module mocks, Service Worker vs Node.js socket patching, `HttpResponse.json()`, runtime overrides via `server.use()`, and eliminating mock drift.
+- [x] **05: Testing Asynchronous React Hooks & Stores** ([05-testing-async-react-hooks-stores.md](notes/phase-10-testing-strategy/05-testing-async-react-hooks-stores.md))
+  *Core concepts:* `renderHook` synthetic component harness, React 19 `act()` reconciliation flushing, pure Zustand store isolation with deterministic resets, and TanStack Query `createWrapper` setups.
+- [x] **06: Integration Testing Complex User Workflows** ([06-integration-testing-complex-workflows.md](notes/phase-10-testing-strategy/06-integration-testing-complex-workflows.md))
+  *Core concepts:* Multi-step wizards with `MemoryRouter`, optimistic UI mutations with rollback verification on HTTP 500, React Error Boundary testing with self-healing recovery, and accessible dialogs.
+- [x] **07: Playwright End-to-End (E2E) Testing Architecture** ([07-playwright-e2e-testing-architecture.md](notes/phase-10-testing-strategy/07-playwright-e2e-testing-architecture.md))
+  *Core concepts:* Out-of-process WebSocket protocol control, `Browser` vs `BrowserContext` vs `Page`, session caching via `storageState`, actionability auto-waiting, Page Object Models, and test sharding.
+- [x] **08: Visual Regression Testing & CI Quality Gates** ([08-visual-regression-testing-ci-quality-gates.md](notes/phase-10-testing-strategy/08-visual-regression-testing-ci-quality-gates.md))
+  *Core concepts:* Pixelmatch raster diffing vs DOM snapshots, font anti-aliasing drift between OS engines, Dockerized Linux test execution, dynamic element masking, and Storybook visual PR quality gates.
 
 ---
 
-### Phase 11: Frontend System Design at Scale — 0% Published
-- [ ] **01: The Frontend System Design Interview Framework** (Requirements triage, data modeling, architecture, performance, resilience)
-- [ ] **02: System Design: Real-Time Collaborative Canvas** (Figma-style CRDT conflict resolution, WebSocket streaming, spatial indexing)
-- [ ] **03: System Design: High-Frequency Trading & Telemetry Terminal** (1,000 msgs/sec, virtualized data grids, memory footprint control)
-- [ ] **04: System Design: Multi-Tenant Enterprise SaaS Dashboard** (Dynamic white-labeling, RBAC entitlement engines, schema-driven widgets)
-- [ ] **05: System Design: Global Streaming Media Player** (Adaptive bitrate HLS/DASH, offline buffering, telemetry beaconing)
-- [ ] **06: System Design: Backend-For-Frontend (BFF) vs API Gateway** (Node/Next BFF vs ASP.NET Core YARP, data aggregation, caching)
-- [ ] **07: System Design: Resilient Offline-First Mobile Field Worker App** (IndexedDB durability, FIFO outbox, conflict reconciliation)
-- [ ] **08: System Design: Global CDN Edge Compute & Caching Strategy** (Cloudflare Workers, Edge middleware, cache-control directives)
+### Phase 11: Frontend System Design at Scale — 100% Published & Mastered
+- [x] **01: The Frontend System Design Interview Framework** ([01-frontend-system-design-interview-framework.md](notes/phase-11-frontend-system-design/01-frontend-system-design-interview-framework.md))
+  *Core concepts:* Requirements triage, functional & non-functional SLAs, component data contracts, state topologies, and end-to-end architecture diagrams.
+- [x] **02: System Design: Real-Time Collaborative Canvas** ([02-realtime-collaborative-canvas-crdts.md](notes/phase-11-frontend-system-design/02-realtime-collaborative-canvas-crdts.md))
+  *Core concepts:* Figma-style CRDT conflict resolution (Yjs / Automerge), WebSocket awareness protocol, and QuadTree spatial indexing for 100k shapes at 60 FPS.
+- [x] **03: System Design: High-Frequency Trading & Telemetry Terminal** ([03-high-frequency-trading-telemetry-terminal.md](notes/phase-11-frontend-system-design/03-high-frequency-trading-telemetry-terminal.md))
+  *Core concepts:* Ingesting 10,000 ticks/sec, Web Worker binary parsing, zero-copy `ArrayBuffer` transfer lists, Circular Ring Buffers, and OffscreenCanvas.
+- [x] **04: System Design: Multi-Tenant Enterprise SaaS Dashboard** ([04-multi-tenant-enterprise-saas-dashboard.md](notes/phase-11-frontend-system-design/04-multi-tenant-enterprise-saas-dashboard.md))
+  *Core concepts:* Zero-runtime CSS Custom Property theming, bitmask RBAC/ABAC entitlement engine, schema-driven JSON widget layout engine, and plugin sandboxing.
+- [x] **05: System Design: Global Streaming Media Player** ([05-global-streaming-media-player.md](notes/phase-11-frontend-system-design/05-global-streaming-media-player.md))
+  *Core concepts:* Media Source Extensions (MSE) pipeline, HLS/DASH chunking, BOLA buffer-based adaptive bitrate (ABR) algorithm, EME DRM, and QoE telemetry.
+- [x] **06: System Design: Backend-For-Frontend (BFF) vs API Gateway** ([06-bff-pattern-vs-api-gateway.md](notes/phase-11-frontend-system-design/06-bff-pattern-vs-api-gateway.md))
+  *Core concepts:* Eliminating over/under-fetching, Token-Mediating BFF with encrypted cookies, gRPC to JSON/RSC translation, and resilient fan-out via `Promise.allSettled`.
+- [x] **07: System Design: Resilient Offline-First Mobile Field Worker App** ([07-resilient-offline-first-mobile-field-app.md](notes/phase-11-frontend-system-design/07-resilient-offline-first-mobile-field-app.md))
+  *Core concepts:* Local-First paradigm, IndexedDB persistence, atomic FIFO mutation outbox, Dead-Letter Queue (DLQ), and optimistic concurrency control (OCC).
+- [x] **08: System Design: Global CDN Edge Compute & Caching Strategy** ([08-global-cdn-edge-compute-caching.md](notes/phase-11-frontend-system-design/08-global-cdn-edge-compute-caching.md))
+  *Core concepts:* Global Anycast routing, RFC 5861 `stale-while-revalidate`, V8 Isolates vs Node containers, Cache-Tag surrogate keys, and streaming `HTMLRewriter` edge personalization.
 
 ---
 
-### Phase 12: Angular to React Enterprise Synthesis (Senior / Staff Capstone) — 11% Published
+### Phase 12: Angular to React Enterprise Synthesis (Senior / Staff Capstone) — 100% Published & Mastered
 - [x] **00: Angular vs. React Mental Model** ([00-angular-vs-react-mental-model.md](notes/phase-12-angular-to-react-enterprise-synthesis/00-angular-vs-react-mental-model.md))
   *Core concepts:* Two-way binding vs one-way data flow, OOP/DI vs Functional Composition, Zone.js vs React Schedulers.
-- [ ] **01: Angular to React Architectural Mapping Guide**
-- [ ] **02: Angular Change Detection (Zone.js/Signals) vs React Reconciliation (Fiber)**
-- [ ] **03: RxJS Reactive Streams vs React Hooks & State Primitives**
-- [ ] **04: Angular Hierarchical Dependency Injection vs React Composition & Context**
-- [ ] **05: NgRx Store Architecture vs Redux Toolkit & Zustand**
-- [ ] **06: Angular Route Guards & Interceptors vs React Routers & Middleware**
-- [ ] **07: Angular Signals (Fine-Grained) vs React State & React Compiler**
-- [ ] **08: Enterprise Clean Architecture: Scalable Angular vs Scalable React Applications**
+- [x] **01: Angular to React Architectural Mapping Guide** ([01-angular-to-react-architectural-mapping-guide.md](notes/phase-12-angular-to-react-enterprise-synthesis/01-angular-to-react-architectural-mapping-guide.md))
+  *Core concepts:* 1-to-1 Rosetta Stone mapping for modules, `@Component`, `@Input`/`@Output`, lifecycle hooks, structural directives (`*ngIf`, `*ngFor`), and templates.
+- [x] **02: Angular Change Detection (Zone.js/Signals) vs React Reconciliation (Fiber)** ([02-angular-change-detection-vs-react-reconciliation.md](notes/phase-12-angular-to-react-enterprise-synthesis/02-angular-change-detection-vs-react-reconciliation.md))
+  *Core concepts:* Monkey-patched `Zone.js` dirty checking vs Fiber reconciler dual-buffering work loop; `ChangeDetectionStrategy.OnPush` vs `React.memo`.
+- [x] **03: RxJS Reactive Streams vs React Hooks & State Primitives** ([03-rxjs-reactive-streams-vs-react-hooks.md](notes/phase-12-angular-to-react-enterprise-synthesis/03-rxjs-reactive-streams-vs-react-hooks.md))
+  *Core concepts:* Push-based asynchronous event streams (`Observable`, `Subject`, `pipe`) vs pull-based continuous component re-execution with hooks; `switchMap` vs `AbortController`.
+- [x] **04: Angular Hierarchical Dependency Injection vs React Composition & Context** ([04-angular-di-vs-react-composition-context.md](notes/phase-12-angular-to-react-enterprise-synthesis/04-angular-di-vs-react-composition-context.md))
+  *Core concepts:* Injector bubbling trees (`ElementInjector`, `EnvironmentInjector`, `@Injectable`) vs React Context and Higher-Order Components / custom hooks.
+- [x] **05: NgRx Store Architecture vs Redux Toolkit & Zustand** ([05-ngrx-store-vs-redux-toolkit-zustand.md](notes/phase-12-angular-to-react-enterprise-synthesis/05-ngrx-store-vs-redux-toolkit-zustand.md))
+  *Core concepts:* NgRx Actions, Reducers, Effects, and Selectors vs RTK slices, `createAsyncThunk`, and Zustand bare-metal closures; boilerplate reduction.
+- [x] **06: Angular Route Guards & Interceptors vs React Routers & Middleware** ([06-angular-route-guards-interceptors-vs-react.md](notes/phase-12-angular-to-react-enterprise-synthesis/06-angular-route-guards-interceptors-vs-react.md))
+  *Core concepts:* `CanActivate`, `CanDeactivate`, and `HttpInterceptor` vs React Router loaders, layout route wrappers, and Axios / Fetch interceptor patterns.
+- [x] **07: Angular Signals (Fine-Grained) vs React State & React Compiler** ([07-angular-signals-vs-react-state-compiler.md](notes/phase-12-angular-to-react-enterprise-synthesis/07-angular-signals-vs-react-state-compiler.md))
+  *Core concepts:* Signal dependency graph & fine-grained DOM mutation without component re-evaluation vs React coarse component re-rendering optimized by React Compiler (Forget).
+- [x] **08: Enterprise Clean Architecture: Scalable Angular vs Scalable React Applications** ([08-enterprise-clean-architecture-angular-vs-react.md](notes/phase-12-angular-to-react-enterprise-synthesis/08-enterprise-clean-architecture-angular-vs-react.md))
+  *Core concepts:* Clean Architecture / Hexagonal Ports & Adapters across both ecosystems; domain entities, use-case interactors, repository interfaces, and framework independence.
+
 
 ---
 
@@ -329,9 +397,10 @@ This backlog catalogs interactive simulations, visual labs, and responsive demos
     - OOP Class instance vs Closure Factory toggle.
   - Visual panel showing the frozen lexical "photograph" retained in the callback's `[[Scopes]]`.
 
-### Lab 04: The 4-Lane Event Loop & 60 FPS Frame Budget Simulator
+### Lab 04: The 4-Lane Event Loop & 60 FPS Frame Budget Simulator ✅ (Live in Portal: `lab-04-event-loop`)
 - **Reference:** [`04-event-loop.md`](notes/phase-01-javascript-runtime-foundations/04-event-loop.md)
 - **Concept:** Real-time visual simulator of the browser Event Loop and rendering pipeline.
+- **Component:** [`EventLoopLab.tsx`](apps/portal/src/features/visualizers/topic-04-event-loop/EventLoopLab.tsx)
 - **Interactive Controls:**
   - Visual lanes: **Call Stack**, **Microtask Queue**, **Render Gate (16.6ms V-Sync)**, **Macrotask Queue**.
   - Action buttons:
@@ -422,15 +491,15 @@ The portal development is executed incrementally in parallel with our handbook c
 | **Phase P2: Dashboard & Topic Reader** | - Dynamic Dashboard with phase progress bars, search, and quick resume.<br>- Topic Reader powered by `marked` + `prismjs` + `dompurify`.<br>- "Architect Bridge Mode" toggle for Angular & .NET side-by-side comparisons. | [x] **Complete** |
 | **Phase P2.5: Navigation, History & Knowledge Graph** | - `FEAT-NAV-01`: Interactive Breadcrumb Trail (`Dashboard > Phase XX > Chapter`).<br>- `FEAT-NAV-02`: Topic Navigation History Stack with `← Back to [Previous Topic]` button & browser history sync.<br>- `FEAT-NAV-03`: Sequential Previous / Next Topic bottom cards.<br>- `FEAT-NAV-04`: Cross-article link interception & section anchor jumping. | [x] **Complete** |
 | **Phase P3: First React Simulation Labs** | - Lab 10: JSX Compiler & `$$typeof` Security Barrier Inspector.<br>- Lab 11: Component Purity & StrictMode Stress-Tester.<br>- Lab 12: Render Cycle Stepper (Trigger -> Render -> Commit). | [x] **Complete** |
-| **Phase P4: Render Internals & Fiber Labs** | - Lab 04: Event Loop & Microtasks Simulator.<br>- Lab 13: Reconciliation & Diffing Algorithm Visualizer.<br>- Lab 14: Fiber Linked-List Work Loop Explorer. | 🚀 *In Progress* |
-| **Phase P5: Flashcards & GitHub Pages Deployment** | - Memory Anchors Hub ("Museum Rule", "Wax Signet", "Photocopier Rule").<br>- Lead & Architect interview drill cards.<br>- Automated GitHub Pages build script (`npm run build:pages`). | 📋 *Queued* |
+| **Phase P4: Render Internals, Fiber & System Design Labs** | - Lab 04: Event Loop & Microtasks Simulator.<br>- Lab 14: Fiber Linked-List Work Loop & Key Diffing Algorithm Visualizer.<br>- Lab 19: RSC Flight Wire Format Stream Parser.<br>- Lab 09: Clean Architecture & Strangler Fig.<br>- Lab 10: Testing Trophy & MSW Interceptor.<br>- Lab 11: Real-Time CRDT Canvas & HFT Terminal. | [x] **Complete** |
+| **Phase P5: Learning Engine, Flashcards, Quizzes & CI/CD** | - Flashcards Arena (`FEAT-LEARN-01`) drilling Layer 3 Memory Anchors.<br>- Staff Scenario Quizzes (`FEAT-LEARN-02`) with trade-off dilemmas & Staff critiques.<br>- Global Instant Search (`FEAT-LEARN-03`) with `Ctrl+K` across all 110 topics.<br>- Automated GitHub Actions CI/CD deployment (`deploy.yml`) (`FEAT-LEARN-04`). | [x] **Complete** |
 
-*Local Dev Server:* Active at `http://localhost:5174/`
+*Local Dev Server:* Active at `http://localhost:5173/`
 
 ---
 
 ## 6. Next Immediate Steps
-1. **Advance Phase 06 Full-Stack Curriculum:** Socratic Deep-Dive and author Topic 04: `notes/phase-06-nextjs-fullstack-react/04-ssg-vs-isr.md` (Static Site Generation vs Incremental Static Regeneration, Time-Based Revalidation, On-Demand Tag Revalidation, and Caching Topologies).
-2. **Continue Phase 06 Topics 05 through 10:** Middleware & Edge Runtime, Next.js Authentication, Route Handlers, Caching Layers, Bundling/Splitting, and Enterprise Deployment (Docker/Vercel/Azure).
+1. **Socratic Mentorship & Chapter Deep-Dives:** Conduct guided chapter reviews, discuss edge cases, and solve architectural code puzzles.
+2. **Staff Architect Mock Interviews:** Simulate technical interview rounds covering System Design at scale, React rendering internals, framework defense (Angular vs React vs Next.js), and clean architecture governance.
 
 
