@@ -41,3 +41,4 @@ When capturing a new unplanned issue or bug, copy and fill out the template belo
 - **User Feedback 2026-10-08 (Repo License):** Resolved via `FEAT-REPO-LICENSE` (MIT License added to root).
 - **User Feedback 2026-10-08 (110-Page Term Links Audit):** Verified universal coverage via `FEAT-08` across all 110 handbook chapters in `TopicReader.tsx`.
 - **`image.png` (Hotfix Light Theme Contrast):** Resolved via `BUG-HOTFIX-LIGHT-THEME-CONTRAST` (`var(--code-text, #f8fafc)` applied across diff and console views).
+- **User Feedback 2026-10-08 (GitHub Pages Live Link):** Resolved via `DOCS-GH-PAGES-LINK` (Live URL `https://adarshsince90.github.io/react-interview-prep/` integrated with badges across `README.md`, `PROGRESS.md`, `apps/portal/README.md`, and `docs/sdlc/README.md`).

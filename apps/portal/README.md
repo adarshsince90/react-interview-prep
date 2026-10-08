@@ -2,6 +2,7 @@
 
 The companion living revision and simulation application for the **React & JavaScript Runtime Engineering Handbook**.
 
+> 🌐 **Live Hosted Portal (GitHub Pages):** **[https://adarshsince90.github.io/react-interview-prep/](https://adarshsince90.github.io/react-interview-prep/)**  
 > 📖 **SDLC & Feature Specification:** See [`PORTAL_SDLC.md`](./PORTAL_SDLC.md) for full feature inventory, automated verification gates, and release changelogs.
 
 ---

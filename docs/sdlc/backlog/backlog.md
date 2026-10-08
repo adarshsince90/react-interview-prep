@@ -528,4 +528,16 @@
 
 ### Item FEAT-REPO-LICENSE: Open-Source MIT License
 - **Resolution**: Added standard permissive MIT License (`LICENSE`) to the repository root for clear open-source distribution and professional portfolio presentation.
+
+---
+
+### Item DOCS-GH-PAGES-LINK: Live Hosted Portal Deployment URL & Badges Integration
+- **Issue / User Need**: The application is continuously built and published to GitHub Pages at `https://adarshsince90.github.io/react-interview-prep/`, but users, recruiters, and learners viewing documentation had no direct one-click links or badges to access the live web application.
+- **Resolution**:
+  1. *Root `README.md`:* Added prominent `Live_Portal-GitHub_Pages` badge, curriculum status badge, MIT license badge, and featured blockquote linking directly to `https://adarshsince90.github.io/react-interview-prep/`.
+  2. *`PROGRESS.md`:* Added live hosted deployment URL into tracking header and runtime server links.
+  3. *`apps/portal/README.md`:* Highlighted live hosted portal access alongside local quick-start instructions.
+  4. *`docs/sdlc/README.md`:* Added live deployed web application cross-reference.
+  5. *SDLC Intake:* Triaged and resolved from `unplanned-backlog.md`.
+
 

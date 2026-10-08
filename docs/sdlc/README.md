@@ -49,3 +49,4 @@ flowchart LR
 - 📊 **Curriculum Learning Tracker (Root):** [`PROGRESS.md`](../../PROGRESS.md)
 - 📚 **Handbook Study Material (Root):** [`notes/`](../../notes)
 - ⚛️ **Living Portal App (Root):** [`apps/portal/`](../../apps/portal)
+- 🌐 **Live Deployed Web Application:** **[https://adarshsince90.github.io/react-interview-prep/](https://adarshsince90.github.io/react-interview-prep/)**

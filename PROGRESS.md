@@ -3,6 +3,7 @@
 > **Tracking:** Senior Backend & Distributed Systems Engineer → Senior / Staff React + Next.js Architect  
 > **Study Material Location:** [`notes/`](notes)  
 > **Interactive App Target:** React / Next.js Interactive Revision Portal with Live Simulators & Labs  
+> **Live Portal Deployment:** **[https://adarshsince90.github.io/react-interview-prep/](https://adarshsince90.github.io/react-interview-prep/)**  
 > **Sprint Execution Plan:** [`docs/sdlc/sprint-plan.md`](docs/sdlc/sprint-plan.md)  
 > **Architecture Decision Records:** [`docs/adr/`](docs/adr/README.md)  
 > **Active Product Backlog:** [`docs/sdlc/backlog/backlog.md`](docs/sdlc/backlog/backlog.md)
@@ -73,11 +74,12 @@ react-interview-prep/
 - **Interactive Simulation Labs:** **9 Full Living Arena Laboratories** active in `apps/portal` (Event Loop, Fiber Reconciler, RSC Flight, JSX AST, Purity, Render Stepper, Architecture, Testing Trophy, System Design Canvas)
 - **Learning & Assessment Engine:** Flashcards Arena (`FEAT-LEARN-01`), Staff Scenario Quizzes (`FEAT-LEARN-02`), and Global Instant Full-Text Search (`FEAT-LEARN-03`)
 - **Automated CI/CD Pipeline:** GitHub Actions workflow (`deploy.yml`) with automated manifest checks, test suites, and GitHub Pages deployment (`FEAT-LEARN-04`)
-- **Post-Curriculum Sprints Planned:**
-  - `Sprint 16`: Portal Evolution & Advanced Simulation Labs (v0.15.0)
-  - `Sprint 17`: Staff-Level Machine Coding Challenges (v0.16.0)
-  - `Sprint 18`: Staff/Principal Architect Mock Interviews & Technical Defenses
-  - `Sprint 19`: Enterprise Production Post-Mortems & Incident Drills
+- **Post-Curriculum Sprints Delivered:**
+  - `Sprint 16`: Portal Evolution & Advanced Simulation Labs (`v0.15.0`) ✅
+  - `Sprint 17`: Staff-Level Machine Coding Challenges (`v0.16.0`) ✅
+  - `Sprint 18`: Staff Machine Coding Implementation (`v0.17.0`) ✅
+  - `Sprint 19`: Staff/Principal Architect Mock Interviews & Technical Defenses (`v0.18.0`) ✅
+  - `Sprint 20`: Enterprise Production Post-Mortems & Incident Drills War Room (`v0.19.0`) ✅
 
 ### B. Curriculum Publication Summary (Handbook Availability)
 ```text
@@ -503,12 +505,15 @@ The portal development and staff preparation roadmap is executed incrementally a
 | **Phase P9: Staff Architect Mock Interviews (Sprint 19)** | - Real-Time HFT Terminal System Design (45 min mock) (`MOCK-01`).<br>- Multi-Tenant SaaS MFE Dashboard System Design (`MOCK-02`).<br>- React 19 Internals & Fiber Scheduler Deep Defense (`MOCK-03`).<br>- Executive Angular/.NET to React Migration Defense (`MOCK-04`). | [x] **Complete** (v0.18.0) |
 | **Phase P10: Production Post-Mortems & Drills (Sprint 20)** | - Heap Snapshot Memory Leak Post-Mortem (`CASE-01`).<br>- INP Main-Thread Yielding Incident Drill (`CASE-02`).<br>- Enterprise Auth & Token Exfiltration Remediation (`CASE-03`).<br>- MFE Dependency Drift Regression Drill (`CASE-04`).<br>- Interactive Incident War Room Arena live at `?view=incidents`. | [x] **Complete** (v0.19.0) |
 
+*Live Hosted Deployment:* **[https://adarshsince90.github.io/react-interview-prep/](https://adarshsince90.github.io/react-interview-prep/)**  
 *Local Dev Server:* Active at `http://localhost:5173/`
 
 ---
 
 ## 6. Sprint Prioritization & Execution Choice
 
-### Next Active Sprint: Sprint 20 (Enterprise Production Post-Mortems & Incident Drills)
-- **Option 1: Sprint 20 (Production Post-Mortems & Drills)** — Deep architectural debugging drills for real-world production incidents (Heap Snapshot Memory Leak `CASE-01`, INP Main-Thread Yielding `CASE-02`, Enterprise Auth & Token Exfiltration `CASE-03`, MFE Dependency Drift Regression `CASE-04`).
-- **Option 2: Staff Machine Coding Extension** — Additional high-leverage challenges in the Challenges Arena (e.g., Reactive Form DAG Engine, Virtualized Tree Grid).
+### Sprints 01–20 Delivered (Curriculum & Advanced Portals 100% Complete)
+- **Status:** All 20 Core & Advanced Sprints fully completed with publication-grade notes, 9 simulation laboratories, spaced-repetition flashcards, scenario quizzes, staff machine coding arena, staff mock interviews arena, and enterprise incident war room.
+- **Future Expansion Options:**
+  - Additional Staff Machine Coding challenges (e.g., Reactive Form DAG Engine, Virtualized Tree Grid).
+  - Additional Mock Interview Scenarios & Incident War Room Cases.

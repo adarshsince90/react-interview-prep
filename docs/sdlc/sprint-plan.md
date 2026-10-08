@@ -52,7 +52,7 @@ flowchart TD
     S16 --> S17["Sprint 17: Advanced Simulation Labs & Staff Challenges Arena (v0.16.0) ✅"]
     S17 --> S18["Sprint 18: Staff Machine Coding Challenges (v0.17.0) ✅"]
     S18 --> S19["Sprint 19: Staff Architect Mock Interviews & Technical Defenses (v0.18.0) ✅"]
-    S19 --> S20["Sprint 20: Enterprise Production Post-Mortems & Case Studies 📋"]
+    S19 --> S20["Sprint 20: Enterprise Production Post-Mortems & Incident Drills (v0.19.0) ✅"]
 ```
 
 | Sprint | Goal & Scope | Status | Primary Skill | Deliverables |
@@ -76,7 +76,7 @@ flowchart TD
 | **Sprint 17** | **Advanced Simulation Labs & Staff Challenges Arena** | [x] **Complete** (v0.16.0) | `portal-developer` / Machine Coding | Memory Retainer Lab (`FEAT-LAB-20`), TanStack Query Cache Simulator (`FEAT-LAB-21`), Virtualization Culling Lab (`FEAT-LAB-22`), SM-2 Spaced Repetition (`FEAT-LEARN-05`), Dedicated Staff Machine Coding Arena (`?view=challenges`) featuring Dynamic Virtualizer (`CHALLENGE-01`), Concurrent State Store (`CHALLENGE-02`), and Resilient Mutation Outbox (`CHALLENGE-03`) with interactive simulators, interview rubrics, and architectural deep dives. |
 | **Sprint 18** | **Staff-Level Frontend Machine Coding Challenges** | [x] **Complete** (v0.17.0) | Hands-on Coding / Mentor | Dynamic-Height Virtualized Windowing Engine (`CHALLENGE-01`), Concurrent Reactive State Store via `useSyncExternalStore` (`CHALLENGE-02`), Resilient Optimistic Mutation Queue (`CHALLENGE-03`). |
 | **Sprint 19** | **Staff & Principal Architect Mock Interviews & Defenses** | [x] **Complete** (v0.18.0) | Technical Mentor | Dedicated Staff Mock Interviews Arena (`?view=interviews`) with 45-min timer, Socratic simulation turns, rubrics, and defense transcripts for Real-Time HFT Terminal (`MOCK-01`), Multi-Tenant SaaS MFE (`MOCK-02`), React 19 Internals (`MOCK-03`), and Angular/.NET Migration (`MOCK-04`). |
-| **Sprint 20** | **Enterprise Production Post-Mortems & Incident Drills** | [ ] **Planned** | Technical Mentor | Heap Snapshot Memory Leak Post-Mortem (`CASE-01`), INP Main-Thread Yielding Drill (`CASE-02`), Enterprise Auth/Token Vulnerability Remediation (`CASE-03`), MFE Dependency Drift Regression (`CASE-04`). |
+| **Sprint 20** | **Enterprise Production Post-Mortems & Incident Drills** | [x] **Complete** (v0.19.0) | Technical Mentor | Interactive Incident War Room live at `?view=incidents` with 4 production scenarios (`INC-01` to `INC-04`), DevTools diagnostics, diffs, and 5-Whys RCAs. |
 
 ---
 

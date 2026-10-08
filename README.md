@@ -1,5 +1,12 @@
 # Frontend Engineering Handbook
 
+[![Live Interactive Portal](https://img.shields.io/badge/Live_Portal-GitHub_Pages-6366f1?style=for-the-badge&logo=react&logoColor=white)](https://adarshsince90.github.io/react-interview-prep/)
+[![Curriculum](https://img.shields.io/badge/Curriculum-110_Topics_%7C_12_Phases-10b981?style=for-the-badge)](./PROGRESS.md)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](./LICENSE)
+
+> 🌐 **Live Interactive Learning Portal:** **[https://adarshsince90.github.io/react-interview-prep/](https://adarshsince90.github.io/react-interview-prep/)**  
+> Direct access to all 110 publication-grade chapters, 9 interactive simulation laboratories, SM-2 flashcard drills, Staff Machine Coding Arena, Staff Mock Interviews Arena, and Incident War Room.
+>
 > A deep-first-principles learning repository for transitioning from **Senior Backend & Enterprise Engineer (Angular, .NET, Distributed Systems)** to **Senior / Staff React & Next.js Architect**, with a strong focus on architecture, runtime internals, enterprise engineering, performance, and interview preparation.
 
 ---
