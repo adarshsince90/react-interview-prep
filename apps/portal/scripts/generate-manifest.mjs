@@ -173,6 +173,8 @@ function parseMarkdownFile(filePath, relativePath, phaseId) {
 
   let title = 'Untitled Chapter';
   const headings = [];
+  const concepts = [];
+  let inSection18 = false;
 
   for (const line of lines) {
     const trimmed = line.trim();
@@ -188,6 +190,15 @@ function parseMarkdownFile(filePath, relativePath, phaseId) {
         title: headingText.replace(/[`*]/g, ''),
         anchor: slugify(headingText)
       });
+      inSection18 = headingText.includes('18.') || headingText.toLowerCase().includes('core vocabulary');
+    } else if (inSection18 && (trimmed.startsWith('- **') || trimmed.startsWith('* **'))) {
+      const match = trimmed.match(/^[-*]\s+\*\*([^*:]+)\*\*:\s*(.+)$/);
+      if (match) {
+        concepts.push({
+          term: match[1].trim(),
+          definition: match[2].trim().slice(0, 180)
+        });
+      }
     }
   }
 
@@ -207,6 +218,7 @@ function parseMarkdownFile(filePath, relativePath, phaseId) {
     wordCount,
     readingTimeMin,
     headings,
+    concepts,
     lab
   };
 }
@@ -233,6 +245,8 @@ function generateManifest() {
     phases: []
   };
 
+  const searchIndex = [];
+
   for (const phaseDir of phaseDirs) {
     const phasePath = path.join(NOTES_DIR, phaseDir);
     const meta = phaseMetadata[phaseDir] || {
@@ -254,6 +268,46 @@ function generateManifest() {
       const topic = parseMarkdownFile(filePath, relativePath, meta.id);
       topics.push(topic);
       manifest.totalTopics++;
+
+      // 1. Index Chapter
+      searchIndex.push({
+        type: 'chapter',
+        id: topic.id,
+        phaseId: meta.id,
+        phaseBadge: meta.badge,
+        phaseTitle: meta.title,
+        title: topic.title,
+        anchor: ''
+      });
+
+      // 2. Index Sections
+      for (const h of topic.headings) {
+        searchIndex.push({
+          type: 'section',
+          id: topic.id,
+          phaseId: meta.id,
+          phaseBadge: meta.badge,
+          phaseTitle: meta.title,
+          topicTitle: topic.title,
+          title: h.title,
+          anchor: h.anchor
+        });
+      }
+
+      // 3. Index Concepts
+      for (const c of topic.concepts) {
+        searchIndex.push({
+          type: 'concept',
+          id: topic.id,
+          phaseId: meta.id,
+          phaseBadge: meta.badge,
+          phaseTitle: meta.title,
+          topicTitle: topic.title,
+          title: c.term,
+          snippet: c.definition,
+          anchor: '18-core-vocabulary-and-aha-breakthrough-insights-refresher'
+        });
+      }
     }
 
     manifest.phases.push({
@@ -264,9 +318,14 @@ function generateManifest() {
     });
   }
 
+  const PUBLIC_SEARCH_INDEX = path.resolve(PORTAL_ROOT, 'public/search-index.json');
+
   fs.writeFileSync(MANIFEST_OUTPUT, JSON.stringify(manifest, null, 2), 'utf-8');
+  fs.writeFileSync(PUBLIC_SEARCH_INDEX, JSON.stringify(searchIndex), 'utf-8');
+
   console.log(`✅ Manifest generated successfully! Indexed ${manifest.totalTopics} topics across ${manifest.phases.length} phases.`);
-  console.log(`📄 Saved to: ${MANIFEST_OUTPUT}`);
+  console.log(`🔍 Search index generated with ${searchIndex.length} entries at: ${PUBLIC_SEARCH_INDEX}`);
+  console.log(`📄 Manifest saved to: ${MANIFEST_OUTPUT}`);
 }
 
 generateManifest();

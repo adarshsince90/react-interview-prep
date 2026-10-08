@@ -48,6 +48,11 @@ flowchart TD
     S12 --> S13["Sprint 13: Simulation Labs: Event Loop, Fiber & RSC (v0.12.0) ✅"]
     S13 --> S14["Sprint 14: Learning Engine: Flashcards, Quizzes & Search (v0.13.0) ✅"]
     S14 --> S15["Sprint 15: CI/CD Automation & GitHub Pages Deployment (v0.14.0) ✅"]
+    S15 --> S16["Sprint 16: Portal Wayfinding, Deep Search & Generalization (v0.15.0) ✅"]
+    S16 --> S17["Sprint 17: Advanced Simulation Labs & Playground (v0.16.0) 📋"]
+    S17 --> S18["Sprint 18: Staff Machine Coding Challenges (v0.17.0) 📋"]
+    S18 --> S19["Sprint 19: Staff Architect Mock Interviews & Technical Defenses 📋"]
+    S19 --> S20["Sprint 20: Enterprise Production Post-Mortems & Case Studies 📋"]
 ```
 
 | Sprint | Goal & Scope | Status | Primary Skill | Deliverables |
@@ -67,6 +72,11 @@ flowchart TD
 | **Sprint 13** | **Interactive Simulation Labs: Event Loop, Fiber & RSC** | [x] **Complete** (v0.12.0) | `portal-developer` | Implemented Lab 04 (4-Lane Event Loop & INP Simulator), Lab 14 (Fiber Linked-List Work Loop & Key Diffing), and Lab 19 (RSC Flight Wire Format Stream Parser) in `VisualizerHub.tsx`. CI passed 100%. |
 | **Sprint 14** | **Portal Learning Engine: Flashcards, Quizzes & Search** | [x] **Complete** (v0.13.0) | `portal-developer` | Implemented Flashcards Arena (`FEAT-LEARN-01`) with memory anchors, Staff Scenario Quizzes (`FEAT-LEARN-02`), and Global Instant Full-Text Search (`FEAT-LEARN-03`) with `Ctrl+K`. CI passed 100%. |
 | **Sprint 15** | **CI/CD Automation, GitHub Actions & Public Deployment** | [x] **Complete** (v0.14.0) | DevOps / Agent | Configured automated GitHub Actions CI/CD workflow (`.github/workflows/deploy.yml`) for automated manifest sync, test validation, typecheck, build, and static deployment (`FEAT-LEARN-04`). CI passed 100%. |
+| **Sprint 16** | **Portal Wayfinding, Deep Search & Generalization** | [x] **Complete** (v0.15.0) | `portal-developer` / Agent | Dynamic 4-card Dashboard with Next Recommended Chapter (`FEAT-DASH-01`), 2,382-entry Deep Section Heading & Keyword Search (`FEAT-SEARCH-01`), Smart Architectural Term Hover Cards & In-Situ Peek (`FEAT-HOVER-01`, `FEAT-NAV-05`), Senior Backend Engineer Generalization across 110 chapters (`REFACTOR-EXP-01`). |
+| **Sprint 17** | **Advanced Simulation Labs & In-Browser Playground** | [ ] **Planned** (v0.16.0) | `portal-developer` | Memory Retainer Lab (`FEAT-LAB-20`), TanStack Query Cache Simulator (`FEAT-LAB-21`), Virtualization Culling Lab (`FEAT-LAB-22`), SM-2 Spaced Repetition (`FEAT-LEARN-05`), In-Browser TSX Playground (`FEAT-LEARN-06`). |
+| **Sprint 18** | **Staff-Level Frontend Machine Coding Challenges** | [ ] **Planned** (v0.17.0) | Hands-on Coding / Mentor | Dynamic-Height Virtualized Windowing Engine (`CHALLENGE-01`), Concurrent Reactive State Store via `useSyncExternalStore` (`CHALLENGE-02`), Resilient Optimistic Mutation Queue (`CHALLENGE-03`). |
+| **Sprint 19** | **Staff & Principal Architect Mock Interviews & Defenses** | [ ] **Planned** | Technical Mentor | Real-Time HFT Terminal System Design (`MOCK-01`), Multi-Tenant SaaS MFE Dashboard (`MOCK-02`), React 19 Internals Defense (`MOCK-03`), Enterprise Angular/.NET to React Migration Defense (`MOCK-04`). |
+| **Sprint 20** | **Enterprise Production Post-Mortems & Incident Drills** | [ ] **Planned** | Technical Mentor | Heap Snapshot Memory Leak Post-Mortem (`CASE-01`), INP Main-Thread Yielding Drill (`CASE-02`), Enterprise Auth/Token Vulnerability Remediation (`CASE-03`), MFE Dependency Drift Regression (`CASE-04`). |
 
 ---
 
@@ -99,7 +109,72 @@ Architecture Reference: [`docs/adr/ADR-002`](../adr/ADR-002-portal-ux-typographi
 
 ---
 
-## 5. Verification Checklist for Closing Sprints
+## 5. Sprint 16 Detailed Work Breakdown: Portal Wayfinding, Deep Search & Generalization (Planned - v0.15.0)
+
+### Backlog Reference:
+Epic 16 in [`docs/sdlc/backlog/backlog.md`](./backlog/backlog.md). Primary Skill: `portal-developer` / Agent.
+
+### Tasks:
+- [ ] **TASK-DASH-01 (Dynamic Resume & Labs Metrics):** In `Dashboard.tsx`, replace static "Active Mentorship Focus" with dynamic "Continue Reading: [Topic Title]" loaded from `localStorage` (`last_read_topic_id`, fallback to first uncompleted topic). Replace static "2 Live Labs" with live counter of the 9 Living Arena Labs with a 1-click launch CTA. Update Hero badge to "Senior Backend & Enterprise Engineer → Senior / Staff React Architect".
+- [ ] **TASK-SEARCH-01 (Deep Section & Concept Keyword Search):** Upgrade `generate-manifest.mjs` to extract all section headings (`##` and `###`) with anchor slugs and parse Section 18 / Section 2 vocabulary terms. Upgrade `GlobalSearchModal.tsx` to render multi-tier search results (Chapters, Sections, Concepts) with direct anchor navigation.
+- [ ] **TASK-NAV-05 (Quick Peek Drawer & Return Teleport):** Implement side-sheet slide-over drawer in `TopicReader.tsx` for inter-topic links to preview referenced sections without losing scroll position. Add persistent floating "← Return to [Previous Topic: Section]" teleport pill.
+- [ ] **TASK-EXP-01 (Audience Persona Generalization):** Replace specific "11+ years in .NET" text across Phase 01 notes (`04-event-loop.md`, `05-promises-async-await.md`, `06-objects-prototypes-this.md`, `07-functional-javascript.md`, `08-modern-es6-plus.md`) and core documentation with universal "Senior Backend & Enterprise Engineers (C#/.NET, Java, Go, Distributed Systems)".
+
+---
+
+## 6. Sprint 17 Detailed Work Breakdown: Advanced Simulation Labs & Playground (Planned - v0.16.0)
+
+### Backlog Reference:
+Epic 17 in [`docs/sdlc/backlog/backlog.md`](./backlog/backlog.md). Primary Skill: `portal-developer`.
+
+### Tasks:
+- [x] **TASK-LAB-20 (Memory Retainer Lab):** Build `features/visualizers/topic-09-memory/MemoryRetainerLab.tsx` modeling detached DOM subtrees, closure lexical retaining graphs, and `WeakMap` Ephemeron deallocation.
+- [x] **TASK-LAB-21 (Query Cache Lifecycle Lab):** Build `features/visualizers/topic-04-state/QueryCacheLab.tsx` displaying live query transition rings (`fresh` → `stale` → `inactive` → `gc`) and interactive optimistic rollback animations.
+- [x] **TASK-LAB-22 (Virtualization Lab):** Build `features/visualizers/topic-08-performance/VirtualizationLab.tsx` rendering physical DOM element recycling vs infinite virtual viewport calculations at 60 FPS.
+- [x] **TASK-LEARN-05 (Spaced Repetition Flashcards):** Add SuperMemo SM-2 interval scheduler to `FlashcardsArena.tsx` with IndexedDB persistence for long-term memory anchors.
+- [x] **TASK-LEARN-06 (Live Code Playground):** Embed an in-browser TSX sandbox component in portal allowing live React 19 experimentation directly in chapter notes.
+
+---
+
+## 7. Sprint 18 Detailed Work Breakdown: Staff Machine Coding Challenges (Planned - v0.17.0)
+
+### Backlog Reference:
+Epic 18 in [`docs/sdlc/backlog/backlog.md`](./backlog/backlog.md). Primary Skill: Mentorship / Machine Coding.
+
+### Challenges:
+- [ ] **TASK-CODE-01 (Dynamic Virtualizer):** Handcraft a virtual list component from scratch supporting dynamic row heights via ResizeObserver, binary search O(log N) offset indexing, and scroll FPS meters.
+- [ ] **TASK-CODE-02 (Concurrent Reactive Store):** Build a zero-dependency reactive state store using `useSyncExternalStore` guaranteeing zero tearing during React 18/19 concurrent transitions.
+- [ ] **TASK-CODE-03 (Resilient Optimistic Outbox):** Implement an offline mutation outbox backed by IndexedDB with exponential jittered retries, network listener recovery, and rollback snapshots.
+
+---
+
+## 8. Sprint 19 Detailed Work Breakdown: Staff Architect Mock Interviews & Technical Defenses (Planned)
+
+### Backlog Reference:
+Epic 19 in [`docs/sdlc/backlog/backlog.md`](./backlog/backlog.md). Primary Skill: Technical Mentor / Staff Interviewer.
+
+### Mock Sessions:
+- [ ] **SESSION-01 (System Design: HFT Terminal):** Timed 45-min mock on 60 FPS rendering, WebSockets, backpressure, Web Workers, canvas vs DOM.
+- [ ] **SESSION-02 (System Design: Multi-Tenant SaaS MFE):** Timed 45-min mock on Module Federation, shared singletons, version isolation, token contracts.
+- [ ] **SESSION-03 (Runtime Internals Defense):** Technical probing on Fiber linked-list work loop, Lane priority bitmasks, compiler memoization, and RSC wire streaming.
+- [ ] **SESSION-04 (Executive Migration Defense):** Defending an enterprise architectural transition from Angular/.NET to React/Next.js before an executive committee.
+
+---
+
+## 9. Sprint 20 Detailed Work Breakdown: Enterprise Production Post-Mortems & Incident Drills (Planned)
+
+### Backlog Reference:
+Epic 20 in [`docs/sdlc/backlog/backlog.md`](./backlog/backlog.md). Primary Skill: Technical Mentor.
+
+### Incident Scenarios:
+- [ ] **INCIDENT-01:** Single-page application memory leak root-cause investigation using Chrome DevTools heap snapshots and retainer analysis.
+- [ ] **INCIDENT-02:** Critical Interaction to Next Paint (INP) degradation troubleshooting and main-thread unblocking via `scheduler.yield()`.
+- [ ] **INCIDENT-03:** Frontend XSS token exfiltration attack analysis and migration to secure BFF HTTP-only cookie proxy.
+- [ ] **INCIDENT-04:** Production Micro-Frontend outage remediation caused by federated shared dependency skew and diamond dependency conflicts.
+
+---
+
+## 10. Verification Checklist for Closing Sprints
 
 Every sprint milestone must pass this automated checklist:
 1. `npm run manifest` exits with code 0.

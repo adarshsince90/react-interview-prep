@@ -22,7 +22,7 @@ Mastering how the DOM and CSSOM are constructed, how the **Speculative Preload S
 
 ## 2. Learning Objectives
 
-- Trace the 5-stage pipeline from raw network bytes to memory trees: **Bytes $\rightarrow$ Characters $\rightarrow$ Tokens $\rightarrow$ Nodes $\rightarrow$ DOM Tree**.
+- Trace the 5-stage pipeline from raw network bytes to memory trees: **Bytes → Characters → Tokens → Nodes → DOM Tree**.
 - Understand the state machine of the HTML5 Tokenizer and the open-element stack management in the Tree Builder.
 - Dissect the construction of the CSSOM and understand why stylesheets are render-blocking and script-blocking.
 - Inspect how the **Speculative Preload Scanner** runs on a background thread to discover sub-resources before the main parser unblocks.
@@ -249,7 +249,7 @@ LEGEND:
 
 ### Pattern 2: Auditing Parser Blocking in Chrome DevTools
 
-1. Open DevTools $\rightarrow$ **Performance Panel** $\rightarrow$ Record page load.
+1. Open DevTools → **Performance Panel** → Record page load.
 2. Under the **Main Thread** flamechart, locate the long purple **`Parse HTML`** block.
 3. Look for vertical breaks in `Parse HTML`:
    - If you see `Evaluate Script` dividing `Parse HTML`, an un-deferred script is blocking your parser!
@@ -390,7 +390,7 @@ The **Speculative Preload Scanner** runs on a secondary thread, scanning ahead t
 
 ## 19. Key Takeaways
 
-1. **DOM construction is a 5-stage pipeline:** Bytes $\rightarrow$ Characters $\rightarrow$ Tokens $\rightarrow$ Nodes $\rightarrow$ DOM Tree.
+1. **DOM construction is a 5-stage pipeline:** Bytes → Characters → Tokens → Nodes → DOM Tree.
 2. **CSS is render-blocking and script-blocking:** Un-deferred scripts freeze execution until preceding stylesheets finish parsing.
 3. **The Speculative Preload Scanner mitigates blocking scripts** by discovering and downloading assets on a background thread.
 4. **Always use `<script defer>` or `<script type="module">`** to ensure scripts download in the background without halting the HTML parser.

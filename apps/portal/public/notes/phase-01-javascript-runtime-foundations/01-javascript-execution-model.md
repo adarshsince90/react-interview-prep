@@ -23,10 +23,10 @@ Every core architectural pattern in modern frontend engineering—React's Virtua
 ## 2. Learning Objectives
 
 By the end of this chapter, you will be able to:
-- Deconstruct the **V8 JIT compilation pipeline**: Parser $\to$ AST $\to$ Ignition (Bytecode) $\to$ TurboFan (Optimized Machine Code).
+- Deconstruct the **V8 JIT compilation pipeline**: Parser → AST → Ignition (Bytecode) → TurboFan (Optimized Machine Code).
 - Analyze **Speculative Optimization** and how polymorphic type mutations trigger CPU-costly **Deoptimization Bailouts**.
 - Trace the lifecycle of an **Execution Context** through its **Creation Phase** and **Execution Phase**.
-- Differentiate how V8 allocates **Primitives** (Small Integers/Smis via pointer tagging) versus **Reference Objects** on the Memory Heap.
+- Differentiate how V8 allocates **Primitives** (Small Integers / `Smi`s via pointer tagging) versus **Reference Objects** on the Memory Heap.
 - Contrast JavaScript's **single-threaded coroutine `async/await`** with the .NET CLR's **multi-threaded `IAsyncStateMachine`**.
 - Explain the physical reason React migrated from the **Stack Reconciler (React 15)** to the **Fiber Reconciler (React 16+)**.
 - Identify and debug enterprise SPA **Memory Leaks** (Detached DOM trees and closure retention) using V8 GC root mechanics.
@@ -348,7 +348,7 @@ function workLoopConcurrent() {
 
 | Feature | .NET CLR (Core / .NET 8+) | JavaScript Engine (V8) |
 | :--- | :--- | :--- |
-| **Execution Target** | Statically compiled CIL bytecode running on a VM. | Dynamic JIT compilation (Ignition Bytecode $\to$ TurboFan Machine Code). |
+| **Execution Target** | Statically compiled CIL bytecode running on a VM. | Dynamic JIT compilation (Ignition Bytecode → TurboFan Machine Code). |
 | **Threading Model** | **Preemptive Multi-threading**; threads scheduled across CPU cores by the OS kernel. | **Single-threaded Event-driven**; exactly one Call Stack per browser isolate. |
 | **Async Mechanism** | `IAsyncStateMachine` struct; continuations dispatched to any available `ThreadPool` worker thread. | Generator-like coroutine suspension; continuations enqueued on the single-threaded **Microtask Queue**. |
 | **Garbage Collector** | Generational GC: Gen 0, Gen 1, Gen 2, Large Object Heap (LOH), Pinned Object Heap (POH). | Generational GC: New Space (From/To Scavenger), Old Pointer, Old Data, Large Object Space. |

@@ -26,17 +26,37 @@ import {
   MessageSquare,
   Copy,
   Check,
-  ArrowUp
+  ArrowUp,
+  ExternalLink,
+  X
 } from 'lucide-react';
 import {
   isTopicCompleted,
   toggleTopicCompleted,
   getTopicNotes,
-  saveTopicNotes
+  saveTopicNotes,
+  recordRecentTopicId
 } from '../../core/utils/progressStorage';
 import { slugifyHeading } from '../../core/utils/slugify';
+import manifestData from '../../assets/manifest.json';
 
 import mermaid from 'mermaid';
+import { TermHoverCard } from './TermHoverCard';
+import { CORE_ARCH_TERMS, type TermDefinition } from './termDictionary';
+
+function resolveTopicFromHref(href: string): { topic: TopicItem; hash?: string; phaseTitle?: string } | null {
+  const [pathPart, hash] = href.split('#');
+  const cleanFilename = pathPart.split('/').pop()?.replace('.md', '');
+  if (!cleanFilename) return null;
+
+  for (const phase of (manifestData as any).phases) {
+    const match = phase.topics.find((t: TopicItem) => t.id === cleanFilename || t.filename.replace('.md', '') === cleanFilename);
+    if (match) {
+      return { topic: match, hash, phaseTitle: phase.title };
+    }
+  }
+  return null;
+}
 
 // Configure marked to render headings with unique ID anchors and responsive mermaid code blocks
 marked.use({
@@ -85,11 +105,15 @@ function cleanMarkdownFormatting(text: string): string {
           .replace(/\\times/g, '×')
           .replace(/\\mathbf\{([^}]+)\}/g, '$1')
           .replace(/\\rightarrow/g, '→')
+          .replace(/\\to\b/g, '→')
           .replace(/\\implies/g, '→')
           .trim();
       }
       return match;
-    });
+    })
+    // Also defensively catch any stray LaTeX arrow tokens in prose outside code blocks
+    .replace(/(?<![`\w\\])\\rightarrow(?![`\w])/g, '→')
+    .replace(/(?<![`\w\\])\\to(?![`\w])/g, '→');
 }
 
 interface TopicReaderProps {
@@ -134,7 +158,40 @@ export const TopicReader: React.FC<TopicReaderProps> = ({
   const [activeSectionId, setActiveSectionId] = useState<string>('');
   const [readingProgress, setReadingProgress] = useState<number>(0);
   const [showBackToTop, setShowBackToTop] = useState<boolean>(false);
+  const [quickPeekTarget, setQuickPeekTarget] = useState<{
+    topic: TopicItem;
+    hash?: string;
+    phaseTitle?: string;
+    rawHref: string;
+    excerpt?: string;
+    loading?: boolean;
+  } | null>(null);
+  const [hoveredTermCard, setHoveredTermCard] = useState<{
+    data: TermDefinition;
+    rect: DOMRect;
+  } | null>(null);
+  const termHoverTimerRef = useRef<any>(null);
+  const termHideTimerRef = useRef<any>(null);
+  const isTermCardHoveredRef = useRef<boolean>(false);
   const contentRef = useRef<HTMLDivElement>(null);
+
+  // Clear hover card state on topic switch
+  useEffect(() => {
+    setHoveredTermCard(null);
+    if (termHoverTimerRef.current) clearTimeout(termHoverTimerRef.current);
+    if (termHideTimerRef.current) clearTimeout(termHideTimerRef.current);
+  }, [topic]);
+
+  // Dismiss hover card on window scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      if (hoveredTermCard) {
+        setHoveredTermCard(null);
+      }
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [hoveredTermCard]);
 
   // Sync completion and notes state on topic change
   useEffect(() => {
@@ -142,6 +199,7 @@ export const TopicReader: React.FC<TopicReaderProps> = ({
     setUserNotes(getTopicNotes(topic.id));
     setCopied(false);
     setActiveSectionId('');
+    recordRecentTopicId(topic.id);
   }, [topic, propIsCompleted]);
 
   // Track scroll position for reading progress bar & Back to Top button
@@ -345,6 +403,56 @@ export const TopicReader: React.FC<TopicReaderProps> = ({
       // Intercept local relative markdown links
       if (href.endsWith('.md') || href.includes('.md#') || href.includes('phase-')) {
         e.preventDefault();
+        const resolved = resolveTopicFromHref(href);
+        if (resolved) {
+          setQuickPeekTarget({
+            topic: resolved.topic,
+            hash: resolved.hash,
+            phaseTitle: resolved.phaseTitle,
+            rawHref: href,
+            loading: true
+          });
+
+          const baseUrl = import.meta.env.BASE_URL.endsWith('/') 
+            ? import.meta.env.BASE_URL 
+            : `${import.meta.env.BASE_URL}/`;
+          const targetUrl = `${baseUrl}${resolved.topic.relativePath.replace(/^\//, '')}`;
+
+          fetch(targetUrl)
+            .then(res => res.text())
+            .then(md => {
+              const lines = md.split('\n');
+              let excerpt = '';
+              let capturing = false;
+              for (const line of lines) {
+                if (line.startsWith('## 1.') || line.startsWith('## Why')) {
+                  capturing = true;
+                  continue;
+                }
+                if (capturing) {
+                  if (line.startsWith('## ') || line.startsWith('---')) break;
+                  if (line.trim() && !line.startsWith('#')) {
+                    excerpt += line.trim() + ' ';
+                    if (excerpt.length > 280) break;
+                  }
+                }
+              }
+              setQuickPeekTarget(prev => prev ? {
+                ...prev,
+                excerpt: excerpt ? (excerpt.slice(0, 260) + '...') : 'Detailed architectural walkthrough and runtime breakdown.',
+                loading: false
+              } : null);
+            })
+            .catch(() => {
+              setQuickPeekTarget(prev => prev ? {
+                ...prev,
+                excerpt: 'Detailed architectural walkthrough and runtime breakdown.',
+                loading: false
+              } : null);
+            });
+          return;
+        }
+
         if (onNavigateToTopic) {
           onNavigateToTopic(href);
         }
@@ -356,6 +464,207 @@ export const TopicReader: React.FC<TopicReaderProps> = ({
       el.removeEventListener('click', handleAnchorClick);
     };
   }, [contentHtml, onNavigateToTopic]);
+
+  // Highlight architectural terms and wire up interactive hover cards
+  useEffect(() => {
+    if (loading || !contentRef.current) return;
+    const rootEl = contentRef.current;
+
+    const sortedKeys = Object.keys(CORE_ARCH_TERMS).sort((a, b) => b.length - a.length);
+    const highlightedTerms = new Set<string>();
+
+    const walkTextNodes = (node: Node) => {
+      if (highlightedTerms.size === sortedKeys.length) return;
+
+      if (node.nodeType === Node.ELEMENT_NODE) {
+        const el = node as HTMLElement;
+        const tag = el.tagName.toLowerCase();
+        if (
+          ['pre', 'code', 'a', 'button', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'svg', 'script', 'style'].includes(tag) ||
+          el.classList.contains('mermaid') ||
+          el.classList.contains('mermaid-container') ||
+          el.classList.contains('code-block-wrapper') ||
+          el.classList.contains('arch-term-hover')
+        ) {
+          return;
+        }
+        for (let child = node.firstChild; child; child = child.nextSibling) {
+          walkTextNodes(child);
+        }
+      } else if (node.nodeType === Node.TEXT_NODE) {
+        const text = node.nodeValue;
+        if (!text || text.trim().length === 0) return;
+
+        for (const key of sortedKeys) {
+          if (highlightedTerms.has(key)) continue;
+
+          const escapedKey = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          const regex = new RegExp(`\\b(${escapedKey})\\b`, 'i');
+          const match = regex.exec(text);
+
+          if (match && match.index !== undefined) {
+            highlightedTerms.add(key);
+
+            const matchIndex = match.index;
+            const matchedText = match[0];
+            const afterText = text.substring(matchIndex + matchedText.length);
+            const beforeText = text.substring(0, matchIndex);
+
+            const parent = node.parentNode;
+            if (!parent) return;
+
+            const span = document.createElement('span');
+            span.className = 'arch-term-hover';
+            span.dataset.termKey = key;
+            span.textContent = matchedText;
+
+            const afterNode = document.createTextNode(afterText);
+            node.nodeValue = beforeText;
+
+            parent.insertBefore(span, node.nextSibling);
+            parent.insertBefore(afterNode, span.nextSibling);
+
+            walkTextNodes(afterNode);
+            return;
+          }
+        }
+      }
+    };
+
+    walkTextNodes(rootEl);
+
+    const handleMouseOver = (e: MouseEvent) => {
+      const target = (e.target as HTMLElement).closest('.arch-term-hover') as HTMLElement | null;
+      if (target) {
+        const key = target.dataset.termKey;
+        if (key && CORE_ARCH_TERMS[key]) {
+          if (termHideTimerRef.current) {
+            clearTimeout(termHideTimerRef.current);
+            termHideTimerRef.current = null;
+          }
+          if (termHoverTimerRef.current) {
+            clearTimeout(termHoverTimerRef.current);
+          }
+          termHoverTimerRef.current = setTimeout(() => {
+            setHoveredTermCard({
+              data: CORE_ARCH_TERMS[key],
+              rect: target.getBoundingClientRect()
+            });
+          }, 180);
+        }
+      }
+    };
+
+    const handleMouseOut = (e: MouseEvent) => {
+      const target = (e.target as HTMLElement).closest('.arch-term-hover');
+      if (target) {
+        if (termHoverTimerRef.current) {
+          clearTimeout(termHoverTimerRef.current);
+          termHoverTimerRef.current = null;
+        }
+        termHideTimerRef.current = setTimeout(() => {
+          if (!isTermCardHoveredRef.current) {
+            setHoveredTermCard(null);
+          }
+        }, 280);
+      }
+    };
+
+    const handleClick = (e: MouseEvent) => {
+      const target = (e.target as HTMLElement).closest('.arch-term-hover') as HTMLElement | null;
+      if (target) {
+        e.preventDefault();
+        e.stopPropagation();
+        const key = target.dataset.termKey;
+        if (key && CORE_ARCH_TERMS[key]) {
+          setHoveredTermCard(prev => 
+            prev?.data.term === CORE_ARCH_TERMS[key].term 
+              ? null 
+              : { data: CORE_ARCH_TERMS[key], rect: target.getBoundingClientRect() }
+          );
+        }
+      }
+    };
+
+    rootEl.addEventListener('mouseover', handleMouseOver);
+    rootEl.addEventListener('mouseout', handleMouseOut);
+    rootEl.addEventListener('click', handleClick);
+
+    return () => {
+      rootEl.removeEventListener('mouseover', handleMouseOver);
+      rootEl.removeEventListener('mouseout', handleMouseOut);
+      rootEl.removeEventListener('click', handleClick);
+    };
+  }, [contentHtml, loading, topic]);
+
+  const handleTermPeek = (targetTopicId: string) => {
+    setHoveredTermCard(null);
+    for (const phase of (manifestData as any).phases) {
+      const match = phase.topics.find((t: TopicItem) => t.id === targetTopicId);
+      if (match) {
+        setQuickPeekTarget({
+          topic: match,
+          phaseTitle: phase.title,
+          rawHref: match.relativePath,
+          loading: true
+        });
+
+        const baseUrl = import.meta.env.BASE_URL.endsWith('/') 
+          ? import.meta.env.BASE_URL 
+          : `${import.meta.env.BASE_URL}/`;
+        const targetUrl = `${baseUrl}${match.relativePath.replace(/^\//, '')}`;
+
+        fetch(targetUrl)
+          .then(res => res.text())
+          .then(md => {
+            const lines = md.split('\n');
+            let excerpt = '';
+            let capturing = false;
+            for (const line of lines) {
+              if (line.startsWith('## 1.') || line.startsWith('## Why')) {
+                capturing = true;
+                continue;
+              }
+              if (capturing) {
+                if (line.startsWith('## ') || line.startsWith('---')) break;
+                if (line.trim() && !line.startsWith('#')) {
+                  excerpt += line.trim() + ' ';
+                  if (excerpt.length > 280) break;
+                }
+              }
+            }
+            setQuickPeekTarget(prev => prev ? {
+              ...prev,
+              excerpt: excerpt ? (excerpt.slice(0, 260) + '...') : 'Detailed architectural walkthrough and runtime breakdown.',
+              loading: false
+            } : null);
+          })
+          .catch(() => {
+            setQuickPeekTarget(prev => prev ? {
+              ...prev,
+              excerpt: 'Detailed architectural walkthrough and runtime breakdown.',
+              loading: false
+            } : null);
+          });
+        break;
+      }
+    }
+  };
+
+  const handleTermNavigate = (targetTopicId: string, anchor?: string) => {
+    setHoveredTermCard(null);
+    if (onNavigateToTopic) {
+      onNavigateToTopic(`${targetTopicId}${anchor ? `#${anchor}` : ''}`);
+    } else if (onSelectTopic) {
+      for (const phase of (manifestData as any).phases) {
+        const match = phase.topics.find((t: TopicItem) => t.id === targetTopicId);
+        if (match) {
+          onSelectTopic(match);
+          break;
+        }
+      }
+    }
+  };
 
   const handleToggleComplete = () => {
     const nextState = toggleTopicCompleted(topic.id);
@@ -878,6 +1187,198 @@ ${userNotes.trim()}
       >
         <ArrowUp size={18} />
       </button>
+    )}
+
+    {/* Floating Return to Previous Topic Action */}
+    {previousTopicInHistory && onGoBack && (
+      <button
+        onClick={onGoBack}
+        style={{
+          position: 'fixed',
+          bottom: '24px',
+          left: '24px',
+          zIndex: 90,
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.5rem',
+          background: 'var(--bg-secondary)',
+          border: '1px solid var(--border-medium)',
+          color: 'var(--text-primary)',
+          padding: '0.65rem 1.1rem',
+          borderRadius: '30px',
+          fontSize: '0.82rem',
+          fontWeight: 600,
+          cursor: 'pointer',
+          boxShadow: 'var(--shadow-md)',
+          backdropFilter: 'blur(8px)',
+          transition: 'all 200ms ease'
+        }}
+        onMouseEnter={e => {
+          e.currentTarget.style.borderColor = 'var(--react-cyan)';
+          e.currentTarget.style.transform = 'translateY(-2px)';
+        }}
+        onMouseLeave={e => {
+          e.currentTarget.style.borderColor = 'var(--border-medium)';
+          e.currentTarget.style.transform = 'translateY(0)';
+        }}
+        title={`Return to ${previousTopicInHistory.title}`}
+      >
+        <CornerUpLeft size={15} color="var(--react-cyan)" />
+        <span>Back to: {previousTopicInHistory.title.length > 24 ? previousTopicInHistory.title.slice(0, 24) + '...' : previousTopicInHistory.title}</span>
+      </button>
+    )}
+
+    {/* Quick Peek Concept Modal */}
+    {quickPeekTarget && (
+      <div
+        onClick={() => setQuickPeekTarget(null)}
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'rgba(0, 0, 0, 0.65)',
+          backdropFilter: 'blur(6px)',
+          zIndex: 9999,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '1.5rem'
+        }}
+      >
+        <div
+          onClick={e => e.stopPropagation()}
+          style={{
+            width: '100%',
+            maxWidth: '560px',
+            background: 'var(--bg-secondary)',
+            border: '1px solid var(--border-medium)',
+            borderRadius: '14px',
+            padding: '1.75rem',
+            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '1rem'
+          }}
+        >
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+            <div>
+              <span
+                style={{
+                  fontSize: '0.72rem',
+                  fontWeight: 700,
+                  textTransform: 'uppercase',
+                  color: 'var(--react-cyan)',
+                  background: 'rgba(2, 132, 199, 0.12)',
+                  padding: '0.15rem 0.5rem',
+                  borderRadius: '4px',
+                  display: 'inline-block',
+                  marginBottom: '0.4rem'
+                }}
+              >
+                {quickPeekTarget.phaseTitle || quickPeekTarget.topic.phaseId}
+              </span>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0, lineHeight: 1.3 }}>
+                {quickPeekTarget.topic.title}
+              </h3>
+            </div>
+            <button
+              onClick={() => setQuickPeekTarget(null)}
+              style={{
+                background: 'transparent',
+                border: 'none',
+                color: 'var(--text-muted)',
+                cursor: 'pointer',
+                padding: '0.25rem'
+              }}
+            >
+              <X size={18} />
+            </button>
+          </div>
+
+          {quickPeekTarget.hash && (
+            <div style={{ fontSize: '0.8rem', color: 'var(--emerald-success)', display: 'flex', alignItems: 'center', gap: '0.35rem', background: 'rgba(16, 185, 129, 0.1)', padding: '0.35rem 0.65rem', borderRadius: '6px' }}>
+              <Sparkles size={14} /> Referenced Section: <strong>{quickPeekTarget.hash.replace(/-/g, ' ')}</strong>
+            </div>
+          )}
+
+          <div style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: 1.6, background: 'var(--bg-primary)', padding: '1rem', borderRadius: '8px', border: '1px solid var(--border-subtle)', minHeight: '80px' }}>
+            {quickPeekTarget.loading ? (
+              <span style={{ color: 'var(--text-muted)' }}>Loading concept summary...</span>
+            ) : (
+              quickPeekTarget.excerpt || 'Comprehensive guide covering first principles, engine architecture, and production trade-offs.'
+            )}
+          </div>
+
+          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem', marginTop: '0.5rem' }}>
+            <button
+              onClick={() => setQuickPeekTarget(null)}
+              style={{
+                padding: '0.55rem 1rem',
+                borderRadius: '6px',
+                background: 'var(--bg-tertiary)',
+                border: '1px solid var(--border-subtle)',
+                color: 'var(--text-secondary)',
+                fontSize: '0.85rem',
+                fontWeight: 600,
+                cursor: 'pointer'
+              }}
+            >
+              Keep Reading
+            </button>
+            <button
+              onClick={() => {
+                const targetHref = quickPeekTarget.rawHref;
+                setQuickPeekTarget(null);
+                if (onNavigateToTopic) {
+                  onNavigateToTopic(targetHref);
+                }
+              }}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.45rem',
+                padding: '0.55rem 1.15rem',
+                borderRadius: '6px',
+                background: 'linear-gradient(135deg, var(--react-cyan) 0%, #0369a1 100%)',
+                color: '#ffffff',
+                border: 'none',
+                fontSize: '0.85rem',
+                fontWeight: 700,
+                cursor: 'pointer',
+                boxShadow: 'var(--shadow-sm)'
+              }}
+            >
+              <ExternalLink size={14} /> Open Full Chapter
+            </button>
+          </div>
+        </div>
+      </div>
+    )}
+
+    {/* Smart Architectural Term Hover Card */}
+    {hoveredTermCard && (
+      <TermHoverCard
+        data={hoveredTermCard.data}
+        rect={hoveredTermCard.rect}
+        onPeek={handleTermPeek}
+        onNavigate={handleTermNavigate}
+        onClose={() => setHoveredTermCard(null)}
+        onMouseEnter={() => {
+          isTermCardHoveredRef.current = true;
+          if (termHideTimerRef.current) {
+            clearTimeout(termHideTimerRef.current);
+            termHideTimerRef.current = null;
+          }
+        }}
+        onMouseLeave={() => {
+          isTermCardHoveredRef.current = false;
+          termHideTimerRef.current = setTimeout(() => {
+            setHoveredTermCard(null);
+          }, 250);
+        }}
+      />
     )}
   </>
 );

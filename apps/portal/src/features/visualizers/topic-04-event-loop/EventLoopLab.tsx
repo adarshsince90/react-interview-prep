@@ -607,7 +607,7 @@ export const EventLoopLab: React.FC = () => {
             )}
           </div>
           <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginTop: '0.5rem', marginBottom: 0 }}>
-            Syncs with display hardware V-Sync. Executes rAF $\rightarrow$ Recalculate Style $\rightarrow$ Layout $\rightarrow$ Paint.
+            Syncs with display hardware V-Sync. Executes rAF → Recalculate Style → Layout → Paint.
           </p>
         </div>
 

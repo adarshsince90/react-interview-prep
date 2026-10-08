@@ -258,7 +258,7 @@ When updating node `E` in an immutable tree:
 ```
 
 **Key Takeaways from the Diagram:**
-1. Only the direct ancestral spine (`E` $\rightarrow$ `B` $\rightarrow$ `A`) is re-allocated as (`E'` $\rightarrow$ `B'` $\rightarrow$ `A'`).
+1. Only the direct ancestral spine (`E` → `B` → `A`) is re-allocated as (`E'` → `B'` → `A'`).
 2. Sibling subtrees (`Node D`, `Node C`, `Node F`, `Node G`) remain at identical memory addresses (`0x400`, `0x300`, `0x600`, `0x700`).
 3. If `Node C` is wrapped in `React.memo`, React skips rendering `Node C`, `Node F`, and `Node G` completely.
 

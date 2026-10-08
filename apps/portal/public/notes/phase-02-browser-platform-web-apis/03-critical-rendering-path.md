@@ -14,13 +14,13 @@ When an engineer does not understand the **Critical Rendering Path (CRP)**:
 2. **The Core Web Vitals CLS Penalty:** When asynchronous images or dynamic fonts push existing content down the screen without reserved space, the browser recalculates layouts mid-session, resulting in a high **Cumulative Layout Shift (CLS > 0.1)** that damages SEO and user experience.
 3. **The Render Tree Misconception:** Many developers confuse the DOM with the Render Tree, failing to recognize that elements with `display: none` consume zero layout space, while elements with `visibility: hidden` consume full layout space.
 
-Mastering the 5 sequential phases of the rendering pipeline—**Style $\rightarrow$ Layout $\rightarrow$ Paint $\rightarrow$ Composite**—is the prerequisite for achieving flawless, hardware-accelerated 60/120 FPS performance.
+Mastering the 5 sequential phases of the rendering pipeline—**Style → Layout → Paint → Composite**—is the prerequisite for achieving flawless, hardware-accelerated 60/120 FPS performance.
 
 ---
 
 ## 2. Learning Objectives
 
-- Dissect the 5 sequential phases of the Critical Rendering Path: **Parse $\rightarrow$ Style Recalculation $\rightarrow$ Layout (Reflow) $\rightarrow$ Paint $\rightarrow$ Compositing**.
+- Dissect the 5 sequential phases of the Critical Rendering Path: **Parse → Style Recalculation → Layout (Reflow) → Paint → Compositing**.
 - Understand the construction of the **Render Tree**: why `display: none` is excluded while `visibility: hidden` and `opacity: 0` are retained.
 - Master the difference between **Layout (Geometry)**, **Paint (Raster Records)**, and **Compositing (GPU Texture Stacking)**.
 - Analyze the CSS Property Trigger Matrix: know which properties trigger Layout, which trigger Paint only, and which trigger Compositing only.
@@ -297,7 +297,7 @@ When an element is promoted to its own **Compositor Layer** (via `will-change: t
 
 | Dimension | Browser Rendering Path | Angular (v17+) |
 | :--- | :--- | :--- |
-| **Change Detection Timing** | Browser executes Style $\rightarrow$ Layout $\rightarrow$ Paint sequentially. | Angular Zone.js detects asynchronous microtasks, running change detection **before** the browser's render frame. |
+| **Change Detection Timing** | Browser executes Style → Layout → Paint sequentially. | Angular Zone.js detects asynchronous microtasks, running change detection **before** the browser's render frame. |
 | **Animation Optimization** | CSS `transform` and Web Animations API run on the Compositor thread. | `@angular/animations` uses Web Animations API under the hood, but triggers CD cycles unless run outside NgZone. |
 | **DOM Tree Mutations** | Direct Blink mutations trigger style dirtiness. | Angular Signals update fine-grained text nodes directly, reducing the number of affected layout subtrees. |
 | **Animation Best Practice** | Animate `transform` and `opacity` only. | Inject `NgZone` and execute performance-critical animations via `ngZone.runOutsideAngular(() => ...)`. |
@@ -369,7 +369,7 @@ Rendering Budget per Frame (Target: 60 FPS = 16.6ms | 120 FPS = 8.33ms)
 
 ### Trap 2: Animating `left` Instead of `transform: translateX`
 - **Scenario:** A developer writes CSS: `@keyframes slide { from { left: 0px; } to { left: 200px; } }`.
-- **The Reality:** Modifying `left` triggers the **entire rendering pipeline**: Layout $\rightarrow$ Paint $\rightarrow$ Composite on every single frame. Changing it to `transform: translateX(200px)` skips Layout and Paint completely, running exclusively on the GPU Compositor thread.
+- **The Reality:** Modifying `left` triggers the **entire rendering pipeline**: Layout → Paint → Composite on every single frame. Changing it to `transform: translateX(200px)` skips Layout and Paint completely, running exclusively on the GPU Compositor thread.
 
 ---
 
@@ -423,7 +423,7 @@ Rendering Budget per Frame (Target: 60 FPS = 16.6ms | 120 FPS = 8.33ms)
 
 ## 19. Key Takeaways
 
-1. **The Critical Rendering Path has 5 stages:** Parse $\rightarrow$ Style $\rightarrow$ Layout $\rightarrow$ Paint $\rightarrow$ Composite.
+1. **The Critical Rendering Path has 5 stages:** Parse → Style → Layout → Paint → Composite.
 2. **`display: none` is excluded from the Render Tree;** `visibility: hidden` is included in Layout and preserves physical space.
 3. **Always animate with `transform` and `opacity`** to achieve 60/120 FPS by skipping Layout and Paint.
 4. **Reserve space for images and ads with `aspect-ratio`** to eliminate Cumulative Layout Shift (CLS).

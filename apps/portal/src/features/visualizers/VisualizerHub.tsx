@@ -1,3 +1,7 @@
+import { MemoryRetainerLab } from './topic-09-memory/MemoryRetainerLab';
+import { QueryCacheLab } from './topic-04-state/QueryCacheLab';
+import { VirtualizationLab } from './topic-08-performance/VirtualizationLab';
+import { Database, Zap } from 'lucide-react';
 import React, { useState } from 'react';
 import { JsxCompilerLab } from './topic-03-jsx/JsxCompilerLab';
 import { ComponentPurityLab } from './topic-04-purity/ComponentPurityLab';
@@ -14,220 +18,255 @@ interface VisualizerHubProps {
   initialLabId?: string | null;
 }
 
+interface LabMeta {
+  id: string;
+  number: string;
+  title: string;
+  phaseBadge: string;
+  tagline: string;
+  icon: React.ComponentType<{ size: number }>;
+  color: string;
+}
+
+const LABS_CONFIG: LabMeta[] = [
+  {
+    id: 'lab-20-memory-retainer',
+    number: '20',
+    title: 'V8 Heap & Retainer Graph',
+    phaseBadge: 'Phase 01: JS Runtime',
+    tagline: 'GC Roots, detached DOM tree memory retention, and Tri-Color marking sweep.',
+    icon: Database,
+    color: '#ef4444'
+  },
+  {
+    id: 'lab-21-query-cache',
+    number: '21',
+    title: 'Query Cache & Optimistic Rollback',
+    phaseBadge: 'Phase 05: State Architecture',
+    tagline: 'TanStack Query state machine (fresh, stale, inactive, gc) and rollback on 500 error.',
+    icon: Zap,
+    color: 'var(--amber-warning, #f59e0b)'
+  },
+  {
+    id: 'lab-22-virtualization',
+    number: '22',
+    title: 'Virtualization & Viewport Culling',
+    phaseBadge: 'Phase 08: Performance',
+    tagline: '1,000 dataset rows culled into 12 physical DOM elements with translateY recycling.',
+    icon: Layers,
+    color: 'var(--emerald-success, #10b981)'
+  },
+
+  {
+    id: 'lab-04-event-loop',
+    number: '04',
+    title: 'Event Loop & INP Engine',
+    phaseBadge: 'Phase 01: JS Runtime',
+    tagline: '4-Lane reactor, microtasks, timers, and browser render frame time-slicing.',
+    icon: Cpu,
+    color: 'var(--react-cyan)'
+  },
+  {
+    id: 'lab-10-jsx-compiler',
+    number: '10',
+    title: 'JSX Compiler & $$typeof',
+    phaseBadge: 'Phase 03: React Core',
+    tagline: 'AST desugaring, classic vs automatic runtime, and Symbol security protection.',
+    icon: Code2,
+    color: 'var(--react-cyan)'
+  },
+  {
+    id: 'lab-11-component-purity',
+    number: '11',
+    title: 'Component Purity & StrictMode',
+    phaseBadge: 'Phase 03: React Core',
+    tagline: 'Double-invoking renders, side-effect detection, and idempotent execution.',
+    icon: GitCompare,
+    color: 'var(--purple-accent)'
+  },
+  {
+    id: 'lab-12-render-cycle-stepper',
+    number: '12',
+    title: 'Render Cycle Timeline Stepper',
+    phaseBadge: 'Phase 03: React Core',
+    tagline: 'Render vs Commit phase timeline, DOM mutation, and layout effect execution.',
+    icon: Activity,
+    color: 'var(--emerald-success)'
+  },
+  {
+    id: 'lab-14-fiber-reconciliation',
+    number: '14',
+    title: 'Fiber Linked-List & Key Diffing',
+    phaseBadge: 'Phase 04: Fiber Architecture',
+    tagline: 'Cooperative time-slicing, return/child/sibling pointers, and key diffing.',
+    icon: GitBranch,
+    color: '#38bdf8'
+  },
+  {
+    id: 'lab-19-rsc-flight',
+    number: '19',
+    title: 'RSC Flight Wire Format Parser',
+    phaseBadge: 'Phase 06: Next.js & RSC',
+    tagline: 'Streaming Flight chunk protocol, client boundary references, and serialization.',
+    icon: Terminal,
+    color: '#f472b6'
+  },
+  {
+    id: 'topic-09-architecture',
+    number: '09',
+    title: 'Architecture & Strangler Fig',
+    phaseBadge: 'Phase 09: Enterprise Architecture',
+    tagline: 'Domain boundaries, micro-frontends, and Strangler Fig monolith migration.',
+    icon: Box,
+    color: 'var(--amber-warning, #f59e0b)'
+  },
+  {
+    id: 'topic-10-testing',
+    number: '10',
+    title: 'Testing Trophy & MSW Mocking',
+    phaseBadge: 'Phase 10: Modern Testing',
+    tagline: 'Testing pyramid runner, user event interaction, and MSW network mock layer.',
+    icon: ShieldCheck,
+    color: 'var(--purple-accent, #a855f7)'
+  },
+  {
+    id: 'topic-11-system-design',
+    number: '11',
+    title: 'System Design Canvas & CRDTs',
+    phaseBadge: 'Phase 11: System Design',
+    tagline: 'Real-time collaborative canvas, peer nodes, and CRDT state convergence.',
+    icon: Network,
+    color: 'var(--react-cyan, #0ea5e9)'
+  }
+];
+
 export const VisualizerHub: React.FC<VisualizerHubProps> = ({ initialLabId }) => {
-  const [activeLab, setActiveLab] = useState<string>(initialLabId || 'lab-10-jsx-compiler');
+  const [activeLab, setActiveLab] = useState<string>(initialLabId || 'lab-04-event-loop');
 
   return (
-    <div style={{ padding: '2rem', maxWidth: '1200px', margin: '0 auto' }}>
+    <div style={{ padding: '2rem', maxWidth: '1440px', margin: '0 auto' }}>
       {/* Header Banner */}
-      <div style={{ marginBottom: '2rem' }}>
-        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(0, 216, 255, 0.1)', color: 'var(--react-cyan)', padding: '0.35rem 0.75rem', borderRadius: '20px', fontSize: '0.82rem', fontWeight: 600, marginBottom: '0.75rem' }}>
-          <Layers size={15} /> Living Simulation Arena
+      <div style={{ marginBottom: '1.75rem' }}>
+        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(0, 216, 255, 0.1)', color: 'var(--react-cyan)', padding: '0.35rem 0.75rem', borderRadius: '20px', fontSize: '0.82rem', fontWeight: 600, marginBottom: '0.6rem' }}>
+          <Layers size={15} /> Living Simulation Arena • 12 Active Laboratories
         </div>
-        <h1 style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.5rem', letterSpacing: '-0.02em' }}>
+        <h1 style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.4rem', letterSpacing: '-0.02em' }}>
           Interactive React & Runtime Laboratories
         </h1>
-        <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', maxWidth: '800px', margin: 0 }}>
+        <p style={{ color: 'var(--text-secondary)', fontSize: '0.98rem', maxWidth: '850px', margin: 0, lineHeight: 1.5 }}>
           Hands-on visual simulators proving the engine mechanics of V8 Event Loop, JSX AST desugaring, StrictMode, Fiber Reconciliation, RSC Flight protocol, and System Design.
         </p>
       </div>
 
-      {/* Lab Switcher Tabs */}
-      <div style={{ display: 'flex', gap: '0.5rem', borderBottom: '1px solid var(--border-subtle)', paddingBottom: '1rem', marginBottom: '1.5rem', overflowX: 'auto' }}>
-        <button
-          onClick={() => setActiveLab('lab-04-event-loop')}
+      {/* 2-Column Master-Detail Layout */}
+      <div style={{ display: 'flex', gap: '1.75rem', alignItems: 'flex-start' }}>
+        {/* Left Vertical Simulation Navigation Panel */}
+        <div
           style={{
+            width: '320px',
+            flexShrink: 0,
+            position: 'sticky',
+            top: '80px',
+            maxHeight: 'calc(100vh - 100px)',
+            overflowY: 'auto',
+            background: 'var(--bg-secondary)',
+            border: '1px solid var(--border-subtle)',
+            borderRadius: '12px',
+            padding: '0.85rem',
+            boxShadow: 'var(--shadow-sm)',
             display: 'flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            padding: '0.65rem 1.15rem',
-            borderRadius: '8px',
-            background: activeLab === 'lab-04-event-loop' ? 'var(--bg-tertiary)' : 'transparent',
-            color: activeLab === 'lab-04-event-loop' ? 'var(--react-cyan)' : 'var(--text-secondary)',
-            border: activeLab === 'lab-04-event-loop' ? '1px solid var(--border-medium)' : '1px solid transparent',
-            fontWeight: 600,
-            cursor: 'pointer',
-            fontSize: '0.9rem',
-            whiteSpace: 'nowrap'
+            flexDirection: 'column',
+            gap: '0.45rem'
           }}
         >
-          <Cpu size={18} /> Lab 04: Event Loop & INP
-        </button>
+          <div style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.06em', padding: '0.3rem 0.6rem 0.4rem 0.6rem', borderBottom: '1px solid var(--border-subtle)', marginBottom: '0.3rem' }}>
+            Available Simulations (12)
+          </div>
 
-        <button
-          onClick={() => setActiveLab('lab-10-jsx-compiler')}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            padding: '0.65rem 1.15rem',
-            borderRadius: '8px',
-            background: activeLab === 'lab-10-jsx-compiler' ? 'var(--bg-tertiary)' : 'transparent',
-            color: activeLab === 'lab-10-jsx-compiler' ? 'var(--react-cyan)' : 'var(--text-secondary)',
-            border: activeLab === 'lab-10-jsx-compiler' ? '1px solid var(--border-medium)' : '1px solid transparent',
-            fontWeight: 600,
-            cursor: 'pointer',
-            fontSize: '0.9rem',
-            whiteSpace: 'nowrap'
-          }}
-        >
-          <Code2 size={18} /> Lab 10: JSX Compiler & $$typeof
-        </button>
+          {LABS_CONFIG.map(lab => {
+            const Icon = lab.icon;
+            const isSelected = activeLab === lab.id;
 
-        <button
-          onClick={() => setActiveLab('lab-11-component-purity')}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            padding: '0.65rem 1.15rem',
-            borderRadius: '8px',
-            background: activeLab === 'lab-11-component-purity' ? 'var(--bg-tertiary)' : 'transparent',
-            color: activeLab === 'lab-11-component-purity' ? 'var(--purple-accent)' : 'var(--text-secondary)',
-            border: activeLab === 'lab-11-component-purity' ? '1px solid var(--border-medium)' : '1px solid transparent',
-            fontWeight: 600,
-            cursor: 'pointer',
-            fontSize: '0.9rem',
-            whiteSpace: 'nowrap'
-          }}
-        >
-          <GitCompare size={18} /> Lab 11: Purity & StrictMode
-        </button>
+            return (
+              <button
+                key={lab.id}
+                onClick={() => setActiveLab(lab.id)}
+                style={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  gap: '0.75rem',
+                  padding: '0.75rem 0.85rem',
+                  borderRadius: '8px',
+                  background: isSelected ? 'var(--bg-tertiary)' : 'transparent',
+                  border: isSelected ? '1px solid var(--border-medium)' : '1px solid transparent',
+                  borderLeft: isSelected ? `4px solid ${lab.color}` : '4px solid transparent',
+                  textAlign: 'left',
+                  cursor: 'pointer',
+                  transition: 'all 120ms ease',
+                  width: '100%',
+                  position: 'relative'
+                }}
+                onMouseEnter={e => {
+                  if (!isSelected) {
+                    e.currentTarget.style.background = 'rgba(2, 132, 199, 0.06)';
+                  }
+                }}
+                onMouseLeave={e => {
+                  if (!isSelected) {
+                    e.currentTarget.style.background = 'transparent';
+                  }
+                }}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '32px',
+                    height: '32px',
+                    borderRadius: '8px',
+                    background: isSelected ? 'rgba(2, 132, 199, 0.15)' : 'var(--bg-primary)',
+                    color: lab.color,
+                    flexShrink: 0,
+                    marginTop: '2px'
+                  }}
+                >
+                  <Icon size={17} />
+                </div>
 
-        <button
-          onClick={() => setActiveLab('lab-12-render-cycle-stepper')}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            padding: '0.65rem 1.15rem',
-            borderRadius: '8px',
-            background: activeLab === 'lab-12-render-cycle-stepper' ? 'var(--bg-tertiary)' : 'transparent',
-            color: activeLab === 'lab-12-render-cycle-stepper' ? 'var(--emerald-success)' : 'var(--text-secondary)',
-            border: activeLab === 'lab-12-render-cycle-stepper' ? '1px solid var(--border-medium)' : '1px solid transparent',
-            fontWeight: 600,
-            cursor: 'pointer',
-            fontSize: '0.9rem',
-            whiteSpace: 'nowrap'
-          }}
-        >
-          <Activity size={18} /> Lab 12: Render Cycle Stepper
-        </button>
+                <div style={{ minWidth: 0, flex: 1 }}>
+                  <div style={{ fontSize: '0.7rem', color: isSelected ? lab.color : 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '2px' }}>
+                    {lab.phaseBadge}
+                  </div>
+                  <div style={{ fontSize: '0.88rem', fontWeight: isSelected ? 700 : 600, color: isSelected ? 'var(--text-primary)' : 'var(--text-secondary)', lineHeight: 1.3, marginBottom: '3px' }}>
+                    {lab.title}
+                  </div>
+                  <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)', lineHeight: 1.35, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                    {lab.tagline}
+                  </div>
+                </div>
+              </button>
+            );
+          })}
+        </div>
 
-        <button
-          onClick={() => setActiveLab('lab-14-fiber-reconciliation')}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            padding: '0.65rem 1.15rem',
-            borderRadius: '8px',
-            background: activeLab === 'lab-14-fiber-reconciliation' ? 'var(--bg-tertiary)' : 'transparent',
-            color: activeLab === 'lab-14-fiber-reconciliation' ? '#38bdf8' : 'var(--text-secondary)',
-            border: activeLab === 'lab-14-fiber-reconciliation' ? '1px solid var(--border-medium)' : '1px solid transparent',
-            fontWeight: 600,
-            cursor: 'pointer',
-            fontSize: '0.9rem',
-            whiteSpace: 'nowrap'
-          }}
-        >
-          <GitBranch size={18} /> Lab 14: Fiber & Key Diffing
-        </button>
+        {/* Right Active Lab Canvas */}
+        <div style={{ flex: 1, minWidth: 0 }}>
+          {activeLab === 'lab-04-event-loop' && <EventLoopLab />}
+          {activeLab === 'lab-10-jsx-compiler' && <JsxCompilerLab />}
+          {activeLab === 'lab-11-component-purity' && <ComponentPurityLab />}
+          {activeLab === 'lab-12-render-cycle-stepper' && <RenderCycleLab />}
+          {activeLab === 'lab-14-fiber-reconciliation' && <FiberReconciliationLab />}
+          {activeLab === 'lab-19-rsc-flight' && <RscFlightLab />}
+          {activeLab === 'topic-09-architecture' && <ArchitectureLab />}
+          {activeLab === 'topic-10-testing' && <TestingLab />}
+          {activeLab === 'topic-11-system-design' && <CanvasDesignLab />}
+          {activeLab === 'lab-20-memory-retainer' && <MemoryRetainerLab />}
+          {activeLab === 'lab-21-query-cache' && <QueryCacheLab />}
+          {activeLab === 'lab-22-virtualization' && <VirtualizationLab />}
 
-        <button
-          onClick={() => setActiveLab('lab-19-rsc-flight')}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            padding: '0.65rem 1.15rem',
-            borderRadius: '8px',
-            background: activeLab === 'lab-19-rsc-flight' ? 'var(--bg-tertiary)' : 'transparent',
-            color: activeLab === 'lab-19-rsc-flight' ? '#f472b6' : 'var(--text-secondary)',
-            border: activeLab === 'lab-19-rsc-flight' ? '1px solid var(--border-medium)' : '1px solid transparent',
-            fontWeight: 600,
-            cursor: 'pointer',
-            fontSize: '0.9rem',
-            whiteSpace: 'nowrap'
-          }}
-        >
-          <Terminal size={18} /> Lab 19: RSC Flight Parser
-        </button>
-
-        <button
-          onClick={() => setActiveLab('topic-09-architecture')}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            padding: '0.65rem 1.15rem',
-            borderRadius: '8px',
-            background: activeLab === 'topic-09-architecture' ? 'var(--bg-tertiary)' : 'transparent',
-            color: activeLab === 'topic-09-architecture' ? 'var(--amber-warning, #f59e0b)' : 'var(--text-secondary)',
-            border: activeLab === 'topic-09-architecture' ? '1px solid var(--border-medium)' : '1px solid transparent',
-            fontWeight: 600,
-            cursor: 'pointer',
-            fontSize: '0.9rem',
-            whiteSpace: 'nowrap'
-          }}
-        >
-          <Box size={18} /> Lab 09: Architecture & Strangler Fig
-        </button>
-
-        <button
-          onClick={() => setActiveLab('topic-10-testing')}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            padding: '0.65rem 1.15rem',
-            borderRadius: '8px',
-            background: activeLab === 'topic-10-testing' ? 'var(--bg-tertiary)' : 'transparent',
-            color: activeLab === 'topic-10-testing' ? 'var(--purple-accent, #a855f7)' : 'var(--text-secondary)',
-            border: activeLab === 'topic-10-testing' ? '1px solid var(--border-medium)' : '1px solid transparent',
-            fontWeight: 600,
-            cursor: 'pointer',
-            fontSize: '0.9rem',
-            whiteSpace: 'nowrap'
-          }}
-        >
-          <ShieldCheck size={18} /> Lab 10: Testing Trophy
-        </button>
-
-        <button
-          onClick={() => setActiveLab('topic-11-system-design')}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            padding: '0.65rem 1.15rem',
-            borderRadius: '8px',
-            background: activeLab === 'topic-11-system-design' ? 'var(--bg-tertiary)' : 'transparent',
-            color: activeLab === 'topic-11-system-design' ? 'var(--react-cyan, #0ea5e9)' : 'var(--text-secondary)',
-            border: activeLab === 'topic-11-system-design' ? '1px solid var(--border-medium)' : '1px solid transparent',
-            fontWeight: 600,
-            cursor: 'pointer',
-            fontSize: '0.9rem',
-            whiteSpace: 'nowrap'
-          }}
-        >
-          <Network size={18} /> Lab 11: System Design Canvas
-        </button>
-      </div>
-
-      {/* Active Lab Viewport */}
-      <div>
-        {activeLab === 'lab-04-event-loop' && <EventLoopLab />}
-        {activeLab === 'lab-10-jsx-compiler' && <JsxCompilerLab />}
-        {activeLab === 'lab-11-component-purity' && <ComponentPurityLab />}
-        {activeLab === 'lab-12-render-cycle-stepper' && <RenderCycleLab />}
-        {activeLab === 'lab-14-fiber-reconciliation' && <FiberReconciliationLab />}
-        {activeLab === 'lab-19-rsc-flight' && <RscFlightLab />}
-        {activeLab === 'topic-09-architecture' && <ArchitectureLab />}
-        {activeLab === 'topic-10-testing' && <TestingLab />}
-        {activeLab === 'topic-11-system-design' && <CanvasDesignLab />}
+        </div>
       </div>
     </div>
   );
 };
-

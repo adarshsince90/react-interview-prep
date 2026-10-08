@@ -418,7 +418,7 @@ Benchmarking an enterprise e-commerce product catalog:
 | **Client JavaScript Bundle** | 480 KB (gzipped) | **38 KB (gzipped)** | **92% Reduction** |
 | **Script Parse & Compile Time** | 220 ms (Mobile CPU) | **18 ms** | **12x Faster** |
 | **Total Blocking Time (TBT)** | 350 ms | **0 ms** | **100% Elimination** |
-| **Database Latency** | 200ms (Client $\rightarrow$ API $\rightarrow$ DB) | **2ms (Colocated Server $\rightarrow$ DB)** | **100x Faster Data Access** |
+| **Database Latency** | 200ms (Client → API → DB) | **2ms (Colocated Server → DB)** | **100x Faster Data Access** |
 
 ---
 

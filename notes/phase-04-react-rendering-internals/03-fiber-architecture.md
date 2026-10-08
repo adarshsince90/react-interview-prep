@@ -169,9 +169,9 @@ Why did React reject `children[]` in favor of `child`, `sibling`, and `return`?
 2. **$O(1)$ Child Insertion & Sibling Navigation:**  
    In linked lists, splicing or advancing across siblings is a pointer assignment (`fiber.sibling`), avoiding array reallocation and index shifting in V8 New Space.
 3. **The "Call Stack" Analogy:**
-   - `child` $\rightarrow$ Calling a nested function (`push` frame).
-   - `sibling` $\rightarrow$ Executing the next statement in the same function block.
-   - `return` $\rightarrow$ Returning a value back to the caller (`pop` frame).
+   - `child` → Calling a nested function (`push` frame).
+   - `sibling` → Executing the next statement in the same function block.
+   - `return` → Returning a value back to the caller (`pop` frame).
 
 ---
 
@@ -248,7 +248,7 @@ graph TD
    - No child exists! React invokes `completeUnitOfWork(UserAvatar)`.
    - Runs `completeWork(UserAvatar)`: creates physical DOM node for avatar.
    - Checks: Does `UserAvatar.sibling` exist? **No.**
-   - Ascends to parent: `UserAvatar.return` $\rightarrow$ `Sidebar`.
+   - Ascends to parent: `UserAvatar.return` → `Sidebar`.
 4. **`completeUnitOfWork(Sidebar)`:**
    - Runs `completeWork(Sidebar)`: attaches avatar DOM node into sidebar DOM container.
    - Bubbles effect flags up to parent.
@@ -257,7 +257,7 @@ graph TD
 5. **`performUnitOfWork(MainContent)`:**
    - Runs `beginWork(MainContent)` ... descends and completes.
 6. **Final Ascent:**
-   - `MainContent` completes $\rightarrow$ Ascends to `App` $\rightarrow$ `completeWork(App)` finishes.
+   - `MainContent` completes → Ascends to `App` → `completeWork(App)` finishes.
    - `workInProgress` becomes `null`.
    - **Render Phase Ends. React transitions to atomic synchronous Commit Phase!**
 
@@ -588,7 +588,7 @@ Fiber prevents tearing via **Double Buffering**:
 
 ## 20. Revision Sheet
 
-- **Core Problem Solved:** Cannot pause a native call stack $\rightarrow$ Re-implement the stack on the V8 heap.
+- **Core Problem Solved:** Cannot pause a native call stack → Re-implement the stack on the V8 heap.
 - **Pointers Matrix:**
   - `child`: Pointer to first child.
   - `sibling`: Pointer to immediate next sibling.

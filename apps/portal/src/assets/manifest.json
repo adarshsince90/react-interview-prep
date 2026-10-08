@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-07T06:46:45.831Z",
+  "generatedAt": "2026-10-08T06:49:39.133Z",
   "totalPhases": 12,
   "totalTopics": 110,
   "phases": [
@@ -17,7 +17,7 @@
           "phaseId": "phase-01",
           "title": "Chapter 01: The JavaScript Execution Model",
           "relativePath": "notes/phase-01-javascript-runtime-foundations/01-javascript-execution-model.md",
-          "wordCount": 4507,
+          "wordCount": 4509,
           "readingTimeMin": 21,
           "headings": [
             {
@@ -101,6 +101,7 @@
               "anchor": "19-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -191,6 +192,32 @@
             {
               "title": "20. Revision Sheet",
               "anchor": "20-revision-sheet"
+            }
+          ],
+          "concepts": [
+            {
+              "term": "Lexical Scope",
+              "definition": "Scope defined strictly at author time by the physical placement of blocks in code."
+            },
+            {
+              "term": "Environment Record",
+              "definition": "The internal dictionary data structure that maps variable names to values inside an Execution Context."
+            },
+            {
+              "term": "VariableEnvironment",
+              "definition": "The internal store that holds legacy function-scoped `var` variables."
+            },
+            {
+              "term": "LexicalEnvironment",
+              "definition": "The internal store that holds modern block-scoped `let`, `const`, and `class` variables."
+            },
+            {
+              "term": "Hoisting",
+              "definition": "An observational artifact of the Creation Phase allocating memory for identifiers before code runs."
+            },
+            {
+              "term": "Temporal Dead Zone (TDZ)",
+              "definition": "The time interval between scope entry and declaration line evaluation where accessing a variable throws a `ReferenceError`."
             }
           ],
           "lab": null
@@ -285,6 +312,32 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [
+            {
+              "term": "Closure",
+              "definition": "A function bundled with references to its enclosing Lexical Environment (`[[Scopes]]`)."
+            },
+            {
+              "term": "Escape Analysis",
+              "definition": "The compiler phase where V8 determines whether a local variable escapes the Call Stack and must be allocated on the heap."
+            },
+            {
+              "term": "`[[Scopes]]`",
+              "definition": "The internal, hidden property on every JS function object that points to its parent lexical contexts."
+            },
+            {
+              "term": "Dependency Array",
+              "definition": "A watch list array passed as the second argument to `useEffect` telling React when to re-execute the effect."
+            },
+            {
+              "term": "Stale Closure",
+              "definition": "A closure that holds onto an outdated execution context snapshot while the surrounding application has moved forward to newer state."
+            },
+            {
+              "term": "Shared Context Leak",
+              "definition": "A V8 memory leak where an unused large variable is kept alive because another active closure shares the same lexical `Context` object."
+            }
+          ],
           "lab": null
         },
         {
@@ -293,7 +346,7 @@
           "phaseId": "phase-01",
           "title": "Chapter 04: The Event Loop & Asynchronous Runtime Architecture",
           "relativePath": "notes/phase-01-javascript-runtime-foundations/04-event-loop.md",
-          "wordCount": 5438,
+          "wordCount": 5440,
           "readingTimeMin": 25,
           "headings": [
             {
@@ -377,6 +430,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": {
             "labId": "lab-04-event-loop",
             "title": "4-Lane Event Loop & INP Budget Simulator",
@@ -389,7 +443,7 @@
           "phaseId": "phase-01",
           "title": "Chapter 05: Promises, Async/Await Internals & Error Propagation",
           "relativePath": "notes/phase-01-javascript-runtime-foundations/05-promises-async-await.md",
-          "wordCount": 4540,
+          "wordCount": 4546,
           "readingTimeMin": 21,
           "headings": [
             {
@@ -473,6 +527,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -481,7 +536,7 @@
           "phaseId": "phase-01",
           "title": "Chapter 06: Objects, Prototypes, Prototype Chains & this Mechanics",
           "relativePath": "notes/phase-01-javascript-runtime-foundations/06-objects-prototypes-this.md",
-          "wordCount": 3647,
+          "wordCount": 3650,
           "readingTimeMin": 17,
           "headings": [
             {
@@ -565,6 +620,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -573,7 +629,7 @@
           "phaseId": "phase-01",
           "title": "Chapter 07: Functional JavaScript Foundations",
           "relativePath": "notes/phase-01-javascript-runtime-foundations/07-functional-javascript.md",
-          "wordCount": 4307,
+          "wordCount": 4312,
           "readingTimeMin": 20,
           "headings": [
             {
@@ -657,6 +713,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -665,7 +722,7 @@
           "phaseId": "phase-01",
           "title": "Chapter 08: Modern ECMAScript (ES6+) Features",
           "relativePath": "notes/phase-01-javascript-runtime-foundations/08-modern-es6-plus.md",
-          "wordCount": 5566,
+          "wordCount": 5572,
           "readingTimeMin": 26,
           "headings": [
             {
@@ -749,6 +806,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -841,6 +899,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         }
       ]
@@ -943,6 +1002,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -1035,6 +1095,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -1127,6 +1188,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -1219,6 +1281,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -1311,6 +1374,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -1403,6 +1467,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -1495,6 +1560,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -1587,6 +1653,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -1679,6 +1746,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -1771,6 +1839,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         }
       ]
@@ -1841,6 +1910,7 @@
               "anchor": "12-master-system-coordinate-table"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -1933,6 +2003,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -2025,6 +2096,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -2117,6 +2189,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": {
             "labId": "lab-10-jsx-compiler",
             "title": "JSX Compiler & $$typeof Security Inspector",
@@ -2213,6 +2286,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": {
             "labId": "lab-11-component-purity",
             "title": "Component Purity & StrictMode Stress-Tester",
@@ -2309,6 +2383,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": {
             "labId": "lab-12-render-cycle-stepper",
             "title": "Render Cycle Stepper (Trigger -> Render -> Commit)",
@@ -2405,6 +2480,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -2497,6 +2573,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -2589,6 +2666,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -2681,6 +2759,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -2773,6 +2852,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         }
       ]
@@ -2875,6 +2955,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -2967,6 +3048,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": {
             "labId": "lab-14-fiber-reconciliation",
             "title": "Fiber Work Loop & Key Diffing Visualizer",
@@ -3063,6 +3145,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": {
             "labId": "lab-14-fiber-reconciliation",
             "title": "Fiber Work Loop & Key Diffing Visualizer",
@@ -3159,6 +3242,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -3251,6 +3335,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -3343,6 +3428,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -3435,6 +3521,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -3527,6 +3614,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -3619,6 +3707,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": {
             "labId": "lab-19-rsc-flight",
             "title": "RSC Flight Wire Format Stream Parser",
@@ -3715,6 +3804,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         }
       ]
@@ -3817,6 +3907,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -3909,6 +4000,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -4001,6 +4093,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -4093,6 +4186,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -4185,6 +4279,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -4277,6 +4372,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -4369,6 +4465,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -4461,6 +4558,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -4553,6 +4651,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -4645,6 +4744,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         }
       ]
@@ -4703,6 +4803,7 @@
               "anchor": "9-full-stack-curriculum-roadmap-where-to-go-next"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -4795,6 +4896,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -4887,6 +4989,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -4979,6 +5082,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -5071,6 +5175,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -5163,6 +5268,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -5255,6 +5361,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -5347,6 +5454,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -5439,6 +5547,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -5531,6 +5640,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -5623,6 +5733,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         }
       ]
@@ -5725,6 +5836,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -5817,6 +5929,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -5909,6 +6022,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -6001,6 +6115,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -6093,6 +6208,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -6185,6 +6301,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -6277,6 +6394,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -6369,6 +6487,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         }
       ]
@@ -6471,6 +6590,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -6563,6 +6683,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -6655,6 +6776,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -6747,6 +6869,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -6839,6 +6962,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -6931,6 +7055,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -7023,6 +7148,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -7115,6 +7241,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         }
       ]
@@ -7217,6 +7344,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -7309,6 +7437,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -7399,6 +7528,28 @@
             {
               "title": "20. Revision Sheet",
               "anchor": "20-revision-sheet"
+            }
+          ],
+          "concepts": [
+            {
+              "term": "Changeset",
+              "definition": "A markdown file recording version bump intentions and release notes committed alongside code in a feature branch."
+            },
+            {
+              "term": "Conditional Exports",
+              "definition": "The modern Node.js `package.json` `\"exports\"` field mapping subpaths to specific runtime environments (`import`, `require`, `types`, `browser`)."
+            },
+            {
+              "term": "Tree-Shaking",
+              "definition": "The process where modern bundlers drop unused dead exports from the final bundle, relying on `\"sideEffects\": false`."
+            },
+            {
+              "term": "Hoisting",
+              "definition": "Package manager optimization where common dependencies are moved to the root `node_modules` directory to avoid duplication."
+            },
+            {
+              "term": "Diamond Dependency",
+              "definition": "A topological condition where package A depends on B and C, both of which depend on differing versions of D."
             }
           ],
           "lab": null
@@ -7493,6 +7644,28 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [
+            {
+              "term": "Host",
+              "definition": "The shell application that initializes the share scope and mounts remote components."
+            },
+            {
+              "term": "Remote",
+              "definition": "An independent application build that exposes modules to other applications via `remoteEntry.js`."
+            },
+            {
+              "term": "Share Scope",
+              "definition": "The shared global in-memory registry where host and remotes register and resolve compatible dependency versions."
+            },
+            {
+              "term": "Eager Consumption",
+              "definition": "Bundling a shared dependency directly into the initial entry chunk rather than loading it asynchronously."
+            },
+            {
+              "term": "Bi-directional Federation",
+              "definition": "An architecture where an application simultaneously acts as a host (consuming remotes) and a remote (exposing widgets to others)."
+            }
+          ],
           "lab": null
         },
         {
@@ -7583,6 +7756,28 @@
             {
               "title": "20. Revision Sheet",
               "anchor": "20-revision-sheet"
+            }
+          ],
+          "concepts": [
+            {
+              "term": "Headless UI",
+              "definition": "Components providing state and accessibility behavior without injecting any HTML markup or CSS styling."
+            },
+            {
+              "term": "Design Tokens",
+              "definition": "The atomic visual design decisions of an organization stored in platform-agnostic format (JSON)."
+            },
+            {
+              "term": "Slot Pattern (`asChild`)",
+              "definition": "A composition pattern where a parent passes its props and behavior onto its immediate child element."
+            },
+            {
+              "term": "WAI-ARIA APG",
+              "definition": "Accessible Rich Internet Applications Authoring Practices Guide—the official W3C specification for accessible widgets."
+            },
+            {
+              "term": "Roving Tabindex",
+              "definition": "A keyboard navigation strategy where only the currently focused item has `tabIndex=\"0\"` and all siblings have `tabIndex=\"-1\"`."
             }
           ],
           "lab": null
@@ -7677,6 +7872,28 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [
+            {
+              "term": "Layer",
+              "definition": "The highest-level hierarchy in FSD (App, Pages, Widgets, Features, Entities, Shared)."
+            },
+            {
+              "term": "Slice",
+              "definition": "A business domain partition within a layer (e.g., `features/add-to-cart`, `entities/product`)."
+            },
+            {
+              "term": "Segment",
+              "definition": "A technical concern within a slice (`ui`, `model`, `api`, `lib`)."
+            },
+            {
+              "term": "Public API",
+              "definition": "The `index.ts` file at the root of a slice defining the contract exposed to outside layers."
+            },
+            {
+              "term": "Unidirectional Flow",
+              "definition": "The architectural constraint that modules can only import code from strictly lower layers."
+            }
+          ],
           "lab": null
         },
         {
@@ -7769,6 +7986,28 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [
+            {
+              "term": "Repository Pattern",
+              "definition": "An abstraction layer between business logic and data storage/transport mechanisms."
+            },
+            {
+              "term": "Runtime Validation",
+              "definition": "Verifying that untyped external data (JSON) matches expected types at runtime using libraries like Zod."
+            },
+            {
+              "term": "Dependency Inversion Principle (DIP)",
+              "definition": "Software design principle stating that high-level modules should depend on abstractions, not concrete implementations."
+            },
+            {
+              "term": "TanStack Query",
+              "definition": "Server-state synchronization library managing caching, deduplication, and stale data."
+            },
+            {
+              "term": "Hermetic Testing",
+              "definition": "Tests that run in complete isolation from external services, networks, or file systems."
+            }
+          ],
           "lab": null
         },
         {
@@ -7859,6 +8098,28 @@
             {
               "title": "20. Revision Sheet",
               "anchor": "20-revision-sheet"
+            }
+          ],
+          "concepts": [
+            {
+              "term": "Strangler Fig Pattern",
+              "definition": "An architectural pattern where legacy systems are incrementally replaced by new systems around their edges until the legacy system is completely superseded."
+            },
+            {
+              "term": "AST Codemod",
+              "definition": "Abstract Syntax Tree code transformation scripts (using tools like `jscodeshift`) that parse, modify, and re-generate code files programmatically."
+            },
+            {
+              "term": "Reverse Proxy Routing",
+              "definition": "Intercepting inbound HTTP requests at the edge and proxying them to different origin servers based on URL path rules."
+            },
+            {
+              "term": "BroadcastChannel API",
+              "definition": "Browser API allowing simple publish-subscribe communication between different windows, tabs, or frames of the same origin."
+            },
+            {
+              "term": "Big Bang Rewrite",
+              "definition": "The anti-pattern of attempting to rebuild an entire software system from scratch in parallel while freezing legacy development."
             }
           ],
           "lab": null
@@ -7963,6 +8224,28 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [
+            {
+              "term": "Testing Trophy",
+              "definition": "A testing model prioritizing Integration tests as the highest ROI layer in modern frontend development."
+            },
+            {
+              "term": "Shallow Rendering",
+              "definition": "The legacy practice of rendering only the immediate parent component while stubbing all children (now an anti-pattern)."
+            },
+            {
+              "term": "Hermetic Testing",
+              "definition": "Tests that run in complete isolation with zero reliance on external networks, shared databases, or third-party states."
+            },
+            {
+              "term": "User-Centric Queries",
+              "definition": "Selecting DOM elements using accessibility attributes (`getByRole('button', { name: /save/i })`) matching how assistive tech and users find elements."
+            },
+            {
+              "term": "Mutation Testing",
+              "definition": "An advanced quality tool (e.g., Stryker) that intentionally introduces bugs into application code to verify whether existing tests catch them."
+            }
+          ],
           "lab": null
         },
         {
@@ -8053,6 +8336,28 @@
             {
               "title": "20. Revision Sheet",
               "anchor": "20-revision-sheet"
+            }
+          ],
+          "concepts": [
+            {
+              "term": "Vitest",
+              "definition": "Vite-native test runner leveraging Vite's transformation pipeline and worker threads."
+            },
+            {
+              "term": "Happy-DOM",
+              "definition": "A high-performance, lightweight simulated DOM environment designed for fast testing."
+            },
+            {
+              "term": "JSDOM",
+              "definition": "A comprehensive, spec-compliant JavaScript implementation of W3C DOM and HTML standards."
+            },
+            {
+              "term": "AST Hoisting",
+              "definition": "Compiler optimization where specific function calls (`vi.mock`) are moved to the top of the file before imports evaluate."
+            },
+            {
+              "term": "vi.hoisted()",
+              "definition": "Vitest utility allowing variable declarations to be hoisted alongside `vi.mock()` calls."
             }
           ],
           "lab": null
@@ -8147,6 +8452,28 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [
+            {
+              "term": "Accessible Name",
+              "definition": "The text string computed by the browser representing an element in the accessibility tree (derived from text content, `aria-label`, or `<label>`)."
+            },
+            {
+              "term": "userEvent",
+              "definition": "The official library for dispatching realistic browser event chains (hover, focus, typing, clicking)."
+            },
+            {
+              "term": "fireEvent",
+              "definition": "Primitive utility dispatching synthetic DOM events without browser side-effects."
+            },
+            {
+              "term": "waitFor",
+              "definition": "Utility that retries an assertion until it passes or times out."
+            },
+            {
+              "term": "Implementation Details",
+              "definition": "Code specifics that users do not observe (state variable names, component hierarchy, private methods)."
+            }
+          ],
           "lab": null
         },
         {
@@ -8237,6 +8564,28 @@
             {
               "title": "20. Revision Sheet",
               "anchor": "20-revision-sheet"
+            }
+          ],
+          "concepts": [
+            {
+              "term": "MSW (Mock Service Worker)",
+              "definition": "An API mocking library that intercepts requests at the network level using Service Workers in the browser and socket interception in Node."
+            },
+            {
+              "term": "HttpResponse.json()",
+              "definition": "MSW v2 standard factory method creating a W3C-compliant Response object with serialized JSON."
+            },
+            {
+              "term": "server.use()",
+              "definition": "Method to dynamically prepend test-specific request handlers at runtime."
+            },
+            {
+              "term": "server.resetHandlers()",
+              "definition": "Method to purge runtime overrides and restore the initial handler stack."
+            },
+            {
+              "term": "Mock Drift",
+              "definition": "The discrepancy that occurs over time when mock data diverges from real production API contracts."
             }
           ],
           "lab": null
@@ -8331,6 +8680,28 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [
+            {
+              "term": "renderHook",
+              "definition": "Testing utility that mounts a custom hook inside a synthetic component harness to satisfy React's Hook rules."
+            },
+            {
+              "term": "result.current",
+              "definition": "The mutable object property holding the most recent return value of the hook."
+            },
+            {
+              "term": "act()",
+              "definition": "React utility ensuring all pending effects, state updates, and microtasks are completely flushed before continuing."
+            },
+            {
+              "term": "Test Hermeticity",
+              "definition": "The principle that each test runs in complete isolation with zero shared state or side-effects from preceding tests."
+            },
+            {
+              "term": "createWrapper",
+              "definition": "Function providing fresh React Context and QueryClient instances per test."
+            }
+          ],
           "lab": null
         },
         {
@@ -8421,6 +8792,28 @@
             {
               "title": "20. Revision Sheet",
               "anchor": "20-revision-sheet"
+            }
+          ],
+          "concepts": [
+            {
+              "term": "Feature Slice Testing",
+              "definition": "Mounting an entire domain workflow (wizards, forms, routers) in-memory rather than testing individual sub-components in isolation."
+            },
+            {
+              "term": "MemoryRouter",
+              "definition": "In-memory React Router implementation that stores history internally in an array, making it perfect for tests."
+            },
+            {
+              "term": "Optimistic Rollback",
+              "definition": "Reverting UI state back to its previous valid snapshot when a speculative mutation fails on the server."
+            },
+            {
+              "term": "Error Boundary",
+              "definition": "A React component that catches JavaScript errors anywhere in its child component tree, logs the errors, and displays a fallback UI."
+            },
+            {
+              "term": "Focus Trap",
+              "definition": "An accessibility mechanism ensuring keyboard focus cannot leave an active modal dialog."
             }
           ],
           "lab": null
@@ -8515,6 +8908,28 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [
+            {
+              "term": "BrowserContext",
+              "definition": "An isolated, lightweight incognito session operating within a single browser process."
+            },
+            {
+              "term": "storageState",
+              "definition": "Playwright mechanism to save and restore authentication cookies and local storage to disk."
+            },
+            {
+              "term": "Auto-Waiting",
+              "definition": "Automatic polling of actionability criteria (visible, stable, enabled) prior to executing user actions."
+            },
+            {
+              "term": "Trace Viewer",
+              "definition": "Playwright visual inspection tool recording DOM snapshots, network waterfalls, and console logs."
+            },
+            {
+              "term": "Test Sharding",
+              "definition": "Splitting a test suite into N parallel segments executed across separate CI runner machines."
+            }
+          ],
           "lab": null
         },
         {
@@ -8605,6 +9020,28 @@
             {
               "title": "20. Revision Sheet",
               "anchor": "20-revision-sheet"
+            }
+          ],
+          "concepts": [
+            {
+              "term": "Visual Regression Testing",
+              "definition": "Automated comparison of rasterized screenshots against baseline reference images using pixel-diff algorithms."
+            },
+            {
+              "term": "Pixelmatch",
+              "definition": "Ultra-fast, lightweight pixel-level image comparison library used by Playwright."
+            },
+            {
+              "term": "Font Anti-Aliasing",
+              "definition": "The rendering smoothing technique that creates subtle sub-pixel differences across operating systems."
+            },
+            {
+              "term": "Masking",
+              "definition": "Obscuring dynamic elements with solid color blocks during visual capture to eliminate false failures."
+            },
+            {
+              "term": "Dockerized Runner",
+              "definition": "Executing tests inside standardized Linux containers to achieve 100% deterministic visual output."
             }
           ],
           "lab": null
@@ -8709,6 +9146,28 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [
+            {
+              "term": "RADIO Framework",
+              "definition": "Standardized 5-step methodology for frontend system design interviews."
+            },
+            {
+              "term": "Cursor Pagination",
+              "definition": "Pagination strategy referencing a unique record pointer rather than an offset index."
+            },
+            {
+              "term": "State Taxonomy",
+              "definition": "Categorizing state by ownership and persistence: Server Cache, Global Client, URL, Local UI."
+            },
+            {
+              "term": "Actionability",
+              "definition": "Playwright criteria verifying element readiness before dispatching clicks."
+            },
+            {
+              "term": "Mutation Outbox",
+              "definition": "A persistent queue storing offline mutations to be synchronized upon network reconnection."
+            }
+          ],
           "lab": {
             "labId": "topic-11-system-design",
             "title": "Collaborative Canvas & HFT Telemetry Simulator",
@@ -8803,6 +9262,28 @@
             {
               "title": "20. Revision Sheet",
               "anchor": "20-revision-sheet"
+            }
+          ],
+          "concepts": [
+            {
+              "term": "CRDT (Conflict-Free Replicated Data Type)",
+              "definition": "Data structure that can be replicated across multiple computers and merged concurrently without conflicts."
+            },
+            {
+              "term": "QuadTree",
+              "definition": "A 2D spatial tree data structure that recursively subdivides space into four quadrants for fast spatial querying."
+            },
+            {
+              "term": "Immediate Mode",
+              "definition": "Graphics paradigm where the developer explicitly redraws primitives every frame rather than the browser maintaining an object tree."
+            },
+            {
+              "term": "Frustum Culling",
+              "definition": "The graphics optimization of discarding objects outside the visible camera view before issuing draw calls."
+            },
+            {
+              "term": "Lamport Timestamp",
+              "definition": "A logical clock used to determine the partial ordering of events in distributed computer systems."
             }
           ],
           "lab": {
@@ -8901,6 +9382,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -8993,6 +9475,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -9085,6 +9568,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -9177,6 +9661,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -9269,6 +9754,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -9361,6 +9847,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         }
       ]
@@ -9459,6 +9946,7 @@
               "anchor": "19-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -9467,7 +9955,7 @@
           "phaseId": "phase-12",
           "title": "01: Angular to React Architectural Mapping Guide",
           "relativePath": "notes/phase-12-angular-to-react-enterprise-synthesis/01-angular-to-react-architectural-mapping-guide.md",
-          "wordCount": 3904,
+          "wordCount": 3910,
           "readingTimeMin": 18,
           "headings": [
             {
@@ -9551,6 +10039,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -9643,6 +10132,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -9735,6 +10225,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -9827,6 +10318,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -9919,6 +10411,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -10011,6 +10504,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -10103,6 +10597,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         },
         {
@@ -10195,6 +10690,7 @@
               "anchor": "20-revision-sheet"
             }
           ],
+          "concepts": [],
           "lab": null
         }
       ]

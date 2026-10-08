@@ -330,7 +330,7 @@ For senior engineers with background in Angular:
 
 | Dimension | React Context | Angular Dependency Injection |
 | :--- | :--- | :--- |
-| **Resolution Mechanism** | Tree-based visual hierarchy. Evaluates up the Fiber tree until the nearest `<Context.Provider>` is encountered. | Tree-based injector hierarchy (`ElementInjector` $\rightarrow$ `EnvironmentInjector` $\rightarrow$ `Root`). Resolves services via constructor tokens. |
+| **Resolution Mechanism** | Tree-based visual hierarchy. Evaluates up the Fiber tree until the nearest `<Context.Provider>` is encountered. | Tree-based injector hierarchy (`ElementInjector` → `EnvironmentInjector` → `Root`). Resolves services via constructor tokens. |
 | **Change Propagation** | Context is fundamentally a **change-propagation vehicle**. Updating provider value invalidates and re-renders all consumers. | Angular DI is a **wiring mechanism**, not a reactivity engine. Services are instantiated once; reactivity requires RxJS observables or Signals inside the service. |
 | **Bypass Capabilities** | Bypasses `React.memo` and `shouldComponentUpdate` completely. | Follows Angular's change detection strategy (`OnPush` or `Default`). Modifying a service field does not automatically trigger change detection unless integrated with Signals/RxJS. |
 | **Shadowing & Scoping** | Nesting `<Context.Provider>` overrides values for that specific subtree. | Providing a service in `@Component({ providers: [...] })` creates a new scoped instance for that component subtree. |

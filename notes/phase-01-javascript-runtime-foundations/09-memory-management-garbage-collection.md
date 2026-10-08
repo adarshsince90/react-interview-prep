@@ -558,7 +558,7 @@ export const UserProfile: React.FC<{ userId: string }> = ({ userId }) => {
 | **Subscription Lifecycle** | Managed via `takeUntilDestroyed(destroyRef)` (Angular 16+) or manual `sub.unsubscribe()` in `ngOnDestroy`. | Built-in cancellation via cleanup returns `useEffect(() => () => teardown(), [])`. |
 | **DI Retention Traps** | Singletons `@Injectable({ providedIn: 'root' })` holding references to component instances or `ViewContainerRef`. | Context Providers mounted high in the tree holding references to unmounted leaf data. |
 | **Event Monkey-Patching** | **Zone.js:** Monkey-patches all browser async APIs (`addEventListener`, `setTimeout`), adding execution context frames that can preserve memory longer. | Direct native event listeners or React Synthetic Event delegation attached to the root container. |
-| **Verification Tooling** | Angular does not automatically test component destruction out of the box. | **React 18 StrictMode:** In DEV mode, React intentionally mounts $\rightarrow$ unmounts $\rightarrow$ re-mounts every component to immediately expose missing cleanup logic! |
+| **Verification Tooling** | Angular does not automatically test component destruction out of the box. | **React 18 StrictMode:** In DEV mode, React intentionally mounts → unmounts → re-mounts every component to immediately expose missing cleanup logic! |
 
 ---
 

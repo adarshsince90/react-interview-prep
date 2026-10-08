@@ -467,7 +467,7 @@ async function processOrdersModern(orders) {
 
 ## 11. .NET Comparison: CLR Concurrency vs. JavaScript Event Loop
 
-For an engineer with 11+ years of .NET experience, the differences between the CLR and JavaScript asynchronous runtimes are profound:
+For Senior Backend and Enterprise Engineers (C#/.NET, Java, Go, Distributed Systems), the differences between the CLR and JavaScript asynchronous runtimes are profound:
 
 | Architectural Metric | .NET / CLR (C#) | JavaScript (V8 / Browser) |
 | :--- | :--- | :--- |
@@ -648,7 +648,7 @@ console.log('E');
 ```
 
 > **Staff Engineer Answer:**  
-> The output is strictly **A $\rightarrow$ E $\rightarrow$ C $\rightarrow$ D $\rightarrow$ B**.
+> The output is strictly **A → E → C → D → B**.
 > 
 > 1. `console.log('A')` executes synchronously on the Call Stack.
 > 2. `setTimeout` schedules callback `B` into the Macrotask Queue.

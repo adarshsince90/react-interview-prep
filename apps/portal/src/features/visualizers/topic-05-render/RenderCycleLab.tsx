@@ -223,11 +223,11 @@ export const RenderCycleLab: React.FC = () => {
             <Zap size={24} />
           </div>
           <div>
-            <h3 style={{ margin: 0, fontSize: '1.25rem', color: '#fff' }}>
+            <h3 style={{ margin: 0, fontSize: '1.25rem', color: 'var(--text-primary)' }}>
               Lab 12: The 3-Phase Render Cycle Stepper
             </h3>
             <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-              Step-by-step visualizer tracing Trigger $\rightarrow$ Render (workInProgress) $\rightarrow$ Commit (DOM & Layout) $\rightarrow$ Paint $\rightarrow$ Passive Effects.
+              Step-by-step visualizer tracing Trigger → Render (workInProgress) → Commit (DOM & Layout) → Paint → Passive Effects.
             </p>
           </div>
         </div>
@@ -286,7 +286,7 @@ export const RenderCycleLab: React.FC = () => {
         
         {/* Left Column: Interactive Dispatcher & Phase Progress */}
         <div style={{ background: 'var(--bg-tertiary)', padding: '1.25rem', borderRadius: '10px', border: '1px solid var(--border-subtle)' }}>
-          <h4 style={{ margin: '0 0 1rem 0', fontSize: '0.95rem', color: '#fff', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <h4 style={{ margin: '0 0 1rem 0', fontSize: '0.95rem', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <Cpu size={16} color="var(--react-cyan)" /> State Trigger Controller
           </h4>
 
@@ -400,7 +400,7 @@ export const RenderCycleLab: React.FC = () => {
 
         {/* Right Column: 5-Stage Phase Progress Stepper */}
         <div style={{ background: 'var(--bg-tertiary)', padding: '1.25rem', borderRadius: '10px', border: '1px solid var(--border-subtle)' }}>
-          <h4 style={{ margin: '0 0 1rem 0', fontSize: '0.95rem', color: '#fff', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <h4 style={{ margin: '0 0 1rem 0', fontSize: '0.95rem', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <Layers size={16} color="var(--purple-accent)" /> 5-Stage Engine Pipeline
           </h4>
 
@@ -450,7 +450,7 @@ export const RenderCycleLab: React.FC = () => {
 
       {/* Double Buffering Fiber Inspection Panel */}
       <div style={{ background: 'var(--bg-tertiary)', padding: '1.25rem', borderRadius: '10px', border: '1px solid var(--border-subtle)', marginBottom: '1.5rem' }}>
-        <h4 style={{ margin: '0 0 1rem 0', fontSize: '0.95rem', color: '#fff', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <h4 style={{ margin: '0 0 1rem 0', fontSize: '0.95rem', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <Sparkles size={16} color="var(--amber-warning)" /> Double Buffering Topology: Current vs. WorkInProgress Fibers
         </h4>
 
@@ -508,11 +508,11 @@ export const RenderCycleLab: React.FC = () => {
       </div>
 
       {/* Live Blink DOM Screen Simulation */}
-      <div style={{ background: '#070b14', padding: '1.25rem', borderRadius: '10px', border: '1px solid var(--border-subtle)', marginBottom: '1.5rem', textAlign: 'center' }}>
+      <div style={{ background: 'var(--code-bg)', color: 'var(--code-text)', padding: '1.25rem', borderRadius: '10px', border: '1px solid var(--border-subtle)', marginBottom: '1.5rem', textAlign: 'center' }}>
         <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem' }}>
           <Eye size={14} /> Physical Chromium Display Screen (Blink C++ Framebuffer)
         </div>
-        <div style={{ fontSize: '3rem', fontWeight: 900, color: '#fff', letterSpacing: '-0.02em', margin: '0.5rem 0' }}>
+        <div style={{ fontSize: '3rem', fontWeight: 900, color: 'var(--react-cyan)', letterSpacing: '-0.02em', margin: '0.5rem 0' }}>
           {currentVal}
         </div>
         <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>

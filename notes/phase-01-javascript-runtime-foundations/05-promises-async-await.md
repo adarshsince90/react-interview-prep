@@ -25,7 +25,7 @@ The fundamental failure of CPS callbacks was not merely aesthetic indentation. *
 2. **Broken Call Stack Error Boundaries:** In synchronous programming, exceptions bubble up the Call Stack to the nearest enclosing `try/catch`. With asynchronous callbacks, because the callback is dispatched in a future Event Loop turn where the initiating function is already dead and gone from the Call Stack, standard `try/catch` was completely useless.
 
 **The Solution:** A **Promise** is a stateful surrogate object that re-inverts control. Instead of passing your continuation into external code, the external code hands you an immutable state machine (`Promise`) that guarantees:
-- It can transition state **at most once** (`pending` $\rightarrow$ `fulfilled` OR `rejected`).
+- It can transition state **at most once** (`pending` → `fulfilled` OR `rejected`).
 - Its state transitions are **immutable and permanent**.
 - Continuations attached via `.then()` are **guaranteed** to execute asynchronously on the Microtask Queue, even if the Promise was already resolved before `.then()` was called.
 
@@ -183,7 +183,7 @@ When `.then()` is called on an already-fulfilled Promise:
 1. V8 checks `[[PromiseState]]` and sees `"fulfilled"`.
 2. Instead of storing the handler in `[[PromiseFulfillReactions]]`, V8 **immediately packages a `PromiseReactionJob` and pushes it into the Microtask Queue**.
 3. It does *not* execute inline. `console.log('Synchronous End')` runs first.
-4. Call stack clears $\rightarrow$ Microtask checkpoint dequeues `val => console.log(val)` $\rightarrow$ logs `42`.
+4. Call stack clears → Microtask checkpoint dequeues `val => console.log(val)` → logs `42`.
 
 ---
 
@@ -418,7 +418,7 @@ const results = await Promise.all(tasks);
 
 ## 11. .NET Comparison: CLR Concurrency vs. JavaScript Promises
 
-For an engineer with 11+ years of .NET / C# experience:
+For Senior Backend and Enterprise Engineers (C#/.NET, Java, Go) comparing CLR Task-based asynchronous architecture with JavaScript Promises:
 
 | Feature | .NET / CLR (C#) | JavaScript (V8 / Browser) |
 | :--- | :--- | :--- |
@@ -606,7 +606,7 @@ console.log('5');
 ```
 
 > **Staff Engineer Answer:**  
-> The output is strictly **4 $\rightarrow$ 1 $\rightarrow$ 3 $\rightarrow$ 5 $\rightarrow$ 2**.
+> The output is strictly **4 → 1 → 3 → 5 → 2**.
 > 
 > 1. `console.log('4')` executes synchronously on the Call Stack.
 > 2. `first()` is invoked. Its stack frame pushes. Logs `'1'`.
@@ -704,7 +704,7 @@ console.log('5');
 ## 19. Key Takeaways
 
 1. Promises restore **Inversion of Control** and asynchronous call stack error propagation that callbacks destroyed.
-2. V8 promises are immutable state machines (`pending` $\rightarrow$ `fulfilled` / `rejected`) that transition at most once.
+2. V8 promises are immutable state machines (`pending` → `fulfilled` / `rejected`) that transition at most once.
 3. Microtask dispatch is **push-based**: the `resolve()` call is what enqueues the `PromiseReaction` into the Microtask Queue.
 4. `async/await` compiles into a **heap-allocated Generator context** that suspends on `await` and re-enters via the microtask trampoline.
 5. In C# / .NET, `ValueTask<T>` provides zero-allocation synchronous fast paths; in JavaScript, **`async` functions always allocate a `JSPromise` on the heap**.

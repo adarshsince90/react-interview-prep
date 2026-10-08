@@ -71,3 +71,26 @@ export function setStoredTheme(theme: 'light' | 'dark'): void {
     // ignore
   }
 }
+
+const RECENT_TOPICS_KEY = 'react_prep_recent_topics';
+
+export function getRecentTopicIds(): string[] {
+  try {
+    const raw = localStorage.getItem(RECENT_TOPICS_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+}
+
+export function recordRecentTopicId(topicId: string): void {
+  try {
+    const recents = getRecentTopicIds().filter(id => id !== topicId);
+    recents.unshift(topicId); // most recent first
+    const trimmed = recents.slice(0, 5); // keep up to 5 in storage
+    localStorage.setItem(RECENT_TOPICS_KEY, JSON.stringify(trimmed));
+    window.dispatchEvent(new Event('recent_topics_updated'));
+  } catch {
+    // ignore
+  }
+}

@@ -19,6 +19,67 @@ export interface Flashcard {
   category: 'runtime' | 'react' | 'state' | 'architecture' | 'security' | 'synthesis';
 }
 
+
+interface SM2Data {
+  repetitions: number;
+  interval: number; // in days
+  easeFactor: number;
+  nextReviewDate: string; // ISO date
+}
+
+const DEFAULT_SM2: SM2Data = {
+  repetitions: 0,
+  interval: 1,
+  easeFactor: 2.5,
+  nextReviewDate: new Date().toISOString()
+};
+
+function getStoredSM2Deck(): Record<string, SM2Data> {
+  try {
+    const raw = localStorage.getItem('sm2_flashcards_progress_v1');
+    return raw ? JSON.parse(raw) : {};
+  } catch {
+    return {};
+  }
+}
+
+function saveSM2Deck(data: Record<string, SM2Data>) {
+  try {
+    localStorage.setItem('sm2_flashcards_progress_v1', JSON.stringify(data));
+  } catch {}
+}
+
+function calculateSM2(current: SM2Data, quality: number): SM2Data {
+  let { repetitions, interval, easeFactor } = current;
+
+  if (quality >= 3) {
+    if (repetitions === 0) {
+      interval = 1;
+    } else if (repetitions === 1) {
+      interval = 6;
+    } else {
+      interval = Math.round(interval * easeFactor);
+    }
+    repetitions++;
+  } else {
+    repetitions = 0;
+    interval = 1;
+  }
+
+  easeFactor = easeFactor + (0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02));
+  if (easeFactor < 1.3) easeFactor = 1.3;
+
+  const nextDate = new Date();
+  nextDate.setDate(nextDate.getDate() + interval);
+
+  return {
+    repetitions,
+    interval,
+    easeFactor: Number(easeFactor.toFixed(2)),
+    nextReviewDate: nextDate.toISOString()
+  };
+}
+
 const FLASHCARD_DECK: Flashcard[] = [
   {
     id: 'fc-01',
@@ -133,6 +194,8 @@ const FLASHCARD_DECK: Flashcard[] = [
 ];
 
 export const FlashcardsArena: React.FC = () => {
+  const [sm2Deck, setSm2Deck] = useState<Record<string, SM2Data>>(() => getStoredSM2Deck());
+
   const [selectedPhase, setSelectedPhase] = useState<string>('all');
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [isFlipped, setIsFlipped] = useState<boolean>(false);
@@ -151,6 +214,20 @@ export const FlashcardsArena: React.FC = () => {
   }, [selectedPhase]);
 
   const currentCard = filteredCards[currentIndex] || filteredCards[0];
+
+  const handleSM2Rate = (quality: number) => {
+    const card = filteredCards[currentIndex];
+    if (!card) return;
+    const currentData = sm2Deck[card.id] || DEFAULT_SM2;
+    const updated = calculateSM2(currentData, quality);
+    const newDeck = { ...sm2Deck, [card.id]: updated };
+    setSm2Deck(newDeck);
+    saveSM2Deck(newDeck);
+    setIsFlipped(false);
+    if (currentIndex < filteredCards.length - 1) {
+      setCurrentIndex(c => c + 1);
+    }
+  };
 
   const handlePhaseChange = (phase: string) => {
     setSelectedPhase(phase);
@@ -346,6 +423,39 @@ export const FlashcardsArena: React.FC = () => {
                 <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0 }}>
                   {currentCard.answer}
                 </p>
+
+                {/* SuperMemo SM-2 Spaced Repetition Rating Controls */}
+                <div style={{ marginTop: '1.25rem', paddingTop: '1rem', borderTop: '1px solid var(--border-subtle)' }}>
+                  <div style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '0.5rem', letterSpacing: '0.04em' }}>
+                    Rate Recall (SuperMemo SM-2 Interval Calculation)
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0.5rem' }}>
+                    <button
+                      onClick={() => handleSM2Rate(1)}
+                      style={{ padding: '0.45rem', borderRadius: '6px', border: '1px solid #ef4444', background: 'rgba(239, 68, 68, 0.1)', color: '#ef4444', fontWeight: 700, fontSize: '0.75rem', cursor: 'pointer' }}
+                    >
+                      Again (1d)
+                    </button>
+                    <button
+                      onClick={() => handleSM2Rate(2)}
+                      style={{ padding: '0.45rem', borderRadius: '6px', border: '1px solid #f59e0b', background: 'rgba(245, 158, 11, 0.1)', color: '#f59e0b', fontWeight: 700, fontSize: '0.75rem', cursor: 'pointer' }}
+                    >
+                      Hard (2d)
+                    </button>
+                    <button
+                      onClick={() => handleSM2Rate(3)}
+                      style={{ padding: '0.45rem', borderRadius: '6px', border: '1px solid #10b981', background: 'rgba(16, 185, 129, 0.1)', color: '#10b981', fontWeight: 700, fontSize: '0.75rem', cursor: 'pointer' }}
+                    >
+                      Good (6d)
+                    </button>
+                    <button
+                      onClick={() => handleSM2Rate(4)}
+                      style={{ padding: '0.45rem', borderRadius: '6px', border: '1px solid #0ea5e9', background: 'rgba(14, 165, 233, 0.1)', color: '#0ea5e9', fontWeight: 700, fontSize: '0.75rem', cursor: 'pointer' }}
+                    >
+                      Easy (Bonus)
+                    </button>
+                  </div>
+                </div>
               </div>
             )}
           </div>

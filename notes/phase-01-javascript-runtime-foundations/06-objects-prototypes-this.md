@@ -6,7 +6,7 @@
 
 ## 1. Why This Topic Exists
 
-Coming from 11+ years of **C# / .NET and Angular**, you are deeply accustomed to **Classical Object-Oriented Programming (OOP)**:
+Coming from an enterprise backend background in **C# / .NET, Java, and Angular**, you are deeply accustomed to **Classical Object-Oriented Programming (OOP)**:
 - Classes are rigid, compile-time blueprints.
 - In the CLR, an object instance in the GC heap carries an object header containing a `TypeHandle` pointing to its `MethodTable`. Inheritance is a static type hierarchy established at compile time.
 - `this` in C# is statically bound: inside an instance method, `this` unconditionally refers to that specific heap instance.
@@ -100,9 +100,9 @@ Because a function isn't permanently anchored to an object, it needs to know: **
 Imagine a **Microphone** on a concert stage:
 - A song (function) has lyrics, but it doesn't own a voice.
 - **`this` is simply whoever is currently holding the microphone!**
-- If **Alice** holds the mic and sings $\rightarrow$ `this` is Alice (`alice.sing()`).
-- If Alice hands the mic to **Bob** $\rightarrow$ `this` is now Bob (`bob.sing()`).
-- If the mic is **dropped on the floor** with nobody holding it $\rightarrow$ in strict mode, nobody gets the credit (`this` is `undefined`).
+- If **Alice** holds the mic and sings → `this` is Alice (`alice.sing()`).
+- If Alice hands the mic to **Bob** → `this` is now Bob (`bob.sing()`).
+- If the mic is **dropped on the floor** with nobody holding it → in strict mode, nobody gets the credit (`this` is `undefined`).
 
 ---
 
@@ -213,20 +213,20 @@ setTimeout(user.greet, 100); // Call 3
 1. **Call 1 (`user.greet()`):**  
    - Inspect call site: `user.greet()`.  
    - Is there an object to the left of the dot? **Yes (`user`)**.  
-   - Rule 3 (Implicit Binding) applies $\rightarrow$ `this === user`.  
+   - Rule 3 (Implicit Binding) applies → `this === user`.  
    - Logs: `"Hello, I am Adarsh"`.
 
 2. **Call 2 (`looseGreet()`):**  
    - `looseGreet` is assigned the raw function pointer.  
    - Inspect call site: `looseGreet()`.  
    - Is there a dot? **No.** Called with `new`? **No.** Explicit `.call`? **No.**  
-   - Rule 4 (Default Binding) applies $\rightarrow$ In strict mode, `this === undefined`.  
+   - Rule 4 (Default Binding) applies → In strict mode, `this === undefined`.  
    - Throws: `TypeError: Cannot read properties of undefined (reading 'name')`.
 
 3. **Call 3 (`setTimeout(user.greet, 100)`):**  
    - `user.greet` is passed as an argument. The reference is copied.  
    - When the timer fires, the Host Environment executes: `callback()`.  
-   - Standalone invocation! Rule 4 applies $\rightarrow$ `this === undefined`.
+   - Standalone invocation! Rule 4 applies → `this === undefined`.
 
 ---
 
@@ -455,11 +455,11 @@ console.log(person.arrow.call(outsider));
 ```
 
 > **Staff Engineer Answer:**  
-> 1. `person.regular()`: Rule 3 (Implicit Binding). Object left of dot is `person`. $\rightarrow$ **`"I am Adarsh"`**.
-> 2. `person.arrow()`: Arrow functions have no `this`. It resolves lexically to the enclosing module/global scope. $\rightarrow$ **`"I am undefined"`** (or empty string in browser window).
-> 3. `detached()`: Rule 4 (Default Binding). Standalone invocation without dot. In strict mode, `this` is `undefined`. $\rightarrow$ **Throws `TypeError`** (or `"I am undefined"` in non-strict).
-> 4. `person.regular.call(outsider)`: Rule 2 (Explicit Binding). Forces `this === outsider`. $\rightarrow$ **`"I am Outsider"`**.
-> 5. `person.arrow.call(outsider)`: Arrow functions ignore `.call()`. Still resolves lexically. $\rightarrow$ **`"I am undefined"`**.
+> 1. `person.regular()`: Rule 3 (Implicit Binding). Object left of dot is `person`. → **`"I am Adarsh"`**.
+> 2. `person.arrow()`: Arrow functions have no `this`. It resolves lexically to the enclosing module/global scope. → **`"I am undefined"`** (or empty string in browser window).
+> 3. `detached()`: Rule 4 (Default Binding). Standalone invocation without dot. In strict mode, `this` is `undefined`. → **Throws `TypeError`** (or `"I am undefined"` in non-strict).
+> 4. `person.regular.call(outsider)`: Rule 2 (Explicit Binding). Forces `this === outsider`. → **`"I am Outsider"`**.
+> 5. `person.arrow.call(outsider)`: Arrow functions ignore `.call()`. Still resolves lexically. → **`"I am undefined"`**.
 
 ---
 
@@ -493,13 +493,13 @@ console.log(person.arrow.call(outsider));
 ## 17. Senior-Level Mental Model & "How to Remember This Forever" (Layer 3)
 
 ### 🧠 Memory Anchor #1: The Drawer vs. The Supply Room
-- **Reading** searches up the chain: *My Drawer $\rightarrow$ Team Lead $\rightarrow$ Supply Room*.
+- **Reading** searches up the chain: *My Drawer → Team Lead → Supply Room*.
 - **Writing** ALWAYS stops at your own drawer: *Setting `myCar.color = 'red'` puts red paint in your own drawer; it never touches the supply room!*
 
 ### 🧠 Memory Anchor #2: Look Left of the Dot!
 At the exact moment of execution:
-- `user.speak()` $\rightarrow$ Dot exists! Look left $\rightarrow$ `user` holds the microphone.
-- `const fn = user.speak; fn();` $\rightarrow$ No dot! The mic was dropped on the floor $\rightarrow$ `this` is `undefined`!
+- `user.speak()` → Dot exists! Look left → `user` holds the microphone.
+- `const fn = user.speak; fn();` → No dot! The mic was dropped on the floor → `this` is `undefined`!
 
 ### 🧠 Memory Anchor #3: Arrow Functions Have No Microphone
 Arrow functions do not participate in call-site binding. They are deaf to `.call()`, `.apply()`, and `.bind()`. They inherit `this` from the room where they were born.
@@ -539,7 +539,7 @@ Arrow functions do not participate in call-site binding. They are deaf to `.call
 
 1. Prototypal inheritance is **delegative behavior sharing**, not classical type copying.
 2. `[[Prototype]]` is the actual fallback link; `Function.prototype` is the starter pack handed out during `new`.
-3. `this` binding follows 4 priority rules: `new` $\rightarrow$ Explicit (`call`/`apply`/`bind`) $\rightarrow$ Implicit (`obj.fn()`) $\rightarrow$ Default (`undefined` in strict mode).
+3. `this` binding follows 4 priority rules: `new` → Explicit (`call`/`apply`/`bind`) → Implicit (`obj.fn()`) → Default (`undefined` in strict mode).
 4. Arrow functions possess no `this` and cannot be rebound.
 5. In React, the difficulty of managing `this` in class components directly drove the creation of **Functional Components and Hooks**.
 6. Guard enterprise code against **Prototype Pollution** by using `Map` or `Object.create(null)`.

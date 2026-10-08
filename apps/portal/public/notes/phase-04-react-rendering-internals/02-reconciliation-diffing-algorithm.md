@@ -189,7 +189,7 @@ function reconcileSingleElement(returnFiber, currentFirstChild, element, lanes) 
 #### The Critical Distinction: Key Match vs. Type Match
 1. **If Key and Type Both Match:**  
    React reuses the existing `FiberNode` from the heap. It copies the old DOM node reference (`fiber.stateNode`), updates `memoizedProps` with new props, flags the node with `flags |= Update`, and preserves its local state (`memoizedState`).
-2. **If Key Matches but Type Changes (`<div>` $\rightarrow$ `<span>`):**  
+2. **If Key Matches but Type Changes (`<div>` → `<span>`):**  
    React cannot reuse anything. It flags the existing Fiber with `flags |= ChildDeletion`. It creates a completely fresh Fiber, requiring a brand new DOM allocation in Blink during Commit. **All state, child components, and DOM nodes are completely unmounted and destroyed.**
 3. **If Key Differs:**  
    React deletes the existing Fiber and advances to the next sibling in the linked list.
@@ -505,7 +505,7 @@ For a Senior Angular Architect transitioning to React, understanding how React's
 | :--- | :--- | :--- |
 | **Execution Model** | **Pure Runtime Tree Diffing ($O(n)$)**.<br/>Re-executes component functions to generate fresh Virtual DOM elements and compares with Fibers. | **Template Instruction Graph (LView / TView)**.<br/> Ivy compiles templates into bytecode instructions (`property()`, `advance()`). Traverses bindings, not elements. |
 | **List Optimization** | `key={entity.id}` attribute.<br/>Used by runtime reconciler to map Fibers in a heap `Map`. | `trackBy: trackById` or modern `@for (item of items; track item.id)`.<br/>Compiled into DOM node track instructions. |
-| **Type Mutation Behavior** | Changing element type (`<div>` $\rightarrow$ `<span>`) completely unmounts the Fiber subtree and destroys all internal state. | Templates have static types. Dynamic component swaps use `*ngComponentOutlet` or `ViewContainerRef.createComponent()`. |
+| **Type Mutation Behavior** | Changing element type (`<div>` → `<span>`) completely unmounts the Fiber subtree and destroys all internal state. | Templates have static types. Dynamic component swaps use `*ngComponentOutlet` or `ViewContainerRef.createComponent()`. |
 | **Fine-Grained Granularity** | Coarse/Subtree level. Parent re-renders cause child reconciliation unless wrapped in `React.memo()`. | Fine-grained with **Angular Signals** (Angular 16-18+). Direct signal graph notifies only the specific binding; zero tree traversal. |
 | **DOM Move Strategy** | `lastPlacedIndex` algorithm moves elements forward; prepending items can trigger multiple sibling shifts. | `IterableDiffer` (DefaultIterableDiffer) calculates moves using record linked lists with bidirectional move pointers. |
 
@@ -643,9 +643,9 @@ In a virtualized grid (such as `react-window` or `@tanstack/react-virtual`):
 To immediately predict how React will reconcile any JSX update, visualize this physical peg:
 
 1. **The Chameleon (Same Type):**  
-   If the element type stays the same (`<UserCard>` $\rightarrow$ `<UserCard>` or `<div>` $\rightarrow$ `<div>`), React behaves like a **Chameleon**. It stays in the exact same place on the tree branch, changes its skin color (updates props and attributes), and keeps all internal organs (state and DOM nodes) intact.
+   If the element type stays the same (`<UserCard>` → `<UserCard>` or `<div>` → `<div>`), React behaves like a **Chameleon**. It stays in the exact same place on the tree branch, changes its skin color (updates props and attributes), and keeps all internal organs (state and DOM nodes) intact.
 2. **The Bulldozer (Different Type):**  
-   If the element type changes by even a single character (`<div>` $\rightarrow$ `<section>`, or `<AdminCard>` $\rightarrow$ `<UserCard>`), React calls in the **Bulldozer**. It does not remodel. It levels the entire building down to the bedrock, sweeps away the rubble (garbage collects all state and child Fibers), and constructs a brand new building from scratch.
+   If the element type changes by even a single character (`<div>` → `<section>`, or `<AdminCard>` → `<UserCard>`), React calls in the **Bulldozer**. It does not remodel. It levels the entire building down to the bedrock, sweeps away the rubble (garbage collects all state and child Fibers), and constructs a brand new building from scratch.
 
 ---
 
@@ -679,7 +679,7 @@ To immediately predict how React will reconcile any JSX update, visualize this p
 
 - **Formula:** Tree Edit Distance = $O(n^3)$; React Heuristic = $O(n)$.
 - **Two Assumptions:**
-  1. Different types $\rightarrow$ Different trees (Demolish & Rebuild).
+  1. Different types → Different trees (Demolish & Rebuild).
   2. Keys indicate stability across renders.
 - **Array Diffing Steps:**
   - **Pass 1:** Fast path matching `key` at identical indices.

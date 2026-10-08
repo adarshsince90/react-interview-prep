@@ -57,7 +57,10 @@ if (manifestData) {
     'lab-04-event-loop': 'topic-04-event-loop/EventLoopLab.tsx',
     'lab-14-fiber-reconciliation': 'topic-14-fiber/FiberReconciliationLab.tsx',
     'lab-19-rsc-flight': 'topic-19-rsc/RscFlightLab.tsx',
-    'topic-11-system-design': 'topic-11-system-design/CanvasDesignLab.tsx'
+    'topic-11-system-design': 'topic-11-system-design/CanvasDesignLab.tsx',
+    'lab-20-memory-retainer': 'topic-09-memory/MemoryRetainerLab.tsx',
+    'lab-21-query-cache': 'topic-04-state/QueryCacheLab.tsx',
+    'lab-22-virtualization': 'topic-08-performance/VirtualizationLab.tsx'
   };
 
   for (const [labId, relativePath] of Object.entries(LAB_COMPONENT_MAP)) {
@@ -68,14 +71,21 @@ if (manifestData) {
     );
   }
 
-  // 4. Verify No Raw LaTeX Math (\frac, \text{, \approx) Exists in Indexed Notes
+  // 4. Verify No Raw LaTeX Math (\frac, \text{, \approx, \rightarrow, \to) Exists in Indexed Notes
   let latexViolations = 0;
   for (const phase of manifestData.phases) {
     for (const topic of phase.topics) {
       const publicFilePath = path.resolve(PORTAL_ROOT, 'public', topic.relativePath);
       if (fs.existsSync(publicFilePath)) {
         const text = fs.readFileSync(publicFilePath, 'utf-8');
-        if (text.includes('\\frac') || text.includes('\\text{') || text.includes('\\approx')) {
+        if (
+          text.includes('\\frac') ||
+          text.includes('\\text{') ||
+          text.includes('\\approx') ||
+          text.includes('\\rightarrow') ||
+          text.includes('\\to ') ||
+          text.includes('$\\to$')
+        ) {
           console.error(`  - Unescaped LaTeX detected in ${topic.relativePath}`);
           latexViolations++;
         }

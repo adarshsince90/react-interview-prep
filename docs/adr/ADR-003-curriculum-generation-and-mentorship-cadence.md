@@ -1,7 +1,7 @@
 # ADR-003: Publication-First Curriculum Generation & Socratic Mentorship Cadence
 
 ## Context
-The student is an experienced Senior Software Engineer (11+ years). Rather than spending long sessions on repetitive conversational exchanges for every individual chapter before reading, the user requested:
+The student is an experienced Senior Backend & Enterprise Engineer. Rather than spending long sessions on repetitive conversational exchanges for every individual chapter before reading, the user requested:
 1. Generate all pending chapters across Phase 05, Phase 06, and Phase 07 using our established publication-grade format upfront.
 2. Read and master the material independently via the interactive web portal at their own pace.
 3. Bring specific, sticky doubts and architectural edge cases to the mentor for deep-dive Socratic clarification, active recall drills, and mock interview practice.

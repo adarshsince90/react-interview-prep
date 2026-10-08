@@ -61,6 +61,8 @@ By the end of this chapter, you will be able to:
 [2023+: The Modern Convergence]
   - Angular introduces Signals (fine-grained push/pull reactivity without Zone.js).
   - React develops the React Compiler (build-time automatic memoization) and Server Components (RSC).
+
+
 ```
 
 ---
@@ -98,6 +100,8 @@ In function components, `memoizedState` is **not a plain dictionary**; it is a *
                             (useState)         (useReducer)        (useEffect)
                             memoizedState:     memoizedState:      memoizedState:
                             "Adarsh"           { count: 0 }        EffectObject
+
+
 ```
 
 ### The Hook Cursor and Execution Order
@@ -255,7 +259,7 @@ function metricReducer(state: MetricState, action: { id: string; val: number }):
     }
   };
 }
-```
+```text
 
 ---
 
@@ -298,14 +302,16 @@ At scale (100k+ lines of code, distributed engineering teams):
 1. **Child Re-render Defaults:** In React, when a parent component renders, **all child components render recursively by default**, regardless of whether their props changed. This contrasts with Angular `OnPush`.
    - *Mitigation:* Apply `React.memo()` to performance-critical components with stable props.
 2. **Referential Instability of Functions:** Defining functions inside the component body creates a new memory reference on every render:
-   ```javascript
+   
+
+```javascript
    function Parent() {
      // New function pointer allocated every single render
      const handleClick = () => console.log("clicked");
      return <MemoizedChild onClick={handleClick} />;
      // MemoizedChild's shallow comparison fails: prev.onClick !== next.onClick
    }
-   ```
+   ```text
    - *Mitigation:* Stabilize callbacks across renders using `useCallback()`.
 
 ---
@@ -323,6 +329,8 @@ At scale (100k+ lines of code, distributed engineering teams):
 ## 15. Common Mistakes
 
 ### 1. In-Place Mutation Trap
+
+
 ```javascript
 // ❌ FAILS: Array mutated in place; pointer address unchanged
 items.push(newItem);

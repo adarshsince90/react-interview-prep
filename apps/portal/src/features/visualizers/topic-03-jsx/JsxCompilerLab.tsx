@@ -63,7 +63,7 @@ export const JsxCompilerLab: React.FC = () => {
           <Code2 size={24} />
         </div>
         <div>
-          <h3 style={{ margin: 0, fontSize: '1.25rem', color: '#fff' }}>Lab 10: JSX Compilation & $$typeof Security Inspector</h3>
+          <h3 style={{ margin: 0, fontSize: '1.25rem', color: 'var(--text-primary)' }}>Lab 10: JSX Compilation & $$typeof Security Inspector</h3>
           <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--text-muted)' }}>
             Explore how JSX compiles to modern _jsx() calls and inspect the V8 heap React Element object.
           </p>
@@ -133,7 +133,7 @@ export const JsxCompilerLab: React.FC = () => {
       {/* Side-by-Side Playground */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1rem', marginBottom: '1.25rem' }}>
         {/* Source JSX */}
-        <div style={{ background: '#090d16', padding: '1rem', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}>
+        <div style={{ background: 'var(--code-bg)', padding: '1rem', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}>
           <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>
             1. Source JSX Code
           </div>
@@ -143,7 +143,7 @@ export const JsxCompilerLab: React.FC = () => {
         </div>
 
         {/* Compiler Output */}
-        <div style={{ background: '#090d16', padding: '1rem', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}>
+        <div style={{ background: 'var(--code-bg)', padding: '1rem', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}>
           <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>
             2. Transpiled Output (_jsx runtime)
           </div>
@@ -157,12 +157,12 @@ export const JsxCompilerLab: React.FC = () => {
       <div style={{ background: 'var(--bg-tertiary)', padding: '1.25rem', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem' }}>
           <Sparkles size={18} color="var(--react-cyan)" />
-          <strong style={{ color: '#fff' }}>V8 Heap Object (`ReactElement` Representation):</strong>
+          <strong style={{ color: 'var(--text-primary)' }}>V8 Heap Object (`ReactElement` Representation):</strong>
         </div>
-        <pre style={{ background: '#090d16', color: '#cbd5e1', padding: '0.75rem', borderRadius: '6px', fontSize: '0.85rem' }}>
+        <pre style={{ background: 'var(--code-bg)', color: 'var(--code-text)', padding: '0.75rem', borderRadius: '6px', fontSize: '0.85rem' }}>
           {JSON.stringify(current.elementObj, null, 2)}
         </pre>
-        <div style={{ marginTop: '0.75rem', fontSize: '0.9rem', color: '#94a3b8', borderLeft: '3px solid var(--react-cyan)', paddingLeft: '0.75rem' }}>
+        <div style={{ marginTop: '0.75rem', fontSize: '0.9rem', color: 'var(--text-secondary)', borderLeft: '3px solid var(--react-cyan)', paddingLeft: '0.75rem' }}>
           💡 <strong>Architectural Note:</strong> {current.note}
         </div>
       </div>
@@ -185,7 +185,7 @@ export const JsxCompilerLab: React.FC = () => {
                   padding: '0.35rem 0.75rem',
                   borderRadius: '4px',
                   background: expressionValue === val ? 'var(--amber-warning)' : 'var(--bg-tertiary)',
-                  color: expressionValue === val ? '#000' : '#fff',
+                  color: expressionValue === val ? '#000' : 'var(--text-primary)',
                   border: '1px solid var(--border-medium)',
                   cursor: 'pointer',
                   fontWeight: 600,
@@ -196,7 +196,7 @@ export const JsxCompilerLab: React.FC = () => {
               </button>
             ))}
           </div>
-          <div style={{ background: '#090d16', padding: '0.75rem', borderRadius: '6px', fontSize: '0.9rem' }}>
+          <div style={{ background: 'var(--code-bg)', color: 'var(--code-text)', padding: '0.75rem', borderRadius: '6px', fontSize: '0.9rem' }}>
             <strong>DOM Render Result: </strong>
             {expressionValue === '0' || expressionValue === 'NaN' || expressionValue === '5' ? (
               <span style={{ color: 'var(--rose-danger)', fontWeight: 'bold' }}>

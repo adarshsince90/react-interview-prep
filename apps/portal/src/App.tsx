@@ -1,3 +1,4 @@
+import { CodePlayground } from './features/playground/CodePlayground';
 import { useState, useMemo, useEffect } from 'react';
 import manifestData from './assets/manifest.json';
 import type { ManifestData, TopicItem } from './core/types/manifest';
@@ -30,7 +31,7 @@ import { formatTopicBadgeAndTitle } from './core/utils/slugify';
 const manifest = manifestData as unknown as ManifestData;
 
 export function App() {
-  const [activeView, setActiveView] = useState<'dashboard' | 'reader' | 'labs' | 'flashcards' | 'quizzes'>('dashboard');
+  const [activeView, setActiveView] = useState<'dashboard' | 'reader' | 'labs' | 'flashcards' | 'quizzes' | 'playground'>('dashboard');
   const [theme, setTheme] = useState<'light' | 'dark'>(() => getStoredTheme());
   const [completedIds, setCompletedIds] = useState<string[]>(() => getCompletedTopicIds());
   const [isSearchModalOpen, setIsSearchModalOpen] = useState<boolean>(false);
@@ -733,6 +734,10 @@ export function App() {
           {activeView === 'quizzes' && (
             <QuizArena />
           )}
+
+          {activeView === 'playground' && (
+            <CodePlayground />
+          )}
         </main>
       </div>
 
@@ -741,6 +746,7 @@ export function App() {
         isOpen={isSearchModalOpen}
         onClose={() => setIsSearchModalOpen(false)}
         onSelectTopic={handleSelectTopic}
+        onNavigateToTopic={handleNavigateToTopic}
       />
     </div>
   );

@@ -72,7 +72,7 @@ export const ComponentPurityLab: React.FC = () => {
           <GitCompare size={24} />
         </div>
         <div>
-          <h3 style={{ margin: 0, fontSize: '1.25rem', color: '#fff' }}>Lab 11: Component Purity & StrictMode Stress-Tester</h3>
+          <h3 style={{ margin: 0, fontSize: '1.25rem', color: 'var(--text-primary)' }}>Lab 11: Component Purity & StrictMode Stress-Tester</h3>
           <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--text-muted)' }}>
             Compare in-place array mutation against pure functional projection and watch how StrictMode exposes bugs.
           </p>
@@ -182,7 +182,7 @@ export const ComponentPurityLab: React.FC = () => {
       {/* Memory & V8 Engine Visualizer Grid */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1rem', marginBottom: '1.25rem' }}>
         {/* Active Transactions List */}
-        <div style={{ background: '#090d16', padding: '1rem', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}>
+        <div style={{ background: 'var(--bg-tertiary)', padding: '1rem', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
             <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
               Rendered Component Tree
@@ -200,12 +200,12 @@ export const ComponentPurityLab: React.FC = () => {
                   display: 'flex',
                   justifyContent: 'space-between',
                   padding: '0.65rem 0.85rem',
-                  background: 'var(--bg-tertiary)',
+                  background: 'var(--bg-secondary)',
                   borderRadius: '6px',
                   border: '1px solid var(--border-subtle)'
                 }}
               >
-                <span style={{ color: '#fff' }}>{item.label}</span>
+                <span style={{ color: 'var(--text-primary)', fontWeight: 500 }}>{item.label}</span>
                 <strong style={{ color: 'var(--react-cyan)', fontFamily: 'var(--font-mono)' }}>${item.amount}</strong>
               </div>
             ))}
@@ -213,7 +213,7 @@ export const ComponentPurityLab: React.FC = () => {
         </div>
 
         {/* V8 Heap Pointer & Identity Inspector */}
-        <div style={{ background: '#090d16', padding: '1rem', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}>
+        <div style={{ background: 'var(--bg-tertiary)', padding: '1rem', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem' }}>
             <Cpu size={18} color="var(--purple-accent)" />
             <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
@@ -221,7 +221,7 @@ export const ComponentPurityLab: React.FC = () => {
             </span>
           </div>
 
-          <div style={{ background: 'var(--bg-secondary)', padding: '0.75rem', borderRadius: '6px', marginBottom: '0.75rem', fontFamily: 'var(--font-mono)', fontSize: '0.85rem' }}>
+          <div style={{ background: 'var(--bg-secondary)', padding: '0.75rem', borderRadius: '6px', marginBottom: '0.75rem', fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: 'var(--text-primary)', border: '1px solid var(--border-subtle)' }}>
             <div><strong>Active Pointer:</strong> <span style={{ color: strategy === 'impure' ? 'var(--rose-danger)' : 'var(--emerald-success)' }}>{heapPointer}</span></div>
             <div><strong>Referential Equality:</strong> {strategy === 'impure' ? 'prev === next (TRUE, MUTATED)' : 'prev !== next (FALSE, NEW ALLOCATION)'}</div>
             <div><strong>StrictMode Invocation:</strong> {strictModeActive ? '2x Speculative Executions' : '1x Synchronous Execution'}</div>
@@ -244,13 +244,13 @@ export const ComponentPurityLab: React.FC = () => {
       </div>
 
       {/* Real-Time Telemetry Log */}
-      <div style={{ background: '#090d16', padding: '0.75rem 1rem', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}>
+      <div style={{ background: 'var(--code-bg)', padding: '0.75rem 1rem', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}>
         <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '0.35rem', fontFamily: 'var(--font-mono)' }}>
           Engine Execution Telemetry Stream
         </div>
         <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
           {logMessages.map((msg, idx) => (
-            <div key={idx} style={{ color: idx === 0 ? '#38bdf8' : '#64748b' }}>
+            <div key={idx} style={{ color: idx === 0 ? 'var(--react-cyan)' : '#94a3b8' }}>
               &gt; {msg}
             </div>
           ))}

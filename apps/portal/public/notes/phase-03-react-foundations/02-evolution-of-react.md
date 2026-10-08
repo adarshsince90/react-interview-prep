@@ -20,7 +20,7 @@ In enterprise engineering, you cannot understand modern React without understand
 
 By the end of this chapter, you will be able to:
 - Deconstruct the physical failure modes of **ES6 Class Components**: the `this` binding trap, lifecycle logic fragmentation, and V8 optimization bottlenecks.
-- Explain the historical progression of code reuse patterns—**Mixins $\rightarrow$ Higher-Order Components (HOCs) $\rightarrow$ Render Props $\rightarrow$ Custom Hooks**—and articulate why each predecessor failed.
+- Explain the historical progression of code reuse patterns—**Mixins → Higher-Order Components (HOCs) → Render Props → Custom Hooks**—and articulate why each predecessor failed.
 - Trace the internal V8 engine execution of a functional component and explain how the **Fiber Singly-Linked List (`memoizedState`)** tracks hooks without class instances.
 - Explain the mechanical necessity of the **Rules of Hooks** (why hooks cannot be placed inside `if` statements or loops) and how `ReactCurrentDispatcher.current` orchestrates execution.
 - Dissect the architectural boundary of **React Server Components (RSC)**: how server components execute with zero client-side bundle impact, why backend API calls are invisible in the browser's Network tab, and what `"use client"` actually means.
@@ -546,7 +546,7 @@ A dangerous misconception among engineers new to React 19 / Next.js is assuming:
 
 ### 1. Minification & Bundle Size Advantage
 In a large enterprise codebase (500+ components):
-- Functional components minify significantly better than classes because minifiers (Terser, SWC) can safely rename local closure variables (`const [data, setData]` $\rightarrow$ `const [a, b]`).
+- Functional components minify significantly better than classes because minifiers (Terser, SWC) can safely rename local closure variables (`const [data, setData]` → `const [a, b]`).
 - Class component properties (`this.state.userProfileData`, `this.componentDidMount`) cannot be mangled by compilers without breaking runtime reflection, resulting in **15% to 30% larger gzipped JavaScript bundles**.
 
 ### 2. RSC Zero-Bundle Impact

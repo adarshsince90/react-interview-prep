@@ -1,6 +1,6 @@
 # Learning Progress & Interactive Portal Roadmap
 
-> **Tracking:** Senior Angular + .NET Engineer → Senior / Staff React + Next.js Engineer  
+> **Tracking:** Senior Backend & Distributed Systems Engineer → Senior / Staff React + Next.js Architect  
 > **Study Material Location:** [`notes/`](notes)  
 > **Interactive App Target:** React / Next.js Interactive Revision Portal with Live Simulators & Labs  
 > **Sprint Execution Plan:** [`docs/sdlc/sprint-plan.md`](docs/sdlc/sprint-plan.md)  
@@ -73,7 +73,11 @@ react-interview-prep/
 - **Interactive Simulation Labs:** **9 Full Living Arena Laboratories** active in `apps/portal` (Event Loop, Fiber Reconciler, RSC Flight, JSX AST, Purity, Render Stepper, Architecture, Testing Trophy, System Design Canvas)
 - **Learning & Assessment Engine:** Flashcards Arena (`FEAT-LEARN-01`), Staff Scenario Quizzes (`FEAT-LEARN-02`), and Global Instant Full-Text Search (`FEAT-LEARN-03`)
 - **Automated CI/CD Pipeline:** GitHub Actions workflow (`deploy.yml`) with automated manifest checks, test suites, and GitHub Pages deployment (`FEAT-LEARN-04`)
-- **Active Focus:** Socratic Mentorship, Code Walkthroughs & Staff-Level Technical Mock Interviews
+- **Post-Curriculum Sprints Planned:**
+  - `Sprint 16`: Portal Evolution & Advanced Simulation Labs (v0.15.0)
+  - `Sprint 17`: Staff-Level Machine Coding Challenges (v0.16.0)
+  - `Sprint 18`: Staff/Principal Architect Mock Interviews & Technical Defenses
+  - `Sprint 19`: Enterprise Production Post-Mortems & Incident Drills
 
 ### B. Curriculum Publication Summary (Handbook Availability)
 ```text
@@ -481,9 +485,9 @@ This backlog catalogs interactive simulations, visual labs, and responsive demos
 
 ---
 
-## 5. Portal Development Roadmap (Phased Execution)
+## 5. Portal Development & Mastery Roadmap (Phased Execution)
 
-The portal development is executed incrementally in parallel with our handbook chapters to maintain steady momentum:
+The portal development and staff preparation roadmap is executed incrementally across structured sprints:
 
 | Phase | Scope & Deliverables | Status |
 | :--- | :--- | :--- |
@@ -493,13 +497,23 @@ The portal development is executed incrementally in parallel with our handbook c
 | **Phase P3: First React Simulation Labs** | - Lab 10: JSX Compiler & `$$typeof` Security Barrier Inspector.<br>- Lab 11: Component Purity & StrictMode Stress-Tester.<br>- Lab 12: Render Cycle Stepper (Trigger -> Render -> Commit). | [x] **Complete** |
 | **Phase P4: Render Internals, Fiber & System Design Labs** | - Lab 04: Event Loop & Microtasks Simulator.<br>- Lab 14: Fiber Linked-List Work Loop & Key Diffing Algorithm Visualizer.<br>- Lab 19: RSC Flight Wire Format Stream Parser.<br>- Lab 09: Clean Architecture & Strangler Fig.<br>- Lab 10: Testing Trophy & MSW Interceptor.<br>- Lab 11: Real-Time CRDT Canvas & HFT Terminal. | [x] **Complete** |
 | **Phase P5: Learning Engine, Flashcards, Quizzes & CI/CD** | - Flashcards Arena (`FEAT-LEARN-01`) drilling Layer 3 Memory Anchors.<br>- Staff Scenario Quizzes (`FEAT-LEARN-02`) with trade-off dilemmas & Staff critiques.<br>- Global Instant Search (`FEAT-LEARN-03`) with `Ctrl+K` across all 110 topics.<br>- Automated GitHub Actions CI/CD deployment (`deploy.yml`) (`FEAT-LEARN-04`). | [x] **Complete** |
+| **Phase P6: Portal Wayfinding, Deep Search & Generalization (Sprint 16)** | - Dynamic Resume & Live Labs on Dashboard (`FEAT-DASH-01`).<br>- Deep Section & Keyword Search Indexing (`FEAT-SEARCH-01`).<br>- Cross-Topic Quick Peek Drawer & Return Teleport (`FEAT-NAV-05`).<br>- Universal Senior Backend Engineer Persona Generalization (`REFACTOR-EXP-01`). | [ ] **Planned** |
+| **Phase P7: Advanced Simulation Labs & Playground (Sprint 17)** | - Lab 20: Memory Leak & Retainer Graph Visualizer (`FEAT-LAB-20`).<br>- Lab 21: TanStack Query Cache Lifecycle Simulator (`FEAT-LAB-21`).<br>- Lab 22: Virtualization & Viewport Culling Visualizer (`FEAT-LAB-22`).<br>- Spaced Repetition Engine with SuperMemo SM-2 (`FEAT-LEARN-05`).<br>- In-Browser Live TSX Sandbox Playground (`FEAT-LEARN-06`). | [ ] **Planned** |
+| **Phase P8: Staff Machine Coding Challenges (Sprint 18)** | - Dynamic-Height Virtualized Windowing Engine from scratch (`CHALLENGE-01`).<br>- Concurrent Reactive Store via `useSyncExternalStore` (`CHALLENGE-02`).<br>- Resilient Optimistic Mutation Queue & Offline Outbox (`CHALLENGE-03`). | [ ] **Planned** |
+| **Phase P9: Staff Architect Mock Interviews (Sprint 19)** | - Real-Time HFT Terminal System Design (45 min mock) (`MOCK-01`).<br>- Multi-Tenant SaaS MFE Dashboard System Design (`MOCK-02`).<br>- React 19 Internals & Fiber Scheduler Deep Defense (`MOCK-03`).<br>- Executive Angular/.NET to React Migration Defense (`MOCK-04`). | [ ] **Planned** |
+| **Phase P10: Production Post-Mortems & Drills (Sprint 20)** | - Heap Snapshot Memory Leak Post-Mortem (`CASE-01`).<br>- INP Main-Thread Yielding Incident Drill (`CASE-02`).<br>- Enterprise Auth & Token Exfiltration Remediation (`CASE-03`).<br>- MFE Dependency Drift Regression Drill (`CASE-04`). | [ ] **Planned** |
 
 *Local Dev Server:* Active at `http://localhost:5173/`
 
 ---
 
-## 6. Next Immediate Steps
-1. **Socratic Mentorship & Chapter Deep-Dives:** Conduct guided chapter reviews, discuss edge cases, and solve architectural code puzzles.
-2. **Staff Architect Mock Interviews:** Simulate technical interview rounds covering System Design at scale, React rendering internals, framework defense (Angular vs React vs Next.js), and clean architecture governance.
+## 6. Sprint Prioritization & Execution Choice
+
+Choose the next active sprint to initiate:
+- **Option 1: Sprint 16 (Portal Wayfinding, Deep Search & Generalization)** — Dynamic Dashboard resume, deep section/keyword search indexing, cross-topic quick peek drawer, and universal persona generalization.
+- **Option 2: Sprint 17 (Advanced Simulation Labs & In-Browser Playground)** — Memory Retainer Lab, Query Cache Lab, Virtualization Lab, and SM-2 flashcard repetition.
+- **Option 3: Sprint 18 (Staff Machine Coding Challenges)** — Dynamic virtualizer, concurrent reactive store, and optimistic mutation outbox from scratch.
+- **Option 4: Sprint 19 (Staff Architect Mock Interviews)** — Simulated 45–60 min interview rounds (System Design, React Internals, or Executive Migration Defense).
+- **Option 5: Sprint 20 (Production Post-Mortems & Drills)** — Deep architectural debugging drills for real-world production incidents.
 
 

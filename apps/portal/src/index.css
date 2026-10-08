@@ -36,9 +36,9 @@
   --code-bg: #0f172a;
   --code-text: #f8fafc;
 
-  /* Typography Stack - JetBrains Mono first for world-class programming typography */
+  /* Typography Stack - Cascadia Code & Consolas first for native 1:1 box-drawing metrics */
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', Menlo, Consolas, monospace;
+  --font-mono: 'Cascadia Code', Consolas, Menlo, Monaco, 'Liberation Mono', 'Fira Code', 'JetBrains Mono', monospace;
 
   /* Elevation & Shadows */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
@@ -86,13 +86,16 @@
   --shadow-glow: 0 0 20px rgba(0, 216, 255, 0.15);
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   background-color: var(--bg-primary);
   color: var(--text-primary);
@@ -104,7 +107,7 @@ html, body {
   transition: background-color var(--transition-base), color var(--transition-base);
 }
 
-body > #root {
+body>#root {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -115,22 +118,29 @@ body > #root {
   width: 8px;
   height: 8px;
 }
+
 ::-webkit-scrollbar-track {
   background: var(--bg-primary);
 }
+
 ::-webkit-scrollbar-thumb {
   background: var(--border-medium);
   border-radius: 4px;
   border: 2px solid var(--bg-primary);
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: var(--text-muted);
 }
 
 /* Code & Markdown Base Styling - Strict Monospace & Ligature Control */
-code, pre {
+code,
+pre {
   font-family: var(--font-mono);
   letter-spacing: 0;
+  font-variant-ligatures: none;
+  font-feature-settings: "liga" 0, "calt" 0;
+  -webkit-font-feature-settings: "liga" 0, "calt" 0;
 }
 
 pre {
@@ -232,7 +242,8 @@ code:not(pre code) {
 .mermaid .node foreignObject {
   overflow: visible;
 }
-.mermaid .node foreignObject > div {
+
+.mermaid .node foreignObject>div {
   width: max-content !important;
   max-width: 360px !important;
   min-height: unset !important;
@@ -248,14 +259,60 @@ code:not(pre code) {
 }
 
 /* Prism Token Colors for Markdown Code Highlighting */
-.token.comment, .token.prolog, .token.doctype, .token.cdata { color: #64748b; font-style: italic; }
-.token.punctuation { color: #94a3b8; }
-.token.property, .token.tag, .token.boolean, .token.number, .token.constant, .token.symbol { color: #f43f5e; }
-.token.selector, .token.attr-name, .token.string, .token.char, .token.builtin { color: #10b981; }
-.token.operator, .token.entity, .token.url, .language-css .token.string, .style .token.string { color: #38bdf8; }
-.token.atrule, .token.attr-value, .token.keyword { color: #c084fc; font-weight: 600; }
-.token.function, .token.class-name { color: #60a5fa; }
-.token.regex, .token.important, .token.variable { color: #fbbf24; }
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #64748b;
+  font-style: italic;
+}
+
+.token.punctuation {
+  color: #94a3b8;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol {
+  color: #f43f5e;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin {
+  color: #10b981;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+  color: #38bdf8;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: #c084fc;
+  font-weight: 600;
+}
+
+.token.function,
+.token.class-name {
+  color: #60a5fa;
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+  color: #fbbf24;
+}
 
 /* Markdown Typography Enhancement */
 .markdown-body {
@@ -265,9 +322,9 @@ code:not(pre code) {
 }
 
 .heading-anchor-target,
-.markdown-body h1, 
-.markdown-body h2, 
-.markdown-body h3, 
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
 .markdown-body h4 {
   color: var(--text-primary);
   font-weight: 700;
@@ -276,7 +333,7 @@ code:not(pre code) {
 }
 
 .markdown-body h1 {
-  font-size: 2.2rem;
+  font-size: 1.2rem;
   padding-bottom: 0.6rem;
   margin-top: 1.5rem;
   margin-bottom: 1.25rem;
@@ -311,14 +368,15 @@ code:not(pre code) {
   color: var(--text-secondary);
 }
 
-.markdown-body ul, .markdown-body ol {
+.markdown-body ul,
+.markdown-body ol {
   margin-bottom: 1.4rem;
   padding-left: 1.45rem;
   color: var(--text-secondary);
 }
 
-.markdown-body li > .code-block-wrapper,
-.markdown-body li > pre {
+.markdown-body li>.code-block-wrapper,
+.markdown-body li>pre {
   margin: 0.85rem 0;
 }
 
@@ -356,7 +414,8 @@ code:not(pre code) {
   box-shadow: var(--shadow-sm);
 }
 
-.markdown-body th, .markdown-body td {
+.markdown-body th,
+.markdown-body td {
   padding: 0.8rem 1.1rem;
   border: 1px solid var(--border-subtle);
   text-align: left;
@@ -452,6 +511,7 @@ code:not(pre code) {
     opacity: 0;
     transform: translateY(6px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -513,9 +573,25 @@ code:not(pre code) {
 .topic-reader-right-sidebar::-webkit-scrollbar {
   width: 5px;
 }
+
 .topic-reader-right-sidebar::-webkit-scrollbar-thumb {
   background: var(--border-medium);
   border-radius: 3px;
 }
 
+/* Interactive In-Situ Architectural Term Badges (FEAT-HOVER-01) */
+.arch-term-hover {
+  text-decoration: underline dotted var(--react-cyan);
+  text-underline-offset: 3px;
+  cursor: help;
+  color: inherit;
+  border-radius: 3px;
+  padding: 0 2px;
+  transition: all 120ms ease;
+}
 
+.arch-term-hover:hover {
+  color: var(--react-cyan);
+  background: rgba(2, 132, 199, 0.12);
+  text-decoration-style: solid;
+}

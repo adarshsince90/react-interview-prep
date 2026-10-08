@@ -324,7 +324,7 @@ gantt
 
 ### Pattern 1: Profiling 5ms Time Slices in Chrome DevTools
 To observe React's 5ms time-slicing in production:
-1. Open Chrome DevTools $\rightarrow$ **Performance** tab.
+1. Open Chrome DevTools → **Performance** tab.
 2. Enable **CPU 4x or 6x Slowdown** (to simulate average mobile hardware).
 3. Trigger a large transition wrapped in `startTransition`:
    ```tsx
@@ -562,7 +562,7 @@ When the Scheduler pops an expired task from `taskQueue`, it detects that `task.
 ## 20. Revision Sheet
 
 - **Frame Slice Duration:** `5ms` (`yieldInterval`).
-- **Core API Mechanism:** `new MessageChannel()` (`port2.postMessage(null)` $\rightarrow$ `port1.onmessage`).
+- **Core API Mechanism:** `new MessageChannel()` (`port2.postMessage(null)` → `port1.onmessage`).
 - **Data Structures:** 2 Binary Min-Heaps in flat arrays (`taskQueue` and `timerQueue`).
 - **Priority Levels:**
   - `ImmediatePriority`: -1ms timeout (instant).

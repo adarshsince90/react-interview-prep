@@ -1,7 +1,7 @@
 # ADR-001: Dual-Track Architecture, Markdown SSOT & Quarantined Comparative Pedagogy
 
 ## Context
-The repository prepares an experienced Senior Software Engineer (11+ years in Angular, .NET/ASP.NET Core, Azure, Distributed Systems) for transition to Senior/Staff React and Next.js roles.
+The repository prepares an experienced Senior Backend & Enterprise Engineer (Backend Systems, .NET/ASP.NET Core, Angular, Azure, Distributed Systems) for transition to Senior/Staff React and Next.js roles.
 
 Two failure modes frequently occur in engineering education repositories:
 1. **Content Fragmentation:** Documentation and UI components drift out of sync when topics are hardcoded into web application UI templates or disparate wikis.

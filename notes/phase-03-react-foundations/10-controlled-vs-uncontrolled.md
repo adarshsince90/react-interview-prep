@@ -111,8 +111,8 @@ In HTML, an attribute is the initial value declared in the markup; a property is
 <input type="text" value="Default" id="txt" />
 ```
 
-* `txt.getAttribute('value')` $\rightarrow$ `"Default"` (Immutable initial attribute).
-* `txt.value` $\rightarrow$ Live string currently displayed in the box.
+* `txt.getAttribute('value')` → `"Default"` (Immutable initial attribute).
+* `txt.value` → Live string currently displayed in the box.
 
 In an **uncontrolled component**, React assigns `defaultValue` strictly during initial DOM node creation (`commitMount`). Thereafter, React never touches the node again:
 

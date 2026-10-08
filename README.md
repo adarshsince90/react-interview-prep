@@ -1,6 +1,6 @@
 # Frontend Engineering Handbook
 
-> A deep-first-principles learning repository for transitioning from **Senior Angular + .NET Engineer** to **Senior React + Next.js Engineer**, with a strong focus on architecture, runtime internals, enterprise engineering, performance, and interview preparation.
+> A deep-first-principles learning repository for transitioning from **Senior Backend & Enterprise Engineer (Angular, .NET, Distributed Systems)** to **Senior / Staff React & Next.js Architect**, with a strong focus on architecture, runtime internals, enterprise engineering, performance, and interview preparation.
 
 ---
 

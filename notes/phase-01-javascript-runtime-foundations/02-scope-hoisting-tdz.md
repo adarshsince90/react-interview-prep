@@ -87,23 +87,23 @@ x = 10;
 Inside the V8 C++ codebase, an active **Execution Context** contains two distinct environment records:
 
 ```text
-┌─────────────────────────────────────────────────────────────┐
-│                 V8 EXECUTION CONTEXT INTERNALS              │
-├─────────────────────────────────────────────────────────────┤
-│ 1. VariableEnvironment:                                     │
-│    └── Manages legacy `var` declarations and functions.     │
-│    └── Scoped strictly to the Function or Global level.     │
-│    └── Completely ignores block boundaries ({ }, if, for).  │
-├─────────────────────────────────────────────────────────────┤
-│ 2. LexicalEnvironment:                                      │
-│    └── Manages modern `let`, `const`, and `class` bindings. │
-│    └── Scoped to individual BLOCKS ({ }, if, for, while).   │
-│    └── Pushes a new scope frame when entering a block,      │
-│        and pops it when exiting the block.                  │
-├─────────────────────────────────────────────────────────────┤
-│ 3. OuterEnv Reference (Scope Chain Pointer)                 │
-│ 4. ThisBinding                                              │
-└─────────────────────────────────────────────────────────────┘
++-------------------------------------------------------------+
+|               V8 EXECUTION CONTEXT INTERNALS                |
++-------------------------------------------------------------+
+| 1. VariableEnvironment:                                     |
+|    |-- Manages legacy `var` declarations and functions.     |
+|    |-- Scoped strictly to the Function or Global level.     |
+|    |-- Completely ignores block boundaries ({ }, if, for).  |
++-------------------------------------------------------------+
+| 2. LexicalEnvironment:                                      |
+|    |-- Manages modern `let`, `const`, and `class` bindings. |
+|    |-- Scoped to individual BLOCKS ({ }, if, for, while).   |
+|    |-- Pushes a new scope frame when entering a block,      |
+|        and pops it when exiting the block.                  |
++-------------------------------------------------------------+
+| 3. OuterEnv Reference (Scope Chain Pointer)                 |
+| 4. ThisBinding                                              |
++-------------------------------------------------------------+
 ```
 
 ### What Happens When Entering a Block?
@@ -230,21 +230,21 @@ If the identifier is not found after reaching `outer: null`, V8 throws `Referenc
 ```text
 CASE A: for (var i = 0; i < 3; i++)
 Heap / Context:
-┌────────────────────────────────────────┐
-│ Function VariableEnvironment           │
-│   └── i: 3 (Single slot mutated 3x)    │
-└────────────────────────────────────────┘
++------------------------------------------+
+| Function VariableEnvironment             |
+|   |-- i: 3 (Single slot mutated 3x)      |
++------------------------------------------+
 Callbacks at t=100ms all read the SAME slot: Outputs 3, 3, 3.
 
-──────────────────────────────────────────────────────────────────────────
+--------------------------------------------------------------------------
 
 CASE B: for (let i = 0; i < 3; i++)
 V8 allocates a NEW LexicalEnvironment frame per iteration:
-┌────────────────────────┐  ┌────────────────────────┐  ┌────────────────────────┐
-│ Iteration 0 Frame      │  │ Iteration 1 Frame      │  │ Iteration 2 Frame      │
-│   └── i: 0             │  │   └── i: 1             │  │   └── i: 2             │
-└────────────────────────┘  └────────────────────────┘  └────────────────────────┘
-Callback 0 reads Frame 0    Callback 1 reads Frame 1    Callback 2 reads Frame 2
++--------------------------+  +--------------------------+  +--------------------------+
+| Iteration 0 Frame        |  | Iteration 1 Frame        |  | Iteration 2 Frame        |
+|   |-- i: 0               |  |   |-- i: 1               |  |   |-- i: 2               |
++--------------------------+  +--------------------------+  +--------------------------+
+Callback 0 reads Frame 0      Callback 1 reads Frame 1      Callback 2 reads Frame 2
 Outputs: 0, 1, 2.
 ```
 
@@ -277,7 +277,7 @@ Before ES6, Immediately Invoked Function Expressions (IIFEs) were required to pr
 | :--- | :--- | :--- |
 | **Class Field Scope** | TypeScript enforces `private`, `protected`, and `public` at compile time via Roslyn-like AST validation. | At runtime, standard class fields attach to the instance. True runtime encapsulation requires ES2022 private fields (`#field`). |
 | **Template Scoping** | Angular templates create local template variable scopes (e.g., `*ngFor="let item of items"`). | Angular compiles `let item` into a nested JavaScript function or block scope in the generated template instructions. |
-| **Dependency Injection** | Hierarchical Injectors mimic a scope chain: Component Injector $\to$ Parent Injector $\to$ Root Injector. | Natural Scope Chain: Nested LexicalEnvironment $\to$ Parent LexicalEnvironment $\to$ Global Scope. |
+| **Dependency Injection** | Hierarchical Injectors mimic a scope chain: Component Injector → Parent Injector → Root Injector. | Natural Scope Chain: Nested LexicalEnvironment → Parent LexicalEnvironment → Global Scope. |
 
 ---
 

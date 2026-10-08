@@ -485,10 +485,10 @@ function BadComponent() {
 }
 ```
 - **The Infinite Loop Explosion:**
-  1. `BadComponent` renders $\rightarrow$ allocates `Promise #1` $\rightarrow$ throws `Promise #1`.
+  1. `BadComponent` renders → allocates `Promise #1` → throws `Promise #1`.
   2. Suspense catches `Promise #1`, attaches listener.
-  3. `Promise #1` resolves $\rightarrow$ Suspense pings React to re-render `BadComponent`.
-  4. `BadComponent` re-renders $\rightarrow$ allocates **`Promise #2`** $\rightarrow$ throws `Promise #2`!
+  3. `Promise #1` resolves → Suspense pings React to re-render `BadComponent`.
+  4. `BadComponent` re-renders → allocates **`Promise #2`** → throws `Promise #2`!
   5. The loop repeats infinitely, pinning the CPU at 100% and firing thousands of network requests!
 - **The Rule:** Promises passed to `use()` **MUST be cached** (via React `cache()`, TanStack Query, Next.js fetch cache, or module-scoped maps).
 
@@ -610,7 +610,7 @@ In a financial terminal (where widgets include order books, news tickers, chart 
 
 ## 20. Revision Sheet
 
-- **Suspense Mechanism:** Component throws Promise $\rightarrow$ Reconciler catches $\rightarrow$ Renders fallback $\rightarrow$ Promise settles $\rightarrow$ `ping` schedules `RetryLane` $\rightarrow$ Re-renders primary tree.
+- **Suspense Mechanism:** Component throws Promise → Reconciler catches → Renders fallback → Promise settles → `ping` schedules `RetryLane` → Re-renders primary tree.
 - **Error Boundary Methods:**
   - `static getDerivedStateFromError(error)`: Render phase, pure, returns fallback state.
   - `componentDidCatch(error, errorInfo)`: Commit phase, side-effects, telemetry logging.

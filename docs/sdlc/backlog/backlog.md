@@ -244,6 +244,98 @@
 
 ---
 
+### Epic 16: Portal Wayfinding, Deep Search & Handbook Generalization (Sprint 16 - v0.15.0) 📋
+*Location:* `apps/portal/` & `notes/` | *Primary Skill:* `portal-developer` / Architecture Refactor
+- [ ] `FEAT-DASH-01`: Dynamic "Continue Learning" & Live Labs Metrics on Dashboard
+  - *User Problem:* The Dashboard currently hardcodes "Active Mentorship Focus" to `Phase 03: Topic 06` and "Interactive Labs Active" to `2 Live`, which is static, outdated, and does not reflect actual progress or the 9 living arena labs.
+  - *Acceptance Criteria:*
+    - Dynamically load the user's last-read topic from `localStorage` (`last_read_topic_id`) and render a 1-click "Resume Reading: [Topic Title]" button.
+    - Fall back to the next uncompleted topic if no history exists.
+    - Dynamically calculate and display the active labs count (9 Full Arena Labs Live) with direct navigation to the Labs Arena.
+    - Update hero badge to "Senior Backend & Enterprise Engineer → Senior / Staff React Architect".
+- [ ] `FEAT-SEARCH-01`: Deep Section Heading & Architectural Keyword Indexing
+  - *User Problem:* Search modal currently only filters chapter titles, missing internal headings, runtime concepts, and vocabulary terms (e.g. searching for `scheduler.yield`, `Fiber workLoopSync`, `WriteBarrier`, `Flight wire format`, or `WeakMap ephemeron` returns zero results).
+  - *Acceptance Criteria:*
+    - `generate-manifest.mjs` extracts all section headings (`##` and `###`) with anchor slugs and extracts Section 18 / Section 2 vocabulary keywords.
+    - `GlobalSearchModal.tsx` supports multi-tier search results: Chapters (110), Deep Sections (2,200+), and Key Concepts.
+    - Selecting a section result jumps directly to that specific anchor (`?topic=XX#heading-slug`) with smooth scrolling.
+- [ ] `FEAT-NAV-05`: Cross-Topic Contextual Quick Peek Drawer & Return Teleport
+  - *User Problem:* When reading a chapter that refers to another topic (e.g., React 18 batching referring to Event Loop microtasks), clicking a link abruptly leaves the page, causing the reader to lose their scroll position and focus.
+  - *Acceptance Criteria:*
+    - Clicking an inter-topic reference opens a slide-over "Quick Peek Drawer" showing the target section/definition without unloading the active article.
+    - If full navigation is chosen, display a persistent floating "← Return to [Previous Topic: Section]" pill to teleport back to the exact prior scroll position.
+- [ ] `REFACTOR-EXP-01`: Handbook Generalization for Senior Backend / Enterprise Engineers
+  - *User Problem:* Handbooks and documentation specifically cite "11+ years of experience in .NET", which is overly specific and personal rather than a publication-grade resource for senior backend and enterprise engineers transitioning to React.
+  - *Acceptance Criteria:*
+    - Standardize references across Phase 01 notes (`04-event-loop.md`, `05-promises-async-await.md`, `06-objects-prototypes-this.md`, `07-functional-javascript.md`, `08-modern-es6-plus.md`) to "Senior Backend & Enterprise Engineers (C#/.NET, Java, Go, Distributed Systems)".
+    - Update `README.md`, `AGENTS.md`, and `PROGRESS.md` to consistently frame the audience as "Senior Backend / Full-Stack Enterprise Engineers".
+
+---
+
+### Epic 17: Advanced Simulation Labs & In-Browser Playground (Sprint 17 - v0.16.0) 📋
+*Location:* `apps/portal/src/features/` | *Primary Skill:* `portal-developer`
+- [x] `FEAT-LAB-20`: Memory Leak & Retainer Graph Visualizer (`features/visualizers/topic-09-memory/MemoryRetainerLab.tsx`)
+  - *Acceptance Criteria:* Interactive graph showing GC roots, retainers, and memory weights (Detached DOM vs Scavenged).
+- [x] `FEAT-LAB-21`: TanStack Query Cache Lifecycle Simulator (`features/visualizers/topic-04-state/QueryCacheLab.tsx`)
+  - *Acceptance Criteria:* Visual timeline of cache states (`fresh`, `stale`, `fetching`, `inactive`, `gc`) with optimistic rollback triggers.
+- [x] `FEAT-LAB-22`: Virtualization & Viewport Culling Visualizer (`features/visualizers/topic-08-performance/VirtualizationLab.tsx`)
+  - *Acceptance Criteria:* Dual-view simulator showing virtual viewport vs recycled DOM node pool at 60 FPS.
+- [x] `FEAT-LEARN-05`: Spaced Repetition Engine (Flashcard Retention)
+  - *Acceptance Criteria:* SuperMemo SM-2 algorithm integrated into `FlashcardsArena.tsx` with IndexedDB persistence.
+- [x] `FEAT-LEARN-06`: In-Browser Interactive TSX Sandbox (Code Playground)
+  - *Acceptance Criteria:* Lightweight live editor/runner embedded within portal to test React 19 primitives with instant hot preview.
+
+---
+
+### Epic 17: Staff-Level Frontend Machine Coding Challenges (Sprint 17 - v0.16.0) 📋
+*Location:* `notes/challenges/` & `apps/portal/src/challenges/` | *Primary Skill:* Mentorship / Hands-On Machine Coding
+- [ ] `CHALLENGE-01`: Dynamic-Height Virtualized Windowing Engine from Scratch
+  - *Problem Statement:* Implement a high-performance virtual list from first principles supporting dynamic row heights, binary search offset indexing, and scroll thrashing prevention without external libraries.
+  - *Acceptance Criteria:*
+    - Dynamic measurement via ResizeObserver with cached height lookups.
+    - Binary search for initial visible index calculation in O(log N).
+    - Zero-layout-thrashing scroll performance maintaining 60 FPS across 100,000 items.
+- [ ] `CHALLENGE-02`: Concurrent Reactive State Store & Cache via `useSyncExternalStore`
+  - *Problem Statement:* Implement an atomic reactive store supporting selectors, structural sharing, batching, and concurrent React 18/19 rendering without tearing.
+  - *Acceptance Criteria:*
+    - Store interface: `createStore(initialState)`, `subscribe`, `getState`, `setState`.
+    - Custom React hook `useStore(selector, equalityFn)` utilizing `useSyncExternalStore`.
+    - Verification that high-frequency updates never cause tearing in concurrent transitions.
+- [ ] `CHALLENGE-03`: Resilient Optimistic Mutation Queue & Offline Outbox
+  - *Problem Statement:* Build an enterprise-grade offline mutation manager with FIFO queueing, retry with exponential backoff and jitter, and optimistic rollback.
+  - *Acceptance Criteria:*
+    - IndexedDB storage for offline mutation persistence across page reloads.
+    - Automatic online/offline network detection and graceful resume.
+    - Optimistic cache patching contract with snapshot rollback on terminal 4xx/5xx errors.
+
+---
+
+### Epic 18: Staff & Principal Architect Mock Interviews & Technical Defenses (Sprint 18) 📋
+*Format:* Timed 45–60 min Socratic interview simulations with Staff-level rubric evaluation.
+- [ ] `MOCK-01`: Frontend System Design — Real-Time High-Frequency Trading & Telemetry Terminal
+  - *Focus:* 60 FPS rendering under massive WebSocket throughput, backpressure handling, Web Workers off-main-thread parsing, Canvas/WebGL vs DOM trade-offs.
+- [ ] `MOCK-02`: Frontend System Design — Multi-Tenant Enterprise Micro-Frontend Dashboard
+  - *Focus:* Module Federation, runtime dependency sharing, design token isolation, cross-MFE event bus, backward compatibility & version drift management.
+- [ ] `MOCK-03`: React 19 Internals & Runtime Execution Defense
+  - *Focus:* Fiber reconciler work loop, Lane priority models, compiler auto-memoization mechanics, `useSyncExternalStore` concurrency guards, RSC Flight wire format parser.
+- [ ] `MOCK-04`: Enterprise Migration Defense — Angular/.NET to React/Next.js
+  - *Focus:* Defending an enterprise refactoring plan before an executive committee: Zone.js/RxJS vs React Compiler/Hooks, NgRx vs Zustand/TanStack Query, ASP.NET BFF vs Next.js Route Handlers, Strangler Fig phased rollout.
+
+---
+
+### Epic 19: Enterprise Production Post-Mortems & Incident Socratic Case Studies (Sprint 19) 📋
+*Format:* Real-world architectural post-mortems and incident debugging walkthroughs.
+- [ ] `CASE-01`: Production Memory Leak & V8 Heap Snapshot Post-Mortem
+  - *Focus:* Diagnosing detached DOM leaks, un-cleared event listeners, and closure retainers in single-page apps; reading DevTools heap snapshots and retainer trees.
+- [ ] `CASE-02`: INP Optimization & Main-Thread Yielding Incident Drill
+  - *Focus:* Resolving severe Interaction to Next Paint (INP) degradation during rapid search and data grid interactions; refactoring with `scheduler.yield()`, `useDeferredValue`, and Web Workers.
+- [ ] `CASE-03`: Enterprise Auth & Token Exfiltration Vulnerability Remediation
+  - *Focus:* Addressing XSS vulnerability in client-stored JWT tokens; migrating to BFF HTTP-only cookie proxy with PKCE and token rotation.
+- [ ] `CASE-04`: Micro-Frontend Dependency Drift & Breaking Contract Regression
+  - *Focus:* Resolving production outages caused by federated shared singleton mismatches (e.g. dual React runtime instances) and version skew across distributed deployments.
+
+---
+
 ## 3. Completed Backlog Items
 
 ### Item FIX-01: KaTeX Formula Greedy Regex Boundary Collision (`$$typeof`)
@@ -304,3 +396,74 @@
   1. Realigned Section 3 in `00-react-application-lifecycle-architecture.md` to follow the consistent architectural layout of Section 2 and Section 4: placing the code block at the section level (100% full width, flush left) followed by the step-by-step breakdown.
   2. Refined standard list padding in `apps/portal/src/index.css` to `1.45rem` for balanced typographic hierarchy.
   3. Added defensive styling for code blocks nested inside list items (`.markdown-body li > .code-block-wrapper, .markdown-body li > pre { margin: 0.85rem 0; }`).
+
+---
+
+### Item FIX-06: Centralized ASCII & Unicode Diagram Box Auto-Alignment & Font Normalization
+- **Issue**: ASCII and Unicode box diagrams across multiple handbook chapters (e.g., Phase 01 Topic 02 V8 Execution Context, Phase 06 Topic 06 3-Tier Auth Model) suffered from jagged right borders (`|` / `│`), glyph substitution (`L—` for `└──`), and width drift.
+- **Root Cause**:
+  1. *Font Metrics & Subset Disparity:* Web-loaded monospace fonts (like Google Fonts' Latin subset of JetBrains Mono) lacked the Unicode Box Drawing block (`U+2500–U+257F`). Browsers fell back to secondary system fonts whose glyph advance widths mismatched ASCII spaces, causing horizontal borders (`───`) to render narrower than prose spaces. Additionally, font ligatures collapsed character combinations (`--` into em-dash, `└──` into `L—`).
+  2. *Markdown Authoring Column Variance:* In complex hand-drawn diagrams across 110 chapters, internal content lines or sub-boxes had slight character count variances (e.g. 88 vs 90 vs 91 columns), causing vertical border pipes to stick out.
+- **Resolution**:
+  1. *CSS Engine Normalization:* Updated `--font-mono` in `apps/portal/src/index.css` to prioritize native monospace fonts with built-in 1:1 box-drawing metrics (`Cascadia Code`, `Consolas`, `Menlo`, `Monaco`, `Liberation Mono`), and explicitly disabled ligatures on code elements (`font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0;`).
+  2. *Central Runtime Box Aligner:* Added `alignDiagramCodeBlocks` to `cleanMarkdownFormatting` in `TopicReader.tsx`. It automatically detects diagram code blocks, measures the maximum content width across bounded boxes, and dynamically re-pads all content lines and borders to exact rectangular dimensions before rendering.
+  3. *Central Build-Time Pipeline Integration:* Embedded the auto-aligner into `apps/portal/scripts/generate-manifest.mjs` during the `public/notes/` synchronization step, ensuring all static assets, client fetches, and tests pass with 100% geometric alignment.
+
+---
+
+### Item FIX-07: Markdown Code Fence Parsing swallowed Comparison Tables in Chapters 06 & 07
+- **Issue**: In `06-authentication-session-management.md` and `07-route-handlers-api-design.md`, Section 10 (Angular Comparison), Section 11 (.NET Comparison), and Section 14 (Tradeoffs) markdown tables were swallowed into raw code blocks instead of rendering as rich comparison tables.
+- **Root Cause**:
+  In Section 9, Pattern 3 code block lacked a closing triple-backtick fence (` ``` `), causing the marked parser to treat all downstream prose, section headings, and markdown comparison tables as continuation of the code string.
+- **Resolution**:
+  1. Closed code fences in `06-authentication-session-management.md` and `07-route-handlers-api-design.md`.
+  2. Resynced notes to `public/notes/` and verified clean rendering of all comparison callout tables via headless browser inspection.
+
+---
+
+### Item FEAT-08: Smart Architectural Term Hover Cards & In-Situ Definitions
+- **Issue / User Need**: Instead of manual hyperlinks across 110 markdown files, readers need seamless in-situ access to canonical definitions and source chapters when encountering key runtime and architectural terms (e.g. `V8`, `Fiber`, `Event Loop`, `Microtask`, `RSC`, `CRDT`, `TDZ`, `Zone.js`, `Signals`, `Closure`).
+- **Architecture Reference**: [`ADR-002`](../../adr/ADR-002-portal-ux-typographic-reading-system.md), [`termDictionary.ts`](../../../apps/portal/src/features/topic-reader/termDictionary.ts)
+- **Resolution**:
+  1. *Glossary Engine:* Built [`termDictionary.ts`](../../../apps/portal/src/features/topic-reader/termDictionary.ts) mapping core terms to their canonical definitions, source chapters, and section anchors.
+  2. *Glassmorphic Popover:* Created [`TermHoverCard.tsx`](../../../apps/portal/src/features/topic-reader/TermHoverCard.tsx) with automatic viewport boundary collision handling, definition typography, and action buttons (`Peek Summary` and `Read Chapter`).
+  3. *Non-Destructive Prose Scanner:* Integrated a pure DOM text-node walker in `TopicReader.tsx` that identifies and marks only the *first occurrence* of each architectural term across prose text (`p`, `li`, `td`, `blockquote`), completely ignoring `<code>`, `<pre>`, `<a>`, and headings.
+  4. *Interaction & Accessibility:* Added hover debounce (180ms delay, 280ms grace window), scroll auto-dismiss, and direct click toggle for instant touch and mobile interaction.
+  5. *Live Verification:* Tested live at `http://localhost:5173/`, capturing verified browser screenshots of the active popover and the quick peek excerpt modal.
+
+---
+
+### Item FIX-09: Universal Elimination of Raw LaTeX Arrow Syntax (`\to` / `\rightarrow`)
+- **Issue**: In Chapter 01 (Learning Objectives), Chapter 02, and across 19 notes and 3 simulation lab components, LaTeX math tokens `$\to$` and `$\rightarrow$` rendered as unescaped raw backslashes (`\to`).
+- **Root Cause**:
+  1. Hand-authored notes and simulation code used LaTeX math syntax instead of native Unicode arrows (`→`).
+  2. `TopicReader.tsx`'s `cleanMarkdownFormatting` lacked a mapping for `\to`.
+- **Resolution**:
+  1. Replaced all 124 instances of `$\to$`, `$\rightarrow$`, `\to`, and `\rightarrow` with Unicode `→` across 19 markdown files in `notes/` and `apps/portal/public/notes/`.
+  2. Improved code formatting in `01-javascript-execution-model.md`: `Primitives (Small Integers / \`Smi\`s via pointer tagging)`.
+  3. Replaced raw `$\rightarrow$` in `EventLoopLab.tsx`, `RenderCycleLab.tsx`, and `FiberReconciliationLab.tsx` with clean `→`.
+  4. Added defensive regex replacements in `TopicReader.tsx`.
+  5. Added automated CI test in `apps/portal/scripts/test-manifest-integrity.mjs` verifying zero raw LaTeX arrow violations across all 110 notes.
+
+---
+
+### Item UI-LABS-VERTICAL: Master-Detail Vertical Simulation Navigation
+- **Issue**: As the number of interactive simulation laboratories grew to 9, the horizontal tab row in `VisualizerHub.tsx` required horizontal scrolling, hiding labs off-screen and hurting accessibility.
+- **Root Cause**: All 9 lab switcher buttons were rendered in a single horizontal flex row (`overflow-x: auto; white-space: nowrap;`).
+- **Resolution**:
+  1. Converted `VisualizerHub.tsx` into a responsive master-detail layout.
+  2. Implemented a sticky vertical left navigation panel (`width: 320px`, scrollable) displaying all 9 simulations vertically.
+  3. Each simulation card includes its phase badge, colored icon box, full title, 2-line educational subtitle, and active state indicator.
+  4. Main simulation canvas occupies the full right area with zero horizontal scroll clipping.
+  5. Verified with automated tests and production build.
+
+---
+
+### Item FIX-10: Light-Theme Text Contrast & Component Purity Lab Typography
+- **Issue**: In light theme, rendered component tree items in `ComponentPurityLab.tsx` (`Cloud Infrastructure (Azure)`, `Kubernetes Cluster`, `CDN & DNS Gateway`) and various lab headers rendered as invisible white text against light gray or white surfaces.
+- **Root Cause**: Simulation components hardcoded `color: '#fff'` on surfaces that switch to light tones (`#f1f5f9` or `#ffffff`) in light mode, combined with hardcoded `#090d16` containers.
+- **Resolution**:
+  1. Converted all hardcoded text styles in `ComponentPurityLab.tsx`, `JsxCompilerLab.tsx`, and `RenderCycleLab.tsx` to design system variables (`var(--text-primary)`, `var(--text-secondary)`).
+  2. Refactored container backgrounds to use `var(--bg-tertiary)`, `var(--bg-secondary)`, and `var(--code-bg)`.
+  3. Verified light mode contrast with live browser screenshot tests (`lab_11_component_purity_1791386333988.png`).
+

@@ -59,9 +59,9 @@ Imagine a train station luggage room equipped with a row of numbered lockers: `[
 * **No Name Tags (Index-Only Storage):**
   When your component arrives for its first shift (Mounting), it does not say: *"Store my username in the locker labeled 'username'."* 
   Instead, it executes in top-down order:
-  - First statement: `useState('Alice')` $\rightarrow$ Worker opens **Locker 1** and stores `'Alice'`.
-  - Second statement: `useState(30)` $\rightarrow$ Worker opens **Locker 2** and stores `30`.
-  - Third statement: `useEffect(...)` $\rightarrow$ Worker opens **Locker 3** and stores the effect callback.
+  - First statement: `useState('Alice')` → Worker opens **Locker 1** and stores `'Alice'`.
+  - Second statement: `useState(30)` → Worker opens **Locker 2** and stores `30`.
+  - Third statement: `useEffect(...)` → Worker opens **Locker 3** and stores the effect callback.
 * **The Second Render (Update):**
   When your component executes again tomorrow, it arrives at the luggage room. It does not search for labels. It relies entirely on the exact same sequence:
   - 1st call retrieves from **Locker 1** (`'Alice'`).

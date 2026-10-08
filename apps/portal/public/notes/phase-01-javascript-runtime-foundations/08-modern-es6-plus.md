@@ -600,7 +600,7 @@ async function processAllRecords() {
 
 ## 11. .NET Comparison: Modern C# (.NET 8/9) vs. Modern ECMAScript
 
-For an engineer with 11+ years of enterprise .NET experience:
+For Senior Backend and Enterprise Engineers comparing modern enterprise C# (.NET 8/9) features with Modern ECMAScript:
 
 | Architectural Concept | C# (.NET 8/9 / CLR) | JavaScript (ES6+ / V8) |
 | :--- | :--- | :--- |

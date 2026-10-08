@@ -19,7 +19,7 @@ Understanding how the browser’s **Network Process** manages connection pools, 
 ## 2. Learning Objectives
 
 - Dissect the 3 generations of HTTP protocols: **HTTP/1.1** (text-based, 6-conn limit), **HTTP/2** (binary framing, multiplexing), and **HTTP/3** (QUIC over UDP).
-- Trace the network connection lifecycle: **DNS Resolution (DoH) $\rightarrow$ TCP 3-Way Handshake $\rightarrow$ TLS 1.3 Handshake $\rightarrow$ Request/Response Exchange**.
+- Trace the network connection lifecycle: **DNS Resolution (DoH) → TCP 3-Way Handshake → TLS 1.3 Handshake → Request/Response Exchange**.
 - Understand the difference between **Application Head-of-Line Blocking** (HTTP/1.1) and **Transport Head-of-Line Blocking** (HTTP/2 over TCP).
 - Master how **HTTP/3 QUIC** solves packet drop stalls and enables **Connection Migration** across Wi-Fi and 5G cellular switches.
 - Consume high-throughput, low-memory data streams using the **Web Streams API (`ReadableStream`)** and cancel requests with **`AbortController`**.
@@ -228,7 +228,7 @@ export async function streamNdJson<T>(
 
 ### Pattern 2: Inspecting Protocols in Chrome DevTools
 
-1. Open DevTools $\rightarrow$ **Network Panel**.
+1. Open DevTools → **Network Panel**.
 2. Right-click any table header (e.g., Name, Status) and check **`Protocol`**.
 3. Inspect values:
    - `http/1.1`: Legacy text protocol (capped at 6 connections).

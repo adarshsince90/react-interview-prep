@@ -279,7 +279,7 @@ export const FiberReconciliationLab: React.FC = () => {
               2. Fiber Tree Pointer Traversal (performUnitOfWork)
             </h3>
             <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
-              Step through the DFS work loop walking <code>child</code> $\rightarrow$ <code>sibling</code> $\rightarrow$ <code>return</code> pointers.
+              Step through the DFS work loop walking <code>child</code> → <code>sibling</code> → <code>return</code> pointers.
             </span>
           </div>
 

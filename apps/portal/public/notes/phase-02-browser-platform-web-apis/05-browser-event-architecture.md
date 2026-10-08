@@ -18,7 +18,7 @@ Understanding the deep mechanics of capturing, bubbling, `composedPath`, and pas
 
 ## 2. Learning Objectives
 
-- Master the 3 phases of the W3C Event Flow: **1. Capturing Phase $\rightarrow$ 2. Target Phase $\rightarrow$ 3. Bubbling Phase**.
+- Master the 3 phases of the W3C Event Flow: **1. Capturing Phase → 2. Target Phase → 3. Bubbling Phase**.
 - Differentiate between **`event.target`** (the innermost element that triggered the event) and **`event.currentTarget`** (the element currently executing the event listener).
 - Inspect the complete propagation array using **`event.composedPath()`** across normal DOM trees and Shadow DOM boundaries.
 - Understand the exact behavioral differences between **`event.preventDefault()`**, **`event.stopPropagation()`**, and **`event.stopImmediatePropagation()`**.
@@ -315,7 +315,7 @@ window.addEventListener('app:cart-updated', ((e: CustomEvent<CartUpdatedDetail>)
 
 | Dimension | Browser Event Architecture | WPF & WinUI (.NET 9/10) |
 | :--- | :--- | :--- |
-| **Propagation Model** | 3-Phase: Capture $\rightarrow$ Target $\rightarrow$ Bubble. | **WPF Routed Events**: Tunneling (Preview) $\rightarrow$ Direct $\rightarrow$ Bubbling. |
+| **Propagation Model** | 3-Phase: Capture → Target → Bubble. | **WPF Routed Events**: Tunneling (Preview) → Direct → Bubbling. |
 | **Capturing Equivalent** | Capture phase (`{ capture: true }`). | **Tunneling Events** (prefixed with `Preview`, e.g., `PreviewMouseDown`). |
 | **Bubbling Equivalent** | Bubble phase (`{ capture: false }`). | **Bubbling Events** (e.g., `MouseDown`). |
 | **Halting Propagation** | `event.stopPropagation()`. | `RoutedEventArgs.Handled = true`. |
@@ -431,7 +431,7 @@ canvas.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false
 
 ## 19. Key Takeaways
 
-1. **The W3C Event Flow has 3 phases:** Capturing $\rightarrow$ Target $\rightarrow$ Bubbling.
+1. **The W3C Event Flow has 3 phases:** Capturing → Target → Bubbling.
 2. **`event.target` is the element clicked;** `event.currentTarget` is the element holding the active listener.
 3. **`preventDefault()` stops browser action;** `stopPropagation()` stops bubbling to ancestors; `stopImmediatePropagation()` stops sibling listeners on the identical element.
 4. **Use `{ passive: true }` on touch and wheel listeners** to ensure buttery-smooth 120 FPS scrolling on mobile.

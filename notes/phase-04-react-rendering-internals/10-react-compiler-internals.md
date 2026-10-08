@@ -44,7 +44,7 @@ The React Compiler is an **Ahead-of-Time (AOT) optimizing Babel / Rollup / Vite 
 
 By mastering this chapter, you will be able to:
 - Explain why manual memoization (`useMemo`, `useCallback`, `React.memo`) was a design compromise and how the React Compiler eliminates it.
-- Deconstruct the multi-stage compiler pipeline: **AST $\rightarrow$ HIR (High-level Intermediate Representation) $\rightarrow$ SSA $\rightarrow$ Reactive Scope Inference $\rightarrow$ Codegen**.
+- Deconstruct the multi-stage compiler pipeline: **AST → HIR (High-level Intermediate Representation) → SSA → Reactive Scope Inference → Codegen**.
 - Dissect the **Memo Cache (`_c()`)** runtime primitive and explain how it replaces Hooks with indexed cache slot comparisons.
 - Understand the strict prerequisites of the compiler: why **The Rules of React** (component purity, immutable props) are mandatory.
 - Explain why the React Compiler does **NOT** eliminate the Virtual DOM or turn React into a Signals-based framework.
@@ -543,7 +543,7 @@ Migrating a massive enterprise codebase to the React Compiler requires a discipl
 ## 20. Revision Sheet
 
 - **Compiler Name:** React Compiler (formerly "React Forget").
-- **Core Pipeline:** Source $\rightarrow$ AST $\rightarrow$ HIR $\rightarrow$ SSA $\rightarrow$ Reactive Scopes $\rightarrow$ Codegen (`_c`).
+- **Core Pipeline:** Source → AST → HIR → SSA → Reactive Scopes → Codegen (`_c`).
 - **Runtime Hook:** `_c(size)` allocating flat array slots on `Fiber.updateQueue`.
 - **Bailout Guarantee:** Auto-caches JSX elements, satisfying `current.memoizedProps === workInProgress.pendingProps` to skip child diffing.
 - **Escape Hatch:** Add `'use no memo'` at the top of a component to bypass the compiler.
