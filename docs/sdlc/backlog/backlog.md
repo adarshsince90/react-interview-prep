@@ -246,25 +246,25 @@
 
 ### Epic 16: Portal Wayfinding, Deep Search & Handbook Generalization (Sprint 16 - v0.15.0) 📋
 *Location:* `apps/portal/` & `notes/` | *Primary Skill:* `portal-developer` / Architecture Refactor
-- [ ] `FEAT-DASH-01`: Dynamic "Continue Learning" & Live Labs Metrics on Dashboard
+- [x] `FEAT-DASH-01`: Dynamic "Continue Learning" & Live Labs Metrics on Dashboard
   - *User Problem:* The Dashboard currently hardcodes "Active Mentorship Focus" to `Phase 03: Topic 06` and "Interactive Labs Active" to `2 Live`, which is static, outdated, and does not reflect actual progress or the 9 living arena labs.
   - *Acceptance Criteria:*
     - Dynamically load the user's last-read topic from `localStorage` (`last_read_topic_id`) and render a 1-click "Resume Reading: [Topic Title]" button.
     - Fall back to the next uncompleted topic if no history exists.
     - Dynamically calculate and display the active labs count (9 Full Arena Labs Live) with direct navigation to the Labs Arena.
     - Update hero badge to "Senior Backend & Enterprise Engineer → Senior / Staff React Architect".
-- [ ] `FEAT-SEARCH-01`: Deep Section Heading & Architectural Keyword Indexing
+- [x] `FEAT-SEARCH-01`: Deep Section Heading & Architectural Keyword Indexing
   - *User Problem:* Search modal currently only filters chapter titles, missing internal headings, runtime concepts, and vocabulary terms (e.g. searching for `scheduler.yield`, `Fiber workLoopSync`, `WriteBarrier`, `Flight wire format`, or `WeakMap ephemeron` returns zero results).
   - *Acceptance Criteria:*
     - `generate-manifest.mjs` extracts all section headings (`##` and `###`) with anchor slugs and extracts Section 18 / Section 2 vocabulary keywords.
     - `GlobalSearchModal.tsx` supports multi-tier search results: Chapters (110), Deep Sections (2,200+), and Key Concepts.
     - Selecting a section result jumps directly to that specific anchor (`?topic=XX#heading-slug`) with smooth scrolling.
-- [ ] `FEAT-NAV-05`: Cross-Topic Contextual Quick Peek Drawer & Return Teleport
+- [x] `FEAT-NAV-05`: Cross-Topic Contextual Quick Peek Drawer & Return Teleport
   - *User Problem:* When reading a chapter that refers to another topic (e.g., React 18 batching referring to Event Loop microtasks), clicking a link abruptly leaves the page, causing the reader to lose their scroll position and focus.
   - *Acceptance Criteria:*
     - Clicking an inter-topic reference opens a slide-over "Quick Peek Drawer" showing the target section/definition without unloading the active article.
     - If full navigation is chosen, display a persistent floating "← Return to [Previous Topic: Section]" pill to teleport back to the exact prior scroll position.
-- [ ] `REFACTOR-EXP-01`: Handbook Generalization for Senior Backend / Enterprise Engineers
+- [x] `REFACTOR-EXP-01`: Handbook Generalization for Senior Backend / Enterprise Engineers
   - *User Problem:* Handbooks and documentation specifically cite "11+ years of experience in .NET", which is overly specific and personal rather than a publication-grade resource for senior backend and enterprise engineers transitioning to React.
   - *Acceptance Criteria:*
     - Standardize references across Phase 01 notes (`04-event-loop.md`, `05-promises-async-await.md`, `06-objects-prototypes-this.md`, `07-functional-javascript.md`, `08-modern-es6-plus.md`) to "Senior Backend & Enterprise Engineers (C#/.NET, Java, Go, Distributed Systems)".
@@ -310,28 +310,28 @@
 
 ---
 
-### Epic 18: Staff & Principal Architect Mock Interviews & Technical Defenses (Sprint 18) 📋
-*Format:* Timed 45–60 min Socratic interview simulations with Staff-level rubric evaluation.
-- [ ] `MOCK-01`: Frontend System Design — Real-Time High-Frequency Trading & Telemetry Terminal
+### Epic 18: Staff & Principal Architect Mock Interviews & Technical Defenses (Sprint 18 / 19 - v0.18.0) 📋
+*Format:* Timed 45–60 min Socratic interview simulations with Staff-level rubric evaluation. Live in Portal: `?view=interviews`.
+- [x] `MOCK-01`: Frontend System Design — Real-Time High-Frequency Trading & Telemetry Terminal
   - *Focus:* 60 FPS rendering under massive WebSocket throughput, backpressure handling, Web Workers off-main-thread parsing, Canvas/WebGL vs DOM trade-offs.
-- [ ] `MOCK-02`: Frontend System Design — Multi-Tenant Enterprise Micro-Frontend Dashboard
+- [x] `MOCK-02`: Frontend System Design — Multi-Tenant Enterprise Micro-Frontend Dashboard
   - *Focus:* Module Federation, runtime dependency sharing, design token isolation, cross-MFE event bus, backward compatibility & version drift management.
-- [ ] `MOCK-03`: React 19 Internals & Runtime Execution Defense
+- [x] `MOCK-03`: React 19 Internals & Runtime Execution Defense
   - *Focus:* Fiber reconciler work loop, Lane priority models, compiler auto-memoization mechanics, `useSyncExternalStore` concurrency guards, RSC Flight wire format parser.
-- [ ] `MOCK-04`: Enterprise Migration Defense — Angular/.NET to React/Next.js
+- [x] `MOCK-04`: Enterprise Migration Defense — Angular/.NET to React/Next.js
   - *Focus:* Defending an enterprise refactoring plan before an executive committee: Zone.js/RxJS vs React Compiler/Hooks, NgRx vs Zustand/TanStack Query, ASP.NET BFF vs Next.js Route Handlers, Strangler Fig phased rollout.
 
 ---
 
-### Epic 19: Enterprise Production Post-Mortems & Incident Socratic Case Studies (Sprint 19) 📋
-*Format:* Real-world architectural post-mortems and incident debugging walkthroughs.
-- [ ] `CASE-01`: Production Memory Leak & V8 Heap Snapshot Post-Mortem
+### Epic 19: Enterprise Production Post-Mortems & Incident Socratic Case Studies (Sprint 20 - v0.19.0) 📋
+*Format:* Real-world architectural post-mortems and incident debugging walkthroughs. Live in Portal: `?view=incidents`.
+- [x] `CASE-01`: Production Memory Leak & V8 Heap Snapshot Post-Mortem (`INC-01`)
   - *Focus:* Diagnosing detached DOM leaks, un-cleared event listeners, and closure retainers in single-page apps; reading DevTools heap snapshots and retainer trees.
-- [ ] `CASE-02`: INP Optimization & Main-Thread Yielding Incident Drill
+- [x] `CASE-02`: INP Optimization & Main-Thread Yielding Incident Drill (`INC-02`)
   - *Focus:* Resolving severe Interaction to Next Paint (INP) degradation during rapid search and data grid interactions; refactoring with `scheduler.yield()`, `useDeferredValue`, and Web Workers.
-- [ ] `CASE-03`: Enterprise Auth & Token Exfiltration Vulnerability Remediation
+- [x] `CASE-03`: Enterprise Auth & Token Exfiltration Vulnerability Remediation (`INC-03`)
   - *Focus:* Addressing XSS vulnerability in client-stored JWT tokens; migrating to BFF HTTP-only cookie proxy with PKCE and token rotation.
-- [ ] `CASE-04`: Micro-Frontend Dependency Drift & Breaking Contract Regression
+- [x] `CASE-04`: Micro-Frontend Dependency Drift & Breaking Contract Regression (`INC-04`)
   - *Focus:* Resolving production outages caused by federated shared singleton mismatches (e.g. dual React runtime instances) and version skew across distributed deployments.
 
 ---
@@ -484,4 +484,48 @@
   5. **Staff Self-Evaluation Rubric**: 5 FAANG/Staff-tier criteria with 1-5 star levels, real-time total score calculator (/25 pts), and calculated Staff readiness rating (L5 Senior, L6 Staff, L7 Principal).
   6. **Publication-Grade Architectural Defense Transcripts**: 3-minute executive elevator pitches, ASCII topology blueprints, copyable TypeScript/JSON production snippets, and trade-off comparison matrices.
   7. **Quality Gates**: 100% manifest and component integrity tests passed, zero TypeScript errors (`tsc -b`), and production build validated.
+
+---
+
+### Item FEAT-INCIDENTS-ARENA: Dedicated Enterprise Production Post-Mortems & Incident Drills Arena
+- **Feature Target**: Sprint 20 (`v0.19.0`)
+- **Deliverables**: `apps/portal/src/features/incidents/IncidentsArena.tsx`, `incidentsData.ts`, `types.ts`, `App.tsx` (`?view=incidents`), `Dashboard.tsx`.
+- **Capabilities Delivered**:
+  1. **Interactive Incident War Room**: 4 high-severity production incident simulations:
+     - `INC-01` (`CASE-01`): SPA Heap Exhaustion & Chrome Tab Crash (1.9 GB memory leak, detached DOM subtree, global EventBus retention).
+     - `INC-02` (`CASE-02`): Interaction to Next Paint (INP) Collapse in 50k-Row Enterprise Grid (740ms main-thread freeze, `scheduler.yield()`, Web Worker offload).
+     - `INC-03` (`CASE-03`): Third-Party Analytics Compromise & LocalStorage JWT Exfiltration (BFF HTTP-Only cookie migration, SRI hash pinning, strict CSP).
+     - `INC-04` (`CASE-04`): Production Micro-Frontend Cascade Outage (Diamond dependency skew, dual React 18/19 runtimes, strict Module Federation contracts).
+  2. **5-Tab War Room Workflow**:
+     - *1. Live Incident Communications:* Chronological PagerDuty & Slack #war-room archive with phase pills (ALERT, TRIAGE, DIAGNOSIS, HOTFIX, RESOLVED).
+     - *2. Telemetry Anomaly Monitor:* Interactive SLA threshold comparison and time-series bar chart.
+     - *3. Forensic Diagnostics Sandbox:* Clickable DevTools inspection actions uncovering evidence clues.
+     - *4. Architectural Hotfix Diff:* Side-by-side comparison of vulnerable code vs enterprise fix with copy-to-clipboard.
+     - *5. Executive 5-Whys RCA:* SRE post-mortem report with blast radius, TTD, TTM, TTR, 5-Whys root cause analysis, detection gaps, and 3-tier prevention roadmap.
+  3. **Quality Gates**: Verified with `npm test`, `npx tsc -b`, and `npm run build` in 4.56s.
+
+---
+
+### Item BUG-HOTFIX-LIGHT-THEME-CONTRAST: High-Contrast Code Typography in Incident War Room Light Theme
+- **Issue**: In light theme, text inside the Architectural Hotfix diff box and forensic console was difficult or impossible to read.
+- **Root Cause**: The container used `background: var(--code-bg)` (dark navy `#0f172a`), but child text elements used `var(--text-primary)` (which is also dark navy `#0f172a` in light theme), causing dark text on dark background.
+- **Resolution**: Updated code and console containers in `IncidentsArena.tsx` to explicitly use `color: var(--code-text, #f8fafc)`.
+
+---
+
+### Item BUG-ROUTE-REFRESH-FLASH: SPA Route Initial Render Flash on Reload
+- **Issue**: Reloading `?view=challenges`, `?view=labs`, or other routes momentarily flashed the root Dashboard before switching views.
+- **Root Cause**: `activeView` was statically initialized to `'dashboard'` before URL parameters were read in `useEffect`.
+- **Resolution**: Implemented synchronous `resolveInitialRoute()` in `App.tsx` reading URL parameters on initial component instantiation.
+
+---
+
+### Item FEAT-CHALLENGE-THEORY-DEEPDIVE: Publication-Grade Architectural Deep Dive & Self-Contained Snippets
+- **Issue**: Experimental challenge view used minimal bullet points and linked to raw local file paths.
+- **Resolution**: Removed all local filesystem path disclosures; embedded self-contained syntax-highlighted code implementations, algorithmic trade-off matrices, and Socratic Staff interview defense rebuttals.
+
+---
+
+### Item FEAT-REPO-LICENSE: Open-Source MIT License
+- **Resolution**: Added standard permissive MIT License (`LICENSE`) to the repository root for clear open-source distribution and professional portfolio presentation.
 

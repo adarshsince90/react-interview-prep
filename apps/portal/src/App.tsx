@@ -1,5 +1,6 @@
 import { ChallengesArena } from './features/challenges/ChallengesArena';
 import { InterviewsArena } from './features/interviews/InterviewsArena';
+import { IncidentsArena } from './features/incidents/IncidentsArena';
 import { useState, useMemo, useEffect } from 'react';
 import manifestData from './assets/manifest.json';
 import type { ManifestData, TopicItem } from './core/types/manifest';
@@ -22,7 +23,8 @@ import {
   CheckCircle2,
   Award,
   Code2,
-  Briefcase
+  Briefcase,
+  Flame
 } from 'lucide-react';
 import {
   getStoredTheme,
@@ -38,7 +40,7 @@ const allTopics: TopicItem[] = manifest.phases.flatMap(p => p.topics);
 
 // Resolve initial SPA route synchronously from URL search params on mount
 function resolveInitialRoute(defaultTopic: TopicItem): {
-  view: 'dashboard' | 'reader' | 'labs' | 'challenges' | 'interviews' | 'flashcards' | 'quizzes';
+  view: 'dashboard' | 'reader' | 'labs' | 'challenges' | 'interviews' | 'incidents' | 'flashcards' | 'quizzes';
   topic: TopicItem;
   labId: string | null;
 } {
@@ -69,6 +71,10 @@ function resolveInitialRoute(defaultTopic: TopicItem): {
     return { view: 'interviews', topic: defaultTopic, labId: null };
   }
 
+  if (view === 'incidents') {
+    return { view: 'incidents', topic: defaultTopic, labId: null };
+  }
+
   if (view === 'flashcards') {
     return { view: 'flashcards', topic: defaultTopic, labId: null };
   }
@@ -95,7 +101,7 @@ export function App() {
   // Synchronously compute initial view and parameters from URL to prevent flash of dashboard on refresh
   const [initialRoute] = useState(() => resolveInitialRoute(initialTopic));
 
-  const [activeView, setActiveView] = useState<'dashboard' | 'reader' | 'labs' | 'challenges' | 'interviews' | 'flashcards' | 'quizzes'>(initialRoute.view);
+  const [activeView, setActiveView] = useState<'dashboard' | 'reader' | 'labs' | 'challenges' | 'interviews' | 'incidents' | 'flashcards' | 'quizzes'>(initialRoute.view);
   const [selectedTopic, setSelectedTopic] = useState<TopicItem>(initialRoute.topic);
   const [selectedLabId, setSelectedLabId] = useState<string | null>(initialRoute.labId);
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -155,6 +161,11 @@ export function App() {
 
       if (view === 'interviews') {
         setActiveView('interviews');
+        return;
+      }
+
+      if (view === 'incidents') {
+        setActiveView('incidents');
         return;
       }
 
@@ -326,6 +337,18 @@ export function App() {
     url.searchParams.set('view', 'interviews');
     url.hash = '';
     window.history.pushState({ view: 'interviews' }, '', url.pathname + '?' + url.searchParams.toString());
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleSwitchToIncidents = () => {
+    setActiveView('incidents');
+    setSearchQuery('');
+    const url = new URL(window.location.href);
+    url.searchParams.delete('topic');
+    url.searchParams.delete('lab');
+    url.searchParams.set('view', 'incidents');
+    url.hash = '';
+    window.history.pushState({ view: 'incidents' }, '', url.pathname + '?' + url.searchParams.toString());
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -622,6 +645,26 @@ export function App() {
             </button>
 
             <button
+              onClick={handleSwitchToIncidents}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.4rem',
+                padding: '0.45rem 0.85rem',
+                borderRadius: '6px',
+                background: activeView === 'incidents' ? 'var(--bg-secondary)' : 'transparent',
+                color: activeView === 'incidents' ? '#f87171' : 'var(--text-secondary)',
+                border: 'none',
+                fontWeight: 600,
+                fontSize: '0.82rem',
+                cursor: 'pointer',
+                boxShadow: activeView === 'incidents' ? 'var(--shadow-sm)' : 'none'
+              }}
+            >
+              <Flame size={15} /> War Room
+            </button>
+
+            <button
               onClick={handleSwitchToFlashcards}
               style={{
                 display: 'flex',
@@ -826,6 +869,7 @@ export function App() {
               onLaunchLab={handleLaunchLab}
               onNavigateView={(view) => {
                 if (view === 'interviews') handleSwitchToInterviews();
+                if (view === 'incidents') handleSwitchToIncidents();
               }}
             />
           )}
@@ -866,6 +910,10 @@ export function App() {
 
           {activeView === 'interviews' && (
             <InterviewsArena />
+          )}
+
+          {activeView === 'incidents' && (
+            <IncidentsArena />
           )}
         </main>
       </div>

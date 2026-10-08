@@ -115,10 +115,10 @@ Architecture Reference: [`docs/adr/ADR-002`](../adr/ADR-002-portal-ux-typographi
 Epic 16 in [`docs/sdlc/backlog/backlog.md`](./backlog/backlog.md). Primary Skill: `portal-developer` / Agent.
 
 ### Tasks:
-- [ ] **TASK-DASH-01 (Dynamic Resume & Labs Metrics):** In `Dashboard.tsx`, replace static "Active Mentorship Focus" with dynamic "Continue Reading: [Topic Title]" loaded from `localStorage` (`last_read_topic_id`, fallback to first uncompleted topic). Replace static "2 Live Labs" with live counter of the 9 Living Arena Labs with a 1-click launch CTA. Update Hero badge to "Senior Backend & Enterprise Engineer → Senior / Staff React Architect".
-- [ ] **TASK-SEARCH-01 (Deep Section & Concept Keyword Search):** Upgrade `generate-manifest.mjs` to extract all section headings (`##` and `###`) with anchor slugs and parse Section 18 / Section 2 vocabulary terms. Upgrade `GlobalSearchModal.tsx` to render multi-tier search results (Chapters, Sections, Concepts) with direct anchor navigation.
-- [ ] **TASK-NAV-05 (Quick Peek Drawer & Return Teleport):** Implement side-sheet slide-over drawer in `TopicReader.tsx` for inter-topic links to preview referenced sections without losing scroll position. Add persistent floating "← Return to [Previous Topic: Section]" teleport pill.
-- [ ] **TASK-EXP-01 (Audience Persona Generalization):** Replace specific "11+ years in .NET" text across Phase 01 notes (`04-event-loop.md`, `05-promises-async-await.md`, `06-objects-prototypes-this.md`, `07-functional-javascript.md`, `08-modern-es6-plus.md`) and core documentation with universal "Senior Backend & Enterprise Engineers (C#/.NET, Java, Go, Distributed Systems)".
+- [x] **TASK-DASH-01 (Dynamic Resume & Labs Metrics):** In `Dashboard.tsx`, replace static "Active Mentorship Focus" with dynamic "Continue Reading: [Topic Title]" loaded from `localStorage` (`last_read_topic_id`, fallback to first uncompleted topic). Replace static "2 Live Labs" with live counter of the 9 Living Arena Labs with a 1-click launch CTA. Update Hero badge to "Senior Backend & Enterprise Engineer → Senior / Staff React Architect".
+- [x] **TASK-SEARCH-01 (Deep Section & Concept Keyword Search):** Upgrade `generate-manifest.mjs` to extract all section headings (`##` and `###`) with anchor slugs and parse Section 18 / Section 2 vocabulary terms. Upgrade `GlobalSearchModal.tsx` to render multi-tier search results (Chapters, Sections, Concepts) with direct anchor navigation.
+- [x] **TASK-NAV-05 (Quick Peek Drawer & Return Teleport):** Implement side-sheet slide-over drawer in `TopicReader.tsx` for inter-topic links to preview referenced sections without losing scroll position. Add persistent floating "← Return to [Previous Topic: Section]" teleport pill.
+- [x] **TASK-EXP-01 (Audience Persona Generalization):** Replace specific "11+ years in .NET" text across Phase 01 notes (`04-event-loop.md`, `05-promises-async-await.md`, `06-objects-prototypes-this.md`, `07-functional-javascript.md`, `08-modern-es6-plus.md`) and core documentation with universal "Senior Backend & Enterprise Engineers (C#/.NET, Java, Go, Distributed Systems)".
 
 ---
 
@@ -136,7 +136,7 @@ Epic 17 in [`docs/sdlc/backlog/backlog.md`](./backlog/backlog.md). Primary Skill
 
 ---
 
-## 7. Sprint 18 Detailed Work Breakdown: Staff Machine Coding Challenges (Planned - v0.17.0)
+## 7. Sprint 18 Detailed Work Breakdown: Staff Machine Coding Challenges (Complete - v0.17.0)
 
 ### Backlog Reference:
 Epic 18 in [`docs/sdlc/backlog/backlog.md`](./backlog/backlog.md). Primary Skill: Mentorship / Machine Coding.
@@ -161,16 +161,16 @@ Epic 19 in [`docs/sdlc/backlog/backlog.md`](./backlog/backlog.md). Primary Skill
 
 ---
 
-## 9. Sprint 20 Detailed Work Breakdown: Enterprise Production Post-Mortems & Incident Drills (Planned)
+## 9. Sprint 20 Detailed Work Breakdown: Enterprise Production Post-Mortems & Incident Drills (Complete - v0.19.0)
 
 ### Backlog Reference:
 Epic 20 in [`docs/sdlc/backlog/backlog.md`](./backlog/backlog.md). Primary Skill: Technical Mentor.
 
 ### Incident Scenarios:
-- [ ] **INCIDENT-01:** Single-page application memory leak root-cause investigation using Chrome DevTools heap snapshots and retainer analysis.
-- [ ] **INCIDENT-02:** Critical Interaction to Next Paint (INP) degradation troubleshooting and main-thread unblocking via `scheduler.yield()`.
-- [ ] **INCIDENT-03:** Frontend XSS token exfiltration attack analysis and migration to secure BFF HTTP-only cookie proxy.
-- [ ] **INCIDENT-04:** Production Micro-Frontend outage remediation caused by federated shared dependency skew and diamond dependency conflicts.
+- [x] **INCIDENT-01:** Single-page application memory leak root-cause investigation using Chrome DevTools heap snapshots, detached DOM subtrees, and retainer graph analysis (`INC-01`).
+- [x] **INCIDENT-02:** Critical Interaction to Next Paint (INP) degradation troubleshooting and main-thread unblocking via React 19 `useTransition`, Web Worker offload, and `scheduler.yield()` (`INC-02`).
+- [x] **INCIDENT-03:** Frontend XSS token exfiltration attack analysis, CSP hardening, and migration to secure BFF HTTP-only cookie proxy (`INC-03`).
+- [x] **INCIDENT-04:** Production Micro-Frontend outage remediation caused by federated shared dependency skew, dual React runtimes, and diamond dependency conflicts (`INC-04`).
 
 ---
 

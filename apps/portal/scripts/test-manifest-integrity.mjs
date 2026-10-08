@@ -90,6 +90,11 @@ if (manifestData) {
   assert(fs.existsSync(path.resolve(INTERVIEWS_DIR, 'interviewsData.ts')), 'interviewsData.ts dataset exists');
   assert(fs.existsSync(path.resolve(INTERVIEWS_DIR, 'types.ts')), 'interviews types.ts exists');
 
+  const INCIDENTS_DIR = path.resolve(PORTAL_ROOT, 'src/features/incidents');
+  assert(fs.existsSync(path.resolve(INCIDENTS_DIR, 'IncidentsArena.tsx')), 'IncidentsArena.tsx component exists');
+  assert(fs.existsSync(path.resolve(INCIDENTS_DIR, 'incidentsData.ts')), 'incidentsData.ts dataset exists');
+  assert(fs.existsSync(path.resolve(INCIDENTS_DIR, 'types.ts')), 'incidents types.ts exists');
+
   // 4. Verify No Raw LaTeX Math (\frac, \text{, \approx, \rightarrow, \to) Exists in Indexed Notes
   let latexViolations = 0;
   for (const phase of manifestData.phases) {
