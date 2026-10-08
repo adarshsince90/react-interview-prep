@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import type { ManifestData, TopicItem } from '../../core/types/manifest';
-import { Layers, Sparkles, CheckCircle2, Circle, Terminal, Award, Clock, BookOpen, ArrowRight } from 'lucide-react';
+import { Layers, Sparkles, CheckCircle2, Circle, Terminal, Award, Clock, BookOpen, ArrowRight, Briefcase } from 'lucide-react';
 import { getCompletedTopicIds, getRecentTopicIds } from '../../core/utils/progressStorage';
 import { formatTopicBadgeAndTitle } from '../../core/utils/slugify';
 
@@ -8,9 +8,10 @@ interface DashboardProps {
   manifest: ManifestData;
   onSelectTopic: (topic: TopicItem) => void;
   onLaunchLab: (labId: string) => void;
+  onNavigateView?: (view: string) => void;
 }
 
-export const Dashboard: React.FC<DashboardProps> = ({ manifest, onSelectTopic, onLaunchLab }) => {
+export const Dashboard: React.FC<DashboardProps> = ({ manifest, onSelectTopic, onLaunchLab, onNavigateView }) => {
   const [completedIds, setCompletedIds] = useState<string[]>(() => getCompletedTopicIds());
   const [recentIds, setRecentIds] = useState<string[]>(() => getRecentTopicIds());
 
@@ -115,6 +116,26 @@ export const Dashboard: React.FC<DashboardProps> = ({ manifest, onSelectTopic, o
             >
               <Terminal size={17} /> Test Component Purity
             </button>
+            {onNavigateView && (
+              <button
+                onClick={() => onNavigateView('interviews')}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  padding: '0.7rem 1.35rem',
+                  borderRadius: '8px',
+                  background: 'rgba(16, 185, 129, 0.12)',
+                  color: 'var(--emerald-success)',
+                  border: '1px solid rgba(16, 185, 129, 0.25)',
+                  fontWeight: 700,
+                  fontSize: '0.9rem',
+                  cursor: 'pointer'
+                }}
+              >
+                <Briefcase size={17} /> Staff Mock Interviews
+              </button>
+            )}
           </div>
         </div>
       </div>

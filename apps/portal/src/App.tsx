@@ -1,4 +1,5 @@
 import { ChallengesArena } from './features/challenges/ChallengesArena';
+import { InterviewsArena } from './features/interviews/InterviewsArena';
 import { useState, useMemo, useEffect } from 'react';
 import manifestData from './assets/manifest.json';
 import type { ManifestData, TopicItem } from './core/types/manifest';
@@ -20,7 +21,8 @@ import {
   Moon,
   CheckCircle2,
   Award,
-  Code2
+  Code2,
+  Briefcase
 } from 'lucide-react';
 import {
   getStoredTheme,
@@ -36,7 +38,7 @@ const allTopics: TopicItem[] = manifest.phases.flatMap(p => p.topics);
 
 // Resolve initial SPA route synchronously from URL search params on mount
 function resolveInitialRoute(defaultTopic: TopicItem): {
-  view: 'dashboard' | 'reader' | 'labs' | 'challenges' | 'flashcards' | 'quizzes';
+  view: 'dashboard' | 'reader' | 'labs' | 'challenges' | 'interviews' | 'flashcards' | 'quizzes';
   topic: TopicItem;
   labId: string | null;
 } {
@@ -61,6 +63,10 @@ function resolveInitialRoute(defaultTopic: TopicItem): {
 
   if (view === 'challenges') {
     return { view: 'challenges', topic: defaultTopic, labId: null };
+  }
+
+  if (view === 'interviews') {
+    return { view: 'interviews', topic: defaultTopic, labId: null };
   }
 
   if (view === 'flashcards') {
@@ -89,7 +95,7 @@ export function App() {
   // Synchronously compute initial view and parameters from URL to prevent flash of dashboard on refresh
   const [initialRoute] = useState(() => resolveInitialRoute(initialTopic));
 
-  const [activeView, setActiveView] = useState<'dashboard' | 'reader' | 'labs' | 'challenges' | 'flashcards' | 'quizzes'>(initialRoute.view);
+  const [activeView, setActiveView] = useState<'dashboard' | 'reader' | 'labs' | 'challenges' | 'interviews' | 'flashcards' | 'quizzes'>(initialRoute.view);
   const [selectedTopic, setSelectedTopic] = useState<TopicItem>(initialRoute.topic);
   const [selectedLabId, setSelectedLabId] = useState<string | null>(initialRoute.labId);
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -144,6 +150,11 @@ export function App() {
 
       if (view === 'challenges') {
         setActiveView('challenges');
+        return;
+      }
+
+      if (view === 'interviews') {
+        setActiveView('interviews');
         return;
       }
 
@@ -303,6 +314,18 @@ export function App() {
     url.searchParams.set('view', 'quizzes');
     url.hash = '';
     window.history.pushState({ view: 'quizzes' }, '', url.pathname + '?' + url.searchParams.toString());
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleSwitchToInterviews = () => {
+    setActiveView('interviews');
+    setSearchQuery('');
+    const url = new URL(window.location.href);
+    url.searchParams.delete('topic');
+    url.searchParams.delete('lab');
+    url.searchParams.set('view', 'interviews');
+    url.hash = '';
+    window.history.pushState({ view: 'interviews' }, '', url.pathname + '?' + url.searchParams.toString());
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -579,6 +602,26 @@ export function App() {
             </button>
 
             <button
+              onClick={handleSwitchToInterviews}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.4rem',
+                padding: '0.45rem 0.85rem',
+                borderRadius: '6px',
+                background: activeView === 'interviews' ? 'var(--bg-secondary)' : 'transparent',
+                color: activeView === 'interviews' ? 'var(--emerald-success)' : 'var(--text-secondary)',
+                border: 'none',
+                fontWeight: 600,
+                fontSize: '0.82rem',
+                cursor: 'pointer',
+                boxShadow: activeView === 'interviews' ? 'var(--shadow-sm)' : 'none'
+              }}
+            >
+              <Briefcase size={15} /> Mock Interviews
+            </button>
+
+            <button
               onClick={handleSwitchToFlashcards}
               style={{
                 display: 'flex',
@@ -781,6 +824,9 @@ export function App() {
               manifest={manifest}
               onSelectTopic={handleSelectTopic}
               onLaunchLab={handleLaunchLab}
+              onNavigateView={(view) => {
+                if (view === 'interviews') handleSwitchToInterviews();
+              }}
             />
           )}
 
@@ -816,6 +862,10 @@ export function App() {
 
           {activeView === 'challenges' && (
             <ChallengesArena />
+          )}
+
+          {activeView === 'interviews' && (
+            <InterviewsArena />
           )}
         </main>
       </div>

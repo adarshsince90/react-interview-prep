@@ -466,4 +466,22 @@
   1. Converted all hardcoded text styles in `ComponentPurityLab.tsx`, `JsxCompilerLab.tsx`, and `RenderCycleLab.tsx` to design system variables (`var(--text-primary)`, `var(--text-secondary)`).
   2. Refactored container backgrounds to use `var(--bg-tertiary)`, `var(--bg-secondary)`, and `var(--code-bg)`.
   3. Verified light mode contrast with live browser screenshot tests (`lab_11_component_purity_1791386333988.png`).
+
+---
+
+### Item FEAT-MOCK-INTERVIEWS: Dedicated Staff Architect Mock Interviews & Technical Defenses Arena
+- **Feature Target**: Sprint 19 (`v0.18.0`)
+- **Deliverables**: `apps/portal/src/features/interviews/InterviewsArena.tsx`, `interviewsData.ts`, `types.ts`, `App.tsx` (`?view=interviews`).
+- **Capabilities Delivered**:
+  1. **Master-Detail Scenario Hub**: 4 complete Staff/Principal Architect scenarios:
+     - `MOCK-01`: Real-Time HFT Telemetry Terminal System Design (10k ticks/sec, 60 FPS, Web Workers, Transferables, ring buffers, INP < 50ms).
+     - `MOCK-02`: Multi-Tenant SaaS Micro-Frontend Dashboard System Design (Module Federation, dynamic remotes, shared singletons, circuit breaker boundaries).
+     - `MOCK-03`: React 19 Internals & Fiber Scheduler Deep Defense (Fiber linked list, 31-bit Lane bitmasks, cooperative work loop, React 19 Compiler SSA analysis, RSC Flight wire format).
+     - `MOCK-04`: Enterprise Angular/.NET to React Executive Migration Defense (Strangler Fig reverse proxy, YARP/Cloudflare, Web Components coexistence, OpenAPI TypeScript client generation, 5-tier canary rollback).
+  2. **Interactive 45-Minute Interview Timer**: Live countdown, play/pause controls, visual progress bar, low-time warning.
+  3. **4-Stage Socratic Simulation Stepper**: Progressive interview turns (Clarifications, High-Level Architecture, Stress-Test Curveballs, Technical Drills) with revealable Staff Architect defenses and mentor pro-tips.
+  4. **Live Candidate Scratchpad**: In-situ notes editor per scenario with automatic `localStorage` persistence.
+  5. **Staff Self-Evaluation Rubric**: 5 FAANG/Staff-tier criteria with 1-5 star levels, real-time total score calculator (/25 pts), and calculated Staff readiness rating (L5 Senior, L6 Staff, L7 Principal).
+  6. **Publication-Grade Architectural Defense Transcripts**: 3-minute executive elevator pitches, ASCII topology blueprints, copyable TypeScript/JSON production snippets, and trade-off comparison matrices.
+  7. **Quality Gates**: 100% manifest and component integrity tests passed, zero TypeScript errors (`tsc -b`), and production build validated.
 

@@ -77,6 +77,19 @@ if (manifestData) {
     );
   }
 
+  for (const [challengeId, relativePath] of Object.entries(CHALLENGE_COMPONENT_MAP)) {
+    const componentPath = path.resolve(VISUALIZERS_DIR, relativePath);
+    assert(
+      fs.existsSync(componentPath),
+      `Challenge component for '${challengeId}' exists at ${relativePath}`
+    );
+  }
+
+  const INTERVIEWS_DIR = path.resolve(PORTAL_ROOT, 'src/features/interviews');
+  assert(fs.existsSync(path.resolve(INTERVIEWS_DIR, 'InterviewsArena.tsx')), 'InterviewsArena.tsx component exists');
+  assert(fs.existsSync(path.resolve(INTERVIEWS_DIR, 'interviewsData.ts')), 'interviewsData.ts dataset exists');
+  assert(fs.existsSync(path.resolve(INTERVIEWS_DIR, 'types.ts')), 'interviews types.ts exists');
+
   // 4. Verify No Raw LaTeX Math (\frac, \text{, \approx, \rightarrow, \to) Exists in Indexed Notes
   let latexViolations = 0;
   for (const phase of manifestData.phases) {
