@@ -336,6 +336,23 @@
 
 ---
 
+### Epic 21: Full-Spectrum Responsive Design, Mobile Usability & UI/UX Polish (Sprint 21 - v0.20.0) 📱
+*Format:* Systemic cross-platform responsiveness, touch scrolling enclosures, mobile slide-out drawer, fluid reader layout, and visual alignment fixes across all 8 modules.
+- [x] `UI-HERO-ALIGNMENT`: Dashboard Hero Action Strip Alignment & Symmetrical Grid
+  - *Focus:* Eliminate awkward orphan button wrap on the 4th action button ("Incident War Room"). Replaced hardcoded max-width with CSS grid `repeat(4, 1fr)` on desktop, 2x2 grid on tablet, and 1-column on mobile.
+- [x] `FEAT-RESPONSIVE-SHELL`: Responsive Header, Search Trigger & Mobile Drawer
+  - *Focus:* Top navigation collapses on viewports < 980px into a hamburger button and search icon trigger. Slide-over drawer provides full access to all 8 modules and auto-closes on route change.
+- [x] `UI-READER-FLUID`: TopicReader Responsive Canvas & Collapsible Outlines
+  - *Focus:* Converts desktop 3-column reader layout into fluid 1-column layout on screens < 1120px with an in-header collapsible Table of Contents bar with smooth-scrolling anchors. On screens < 860px, curriculum sidebar converts into an off-canvas drawer with backdrop overlay.
+- [x] `UI-ARENA-STACK`: Adaptive Single-Column Layouts for Arenas & Workspaces
+  - *Focus:* Incidents Arena, Challenges Arena, and Code Playground split panels gracefully stack on viewports < 900px, enabling full-width editor, console output, and diff inspection.
+- [x] `UI-LAB-TOUCH-SCROLL`: Universal Touch Scroll Enclosures for Complex Labs
+  - *Focus:* High-density simulation canvases (Fiber Reconciliation, RSC Flight Stream Parser, Canvas Design, Virtualization, Query Cache) wrapped with `.scroll-touch-container` to maintain desktop detail while offering friction-free horizontal scrolling on mobile and tablet.
+- [x] `TEST-RESPONSIVE-INTEGRITY`: Automated Testing & Multi-Viewport Verification
+  - *Focus:* Verified with automated test suites (`npm test`, `npm run build`) and visual validation across 375px, 768px, and 1920px viewports with zero regressions.
+
+---
+
 ## 3. Completed Backlog Items
 
 ### Item FIX-01: KaTeX Formula Greedy Regex Boundary Collision (`$$typeof`)
@@ -539,5 +556,74 @@
   3. *`apps/portal/README.md`:* Highlighted live hosted portal access alongside local quick-start instructions.
   4. *`docs/sdlc/README.md`:* Added live deployed web application cross-reference.
   5. *SDLC Intake:* Triaged and resolved from `unplanned-backlog.md`.
+
+---
+
+## Epic 21: Full-Spectrum Responsive Design, UI/UX Polish & Cross-Platform Alignment (v0.20.0)
+
+> **Sprint:** Sprint 21 (`v0.20.0`)  
+> **Target Subsystem:** `apps/portal` (Shell, Dashboard, Reader, Arenas, Simulation Labs)  
+> **Source Intake:** `UNPLANNED-RESPONSIVE-ALIGNMENT` in [`unplanned-backlog.md`](./unplanned-backlog.md)
+
+### User Story 21.1 (`UI-HERO-ALIGNMENT`): Dashboard Hero Action Grid & Symmetry Fix
+- **As a** learner visiting the portal on any screen resolution,
+- **I want** the hero action buttons to be arranged in an aesthetically balanced, symmetrical layout without orphan buttons wrapped onto lonely rows,
+- **So that** the first impression is publication-grade and visually commanding.
+- **Root Cause:** In `Dashboard.tsx`, the inner container hardcodes `maxWidth: '780px'`. Four buttons + gaps require ~853px, forcing button #4 ("Incident War Room") to wrap as a lone orphan.
+- **Acceptance Criteria:**
+  1. Remove the arbitrary `maxWidth: '780px'` restriction on the hero action row.
+  2. Implement an auto-fit / 4-card action grid with consistent button heights, icons, and hover elevations.
+  3. On tablet screens (640px–1024px), format cleanly as a 2x2 grid.
+  4. On mobile screens (<640px), format as a single-column or 2-column touch-friendly action stack.
+  5. Zero orphan buttons across all standard viewport widths (375px, 430px, 768px, 1024px, 1440px, 1920px).
+
+### User Story 21.2 (`FEAT-RESPONSIVE-SHELL`): Responsive Navigation Header & Mobile Drawer
+- **As a** mobile or tablet learner,
+- **I want** the top navigation bar to adapt to my screen width with a compact header and slide-out drawer,
+- **So that** I can easily access all 7 portal modules without horizontal page blowout.
+- **Acceptance Criteria:**
+  1. Under `960px`, collapse the 7 desktop navigation tabs into a smooth slide-out navigation sheet/drawer with backdrop overlay.
+  2. Collapse the 320px search input into a compact search icon button that triggers `GlobalSearchModal` (Ctrl+K).
+  3. Ensure the theme toggle, brand logo, and hamburger icon remain pinned and accessible.
+  4. Navigating to any view from the mobile drawer automatically closes the drawer and resets scroll position to top.
+
+### User Story 21.3 (`UI-READER-FLUID`): Fluid TopicReader, Collapsible TOC & Off-Canvas Curriculum Sidebar
+- **As a** reader studying handbook chapters on mobile or tablet,
+- **I want** the reading canvas to occupy full width while keeping the curriculum tree and chapter navigation easily accessible,
+- **So that** reading long technical guides is seamless and comfortable.
+- **Acceptance Criteria:**
+  1. Under `1120px`, collapse the fixed 290px right-hand Table of Contents into a floating collapsible badge / bottom drawer so the reading column expands to 100% width.
+  2. Under `860px`, convert the 320px sticky curriculum sidebar into an animated off-canvas drawer with backdrop blur.
+  3. Selecting a chapter in mobile drawer immediately navigates and closes the drawer.
+  4. All markdown code blocks (`pre`, `code`), tables, and Mermaid diagrams must have horizontal touch-scrolling (`overflow-x: auto`) and never cause document-level horizontal scroll.
+
+### User Story 21.4 (`UI-ARENA-STACK`): Single-Column Adaptive Stacks for Interactive Arenas
+- **As a** candidate practicing in Mock Interviews, Incident War Room, or Machine Coding Challenges on a tablet or phone,
+- **I want** multi-column master-detail layouts to adapt gracefully,
+- **So that** I can review scenarios and inspect telemetry without clipped panels.
+- **Acceptance Criteria:**
+  1. In `IncidentsArena`, convert the fixed `360px 1fr` grid to an adaptive layout (`1fr` on screens < 900px) with segmented selector tabs.
+  2. In `ChallengesArena`, convert `320px 1fr` to single-column stacking with sticky scenario selection on mobile.
+  3. In `CodePlayground`, convert `300px 1fr` to single-column stack on screens < 860px.
+  4. Ensure all telemetry graphs, terminal outputs, and code diffs have touch scroll wrappers.
+
+### User Story 21.5 (`UI-LAB-TOUCH-SCROLL`): Touch-Friendly Overflow Containers for Complex Visualizers
+- **As a** developer exploring complex runtime simulators on a touchscreen or small display,
+- **I want** complex diagrams, Fiber reconciler trees, and TanStack query caches to preserve 100% of their desktop features without being crushed,
+- **So that** no educational fidelity or simulator capability is degraded.
+- **Acceptance Criteria:**
+  1. In `VisualizerHub`, switch to a responsive layout on screens < 960px with a compact simulation dropdown / pill selector.
+  2. Wrap all high-density visualizer canvases (`FiberReconciliationLab`, `RscFlightLab`, `CanvasDesignLab`, `MemoryRetainerLab`, `VirtualizationLab`) in `.scroll-touch-container` with smooth touch inertia.
+  3. Replace hardcoded 4-column/5-column stat strips with responsive auto-fit grids (`repeat(auto-fit, minmax(180px, 1fr))`).
+
+### User Story 21.6 (`TEST-RESPONSIVE-INTEGRITY`): Quality Gates & Multi-Viewport Verification
+- **As a** release engineer,
+- **I want** comprehensive automated tests and multi-viewport validation,
+- **So that** no existing feature, route, or theme breaks during responsive refactoring.
+- **Acceptance Criteria:**
+  1. `npm test` passes 100% of assertions (manifest, labs, challenges, interviews, incidents, LaTeX sanitization).
+  2. `tsc -b` completes with 0 errors.
+  3. `npm run build` succeeds cleanly.
+  4. Verified across mobile (375px/390px), tablet (768px), and desktop (1440px/1920px).
 
 

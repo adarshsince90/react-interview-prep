@@ -194,7 +194,7 @@ export const IncidentsArena: React.FC = () => {
       </div>
 
       {/* Main Grid: Sidebar + Case Arena */}
-      <div style={{ display: 'grid', gridTemplateColumns: '360px 1fr', gap: '1.5rem', alignItems: 'start' }}>
+      <div className="incidents-arena-grid">
         {/* Left Sidebar: Scenario Selector */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           {/* Filter Bar */}
@@ -901,7 +901,7 @@ export const IncidentsArena: React.FC = () => {
               </div>
 
               {/* Side-by-side or stacked diff */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+              <div className="responsive-diff-grid">
                 {/* Buggy / Vulnerable Code */}
                 <div
                   style={{

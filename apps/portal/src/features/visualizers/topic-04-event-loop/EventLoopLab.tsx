@@ -434,7 +434,7 @@ export const EventLoopLab: React.FC = () => {
       </div>
 
       {/* 4 Execution Lanes Visualizer */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem' }}>
         
         {/* Lane 1: Call Stack */}
         <div style={{

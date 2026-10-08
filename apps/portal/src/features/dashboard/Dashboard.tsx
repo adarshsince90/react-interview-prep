@@ -53,46 +53,28 @@ export const Dashboard: React.FC<DashboardProps> = ({ manifest, onSelectTopic, o
   const overallPercentage = Math.round((completedCount / totalTopics) * 100);
 
   return (
-    <div style={{ padding: '2rem', maxWidth: '1280px', margin: '0 auto' }}>
+    <div style={{ padding: '2rem 1.5rem', maxWidth: '1280px', margin: '0 auto' }}>
       {/* Hero Banner */}
-      <div
-        style={{
-          background: 'var(--bg-secondary)',
-          border: '1px solid var(--border-subtle)',
-          borderRadius: '16px',
-          padding: '2.5rem',
-          marginBottom: '2rem',
-          boxShadow: 'var(--shadow-sm)',
-          position: 'relative',
-          overflow: 'hidden'
-        }}
-      >
-        <div style={{ maxWidth: '780px', position: 'relative', zIndex: 1 }}>
+      <div className="dashboard-hero-container">
+        <div style={{ maxWidth: '960px', position: 'relative', zIndex: 1 }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(2, 132, 199, 0.1)', color: 'var(--react-cyan)', padding: '0.35rem 0.85rem', borderRadius: '20px', fontSize: '0.85rem', fontWeight: 600, marginBottom: '1rem' }}>
             <Award size={16} /> Senior Backend & Enterprise Engineer → Senior / Staff React Architect
           </div>
-          <h1 style={{ fontSize: '2.3rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.75rem', letterSpacing: '-0.02em', lineHeight: 1.25 }}>
+          <h1 style={{ fontSize: 'clamp(1.75rem, 4vw, 2.3rem)', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.75rem', letterSpacing: '-0.02em', lineHeight: 1.25 }}>
             React & JavaScript Runtime Architecture Portal
           </h1>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '1.02rem', lineHeight: 1.6, marginBottom: '1.5rem' }}>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', lineHeight: 1.6, marginBottom: '0.5rem', maxWidth: '850px' }}>
             A publication-grade engineering handbook and companion simulation laboratory designed for deep first-principles learning, architectural comparison, and senior interview drills.
           </p>
 
-          <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+          <div className="dashboard-hero-action-grid">
             <button
               onClick={() => onLaunchLab('lab-10-jsx-compiler')}
+              className="dashboard-hero-btn"
               style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                padding: '0.7rem 1.35rem',
-                borderRadius: '8px',
                 background: 'linear-gradient(135deg, var(--react-cyan) 0%, #0369a1 100%)',
                 color: '#ffffff',
                 border: 'none',
-                fontWeight: 700,
-                fontSize: '0.9rem',
-                cursor: 'pointer',
                 boxShadow: 'var(--shadow-sm)'
               }}
             >
@@ -100,18 +82,11 @@ export const Dashboard: React.FC<DashboardProps> = ({ manifest, onSelectTopic, o
             </button>
             <button
               onClick={() => onLaunchLab('lab-11-component-purity')}
+              className="dashboard-hero-btn"
               style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                padding: '0.7rem 1.35rem',
-                borderRadius: '8px',
                 background: 'rgba(124, 58, 237, 0.1)',
                 color: 'var(--purple-accent)',
-                border: '1px solid rgba(124, 58, 237, 0.25)',
-                fontWeight: 700,
-                fontSize: '0.9rem',
-                cursor: 'pointer'
+                border: '1px solid rgba(124, 58, 237, 0.25)'
               }}
             >
               <Terminal size={17} /> Test Component Purity
@@ -120,36 +95,22 @@ export const Dashboard: React.FC<DashboardProps> = ({ manifest, onSelectTopic, o
               <>
                 <button
                   onClick={() => onNavigateView('interviews')}
+                  className="dashboard-hero-btn"
                   style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                    padding: '0.7rem 1.35rem',
-                    borderRadius: '8px',
                     background: 'rgba(16, 185, 129, 0.12)',
                     color: 'var(--emerald-success)',
-                    border: '1px solid rgba(16, 185, 129, 0.25)',
-                    fontWeight: 700,
-                    fontSize: '0.9rem',
-                    cursor: 'pointer'
+                    border: '1px solid rgba(16, 185, 129, 0.25)'
                   }}
                 >
                   <Briefcase size={17} /> Staff Mock Interviews
                 </button>
                 <button
                   onClick={() => onNavigateView('incidents')}
+                  className="dashboard-hero-btn"
                   style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                    padding: '0.7rem 1.35rem',
-                    borderRadius: '8px',
                     background: 'rgba(239, 68, 68, 0.12)',
                     color: '#f87171',
-                    border: '1px solid rgba(239, 68, 68, 0.3)',
-                    fontWeight: 700,
-                    fontSize: '0.9rem',
-                    cursor: 'pointer'
+                    border: '1px solid rgba(239, 68, 68, 0.3)'
                   }}
                 >
                   <Flame size={17} /> Incident War Room

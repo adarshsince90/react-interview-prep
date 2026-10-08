@@ -149,7 +149,7 @@ export const RscFlightLab: React.FC = () => {
       </div>
 
       {/* Main Grid: Raw Wire Stream vs Reconstructed UI */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '1.25rem' }}>
+      <div className="responsive-split-grid">
         
         {/* Left Column: Raw Wire Stream Terminal */}
         <div style={{

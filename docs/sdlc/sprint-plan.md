@@ -53,6 +53,7 @@ flowchart TD
     S17 --> S18["Sprint 18: Staff Machine Coding Challenges (v0.17.0) ✅"]
     S18 --> S19["Sprint 19: Staff Architect Mock Interviews & Technical Defenses (v0.18.0) ✅"]
     S19 --> S20["Sprint 20: Enterprise Production Post-Mortems & Incident Drills (v0.19.0) ✅"]
+    S20 --> S21["Sprint 21: Full-Spectrum Responsive Design & UI/UX Polish (v0.20.0) ✅"]
 ```
 
 | Sprint | Goal & Scope | Status | Primary Skill | Deliverables |
@@ -77,6 +78,9 @@ flowchart TD
 | **Sprint 18** | **Staff-Level Frontend Machine Coding Challenges** | [x] **Complete** (v0.17.0) | Hands-on Coding / Mentor | Dynamic-Height Virtualized Windowing Engine (`CHALLENGE-01`), Concurrent Reactive State Store via `useSyncExternalStore` (`CHALLENGE-02`), Resilient Optimistic Mutation Queue (`CHALLENGE-03`). |
 | **Sprint 19** | **Staff & Principal Architect Mock Interviews & Defenses** | [x] **Complete** (v0.18.0) | Technical Mentor | Dedicated Staff Mock Interviews Arena (`?view=interviews`) with 45-min timer, Socratic simulation turns, rubrics, and defense transcripts for Real-Time HFT Terminal (`MOCK-01`), Multi-Tenant SaaS MFE (`MOCK-02`), React 19 Internals (`MOCK-03`), and Angular/.NET Migration (`MOCK-04`). |
 | **Sprint 20** | **Enterprise Production Post-Mortems & Incident Drills** | [x] **Complete** (v0.19.0) | Technical Mentor | Interactive Incident War Room live at `?view=incidents` with 4 production scenarios (`INC-01` to `INC-04`), DevTools diagnostics, diffs, and 5-Whys RCAs. |
+| **Sprint 21** | **Full-Spectrum Responsive Design, UI/UX Polish & Cross-Platform Alignment** | [x] **Complete** (v0.20.0) | `portal-developer` / Senior Architect | Hero action grid symmetry fix (`UI-HERO-ALIGNMENT`), Responsive navigation topbar with slide-out drawer (`FEAT-RESPONSIVE-SHELL`), TopicReader fluid canvas & off-canvas drawer (`UI-READER-FLUID`), Adaptive single-column arena stacks (`UI-ARENA-STACK`), Touch scroll wrappers across all simulation labs (`UI-LAB-TOUCH-SCROLL`), Automated multi-viewport verification (`TEST-RESPONSIVE-INTEGRITY`). |
+
+---
 
 ---
 
@@ -174,7 +178,23 @@ Epic 20 in [`docs/sdlc/backlog/backlog.md`](./backlog/backlog.md). Primary Skill
 
 ---
 
-## 10. Verification Checklist for Closing Sprints
+## 10. Sprint 21 Detailed Work Breakdown: Full-Spectrum Responsive Design, UI/UX Polish & Cross-Platform Alignment (Complete - v0.20.0)
+
+### Backlog Reference:
+Epic 21 in [`docs/sdlc/backlog/backlog.md`](./backlog/backlog.md). Primary Skill: `portal-developer` / Senior Architect.
+
+### Tasks:
+- [x] **TASK-21-01 (Responsive CSS Foundation):** Define core responsive breakpoint variables and utility classes in `apps/portal/src/index.css` (`--bp-mobile`, `--bp-tablet`, `--bp-desktop`, `.scroll-touch-container`, `.portal-header-responsive`, `.hide-on-mobile`, `.show-on-mobile`).
+- [x] **TASK-21-02 (Dashboard Hero Symmetry & Alignment):** Refactor the hero action strip in `Dashboard.tsx`. Eliminate the hardcoded `maxWidth: '780px'` limit; convert the 4 action buttons into an auto-fit/4-card action grid with unified button heights, centered alignment, and symmetrical 2x2 wrapping on tablet/mobile so zero orphan buttons wrap alone.
+- [x] **TASK-21-03 (Responsive Topbar & Mobile Drawer):** Refactor header in `App.tsx`. On screens `< 960px`, collapse the 7 navigation tabs into a smooth slide-over mobile drawer with backdrop overlay. Collapse search input into a compact search icon button that triggers `GlobalSearchModal`.
+- [x] **TASK-21-04 (TopicReader Fluid Canvas & Off-Canvas Drawer):** Refactor `TopicReader.tsx` and reader layout in `App.tsx`. On screens `< 1120px`, collapse the fixed 290px right-hand TOC into an unobtrusive collapsible badge / drawer. On screens `< 860px`, convert the 320px left curriculum sidebar into an off-canvas drawer with backdrop blur that automatically closes upon chapter selection. Ensure all code blocks, tables, and Mermaid diagrams have horizontal touch scrolling.
+- [x] **TASK-21-05 (Adaptive Single-Column Stacks for Arenas):** Refactor `IncidentsArena.tsx`, `ChallengesArena.tsx`, and `CodePlayground.tsx` multi-column layouts to stack gracefully on tablet and mobile viewports (`< 900px`), providing segmented pill controls for scenario selection and telemetry/workspace views.
+- [x] **TASK-21-06 (Touch Scroll Enclosures for Simulation Labs):** Wrap all complex simulation canvases in `VisualizerHub.tsx` (`FiberReconciliationLab`, `RscFlightLab`, `CanvasDesignLab`, `MemoryRetainerLab`, `VirtualizationLab`) in `.scroll-touch-container`. Convert the fixed 320px master-detail lab navigation panel in `VisualizerHub.tsx` to a responsive top selector / drawer on screens `< 960px`.
+- [x] **TASK-21-07 (Quality Gates & Multi-Viewport Verification):** Extend `scripts/test-manifest-integrity.mjs` to validate all routes, verify zero TypeScript errors (`tsc -b`), verify production bundle build (`npm run build`), and test across viewports (375px mobile, 768px tablet, 1440px desktop).
+
+---
+
+## 11. Verification Checklist for Closing Sprints
 
 Every sprint milestone must pass this automated checklist:
 1. `npm run manifest` exits with code 0.

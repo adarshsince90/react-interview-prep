@@ -303,7 +303,7 @@ export const FiberReconciliationLab: React.FC = () => {
         </div>
 
         {/* Fiber Node Inspector Card */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+        <div className="responsive-diff-grid">
           {/* Active Node Details */}
           <div style={{
             background: 'var(--bg-primary)',
@@ -370,7 +370,7 @@ export const FiberReconciliationLab: React.FC = () => {
         </div>
 
         {/* Fiber Nodes Chain */}
-        <div style={{ display: 'flex', gap: '0.5rem', overflowX: 'auto', marginTop: '1rem', paddingBottom: '0.5rem' }}>
+        <div className="scroll-touch-container" style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem', paddingBottom: '0.5rem' }}>
           {fiberNodes.map((node, idx) => {
             const isActive = idx === activeFiberIndex;
             return (

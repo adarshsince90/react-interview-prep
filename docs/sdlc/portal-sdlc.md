@@ -102,6 +102,18 @@ Before any new feature is considered complete or committed, the following automa
 
 ## 4. Versioned Release Changelog (Regression History)
 
+### [v0.20.0] - 2026-10-08
+- **Added:** Full-Spectrum Mobile & Cross-Platform Responsive Framework in `index.css`:
+  - Defined responsive breakpoints (`--bp-mobile: 480px`, `--bp-tablet: 768px`, `--bp-desktop: 1024px`, `--bp-wide: 1280px`).
+  - Implemented universal `.scroll-touch-container` with native momentum touch scrolling and custom low-friction scrollbars.
+  - Implemented adaptive layout grids (`.dashboard-hero-action-grid`, `.topic-reader-main-grid`, `.responsive-diff-grid`, `.responsive-split-grid`, `.incidents-arena-grid`, `.challenges-arena-grid`, `.playground-arena-grid`, `.visualizer-hub-layout`).
+- **Fixed:** Dashboard Hero Action Strip Symmetry (`UI-HERO-ALIGNMENT`): Removed restrictive `maxWidth: '780px'` container; converted action strip into an auto-fit 4-card grid on desktop, 2x2 symmetrical grid on tablet, and 1-column stack on mobile. Zero orphan buttons wrap alone.
+- **Added:** Mobile Navigation Drawer & Compact Search Trigger (`FEAT-RESPONSIVE-SHELL`): Topbar automatically hides tab strip below 980px in favor of a slide-over mobile drawer with all 8 module routes and curriculum metrics footer. Added compact search button triggering `GlobalSearchModal`.
+- **Added:** TopicReader Mobile Table of Contents & Fluid Drawer (`UI-READER-FLUID`): Collapses fixed 290px outline into an interactive mobile TOC header bar with section anchor jump scrolling. Converts left curriculum sidebar to off-canvas modal drawer on screens < 860px with backdrop overlay.
+- **Added:** Adaptive Single-Column Arena Layouts (`UI-ARENA-STACK`): Incidents War Room, Staff Challenges Arena, and Code Playground split panels dynamically adapt to single-column workspaces on tablet and mobile viewports.
+- **Added:** Touch Scroll Enclosures for Complex Visualizers (`UI-LAB-TOUCH-SCROLL`): High-density visualizers (Fiber Reconciliation, RSC Flight, Canvas Design, Virtualization, Query Cache) wrapped with `.scroll-touch-container` ensuring zero clipped content and friction-free mobile panning.
+- **Verified:** 100% test integrity pass (`scripts/test-manifest-integrity.mjs`), zero TypeScript errors (`tsc -b`), and verified via browser automation across 375px mobile, 768px tablet, and 1920px desktop viewports.
+
 ### [v0.14.0] - 2026-10-07
 - **Added:** Automated CI/CD Deployment Workflow (`.github/workflows/deploy.yml`) (`FEAT-LEARN-04`) for GitHub Actions.
 - **Added:** Universal asset path configuration (`base: './'`) in `vite.config.ts` for zero-configuration GitHub Pages and static host routing.

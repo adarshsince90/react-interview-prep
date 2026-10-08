@@ -225,7 +225,7 @@ export const MemoryRetainerLab: React.FC = () => {
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem', marginBottom: '1.5rem' }}>
+      <div className="responsive-diff-grid" style={{ marginBottom: '1.5rem' }}>
         <div style={{ background: 'var(--bg-tertiary)', border: '1px solid var(--border-subtle)', borderRadius: '10px', padding: '1.25rem' }}>
           <div style={{ fontSize: '0.85rem', fontWeight: 700, marginBottom: '0.85rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <Activity size={16} color="var(--react-cyan)" /> Component Lifecycle Simulator

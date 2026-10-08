@@ -145,7 +145,7 @@ export const VisualizerHub: React.FC<VisualizerHubProps> = ({ initialLabId }) =>
   const [activeLab, setActiveLab] = useState<string>(initialLabId || 'lab-04-event-loop');
 
   return (
-    <div style={{ padding: '2rem', maxWidth: '1440px', margin: '0 auto' }}>
+    <div style={{ padding: '2rem 1.25rem', maxWidth: '1440px', margin: '0 auto' }}>
       {/* Header Banner */}
       <div style={{ marginBottom: '1.75rem' }}>
         <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(0, 216, 255, 0.1)', color: 'var(--react-cyan)', padding: '0.35rem 0.75rem', borderRadius: '20px', fontSize: '0.82rem', fontWeight: 600, marginBottom: '0.6rem' }}>
@@ -160,9 +160,10 @@ export const VisualizerHub: React.FC<VisualizerHubProps> = ({ initialLabId }) =>
       </div>
 
       {/* 2-Column Master-Detail Layout */}
-      <div style={{ display: 'flex', gap: '1.75rem', alignItems: 'flex-start' }}>
+      <div className="visualizer-hub-layout">
         {/* Left Vertical Simulation Navigation Panel */}
         <div
+          className="visualizer-hub-sidebar"
           style={{
             width: '320px',
             flexShrink: 0,

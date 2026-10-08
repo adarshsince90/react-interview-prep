@@ -468,34 +468,36 @@ export const CanvasDesignLab: React.FC = () => {
           </div>
 
           {/* Realtime Market Ladder View */}
-          <div style={{ background: '#0b1120', borderRadius: '8px', border: '1px solid var(--border-medium)', overflow: 'hidden' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', padding: '0.65rem 1rem', background: '#030712', fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-secondary)' }}>
-              <div>INSTRUMENT</div>
-              <div>LAST PRICE</div>
-              <div>24H DELTA</div>
-              <div>THROUGHPUT ENGINE</div>
-            </div>
-            {Object.entries(marketPrices).map(([symbol, item]) => (
-              <div
-                key={symbol}
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: '1fr 1fr 1fr 1fr',
-                  padding: '0.65rem 1rem',
-                  borderTop: '1px solid #1e293b',
-                  fontSize: '0.85rem',
-                  fontFamily: 'monospace',
-                  color: 'var(--text-primary)'
-                }}
-              >
-                <div style={{ fontWeight: 600 }}>{symbol}</div>
-                <div style={{ color: item.change >= 0 ? '#10b981' : '#ef4444' }}>${item.price.toFixed(2)}</div>
-                <div style={{ color: item.change >= 0 ? '#10b981' : '#ef4444' }}>{item.change >= 0 ? `+${item.change}%` : `${item.change}%`}</div>
-                <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
-                  {useRingBuffer ? 'Float64Array (Zero-Copy)' : 'JSON Heap Clones'}
-                </div>
+          <div className="scroll-touch-container" style={{ background: '#0b1120', borderRadius: '8px', border: '1px solid var(--border-medium)', overflow: 'hidden' }}>
+            <div style={{ minWidth: '450px' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', padding: '0.65rem 1rem', background: '#030712', fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-secondary)' }}>
+                <div>INSTRUMENT</div>
+                <div>LAST PRICE</div>
+                <div>24H DELTA</div>
+                <div>THROUGHPUT ENGINE</div>
               </div>
-            ))}
+              {Object.entries(marketPrices).map(([symbol, item]) => (
+                <div
+                  key={symbol}
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: '1fr 1fr 1fr 1fr',
+                    padding: '0.65rem 1rem',
+                    borderTop: '1px solid #1e293b',
+                    fontSize: '0.85rem',
+                    fontFamily: 'monospace',
+                    color: 'var(--text-primary)'
+                  }}
+                >
+                  <div style={{ fontWeight: 600 }}>{symbol}</div>
+                  <div style={{ color: item.change >= 0 ? '#10b981' : '#ef4444' }}>${item.price.toFixed(2)}</div>
+                  <div style={{ color: item.change >= 0 ? '#10b981' : '#ef4444' }}>{item.change >= 0 ? `+${item.change}%` : `${item.change}%`}</div>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
+                    {useRingBuffer ? 'Float64Array (Zero-Copy)' : 'JSON Heap Clones'}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       )}

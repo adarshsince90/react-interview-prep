@@ -91,6 +91,7 @@ export function App() {
   const [theme, setTheme] = useState<'light' | 'dark'>(() => getStoredTheme());
   const [completedIds, setCompletedIds] = useState<string[]>(() => getCompletedTopicIds());
   const [isSearchModalOpen, setIsSearchModalOpen] = useState<boolean>(false);
+  const [mobileNavOpen, setMobileNavOpen] = useState<boolean>(false);
 
   // Default to first topic in Phase 03 or first available topic
   const initialTopic = useMemo(() => {
@@ -237,6 +238,10 @@ export function App() {
     setSelectedTopic(topic);
     setActiveView('reader');
     setSearchQuery('');
+    setMobileNavOpen(false);
+    if (typeof window !== 'undefined' && window.innerWidth <= 860) {
+      setSidebarOpen(false);
+    }
 
     // Sync browser URL
     const url = new URL(window.location.href);
@@ -252,6 +257,7 @@ export function App() {
   const handleSwitchToReader = () => {
     setActiveView('reader');
     setSearchQuery('');
+    setMobileNavOpen(false);
     const url = new URL(window.location.href);
     url.searchParams.set('topic', selectedTopic.id);
     url.searchParams.delete('view');
@@ -262,6 +268,7 @@ export function App() {
   };
 
   const handleGoBack = () => {
+    setMobileNavOpen(false);
     if (topicHistory.length > 0) {
       const prevTopic = topicHistory[topicHistory.length - 1];
       setTopicHistory(prev => prev.slice(0, -1));
@@ -284,6 +291,7 @@ export function App() {
   const handleNavigateHome = () => {
     setActiveView('dashboard');
     setSearchQuery('');
+    setMobileNavOpen(false);
     const cleanPath = window.location.pathname;
     window.history.pushState({ view: 'dashboard' }, '', cleanPath);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -294,6 +302,7 @@ export function App() {
     setSelectedLabId(activeLab);
     setActiveView('labs');
     setSearchQuery('');
+    setMobileNavOpen(false);
 
     const url = new URL(window.location.href);
     url.searchParams.delete('topic');
@@ -304,9 +313,23 @@ export function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleSwitchToChallenges = () => {
+    setActiveView('challenges');
+    setSearchQuery('');
+    setMobileNavOpen(false);
+    const url = new URL(window.location.href);
+    url.searchParams.set('view', 'challenges');
+    url.searchParams.delete('topic');
+    url.searchParams.delete('lab');
+    url.hash = '';
+    window.history.pushState({ view: 'challenges' }, '', url.pathname + '?' + url.searchParams.toString());
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const handleSwitchToFlashcards = () => {
     setActiveView('flashcards');
     setSearchQuery('');
+    setMobileNavOpen(false);
     const url = new URL(window.location.href);
     url.searchParams.delete('topic');
     url.searchParams.delete('lab');
@@ -319,6 +342,7 @@ export function App() {
   const handleSwitchToQuizzes = () => {
     setActiveView('quizzes');
     setSearchQuery('');
+    setMobileNavOpen(false);
     const url = new URL(window.location.href);
     url.searchParams.delete('topic');
     url.searchParams.delete('lab');
@@ -331,6 +355,7 @@ export function App() {
   const handleSwitchToInterviews = () => {
     setActiveView('interviews');
     setSearchQuery('');
+    setMobileNavOpen(false);
     const url = new URL(window.location.href);
     url.searchParams.delete('topic');
     url.searchParams.delete('lab');
@@ -343,6 +368,7 @@ export function App() {
   const handleSwitchToIncidents = () => {
     setActiveView('incidents');
     setSearchQuery('');
+    setMobileNavOpen(false);
     const url = new URL(window.location.href);
     url.searchParams.delete('topic');
     url.searchParams.delete('lab');
@@ -394,15 +420,15 @@ export function App() {
           zIndex: 100,
           background: 'var(--bg-secondary)',
           borderBottom: '1px solid var(--border-subtle)',
-          padding: '0.75rem 1.5rem',
+          padding: '0.65rem 1.25rem',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          gap: '1.5rem',
+          gap: '1rem',
           boxShadow: 'var(--shadow-sm)'
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', minWidth: 0 }}>
           {activeView === 'reader' && (
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -423,7 +449,7 @@ export function App() {
 
           <div
             onClick={handleNavigateHome}
-            style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', cursor: 'pointer' }}
+            style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', cursor: 'pointer', minWidth: 0 }}
           >
             <div
               style={{
@@ -435,24 +461,25 @@ export function App() {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '1.1rem'
+                fontSize: '1.1rem',
+                flexShrink: 0
               }}
             >
               ⚛️
             </div>
-            <div>
-              <div style={{ fontSize: '0.95rem', fontWeight: 800, color: 'var(--text-primary)', letterSpacing: '-0.01em' }}>
+            <div style={{ minWidth: 0 }}>
+              <div style={{ fontSize: '0.92rem', fontWeight: 800, color: 'var(--text-primary)', letterSpacing: '-0.01em', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                 React & Runtime Architecture
               </div>
-              <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
+              <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                 Mastery Portal & Simulation Lab
               </div>
             </div>
           </div>
         </div>
 
-        {/* Global Search Bar */}
-        <div style={{ position: 'relative', width: '320px', maxWidth: '100%' }}>
+        {/* Global Search Bar (Desktop) */}
+        <div className="portal-search-desktop" style={{ position: 'relative', width: '300px', maxWidth: '100%' }}>
           <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
             <Search size={16} style={{ position: 'absolute', left: '0.75rem', color: 'var(--text-muted)' }} />
             <input
@@ -532,16 +559,26 @@ export function App() {
           )}
         </div>
 
-        {/* View Switcher Tabs & Theme Toggle */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-          <div style={{ display: 'flex', gap: '0.35rem', background: 'var(--bg-tertiary)', padding: '0.25rem', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}>
+        {/* View Switcher Tabs, Search Trigger & Theme Toggle */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          {/* Mobile Search Icon Trigger */}
+          <button
+            className="portal-search-mobile-btn"
+            onClick={() => setIsSearchModalOpen(true)}
+            title="Global Search (Ctrl+K)"
+          >
+            <Search size={17} />
+          </button>
+
+          {/* Desktop Inline Navigation Tabs */}
+          <div className="portal-nav-desktop-tabs">
             <button
               onClick={handleNavigateHome}
               style={{
                 display: 'flex',
                 alignItems: 'center',
                 gap: '0.4rem',
-                padding: '0.45rem 0.85rem',
+                padding: '0.45rem 0.75rem',
                 borderRadius: '6px',
                 background: activeView === 'dashboard' ? 'var(--bg-secondary)' : 'transparent',
                 color: activeView === 'dashboard' ? 'var(--text-primary)' : 'var(--text-secondary)',
@@ -561,7 +598,7 @@ export function App() {
                 display: 'flex',
                 alignItems: 'center',
                 gap: '0.4rem',
-                padding: '0.45rem 0.85rem',
+                padding: '0.45rem 0.75rem',
                 borderRadius: '6px',
                 background: activeView === 'reader' ? 'var(--bg-secondary)' : 'transparent',
                 color: activeView === 'reader' ? 'var(--text-primary)' : 'var(--text-secondary)',
@@ -581,7 +618,7 @@ export function App() {
                 display: 'flex',
                 alignItems: 'center',
                 gap: '0.4rem',
-                padding: '0.45rem 0.85rem',
+                padding: '0.45rem 0.75rem',
                 borderRadius: '6px',
                 background: activeView === 'labs' ? 'var(--bg-secondary)' : 'transparent',
                 color: activeView === 'labs' ? 'var(--react-cyan)' : 'var(--text-secondary)',
@@ -595,22 +632,13 @@ export function App() {
               <Layers size={15} /> Labs
             </button>
 
-                        <button
-              onClick={() => {
-                setActiveView('challenges');
-                setSearchQuery('');
-                const url = new URL(window.location.href);
-                url.searchParams.set('view', 'challenges');
-                url.searchParams.delete('topic');
-                url.searchParams.delete('lab');
-                url.hash = '';
-                window.history.pushState({ view: 'challenges' }, '', url.pathname + '?' + url.searchParams.toString());
-              }}
+            <button
+              onClick={handleSwitchToChallenges}
               style={{
                 display: 'flex',
                 alignItems: 'center',
                 gap: '0.4rem',
-                padding: '0.45rem 0.85rem',
+                padding: '0.45rem 0.75rem',
                 borderRadius: '6px',
                 background: activeView === 'challenges' ? 'var(--bg-secondary)' : 'transparent',
                 color: activeView === 'challenges' ? 'var(--react-cyan)' : 'var(--text-secondary)',
@@ -630,7 +658,7 @@ export function App() {
                 display: 'flex',
                 alignItems: 'center',
                 gap: '0.4rem',
-                padding: '0.45rem 0.85rem',
+                padding: '0.45rem 0.75rem',
                 borderRadius: '6px',
                 background: activeView === 'interviews' ? 'var(--bg-secondary)' : 'transparent',
                 color: activeView === 'interviews' ? 'var(--emerald-success)' : 'var(--text-secondary)',
@@ -650,7 +678,7 @@ export function App() {
                 display: 'flex',
                 alignItems: 'center',
                 gap: '0.4rem',
-                padding: '0.45rem 0.85rem',
+                padding: '0.45rem 0.75rem',
                 borderRadius: '6px',
                 background: activeView === 'incidents' ? 'var(--bg-secondary)' : 'transparent',
                 color: activeView === 'incidents' ? '#f87171' : 'var(--text-secondary)',
@@ -670,7 +698,7 @@ export function App() {
                 display: 'flex',
                 alignItems: 'center',
                 gap: '0.4rem',
-                padding: '0.45rem 0.85rem',
+                padding: '0.45rem 0.75rem',
                 borderRadius: '6px',
                 background: activeView === 'flashcards' ? 'var(--bg-secondary)' : 'transparent',
                 color: activeView === 'flashcards' ? '#c084fc' : 'var(--text-secondary)',
@@ -690,7 +718,7 @@ export function App() {
                 display: 'flex',
                 alignItems: 'center',
                 gap: '0.4rem',
-                padding: '0.45rem 0.85rem',
+                padding: '0.45rem 0.75rem',
                 borderRadius: '6px',
                 background: activeView === 'quizzes' ? 'var(--bg-secondary)' : 'transparent',
                 color: activeView === 'quizzes' ? 'var(--amber-warning, #f59e0b)' : 'var(--text-secondary)',
@@ -720,34 +748,273 @@ export function App() {
               border: '1px solid var(--border-subtle)',
               color: 'var(--text-primary)',
               cursor: 'pointer',
-              transition: 'all 150ms ease'
+              transition: 'all 150ms ease',
+              flexShrink: 0
             }}
           >
             {theme === 'light' ? <Moon size={16} /> : <Sun size={16} color="var(--js-yellow)" />}
           </button>
+
+          {/* Mobile Hamburger Toggle Button */}
+          <button
+            className="portal-nav-mobile-toggle"
+            onClick={() => setMobileNavOpen(!mobileNavOpen)}
+            title="Toggle Navigation Menu"
+          >
+            {mobileNavOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
         </div>
       </header>
+
+      {/* Mobile Slide-Over Navigation Drawer */}
+      {mobileNavOpen && (
+        <div className="portal-mobile-drawer-backdrop" onClick={() => setMobileNavOpen(false)}>
+          <div className="portal-mobile-drawer-content" onClick={e => e.stopPropagation()}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: '1rem', borderBottom: '1px solid var(--border-subtle)', marginBottom: '1rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+                <span style={{ fontSize: '1.25rem' }}>⚛️</span>
+                <div>
+                  <div style={{ fontWeight: 800, fontSize: '0.9rem', color: 'var(--text-primary)' }}>Architecture Portal</div>
+                  <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>110 Chapters • 12 Living Labs</div>
+                </div>
+              </div>
+              <button
+                onClick={() => setMobileNavOpen(false)}
+                style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: '0.25rem' }}
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            {/* Drawer Navigation List */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.45rem', flex: 1 }}>
+              <button
+                onClick={handleNavigateHome}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.75rem',
+                  padding: '0.7rem 0.85rem',
+                  borderRadius: '8px',
+                  background: activeView === 'dashboard' ? 'var(--bg-tertiary)' : 'transparent',
+                  color: activeView === 'dashboard' ? 'var(--text-primary)' : 'var(--text-secondary)',
+                  border: 'none',
+                  fontWeight: activeView === 'dashboard' ? 700 : 600,
+                  fontSize: '0.88rem',
+                  cursor: 'pointer',
+                  textAlign: 'left'
+                }}
+              >
+                <LayoutDashboard size={18} color="var(--react-cyan)" /> Dashboard
+              </button>
+
+              <button
+                onClick={handleSwitchToReader}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.75rem',
+                  padding: '0.7rem 0.85rem',
+                  borderRadius: '8px',
+                  background: activeView === 'reader' ? 'var(--bg-tertiary)' : 'transparent',
+                  color: activeView === 'reader' ? 'var(--text-primary)' : 'var(--text-secondary)',
+                  border: 'none',
+                  fontWeight: activeView === 'reader' ? 700 : 600,
+                  fontSize: '0.88rem',
+                  cursor: 'pointer',
+                  textAlign: 'left'
+                }}
+              >
+                <BookOpen size={18} color="var(--purple-accent)" /> Handbook (110 Topics)
+              </button>
+
+              <button
+                onClick={() => handleLaunchLab('lab-10-jsx-compiler')}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.75rem',
+                  padding: '0.7rem 0.85rem',
+                  borderRadius: '8px',
+                  background: activeView === 'labs' ? 'var(--bg-tertiary)' : 'transparent',
+                  color: activeView === 'labs' ? 'var(--text-primary)' : 'var(--text-secondary)',
+                  border: 'none',
+                  fontWeight: activeView === 'labs' ? 700 : 600,
+                  fontSize: '0.88rem',
+                  cursor: 'pointer',
+                  textAlign: 'left'
+                }}
+              >
+                <Layers size={18} color="var(--react-cyan)" /> Simulation Labs (12)
+              </button>
+
+              <button
+                onClick={handleSwitchToChallenges}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.75rem',
+                  padding: '0.7rem 0.85rem',
+                  borderRadius: '8px',
+                  background: activeView === 'challenges' ? 'var(--bg-tertiary)' : 'transparent',
+                  color: activeView === 'challenges' ? 'var(--text-primary)' : 'var(--text-secondary)',
+                  border: 'none',
+                  fontWeight: activeView === 'challenges' ? 700 : 600,
+                  fontSize: '0.88rem',
+                  cursor: 'pointer',
+                  textAlign: 'left'
+                }}
+              >
+                <Code2 size={18} color="var(--emerald-success)" /> Machine Coding Challenges
+              </button>
+
+              <button
+                onClick={handleSwitchToInterviews}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.75rem',
+                  padding: '0.7rem 0.85rem',
+                  borderRadius: '8px',
+                  background: activeView === 'interviews' ? 'var(--bg-tertiary)' : 'transparent',
+                  color: activeView === 'interviews' ? 'var(--text-primary)' : 'var(--text-secondary)',
+                  border: 'none',
+                  fontWeight: activeView === 'interviews' ? 700 : 600,
+                  fontSize: '0.88rem',
+                  cursor: 'pointer',
+                  textAlign: 'left'
+                }}
+              >
+                <Briefcase size={18} color="var(--emerald-success)" /> Staff Mock Interviews
+              </button>
+
+              <button
+                onClick={handleSwitchToIncidents}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.75rem',
+                  padding: '0.7rem 0.85rem',
+                  borderRadius: '8px',
+                  background: activeView === 'incidents' ? 'var(--bg-tertiary)' : 'transparent',
+                  color: activeView === 'incidents' ? 'var(--text-primary)' : 'var(--text-secondary)',
+                  border: 'none',
+                  fontWeight: activeView === 'incidents' ? 700 : 600,
+                  fontSize: '0.88rem',
+                  cursor: 'pointer',
+                  textAlign: 'left'
+                }}
+              >
+                <Flame size={18} color="#f87171" /> Incident War Room
+              </button>
+
+              <button
+                onClick={handleSwitchToFlashcards}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.75rem',
+                  padding: '0.7rem 0.85rem',
+                  borderRadius: '8px',
+                  background: activeView === 'flashcards' ? 'var(--bg-tertiary)' : 'transparent',
+                  color: activeView === 'flashcards' ? 'var(--text-primary)' : 'var(--text-secondary)',
+                  border: 'none',
+                  fontWeight: activeView === 'flashcards' ? 700 : 600,
+                  fontSize: '0.88rem',
+                  cursor: 'pointer',
+                  textAlign: 'left'
+                }}
+              >
+                <Sparkles size={18} color="#c084fc" /> Flashcards
+              </button>
+
+              <button
+                onClick={handleSwitchToQuizzes}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.75rem',
+                  padding: '0.7rem 0.85rem',
+                  borderRadius: '8px',
+                  background: activeView === 'quizzes' ? 'var(--bg-tertiary)' : 'transparent',
+                  color: activeView === 'quizzes' ? 'var(--text-primary)' : 'var(--text-secondary)',
+                  border: 'none',
+                  fontWeight: activeView === 'quizzes' ? 700 : 600,
+                  fontSize: '0.88rem',
+                  cursor: 'pointer',
+                  textAlign: 'left'
+                }}
+              >
+                <Award size={18} color="var(--amber-warning)" /> Scenario Quizzes
+              </button>
+
+              <button
+                onClick={() => {
+                  setMobileNavOpen(false);
+                  setIsSearchModalOpen(true);
+                }}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.75rem',
+                  padding: '0.7rem 0.85rem',
+                  borderRadius: '8px',
+                  background: 'var(--bg-primary)',
+                  color: 'var(--text-muted)',
+                  border: '1px solid var(--border-subtle)',
+                  fontWeight: 600,
+                  fontSize: '0.88rem',
+                  cursor: 'pointer',
+                  textAlign: 'left',
+                  marginTop: '0.5rem'
+                }}
+              >
+                <Search size={18} /> Global Search (Ctrl+K)
+              </button>
+            </div>
+
+            {/* Drawer Progress Footer */}
+            <div style={{ marginTop: 'auto', paddingTop: '1rem', borderTop: '1px solid var(--border-subtle)', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.35rem' }}>
+                <span>Curriculum Progress</span>
+                <span style={{ fontWeight: 700, color: 'var(--emerald-success)' }}>
+                  {Math.round((completedIds.length / allTopics.length) * 100)}%
+                </span>
+              </div>
+              <div style={{ height: '5px', background: 'var(--bg-tertiary)', borderRadius: '999px', overflow: 'hidden' }}>
+                <div style={{ width: `${Math.round((completedIds.length / allTopics.length) * 100)}%`, height: '100%', background: 'var(--emerald-success)' }} />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Main Body Layout */}
       <div style={{ display: 'flex', flex: 1, minHeight: 0 }}>
         {/* Collapsible Sidebar (Active in Reader Mode) */}
         {activeView === 'reader' && sidebarOpen && (
-          <aside
-            style={{
-              width: '320px',
-              flexShrink: 0,
-              background: 'var(--bg-secondary)',
-              borderRight: '1px solid var(--border-subtle)',
-              height: 'calc(100vh - 61px)',
-              position: 'sticky',
-              top: '61px',
-              overflowY: 'auto',
-              padding: '1.25rem 0.75rem',
-              boxShadow: 'var(--shadow-sm)'
-            }}
-          >
-            <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', padding: '0 0.5rem 0.75rem 0.5rem' }}>
-              Handbook Curriculum
+          <>
+            <div
+              className="portal-reader-sidebar-backdrop"
+              onClick={() => setSidebarOpen(false)}
+            />
+            <aside
+              className="portal-reader-sidebar-aside"
+              style={{
+                width: '320px',
+                flexShrink: 0,
+                background: 'var(--bg-secondary)',
+                borderRight: '1px solid var(--border-subtle)',
+                height: 'calc(100vh - 61px)',
+                position: 'sticky',
+                top: '61px',
+                overflowY: 'auto',
+                padding: '1.25rem 0.75rem',
+                boxShadow: 'var(--shadow-sm)'
+              }}
+            >
+              <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', padding: '0 0.5rem 0.75rem 0.5rem' }}>
+                Handbook Curriculum
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.1rem' }}>
@@ -858,7 +1125,8 @@ export function App() {
               })}
             </div>
           </aside>
-        )}
+        </>
+      )}
 
         {/* Content Viewport */}
         <main style={{ flex: 1, minWidth: 0 }}>

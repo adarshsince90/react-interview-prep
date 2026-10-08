@@ -183,7 +183,7 @@ export const QueryCacheLab: React.FC = () => {
       </div>
 
       {/* Query Lifecycle State Ring */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '0.75rem', marginBottom: '1.5rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '0.75rem', marginBottom: '1.5rem' }}>
         {(['fetching', 'fresh', 'stale', 'inactive', 'gc'] as QueryStatus[]).map(s => {
           const isActive = queryStatus === s;
           const color = getStatusColor(s);
@@ -216,7 +216,7 @@ export const QueryCacheLab: React.FC = () => {
       </div>
 
       {/* Controls & Configuration */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem', marginBottom: '1.5rem' }}>
+      <div className="responsive-diff-grid" style={{ marginBottom: '1.5rem' }}>
         {/* Timing Config */}
         <div style={{ background: 'var(--bg-tertiary)', border: '1px solid var(--border-subtle)', borderRadius: '10px', padding: '1.25rem' }}>
           <div style={{ fontSize: '0.85rem', fontWeight: 700, marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>

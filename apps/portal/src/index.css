@@ -595,3 +595,377 @@ code:not(pre code) {
   background: rgba(2, 132, 199, 0.12);
   text-decoration-style: solid;
 }
+
+/* ==========================================================================
+   SPRINT 21: FULL-SPECTRUM RESPONSIVE DESIGN & TOUCH ENCLOSURES
+   ========================================================================== */
+
+/* Universal Hardware-Accelerated Touch Scroll Container */
+.scroll-touch-container {
+  overflow-x: auto !important;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  max-width: 100%;
+}
+
+.scroll-touch-container::-webkit-scrollbar {
+  height: 6px;
+}
+
+.scroll-touch-container::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+  border-radius: 4px;
+}
+
+.scroll-touch-container::-webkit-scrollbar-thumb {
+  background: var(--border-medium);
+  border-radius: 4px;
+}
+
+.scroll-touch-container::-webkit-scrollbar-thumb:hover {
+  background: var(--react-cyan);
+}
+
+/* Universal Code, Table & Diagram Containment */
+pre,
+.code-block,
+.mermaid-container {
+  max-width: 100%;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+.prose-reading-container table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Symmetrical Dashboard Hero Action Grid (Fixes Orphan Button Wrap) */
+.dashboard-hero-container {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  borderRadius: 16px;
+  padding: 2.25rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+@media (max-width: 640px) {
+  .dashboard-hero-container {
+    padding: 1.25rem 1rem !important;
+    border-radius: 12px;
+  }
+}
+
+.dashboard-hero-action-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.85rem;
+  width: 100%;
+  margin-top: 1.5rem;
+}
+
+.dashboard-hero-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+  text-align: center;
+}
+
+.dashboard-hero-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+@media (max-width: 1100px) {
+  .dashboard-hero-action-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .dashboard-hero-action-grid {
+    grid-template-columns: 1fr;
+    gap: 0.65rem;
+  }
+  .dashboard-hero-btn {
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+    justify-content: flex-start;
+  }
+}
+
+/* Responsive Top Navigation Header */
+.portal-nav-desktop-tabs {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: var(--bg-tertiary);
+  padding: 0.25rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-subtle);
+}
+
+.portal-nav-mobile-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.portal-search-mobile-btn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.portal-search-mobile-btn:hover,
+.portal-nav-mobile-toggle:hover {
+  border-color: var(--react-cyan);
+  color: var(--react-cyan);
+}
+
+/* Mobile Slide-Over Navigation Drawer */
+.portal-mobile-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  justify-content: flex-end;
+  animation: fadeInBackdrop 180ms ease forwards;
+}
+
+.portal-mobile-drawer-content {
+  width: 320px;
+  max-width: 85vw;
+  height: 100%;
+  background: var(--bg-secondary);
+  border-left: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem 1rem;
+  overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+  animation: slideInDrawer 220ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeInBackdrop {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInDrawer {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+@media (max-width: 980px) {
+  .portal-nav-desktop-tabs {
+    display: none !important;
+  }
+  .portal-nav-mobile-toggle {
+    display: flex !important;
+  }
+  .portal-search-desktop {
+    display: none !important;
+  }
+  .portal-search-mobile-btn {
+    display: flex !important;
+  }
+}
+
+@media (min-width: 981px) {
+  .portal-search-mobile-btn {
+    display: none !important;
+  }
+  .portal-nav-mobile-toggle {
+    display: none !important;
+  }
+}
+
+/* TopicReader Responsive Layout Grid */
+.topic-reader-main-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 820px) 290px;
+  justify-content: center;
+  gap: 2.5rem;
+  padding: 2rem 1.5rem;
+  max-width: 1220px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.topic-reader-mobile-toc-bar {
+  display: none;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.25rem;
+  box-shadow: var(--shadow-sm);
+}
+
+@media (max-width: 1120px) {
+  .topic-reader-main-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem;
+    padding: 1.25rem 1rem;
+  }
+  .topic-reader-right-sidebar {
+    display: none !important;
+  }
+  .topic-reader-mobile-toc-bar {
+    display: block !important;
+  }
+}
+
+/* Off-Canvas Curriculum Sidebar on Mobile/Tablet */
+@media (max-width: 860px) {
+  .portal-reader-sidebar-aside {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    bottom: 0 !important;
+    width: 320px !important;
+    max-width: 85vw !important;
+    height: 100vh !important;
+    z-index: 999 !important;
+    background: var(--bg-secondary) !important;
+    border-right: 1px solid var(--border-medium) !important;
+    box-shadow: var(--shadow-lg) !important;
+    animation: slideInSidebar 200ms ease forwards;
+  }
+  .portal-reader-sidebar-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    z-index: 998;
+    animation: fadeInBackdrop 180ms ease forwards;
+  }
+}
+
+@keyframes slideInSidebar {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+/* Arena Responsive Grids */
+.incidents-arena-grid {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.responsive-diff-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.responsive-split-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 1.25rem;
+}
+
+@media (max-width: 900px) {
+  .responsive-split-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.25rem;
+  }
+}
+
+@media (max-width: 800px) {
+  .responsive-diff-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 960px) {
+  .incidents-arena-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.25rem;
+  }
+}
+
+.challenges-arena-grid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (max-width: 960px) {
+  .challenges-arena-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.25rem;
+  }
+}
+
+.playground-arena-grid {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+@media (max-width: 900px) {
+  .playground-arena-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.25rem;
+  }
+}
+
+/* VisualizerHub 2-Column Responsive Layout */
+.visualizer-hub-layout {
+  display: flex;
+  gap: 1.75rem;
+  align-items: flex-start;
+}
+
+@media (max-width: 960px) {
+  .visualizer-hub-layout {
+    flex-direction: column !important;
+    gap: 1.25rem;
+  }
+  .visualizer-hub-sidebar {
+    width: 100% !important;
+    position: static !important;
+    max-height: 280px !important;
+  }
+}

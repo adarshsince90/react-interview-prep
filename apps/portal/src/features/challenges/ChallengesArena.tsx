@@ -505,7 +505,7 @@ export const ChallengesArena: React.FC = () => {
       </div>
 
       {/* Main Grid: Sidebar + Arena Content */}
-      <div style={{ display: 'grid', gridTemplateColumns: '320px 1fr', gap: '2rem', alignItems: 'start' }}>
+      <div className="challenges-arena-grid">
         {/* Sidebar: Challenge Selector */}
         <div style={{
           background: 'var(--bg-secondary)',

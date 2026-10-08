@@ -178,7 +178,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
         display: 'flex',
         alignItems: 'flex-start',
         justifyContent: 'center',
-        paddingTop: '8vh'
+        padding: 'max(4vh, 1rem) 1rem 1rem'
       }}
     >
       <div
@@ -186,6 +186,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
         style={{
           width: '100%',
           maxWidth: '720px',
+          maxHeight: '90vh',
           background: 'var(--bg-secondary)',
           border: '1px solid var(--border-medium)',
           borderRadius: '12px',
@@ -241,7 +242,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
         </div>
 
         {/* Results List */}
-        <div style={{ maxHeight: '460px', overflowY: 'auto', padding: '0.5rem' }}>
+        <div style={{ maxHeight: 'min(460px, 60vh)', overflowY: 'auto', padding: '0.5rem' }}>
           {query.trim() === '' ? (
             <div style={{ padding: '2.5rem', textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.88rem' }}>
               <div style={{ marginBottom: '0.5rem', fontWeight: 600, color: 'var(--text-primary)' }}>

@@ -134,7 +134,7 @@ export const CodePlayground: React.FC = () => {
       </div>
 
       {/* Main Grid: Template Switcher + Editor + Console */}
-      <div style={{ display: 'grid', gridTemplateColumns: '300px 1fr', gap: '1.5rem', alignItems: 'flex-start' }}>
+      <div className="playground-arena-grid">
         {/* Templates Sidebar */}
         <div style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-subtle)', borderRadius: '12px', padding: '1rem' }}>
           <div style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.75rem' }}>

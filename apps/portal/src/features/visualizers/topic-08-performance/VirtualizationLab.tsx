@@ -130,7 +130,7 @@ export const VirtualizationLab: React.FC = () => {
       </div>
 
       {/* Metrics Row */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem', marginBottom: '1.5rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '1.5rem' }}>
         <div style={{ background: 'var(--bg-tertiary)', border: '1px solid var(--border-subtle)', borderRadius: '10px', padding: '1rem' }}>
           <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Physical DOM Nodes</div>
           <div style={{ fontSize: '1.5rem', fontWeight: 800, color: renderedItems.length > 50 ? '#ef4444' : '#10b981', marginTop: '0.2rem' }}>
@@ -173,7 +173,7 @@ export const VirtualizationLab: React.FC = () => {
       </div>
 
       {/* Dual Layout: Virtual List + Inspector */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '1.25rem', marginBottom: '1.5rem' }}>
+      <div className="responsive-split-grid" style={{ marginBottom: '1.5rem' }}>
         {/* Virtual List Container */}
         <div style={{ background: 'var(--bg-tertiary)', border: '1px solid var(--border-subtle)', borderRadius: '10px', padding: '1rem' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>

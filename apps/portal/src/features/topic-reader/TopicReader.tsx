@@ -695,6 +695,27 @@ ${userNotes.trim()}
     });
   };
 
+  const handleJumpToSection = (anchor: string, title: string) => {
+    let targetEl = document.getElementById(anchor);
+    if (!targetEl && contentRef.current) {
+      targetEl = contentRef.current.querySelector(`[id*="${anchor}"]`) as HTMLElement | null;
+    }
+    if (!targetEl && contentRef.current) {
+      const cleanT = title.replace(/[^a-z0-9]/gi, '').toLowerCase();
+      targetEl = Array.from(contentRef.current.querySelectorAll('h1, h2, h3, h4, h5, h6')).find(h => {
+        const cleanH = (h.textContent || '').replace(/[^a-z0-9]/gi, '').toLowerCase();
+        return cleanH === cleanT || cleanH.includes(cleanT) || cleanT.includes(cleanH);
+      }) as HTMLElement | null;
+    }
+    if (targetEl) {
+      const navbarHeight = 84;
+      const y = targetEl.getBoundingClientRect().top + window.scrollY - navbarHeight;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+      setActiveSectionId(anchor);
+      window.history.replaceState(null, '', `#${anchor}`);
+    }
+  };
+
   return (
     <>
       {/* Top Reading Progress Bar */}
@@ -702,32 +723,56 @@ ${userNotes.trim()}
         <div className="reading-progress-fill" style={{ width: `${readingProgress}%` }} />
       </div>
 
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'minmax(0, 820px) 290px',
-          justifyContent: 'center',
-          gap: '2.5rem',
-          padding: '2rem 1.5rem',
-          maxWidth: '1220px',
-          margin: '0 auto',
-          position: 'relative'
-        }}
-      >
+      <div className="topic-reader-main-grid">
         {/* Main Reading Column */}
         <div key={topic.id} className="chapter-content-enter prose-reading-container" style={{ minWidth: 0 }}>
-        {/* Top Wayfinding & Breadcrumb Bar */}
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            flexWrap: 'wrap',
-            gap: '0.75rem',
-            marginBottom: '1.25rem',
-            padding: '0.25rem 0.25rem'
-          }}
-        >
+          {/* Mobile/Tablet Collapsible Table of Contents Bar */}
+          <div className="topic-reader-mobile-toc-bar">
+            <details style={{ cursor: 'pointer' }}>
+              <summary style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontWeight: 700, fontSize: '0.84rem', color: 'var(--text-primary)', userSelect: 'none' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <ListOrdered size={16} color="var(--react-cyan)" />
+                  <span>Chapter Navigation ({topic.headings.length} Sections)</span>
+                </div>
+                <span style={{ fontSize: '0.74rem', color: 'var(--text-muted)' }}>
+                  {Math.round(readingProgress)}% read ▾
+                </span>
+              </summary>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem', marginTop: '0.75rem', maxHeight: '240px', overflowY: 'auto', paddingTop: '0.5rem', borderTop: '1px solid var(--border-subtle)' }}>
+                {topic.headings.map((heading, idx) => {
+                  const isBridge = heading.title.includes('Angular') || heading.title.includes('.NET');
+                  const isActive = activeSectionId === heading.anchor;
+                  return (
+                    <a
+                      key={idx}
+                      href={`#${heading.anchor}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleJumpToSection(heading.anchor, heading.title);
+                      }}
+                      className={`toc-nav-link ${isBridge ? 'architect-bridge' : ''} ${isActive ? 'active' : ''}`}
+                      style={{ fontSize: '0.8rem', padding: '0.35rem 0.5rem' }}
+                    >
+                      {heading.title}
+                    </a>
+                  );
+                })}
+              </div>
+            </details>
+          </div>
+
+          {/* Top Wayfinding & Breadcrumb Bar */}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              flexWrap: 'wrap',
+              gap: '0.75rem',
+              marginBottom: '1.25rem',
+              padding: '0.25rem 0.25rem'
+            }}
+          >
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', fontSize: '0.82rem', flexWrap: 'wrap' }}>
             <button
               onClick={onNavigateHome}
@@ -1075,26 +1120,7 @@ ${userNotes.trim()}
                   href={`#${heading.anchor}`}
                   onClick={(e) => {
                     e.preventDefault();
-                    let targetEl = document.getElementById(heading.anchor);
-                    if (!targetEl && contentRef.current) {
-                      // Fallback 1: match partial slug attribute
-                      targetEl = contentRef.current.querySelector(`[id*="${heading.anchor}"]`) as HTMLElement | null;
-                    }
-                    if (!targetEl && contentRef.current) {
-                      // Fallback 2: match by alphanumeric text content
-                      const cleanT = heading.title.replace(/[^a-z0-9]/gi, '').toLowerCase();
-                      targetEl = Array.from(contentRef.current.querySelectorAll('h1, h2, h3, h4, h5, h6')).find(h => {
-                        const cleanH = (h.textContent || '').replace(/[^a-z0-9]/gi, '').toLowerCase();
-                        return cleanH === cleanT || cleanH.includes(cleanT) || cleanT.includes(cleanH);
-                      }) as HTMLElement | null;
-                    }
-                    if (targetEl) {
-                      const navbarHeight = 84;
-                      const y = targetEl.getBoundingClientRect().top + window.scrollY - navbarHeight;
-                      window.scrollTo({ top: y, behavior: 'smooth' });
-                      setActiveSectionId(heading.anchor);
-                      window.history.replaceState(null, '', `#${heading.anchor}`);
-                    }
+                    handleJumpToSection(heading.anchor, heading.title);
                   }}
                   className={`toc-nav-link ${isBridge ? 'architect-bridge' : ''} ${isActive ? 'active' : ''}`}
                   title={heading.title}
