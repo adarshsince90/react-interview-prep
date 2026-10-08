@@ -33,6 +33,18 @@ Understanding how Next.js orchestrates SSG and ISR in the App Router (`generateS
 
 ## 3. Historical Evolution
 
+```mermaid
+timeline
+  title Evolution of Web Rendering: From Static Files to ISR
+  1991 - 2000 : Era 1 - Static HTML & Apache : Pure static files served by web servers : Ultra-fast (0ms compute), zero dynamism, manual FTP updates
+  2000 - 2015 : Era 2 - Dynamic Monoliths (SSR) : PHP, ASP.NET MVC, Rails, Django : Dynamic per-request rendering, high DB load and TTFB
+  2015 - 2020 : Era 3 - JAMstack & Classic SSG : Gatsby, Jekyll, Hugo, early Next.js getStaticProps : Blazing CDN performance but 100k-page build bottlenecks
+  2020 - Present : Era 4 - ISR & Tagged Caching : Next.js ISR & App Router segment cache : Background stale-while-revalidate with targeted on-demand revalidation
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```text
 ERA 1: Handcrafted Static HTML & Apache (1991 - 2000)
 ┌────────────────────────────────────────────────────────┐
@@ -67,6 +79,8 @@ ERA 4: Incremental Static Regeneration & Tagged Cache (2020 - Present)
 │ - Targeted on-demand cache busting via revalidateTag.  │
 └────────────────────────────────────────────────────────┘
 ```
+
+</details>
 
 ---
 
@@ -241,6 +255,37 @@ When a user navigates via client-side routing (`<Link href="/products/42">`):
 
 ### End-to-End ISR & On-Demand Revalidation Architecture
 
+```mermaid
+flowchart TD
+  Client["Client Browser<br/><code>Hard Navigation or &lt;Link&gt;</code>"]
+  Edge["CDN Edge Node<br/><code>Cloudflare / Fastly / Vercel Edge</code>"]
+  Origin["Next.js Origin Server<br/><code>Router &amp; Cache Dispatch</code>"]
+  Stale["Stream Stale Artifact<br/><code>.html or .rsc from disk</code>"]
+  Worker["Spawn Background Regeneration Worker"]
+  WorkerExec["Regeneration Worker Tasks:<br/>1. Execute Page Server Component<br/>2. Query CMS / Microservices<br/>3. Serialize Flight RSC stream<br/>4. Render HTML string<br/>5. Atomic rename to disk/cache"]
+
+  Client -- "HTTP GET Request" --> Edge
+  Edge -- "HIT: Fresh" --> Client
+  Edge -- "MISS / STALE" --> Origin
+  Origin -- "Check: Is Expired &amp;&amp; Not Locked?" --> Stale
+  Stale --> Client
+  Origin -- "If Stale &amp; Not Locked" --> Worker
+  Worker --> WorkerExec
+  WorkerExec -. "Atomic Cache Update" .-> Edge
+
+  classDef clientStyle fill:#1e293b,stroke:#3b82f6,stroke-width:2px,color:#f8fafc;
+  classDef edgeStyle fill:#0f172a,stroke:#10b981,stroke-width:2px,color:#f8fafc;
+  classDef originStyle fill:#1e293b,stroke:#8b5cf6,stroke-width:2px,color:#f8fafc;
+  classDef workerStyle fill:#1e293b,stroke:#f59e0b,stroke-width:2px,color:#f8fafc;
+  class Client clientStyle;
+  class Edge edgeStyle;
+  class Origin,Stale originStyle;
+  class Worker,WorkerExec workerStyle;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```text
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
 │                                   CLIENT BROWSER                                       │
@@ -291,6 +336,8 @@ When a user navigates via client-side routing (`<Link href="/products/42">`):
 │
 └────────────────────────────────────────────────────────────────────────────────────────┘
 ```
+
+</details>
 
 ---
 

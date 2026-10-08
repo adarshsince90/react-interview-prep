@@ -32,6 +32,18 @@ When developers attach listeners directly to individual elements (`row.addEventL
 
 ## 3. Historical Evolution
 
+```mermaid
+timeline
+    title Event Delegation & Memory Optimization Evolution
+    1995 - 2005 : Per-Element Inline Handlers : onclick="handleClick(42)" attributes : Global namespace pollution & tight coupling of markup and JS
+    2005 - 2010 : Direct addEventListener Proliferation : document.querySelectorAll('button').forEach() : 10,000 nodes = 10,000 listeners; detached DOM memory leaks
+    2010 - 2017 : jQuery Event Delegation : $('#table').on('click', '.btn', handler) : 1 listener on table; dynamic children work instantly
+    2017 - Present : Native Delegation & Framework Roots : element.closest() + React 17+ root delegation : Listeners attached to &lt;div id='root'&gt; for clean micro-frontend isolation
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```text
 ERA 1: Per-Element Inline Handlers (1995 - 2005)
 ┌────────────────────────────────────────────────────────┐
@@ -68,6 +80,9 @@ ERA 4: Native Modern Delegation & Framework Roots (2017 - Present)
 │   safely isolating micro-frontends and widgets.        │
 └────────────────────────────────────────────────────────┘
 ```
+
+</details>
+
 
 ---
 
@@ -192,6 +207,51 @@ Under **Event Delegation**, child elements are never directly referenced by clos
 
 ### React 16 vs. React 17+ Event Delegation Architecture
 
+```mermaid
+flowchart TD
+    subgraph React16["REACT 16 (Global Document Delegation)"]
+        direction TB
+        DOC16["window.document<br/>🛑 ALL Synthetic Event Listeners Attached Here"]
+        App1_16["&lt;div id='react-app-1'&gt;<br/>[Component A]"]
+        App2_16["&lt;div id='react-app-2'&gt;<br/>[Component B]"]
+        DOC16 --> App1_16
+        DOC16 --> App2_16
+        Note16["Problem: e.stopPropagation() inside App 1 stops events<br/>reaching document, breaking App 2 or legacy page handlers!"]
+        App2_16 ~~~ Note16
+    end
+
+    subgraph React17["REACT 17 / 18 / 19 (Root Container Delegation)"]
+        direction TB
+        DOC17["window.document (CLEAN - Zero global React listeners)"]
+        
+        subgraph Sub1["App 1 Isolation"]
+            Root1["&lt;div id='react-app-1'&gt;<br/>Listeners scoped ONLY to Root 1"]
+            CompA["[Component A]"]
+            Root1 --> CompA
+        end
+        
+        subgraph Sub2["App 2 Isolation"]
+            Root2["&lt;div id='react-app-2'&gt;<br/>Listeners scoped ONLY to Root 2"]
+            CompB["[Component B]"]
+            Root2 --> CompB
+        end
+        
+        DOC17 --- Sub1
+        DOC17 --- Sub2
+        Note17["Benefit: Full micro-frontend isolation!<br/>stopPropagation() in App 1 never interferes with App 2."]
+        Sub2 ~~~ Note17
+    end
+
+    classDef legacy fill:#1e293b,stroke:#ef4444,stroke-width:1px,color:#f8fafc;
+    classDef modern fill:#0f172a,stroke:#34d399,stroke-width:2px,color:#f8fafc;
+
+    class DOC16,App1_16,App2_16,Note16 legacy;
+    class DOC17,Root1,CompA,Root2,CompB,Note17 modern;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```text
 REACT 16 (Global Document Delegation)
 ┌────────────────────────────────────────────────────────────────────────┐
@@ -219,6 +279,9 @@ REACT 17 / 18 / 19 (Root Container Delegation)
 │ App 1 never interferes with App 2 or exterior host page handlers!      │
 └────────────────────────────────────────────────────────────────────────┘
 ```
+
+</details>
+
 
 ---
 

@@ -26,6 +26,18 @@ By completing this chapter, you will be able to:
 ---
 
 ## 3. Historical Evolution
+```mermaid
+timeline
+    title JavaScript Test Runner Architecture Evolution
+    2011 - 2014 : Mocha, Chai & Karma : Tests in real browsers via Karma : Slow startup & brittle headless configurations
+    2015 - 2020 : Jest Dominance Era (Meta) : All-in-one runner, JSDOM & parallel workers : CommonJS legacy, slow Babel transforms & ESM struggles
+    2021 - 2023 : Vite Revolution & Vitest : Shares Vite transformation pipeline & HMR : Native ESM, esbuild speed & zero config drift
+    2024 - Present : Worker Threads & Lightweight DOMs : Vitest multi-threading + Happy-DOM : 4x throughput, tiny memory footprint & native browser mode
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +---------------------------------------------------------------------------------------------------+
 | 2011 - 2014: Mocha, Chai & Karma                                                                  |
@@ -54,6 +66,9 @@ By completing this chapter, you will be able to:
 | JSDOM, and native browser mode (running tests directly in headless Chromium without JSDOM).       |
 +---------------------------------------------------------------------------------------------------+
 ```
+
+</details>
+
 
 ---
 
@@ -180,6 +195,30 @@ VITEST PROCESS CONCURRENCY TOPOLOGY
 ## 8. Visual Diagrams (ASCII / Text)
 
 ### Comparison: Jest Compilation Bottleneck vs. Vitest Streamlined Pipeline
+```mermaid
+flowchart TD
+    subgraph JestPipeline["Jest Compilation Pipeline (Legacy)"]
+        J_TS["TypeScript Source Code"] -->|Babel / ts-jest transform<br/>Slow Node CJS transpilation| J_CJS["CommonJS JavaScript"]
+        J_CJS -->|Jest Module Resolver<br/>Custom regex moduleNameMapper| J_VM["Jest VM Context"]
+        J_VM -->|JSDOM Environment| J_EXEC["Execution"]
+    end
+
+    subgraph VitestPipeline["Vitest Streamlined Pipeline (Modern)"]
+        V_TS["TypeScript Source Code"] -->|Vite / esbuild transform<br/>10-20x faster compilation| V_ESM["Native ES Module (ESM)"]
+        V_ESM -->|Vite Plugin Resolver<br/>Identical to Dev Server| V_WORKER["Node.js Worker Thread"]
+        V_WORKER -->|Happy-DOM / JSDOM| V_EXEC["Execution"]
+    end
+
+    classDef jest fill:#1e293b,stroke:#f59e0b,stroke-width:1px,color:#f8fafc;
+    classDef vitest fill:#0f172a,stroke:#34d399,stroke-width:2px,color:#f8fafc;
+
+    class J_TS,J_CJS,J_VM,J_EXEC jest;
+    class V_TS,V_ESM,V_WORKER,V_EXEC vitest;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 JEST COMPILATION PIPELINE:
 [ TypeScript Code ] 
@@ -205,6 +244,9 @@ VITEST PIPELINE:
        v (Happy-DOM / JSDOM)
 [ Execution ]
 ```
+
+</details>
+
 
 ---
 

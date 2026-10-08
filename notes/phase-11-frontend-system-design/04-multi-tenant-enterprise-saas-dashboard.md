@@ -211,6 +211,47 @@ V8 HEAP ALLOCATION TOPOLOGY (Multi-Tenant Session):
 
 ### Schema-Driven Widget Registry & Layout Pipeline
 
+```mermaid
+flowchart TD
+    Schema["DASHBOARD CONFIGURATION SCHEMA (JSON API)<br/>{ widgets: [ { type: 'METRIC_CARD', x: 0, y: 0, w: 4, h: 2 } ] }"]
+
+    subgraph Engine["DASHBOARD ENGINE (Grid Container)"]
+        Grid["CSS Grid Layout Computation (x, y, w, h)"]
+        Registry["COMPONENT REGISTRY LOOKUP<br/>Component = Registry.get(widget.type)"]
+        
+        subgraph Resolution["Component Resolution"]
+            Native["Core Native Widgets<br/>(Code-split React bundle)"]
+            MFE["Remote MFE Plugin<br/>(Webpack / Vite Module Federation)"]
+        end
+
+        subgraph Envelope["ISOLATION ENVELOPE"]
+            EB["WidgetErrorBoundary (Error Isolation)"]
+            Susp["Suspense fallback=&lt;WidgetSkeleton /&gt;"]
+            Gate["FeatureGate requiredPerm={widget.permission}"]
+            Comp["Component config={widget.config}"]
+            
+            EB --> Susp --> Gate --> Comp
+        end
+    end
+
+    Schema --> Grid --> Registry
+    Registry --> Native --> EB
+    Registry --> MFE --> EB
+
+    classDef schema fill:#1e293b,stroke:#38bdf8,stroke-width:1px,color:#f8fafc;
+    classDef engine fill:#0f172a,stroke:#818cf8,stroke-width:2px,color:#f8fafc;
+    classDef comp fill:#1e293b,stroke:#f59e0b,stroke-width:1px,color:#f8fafc;
+    classDef envelope fill:#1e293b,stroke:#34d399,stroke-width:1px,color:#f8fafc;
+
+    class Schema schema;
+    class Grid,Registry engine;
+    class Native,MFE comp;
+    class EB,Susp,Gate,Comp envelope;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +-----------------------------------------------------------------+
 | DASHBOARD CONFIGURATION SCHEMA (JSON from API)                  |
@@ -246,6 +287,8 @@ V8 HEAP ALLOCATION TOPOLOGY (Multi-Tenant Session):
 |   +---------------------------------------------------------+   |
 +-----------------------------------------------------------------+
 ```
+
+</details>
 
 ---
 

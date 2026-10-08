@@ -20,7 +20,21 @@ By mastering this chapter, you will be able to:
 
 ## 3. Historical Evolution
 
+```mermaid
+timeline
+    title Chronological Evolution of Enterprise Identity Protocols
+    1995 : Basic Auth & Session Cookies : Plaintext Base64 credentials & in-memory state failing at horizontal scale
+    2001 : SAML 1.1 / 2.0 : XML enterprise assertions with heavy payloads unsuited for mobile & modern SPAs
+    2007 : OAuth 1.0 (RFC 5849) : Cryptographic HMAC request signing with developer friction & fragility
+    2012 : OAuth 2.0 (RFC 6749) : Authorization delegation with TLS bearer tokens lacking identity semantics
+    2014 : OpenID Connect Core 1.0 : Standardized identity layer, JWT id_token & userinfo profile discovery
+    2020+ : OAuth 2.1 & Deprecation of Implicit : Strict deprecation of implicit grants; mandatory PKCE & sender-constraining
 ```
+
+<details>
+<summary>📄 View Raw ASCII Schematic</summary>
+
+```text
 +--------------------------------------------------------------------------------------------------+
 |                                    CHRONOLOGICAL EVOLUTION                                       |
 +--------------------------------------------------------------------------------------------------+
@@ -43,6 +57,8 @@ By mastering this chapter, you will be able to:
 |         universal mandate for Authorization Code Flow with PKCE and token sender-constraining.   |
 +--------------------------------------------------------------------------------------------------+
 ```
+
+</details>
 
 ---
 
@@ -209,7 +225,43 @@ Resource servers maintain an in-memory cache of JSON Web Key Sets (JWKS) to avoi
 
 ### Enterprise Trust Boundaries & Token Partitioning
 
+```mermaid
+flowchart TD
+    subgraph Untrusted["UNTRUSTED CLIENT ZONE"]
+        SPA["Browser: React SPA / Next.js Client Component<br/>• Holds ONLY ID Token payload for UI greeting (user.name)<br/>• DOES NOT touch Raw Refresh Tokens<br/>• Communicates via HttpOnly, SameSite=Lax Cookie"]
+    end
+
+    subgraph TrustedBFF["TRUSTED BFF / EDGE PROXY"]
+        BFF["Next.js Server / ASP.NET Core YARP Gateway<br/>• Holds Confidential Client Secret<br/>• Stores encrypted Refresh Token in Redis cache<br/>• Attaches Raw Access Token into outgoing requests"]
+    end
+
+    subgraph IdPZone["ENTERPRISE IDENTITY PROVIDER"]
+        IdP["Microsoft Entra ID / Okta / Auth0<br/>• Validates MFA & Conditional Access policies<br/>• Issues Tokens & Rotates Keys"]
+    end
+
+    subgraph ResourceZone["PROTECTED RESOURCE SERVER"]
+        API[".NET 10 / Spring Cloud Microservice Engine<br/>• Validates RS256 signature via local JWKS cache<br/>• Enforces Role claims (Finance.Auditor)<br/>• Zero communication back to IdP during requests"]
+    end
+
+    SPA -->|"HTTPS (Secure Session Cookie)"| BFF
+    BFF -->|"Authorization Code Exchange"| IdP
+    BFF -->|"Bearer Access Token"| API
+
+    classDef client fill:#1e293b,stroke:#f43f5e,stroke-width:2px,color:#f8fafc;
+    classDef bff fill:#1e293b,stroke:#0284c7,stroke-width:2px,color:#f8fafc;
+    classDef idp fill:#1e293b,stroke:#10b981,stroke-width:2px,color:#f8fafc;
+    classDef api fill:#1e293b,stroke:#a855f7,stroke-width:2px,color:#f8fafc;
+
+    class SPA client;
+    class BFF bff;
+    class IdP idp;
+    class API api;
 ```
+
+<details>
+<summary>📄 View Raw ASCII Architecture Schematic</summary>
+
+```text
 +---------------------------------------------------------------------------------------------+
 |                                    UNTRUSTED CLIENT ZONE                                    |
 |                                                                                             |
@@ -241,6 +293,8 @@ Resource servers maintain an in-memory cache of JSON Web Key Sets (JWKS) to avoi
 |  - Issues Tokens & Rotates Keys   |   |  - Zero communication back to IdP during requests   |
 +-----------------------------------+   +-----------------------------------------------------+
 ```
+
+</details>
 
 ---
 

@@ -203,6 +203,47 @@ code:not(pre code) {
   border-color: var(--react-cyan);
 }
 
+/* Collapsible Raw Schematic Fallback (Dual-View Safety Hatch) */
+details.raw-schematic-details,
+.prose-reading-container details {
+  margin: 1rem 0 1.5rem 0;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  background: var(--bg-secondary);
+  overflow: hidden;
+  transition: all var(--transition-fast);
+}
+
+details.raw-schematic-details summary,
+.prose-reading-container details summary {
+  padding: 0.65rem 1rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  user-select: none;
+  background: var(--bg-tertiary);
+  border-bottom: 1px solid transparent;
+}
+
+details.raw-schematic-details summary:hover,
+.prose-reading-container details summary:hover {
+  color: var(--react-cyan);
+}
+
+details.raw-schematic-details[open] summary,
+.prose-reading-container details[open] summary {
+  border-bottom-color: var(--border-subtle);
+  color: var(--text-primary);
+}
+
+details.raw-schematic-details pre,
+.prose-reading-container details pre {
+  margin: 0 !important;
+  border: none !important;
+  border-radius: 0 !important;
+}
+
 /* Vector Mermaid Diagram Enhancements */
 .mermaid-container {
   display: flex;

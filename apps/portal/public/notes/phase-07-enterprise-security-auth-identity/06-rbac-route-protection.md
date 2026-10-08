@@ -20,6 +20,18 @@ By mastering this chapter, you will be able to:
 
 ## 3. Historical Evolution
 
+```mermaid
+timeline
+  title Evolution of Enterprise Access Control & Route Gating
+  1992 : RBAC Formalized (NIST) : David Ferraiolo & Richard Kuhn define Role-Based Access Control : Static roles map directly to permissions
+  2013 : ABAC Standardized (NIST SP 800-162) : Dynamic attributes introduced : Subject, Resource, Action, Environment policies
+  2018 : Declarative Frontend Access Control : CASL & CanCan enter JavaScript ecosystem : Isomorphic permission models ability.can in React
+  2023+ : Edge Middleware & Zero-Trust Gating : Authorization moves to Edge runtimes & Server Components : Rejects unauthorized requests before client JS executes
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +--------------------------------------------------------------------------------------------------+
 |                                    CHRONOLOGICAL EVOLUTION                                       |
@@ -38,6 +50,8 @@ By mastering this chapter, you will be able to:
 |         and Server Components, rejecting unauthorized requests before client JS even executes.  |
 +--------------------------------------------------------------------------------------------------+
 ```
+
+</details>
 
 ---
 
@@ -155,6 +169,31 @@ Browser User Navigation                Edge Middleware / Proxy               Ser
 
 ### Multi-Layered Defense-in-Depth Authorization Model
 
+```mermaid
+flowchart TD
+  subgraph Tiers["Defense-in-Depth Authorization Tiers"]
+    direction TB
+    T1["<b>TIER 1: UI Visibility (UX Optimization - Client Side)</b><br/><code>&lt;Can perform='delete'&gt;</code> hides delete buttons for unauthorized viewers<br/><i>Prevents user frustration; does NOT guarantee security</i>"]
+    T2["<b>TIER 2: Route Navigation Guards (Client / Edge Router)</b><br/>Next.js Middleware / ProtectedRoute redirects unauthorized users away<br/><i>Prevents unauthorized layout viewing</i>"]
+    T3["<b>TIER 3: Data Retrieval Authorization (BFF / Server Component)</b><br/>Server Component queries verify caller identity before returning initial data"]
+    T4["<b>TIER 4: Authoritative Resource Server (API / Database Layer)</b><br/>ASP.NET Core <code>[Authorize(Policy = '...')]</code> cryptographically validates token<br/><i>If missing, returns HTTP 403 Forbidden (THE IMPENETRABLE WALL)</i>"]
+
+    T1 --> T2 --> T3 --> T4
+  end
+
+  classDef tier1 fill:#1e293b,stroke:#3b82f6,stroke-width:2px,color:#f8fafc;
+  classDef tier2 fill:#1e293b,stroke:#06b6d4,stroke-width:2px,color:#f8fafc;
+  classDef tier3 fill:#1e293b,stroke:#f59e0b,stroke-width:2px,color:#f8fafc;
+  classDef tier4 fill:#0f172a,stroke:#ef4444,stroke-width:2px,color:#f8fafc;
+  class T1 tier1;
+  class T2 tier2;
+  class T3 tier3;
+  class T4 tier4;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +---------------------------------------------------------------------------------------------+
 |                                    DEFENSE-IN-DEPTH TIERS                                   |
@@ -186,6 +225,8 @@ Browser User Navigation                Edge Middleware / Proxy               Ser
 |   +-------------------------------------------------------------------------------------+   |
 +---------------------------------------------------------------------------------------------+
 ```
+
+</details>
 
 ---
 

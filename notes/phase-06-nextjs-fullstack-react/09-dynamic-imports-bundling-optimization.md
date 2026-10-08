@@ -30,6 +30,18 @@ Next.js provides industrial-grade tools to manage this complexity: **Turbopack**
 
 ## 3. Historical Evolution
 
+```mermaid
+timeline
+  title Evolution of JavaScript Bundling & Optimization
+  2010 - 2016 : Era 1 - Monolithic Bundles : Single bundle.js containing entire application : 5MB+ downloads, poor mobile performance
+  2016 - 2021 : Era 2 - Code Splitting & Dynamic Imports : Webpack SplitChunksPlugin & dynamic import() : Route splitting, complex configs, slow monorepo builds
+  2021 - 2024 : Era 3 - RSC + Next.js Dynamic Imports : React Server Components with 0 KB client bundle : next/dynamic with built-in Suspense integration
+  2024 - Present : Era 4 - Turbopack & Compiler Pruning : Rust-based Turbopack Engine (Next.js 15+) : 10x-50x faster HMR, automatic optimizePackageImports barrel pruning
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```text
 ERA 1: Monolithic Bundles (2010 - 2016)
 ┌────────────────────────────────────────────────────────┐
@@ -64,6 +76,8 @@ ERA 4: Turbopack & Compiler-Assisted Pruning (2024 - Present)
 │ - Function-level dead-code elimination and SWC transforms│
 └────────────────────────────────────────────────────────┘
 ```
+
+</details>
 
 ---
 
@@ -194,6 +208,33 @@ With Strategic RSC + Dynamic Imports
 
 ### Turbopack Incremental Computation vs. Webpack AST Bundling
 
+```mermaid
+flowchart TD
+  subgraph Webpack["Traditional Webpack (Full AST Graph Re-eval)"]
+    direction TB
+    W1["Source Change: Button.tsx"] --> W2["Traverse entire dependency graph<br/><i>(2,500+ modules)</i>"]
+    W2 --> W3["Run Babel / SWC across affected tree"]
+    W3 --> W4["Execute SplitChunks algorithm"]
+    W4 --> W5["HMR Time: 1,800ms – 4,500ms"]
+  end
+
+  subgraph Turbopack["Turbopack Engine (Incremental Rust Engine)"]
+    direction TB
+    T1["Source Change: Button.tsx"] --> T2["Turbopack Dependency Graph<br/><i>Invalidates only Button function node</i>"]
+    T2 --> T3["Function-level memoization in Rust memory"]
+    T3 --> T4["Patches specific hot chunk via WebSocket"]
+    T4 --> T5["HMR Time: 12ms – 35ms (Near-Instantaneous!)"]
+  end
+
+  classDef oldStyle fill:#451a03,stroke:#f59e0b,stroke-width:2px,color:#fef3c7;
+  classDef newStyle fill:#0f172a,stroke:#10b981,stroke-width:2px,color:#f8fafc;
+  class W1,W2,W3,W4,W5 oldStyle;
+  class T1,T2,T3,T4,T5 newStyle;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```text
 TRADITIONAL WEBPACK (Full AST Graph Re-eval)
 ┌────────────────────────────────────────────────────────────────────────┐
@@ -214,6 +255,8 @@ TURBOPACK ENGINE (Incremental Computation in Rust)
 │ -> HMR Time: 12ms - 35ms (Near-Instantaneous at scale!).               │
 └────────────────────────────────────────────────────────────────────────┘
 ```
+
+</details>
 
 ---
 

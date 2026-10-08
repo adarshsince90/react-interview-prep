@@ -21,6 +21,18 @@ By completing this chapter, you will be able to:
 ---
 
 ## 3. Historical Evolution
+```mermaid
+timeline
+    title Design Systems & Component Libraries Evolution
+    2011 - 2015 : Monolithic CSS Frameworks (Bootstrap, Foundation) : Global CSS specificity wars : jQuery DOM mutations coupled to markup
+    2016 - 2019 : Styled-Component Monoliths (Material UI, Ant Design) : Runtime CSS-in-JS overhead : Heavy bundles & brittle styling overrides
+    2020 - 2022 : Headless Primitives & Utility CSS (Radix UI, Tailwind) : Decoupled state/ARIA from aesthetics : Zero-runtime CSS & full style freedom
+    2023 - Present : Design Token Standards & Slot Polymorphism (W3C DTCG, Ark UI) : Multi-brand CSS custom properties : asChild composable slots
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +---------------------------------------------------------------------------------------------------+
 | 2011 - 2015: Monolithic CSS Frameworks (Bootstrap, Foundation)                                    |
@@ -49,6 +61,9 @@ By completing this chapter, you will be able to:
 | zero-runtime type-safe tokens (Style Dictionary), and `asChild` composition replacing `as` props.  |
 +---------------------------------------------------------------------------------------------------+
 ```
+
+</details>
+
 
 ---
 
@@ -185,6 +200,42 @@ V8 FIBER RECONCILER NODE
 ## 8. Visual Diagrams (ASCII / Text)
 
 ### Design Token Pipeline (Style Dictionary)
+```mermaid
+flowchart TD
+    subgraph Inputs["Design Token Source Files (W3C DTCG)"]
+        TC["tokens/color.json"]
+        TT["tokens/typography.json"]
+        TS["tokens/spacing.json"]
+    end
+
+    Engine["Style Dictionary Build Engine<br/>(Parses JSON -> Resolves References -> Applies Transforms)"]
+
+    subgraph Outputs["Multi-Platform Artifacts"]
+        CSS["dist/tokens.css<br/>CSS Custom Properties<br/>(--color-primary: #...)"]
+        TSOut["dist/tokens.ts<br/>Type-Safe TS Constants<br/>(export const Primary...)"]
+        SWIFT["dist/tokens.swift<br/>iOS Native Platform<br/>(let primary = ...)"]
+    end
+
+    TC --> Engine
+    TT --> Engine
+    TS --> Engine
+
+    Engine --> CSS
+    Engine --> TSOut
+    Engine --> SWIFT
+
+    classDef token fill:#1e293b,stroke:#38bdf8,stroke-width:1px,color:#f8fafc;
+    classDef engine fill:#0f172a,stroke:#818cf8,stroke-width:2px,color:#f8fafc;
+    classDef output fill:#1e293b,stroke:#34d399,stroke-width:1px,color:#f8fafc;
+
+    class TC,TT,TS token;
+    class Engine engine;
+    class CSS,TSOut,SWIFT output;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 [ tokens/color.json ]      [ tokens/typography.json ]      [ tokens/spacing.json ]
           \                           |                           /
@@ -201,6 +252,9 @@ V8 FIBER RECONCILER NODE
  CSS Custom Properties      Type-Safe TS Constants      iOS Native Platform
  (--color-primary: #...)    (export const Primary...)   (let primary = ...)
 ```
+
+</details>
+
 
 ---
 

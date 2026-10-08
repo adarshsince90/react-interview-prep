@@ -244,7 +244,7 @@ export const TopicReader: React.FC<TopicReaderProps> = ({
         const rawHtml = marked.parse(sanitizedMarkdown) as string;
         const sanitized = DOMPurify.sanitize(rawHtml, {
           ADD_ATTR: ['id', 'class', 'target'],
-          ADD_TAGS: ['div', 'span']
+          ADD_TAGS: ['div', 'span', 'details', 'summary']
         });
         setContentHtml(sanitized);
         setLoading(false);

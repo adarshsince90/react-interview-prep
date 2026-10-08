@@ -150,6 +150,34 @@ NEXT.JS EDGE MIDDLEWARE TOPOLOGY:
 
 ### The HTTP Interceptor Pipeline: Angular vs Token-Mediating BFF
 
+```mermaid
+flowchart TD
+    subgraph AngularPipeline["ANGULAR HTTP INTERCEPTOR (Client-Side Token Exposure)"]
+        direction TB
+        A_Comp["Angular Component"] --> A_Http["HttpClient.get()"]
+        A_Http --> A_Auth["AuthInterceptor<br/>Clones req; adds 'Authorization: Bearer &lt;JWT&gt;'<br/>(JWT stored in client localStorage / memory)"]
+        A_Auth --> A_Log["LoggingInterceptor"]
+        A_Log --> A_Fetch["Browser fetch / XHR"]
+        A_Fetch -->|Public Internet| A_API["Backend API"]
+    end
+
+    subgraph ReactBFF["REACT / NEXT.JS BFF (Zero Client Token Exposure)"]
+        direction TB
+        R_Comp["React Component"] --> R_Fetch["fetch('/api/billing')<br/>Cookie: __Host-session=xyz (HttpOnly)"]
+        R_Fetch -->|Public Internet| R_BFF["NEXT.JS BFF (Server Tier / VPC Edge)<br/>1. Decrypts __Host-session cookie<br/>2. Retrieves raw Bearer JWT from Redis<br/>3. Calls microservice on private internal network<br/>4. Returns sanitized DTO"]
+        R_BFF -->|Internal Private Network| R_MS["Backend Microservice<br/>(Never exposed to public internet)"]
+    end
+
+    classDef ng fill:#1e293b,stroke:#ef4444,stroke-width:1px,color:#f8fafc;
+    classDef react fill:#0f172a,stroke:#34d399,stroke-width:2px,color:#f8fafc;
+
+    class A_Comp,A_Http,A_Auth,A_Log,A_Fetch,A_API ng;
+    class R_Comp,R_Fetch,R_BFF,R_MS react;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw Comparison Schematic</summary>
+
 ```
 ANGULAR HTTP INTERCEPTOR PIPELINE (Client-Side Token Handling):
 [ Component ]
@@ -186,6 +214,8 @@ REACT / NEXT.JS TOKEN-MEDIATING BFF (Zero Client-Side Token Exposure):
       ▼
 [ Backend Microservice ] (Never exposed to public internet)
 ```
+
+</details>
 
 ---
 

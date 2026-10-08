@@ -21,7 +21,20 @@ By mastering this chapter, you will be able to:
 
 ## 3. Historical Evolution
 
+```mermaid
+timeline
+    title Chronological Evolution of PKCE in Browser Applications
+    2012 : RFC 6749 Implicit Grant : Tokens exposed in browser URI fragments, history & Referer leaks
+    2015 : RFC 7636 PKCE Published : Dynamic proof-key created for native apps to defeat URI hijacking
+    2019 : Browser-Based Apps BCP : IETF deprecates Implicit Flow; mandates Authorization Code with PKCE
+    2021+ : OAuth 2.1 Consolidation : Implicit grant removed; mandatory PKCE for public and confidential clients
+    2024+ : Full-Stack PKCE & BFF : Server-side cookie transactions eliminate client-stored verifiers entirely
 ```
+
+<details>
+<summary>📄 View Raw ASCII Schematic</summary>
+
+```text
 +--------------------------------------------------------------------------------------------------+
 |                                    CHRONOLOGICAL EVOLUTION                                       |
 +--------------------------------------------------------------------------------------------------+
@@ -41,6 +54,8 @@ By mastering this chapter, you will be able to:
 |         server-side cookie transactions, eliminating browser storage of verifiers completely.    |
 +--------------------------------------------------------------------------------------------------+
 ```
+
+</details>
 
 ---
 
@@ -188,9 +203,28 @@ The Web Cryptography API performs hashing operations in native C++ engine code o
 
 ## 8. Visual Diagrams (ASCII / Text)
 
-### Attack Mitigation: How PKCE Defeats Code Interception
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Attacker as Malicious Network Spy
+    participant Client as Legitimate React SPA / BFF
+    participant IdP as Identity Provider (Token Endpoint)
 
+    Note over Client,IdP: Flow initiated with S256 code_challenge="dBjftJeZ4CVP..."
+    Attacker->>Attacker: Intercepts browser redirect: Obtains code=AUTH_CODE_XYZ
+    Note over Attacker: Attacker tries redeeming stolen code without secret verifier
+    Attacker->>IdP: POST /token<br/>grant_type=authorization_code<br/>code=AUTH_CODE_XYZ<br/>code_verifier=MISSING_OR_FAKE
+    Note over IdP: Cryptographic Gate Check:<br/>SHA256(verifier) !== Stored Challenge
+    IdP-->>Attacker: 400 Bad Request: "invalid_grant: code_verifier does not match"
+    Note over Attacker: Attack Defeated! Stolen authorization code is useless.
+    Client->>IdP: POST /token<br/>grant_type=authorization_code<br/>code=AUTH_CODE_XYZ<br/>code_verifier="E9Melhoa2OwvFrGMTJgu..."
+    IdP-->>Client: 200 OK: Validates SHA256 & Returns Tokens (id_token, access_token)
 ```
+
+<details>
+<summary>📄 View Raw ASCII Attack Mitigation Schematic</summary>
+
+```text
 +---------------------------------------------------------------------------------------------+
 |                                    INTERCEPTION ATTEMPT                                     |
 |                                                                                             |
@@ -216,6 +250,8 @@ The Web Cryptography API performs hashing operations in native C++ engine code o
 |   +-------------------------------------------------------------------------------------+   |
 +---------------------------------------------------------------------------------------------+
 ```
+
+</details>
 
 ---
 

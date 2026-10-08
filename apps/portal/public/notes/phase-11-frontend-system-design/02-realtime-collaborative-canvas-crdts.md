@@ -24,6 +24,18 @@ By completing this chapter, you will be able to:
 ---
 
 ## 3. Historical Evolution
+```mermaid
+timeline
+    title Real-Time Collaborative Canvas Architecture Evolution
+    2006 - 2012 : Operational Transformation (Google Wave/Docs) : Central server transforms concurrent ops : Effective for linear text, brittle for 2D spatial graphs
+    2013 - 2017 : DOM & SVG Canvas Experiments : SVG whiteboards (<svg><rect/></svg>) : Layout recalculation thrashing past 2,000 shapes & dropped frames
+    2018 - 2022 : WebGL & CRDT Industrialization (Figma, Yjs) : WebGL/WASM custom rendering engines : Conflict-free replicated data types for decentralized merging
+    2023 - Present : WebGPU, Local-First & OffscreenCanvas : WebGPU hardware compute & Web Worker offscreen threads : Sub-millisecond binary wire protocols & local IndexedDB
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +---------------------------------------------------------------------------------------------------+
 | 2006 - 2012: Operational Transformation (Google Wave / Google Docs)                               |
@@ -53,6 +65,9 @@ By completing this chapter, you will be able to:
 | Yjs binary wire protocols, and zero-latency local-first IndexedDB persistence.                    |
 +---------------------------------------------------------------------------------------------------+
 ```
+
+</details>
+
 
 ---
 
@@ -182,6 +197,33 @@ QUADTREE SPATIAL PARTITIONING IN V8 MEMORY
 ## 8. Visual Diagrams (ASCII / Text)
 
 ### Dual-Channel Multiplexed WebSocket Protocol
+```mermaid
+sequenceDiagram
+    autonumber
+    participant ClientA as Client A (Browser)
+    participant Server as Collab Server
+    participant DB as Snapshot DB
+    participant ClientB as Client B (Browser)
+
+    rect rgb(20, 30, 45)
+        Note over ClientA,ClientB: Channel 1: Document State (Lossless CRDT Updates)
+        ClientA->>Server: Binary Yjs Update [Reliable TCP/WS]
+        Server->>DB: Persist Snapshot & Op Log
+        Server->>ClientB: Broadcast Yjs Op [Reliable TCP/WS]
+        ClientB->>ClientB: Merge CRDT State & Re-render Canvas
+    end
+
+    rect rgb(25, 35, 30)
+        Note over ClientA,ClientB: Channel 2: Ephemeral Presence (Lossy 60Hz Telemetry)
+        ClientA->>Server: Cursor Position {x, y, user} [Lossy WS]
+        Server->>ClientB: High-frequency In-Memory Broadcast
+        ClientB->>ClientB: Render Remote Mouse Pointer
+    end
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 CLIENT A (Browser)                                    COLLAB SERVER
 +---------------------------+                         +----------------------------+
@@ -198,6 +240,9 @@ CLIENT A (Browser)                                    COLLAB SERVER
                                                       CLIENT B (Browser)
                                                       Receives updates & renders
 ```
+
+</details>
+
 
 ---
 

@@ -22,6 +22,19 @@ By mastering this chapter, you will be able to:
 
 ## 3. Historical Evolution
 
+```mermaid
+timeline
+  title Evolution of JavaScript Task Scheduling & Thread Yielding
+  1995 : Synchronous Run-to-Completion : Heavy loops run uninterrupted, freezing the entire browser window
+  2011 : setTimeout(0) Macrotask Hack : Defers work but suffers 4ms minimum clamp penalty after 5 nested calls
+  2015 : W3C requestIdleCallback : Executes when browser is idle, but unreliable for prioritized user tasks
+  2017 : React 16 Scheduler & MessageChannel : Custom cooperative scheduler using 0ms MessageChannel with 5ms time slices
+  2024+ : W3C Prioritized Task Scheduling (scheduler.yield) : Native browser yielding to rendering while continuing ahead of background tasks
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +--------------------------------------------------------------------------------------------------+
 |                                    CHRONOLOGICAL EVOLUTION                                       |
@@ -42,6 +55,8 @@ By mastering this chapter, you will be able to:
 |         that yields to rendering while guaranteeing the continuation resumes ahead of new tasks.|
 +--------------------------------------------------------------------------------------------------+
 ```
+
+</details>
 
 ---
 
@@ -135,6 +150,36 @@ Main Thread Timeline (ms)
 
 ### DevTools Flamechart: Unoptimized vs Yielded Execution
 
+```mermaid
+flowchart TD
+  subgraph Bad["Without Yielding (Catastrophic 250ms Long Task)"]
+    direction LR
+    B1["<b>Task (250ms) ⚠️ USER INPUT FROZEN</b><br/><code>parseLargeDataset()</code><br/><i>15 frames dropped! INP: 250ms (POOR)</i>"]
+  end
+
+  subgraph Good["With scheduler.yield() (Cooperative Time Slicing)"]
+    direction LR
+    T1["Task 1 (48ms)<br/><code>parseChunk(1)</code>"]
+    G1["Yield Gap (2ms)<br/><b>[Frame Painted]</b>"]
+    T2["Task 2 (47ms)<br/><code>parseChunk(2)</code>"]
+    G2["Yield Gap (2ms)<br/><b>[User Click Handled]</b>"]
+    T3["Task 3 (49ms)<br/><code>parseChunk(3)</code>"]
+    G3["Yield Gap (2ms)<br/><b>[Frame Painted]</b>"]
+
+    T1 --> G1 --> T2 --> G2 --> T3 --> G3
+  end
+
+  classDef badStyle fill:#450a0a,stroke:#ef4444,stroke-width:2px,color:#fecaca;
+  classDef goodStyle fill:#1e293b,stroke:#3b82f6,stroke-width:1px,color:#f8fafc;
+  classDef gapStyle fill:#064e3b,stroke:#10b981,stroke-width:2px,color:#a7f3d0;
+  class B1 badStyle;
+  class T1,T2,T3 goodStyle;
+  class G1,G2,G3 gapStyle;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 WITHOUT YIELDING (CATASTROPHIC 250ms LONG TASK):
 +---------------------------------------------------------------------------------------------+
@@ -153,6 +198,8 @@ WITH SCHEDULER.YIELD() (FIVE 50ms CHUNKS):
     [Frame Painted]           [User Click Handled]      [Frame Painted]
 Frame drops: ZERO! INP: 18ms (GOOD).
 ```
+
+</details>
 
 ---
 

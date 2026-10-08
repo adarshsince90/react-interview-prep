@@ -20,6 +20,19 @@ By mastering this chapter, you will be able to:
 
 ## 3. Historical Evolution
 
+```mermaid
+timeline
+  title Evolution of Web Performance Metrics & Core Web Vitals
+  2000s : Legacy Era : window.onload & DOMContentLoaded : Measured network completion, blind to painted pixels or user interactivity
+  2017 : Paint Timing API : First Paint (FP) & First Contentful Paint (FCP) : First visual feedback, but ignored primary content loading
+  2020 : Core Web Vitals Announced : LCP (Loading), FID (Interactivity), CLS (Stability) : Official Google Search ranking signals in 2021
+  2022 : Experimental INP Introduced : Addressed FID flaws : FID only measured first interaction queue wait, ignoring render & subsequent clicks
+  2024 : INP Officially Replaces FID (March 2024) : Universal industry transition : Full lifecycle responsiveness mandated across every click, tap, and keystroke
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +--------------------------------------------------------------------------------------------------+
 |                                    CHRONOLOGICAL EVOLUTION                                       |
@@ -40,6 +53,8 @@ By mastering this chapter, you will be able to:
 |              responsiveness mandated across every click, tap, and keystroke.                     |
 +--------------------------------------------------------------------------------------------------+
 ```
+
+</details>
 
 ---
 
@@ -146,6 +161,43 @@ The browser maintains a circular memory buffer allocated in the Renderer process
 
 ### Core Web Vitals Target Thresholds Matrix
 
+```mermaid
+flowchart TD
+  subgraph Scorecard["Core Web Vitals Thresholds Matrix"]
+    direction TB
+    subgraph INP["INP (Interaction to Next Paint - Interactivity)"]
+      INP_G["Good: &le; 200 ms"]
+      INP_N["Needs Improvement: 200 ms – 500 ms"]
+      INP_P["Poor: &gt; 500 ms"]
+    end
+    subgraph LCP["LCP (Largest Contentful Paint - Loading)"]
+      LCP_G["Good: &le; 2.5 s"]
+      LCP_N["Needs Improvement: 2.5 s – 4.0 s"]
+      LCP_P["Poor: &gt; 4.0 s"]
+    end
+    subgraph CLS["CLS (Cumulative Layout Shift - Stability)"]
+      CLS_G["Good: &le; 0.10"]
+      CLS_N["Needs Improvement: 0.10 – 0.25"]
+      CLS_P["Poor: &gt; 0.25"]
+    end
+    subgraph TTFB["TTFB (Time to First Byte - Foundation)"]
+      TTFB_G["Good: &le; 800 ms"]
+      TTFB_N["Needs Improvement: 800 ms – 1800 ms"]
+      TTFB_P["Poor: &gt; 1800 ms"]
+    end
+  end
+
+  classDef goodStyle fill:#064e3b,stroke:#10b981,stroke-width:1px,color:#a7f3d0;
+  classDef warnStyle fill:#451a03,stroke:#f59e0b,stroke-width:1px,color:#fde68a;
+  classDef poorStyle fill:#450a0a,stroke:#ef4444,stroke-width:1px,color:#fecaca;
+  class INP_G,LCP_G,CLS_G,TTFB_G goodStyle;
+  class INP_N,LCP_N,CLS_N,TTFB_N warnStyle;
+  class INP_P,LCP_P,CLS_P,TTFB_P poorStyle;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +---------------------------------------------------------------------------------------------+
 |                                  CORE WEB VITALS SCORECARD                                  |
@@ -158,6 +210,8 @@ The browser maintains a circular memory buffer allocated in the Renderer process
 | TTFB (Foundation)  | <= 800 ms             | 800 ms - 1800 ms      | > 1800 ms              |
 +--------------------+-----------------------+-----------------------+------------------------+
 ```
+
+</details>
 
 ---
 

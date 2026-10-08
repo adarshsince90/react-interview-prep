@@ -22,6 +22,19 @@ By mastering this chapter, you will be able to:
 
 ## 3. Historical Evolution
 
+```mermaid
+timeline
+  title Evolution of JavaScript Bundling, Tree-Shaking & Dead Code Elimination
+  2012 : Browserify & Early Webpack : Bundled CommonJS require() : Dynamic runtime imports made static analysis impossible
+  2015 : Rollup Introduces Tree-Shaking : Leveraged ES6 static import/export : AST graph analysis including only explicitly imported functions
+  2018 : Webpack 4 & sideEffects : package.json sideEffects annotation : Skips entire unused files without parsing AST bodies
+  2021 : Vite & Esbuild / Rollup : Go-compiled esbuild and Rollup : Replaced slow JS-based bundlers, cutting build times from minutes to seconds
+  2024+ : Turbopack, Rolldown & Next.js 15 : Rust bundling engines : Automatic barrel file pruning optimizePackageImports and module-level dependency graphs
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +--------------------------------------------------------------------------------------------------+
 |                                    CHRONOLOGICAL EVOLUTION                                       |
@@ -42,6 +55,8 @@ By mastering this chapter, you will be able to:
 |         file pruning (`optimizePackageImports`) and module-level dependency graphs.              |
 +--------------------------------------------------------------------------------------------------+
 ```
+
+</details>
 
 ---
 
@@ -142,6 +157,47 @@ Slashing your bundle from 2 MB to 300 KB saves over **18 MB of device RAM** and 
 
 ### The Barrel File Problem Visualized
 
+```mermaid
+flowchart TD
+  subgraph Barrel["components/index.ts (The Barrel File)"]
+    direction TB
+    B1["export * from './Button'"]
+    B2["export * from './Modal'"]
+    B3["export * from './HeavyDataGrid' (Imports AG-Grid: 1.2 MB)"]
+    B4["export * from './PDFViewer' (Imports PDF.js: 2.4 MB)"]
+    B5["export * from './RichTextEditor' (Imports Quill: 800 KB)"]
+  end
+
+  Consumer["Header.tsx<br/><code>import { Button } from '@/components'</code>"]
+
+  subgraph Unoptimized["Without Compiler Barrel Pruning"]
+    P1["Bundler traverses ALL 5 export paths"]
+    P2["Bundles AG-Grid + PDF.js + Quill"]
+    P3["<b>Result: Bundle balloons from 15 KB to 4.4 MB!</b><br/><i>Dev server takes 12s to reload</i>"]
+    P1 --> P2 --> P3
+  end
+
+  subgraph Optimized["With Direct Import or optimizePackageImports"]
+    O1["Rewrites import to: <code>@/components/Button</code>"]
+    O2["<b>Result: Clean 15 KB chunk!</b><br/><i>0ms unnecessary module traversal</i>"]
+    O1 --> O2
+  end
+
+  Consumer --> Barrel
+  Barrel --> Unoptimized
+  Consumer -. "Turbopack / SWC Pruning" .-> Optimized
+
+  classDef barrelStyle fill:#1e293b,stroke:#3b82f6,stroke-width:1px,color:#f8fafc;
+  classDef badStyle fill:#450a0a,stroke:#ef4444,stroke-width:2px,color:#fee2e2;
+  classDef goodStyle fill:#064e3b,stroke:#10b981,stroke-width:2px,color:#a7f3d0;
+  class Barrel,B1,B2,B3,B4,B5 barrelStyle;
+  class Unoptimized,P1,P2,P3 badStyle;
+  class Optimized,O1,O2 goodStyle;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +---------------------------------------------------------------------------------------------+
 |                                    BARREL FILE EXPLOSION                                     |
@@ -169,6 +225,8 @@ Slashing your bundle from 2 MB to 300 KB saves over **18 MB of device RAM** and 
 |   +-------------------------------------------------------------------------------------+   |
 +---------------------------------------------------------------------------------------------+
 ```
+
+</details>
 
 ---
 

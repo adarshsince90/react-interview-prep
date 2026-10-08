@@ -24,6 +24,17 @@ By completing this chapter, you will be able to:
 ---
 
 ## 3. Historical Evolution
+```mermaid
+timeline
+    title React Hooks & Store Testing Evolution
+    2018 - 2019 : Early Hooks & @testing-library/react-hooks : Separate community package for hooks : RTL only supported render() for JSX components
+    2020 - 2022 : Unification into Core RTL : renderHook unified into @testing-library/react : Automatic act() wrapping for synchronous reconciliation
+    2023 - Present : React 19 Built-in act() & Pure State Isolation : import { act } directly from 'react' : Testing global stores (Zustand) as pure JS outside React
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +---------------------------------------------------------------------------------------------------+
 | 2018 - 2019: Early Hooks & `@testing-library/react-hooks`                                         |
@@ -45,6 +56,9 @@ By completing this chapter, you will be able to:
 | (Zustand, Jotai) prioritized testing as pure JavaScript objects outside React altogether.         |
 +---------------------------------------------------------------------------------------------------+
 ```
+
+</details>
+
 
 ---
 
@@ -169,6 +183,26 @@ V8 HEAP TOPOLOGY DURING RENDERHOOK EXECUTION
 ## 8. Visual Diagrams (ASCII / Text)
 
 ### Testing Spectrum: Custom Hook vs. Component vs. Pure Store
+```mermaid
+flowchart TD
+    T1["Tier 1: Pure Store (Zustand / Redux)<br/>• Zero React, zero DOM, zero renderHook<br/>• Test directly via plain JS: store.getState().action()<br/>• Speed: Sub-millisecond (Fastest)"]
+    T2["Tier 2: Custom Hook (useCart, useData)<br/>• Uses renderHook with providers<br/>• Tests lifecycle, state transitions & async ops<br/>• Speed: ~10 - 30ms"]
+    T3["Tier 3: Presentational Component Integration<br/>• Uses render(&lt;CartPage /&gt;)<br/>• Tests full user DOM events & accessibility<br/>• Speed: ~30 - 80ms (Highest Confidence)"]
+
+    T1 --> T2 --> T3
+
+    classDef fast fill:#1e293b,stroke:#38bdf8,stroke-width:1px,color:#f8fafc;
+    classDef hook fill:#1e293b,stroke:#818cf8,stroke-width:1px,color:#f8fafc;
+    classDef full fill:#0f172a,stroke:#34d399,stroke-width:2px,color:#f8fafc;
+
+    class T1 fast;
+    class T2 hook;
+    class T3 full;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +---------------------------------------------------------------------------+
 | TIER 1: PURE STORE (Zustand / Redux)                                      |
@@ -193,6 +227,9 @@ V8 HEAP TOPOLOGY DURING RENDERHOOK EXECUTION
 | - Speed: ~30 - 80ms (Highest Confidence).                                 |
 +---------------------------------------------------------------------------+
 ```
+
+</details>
+
 
 ---
 

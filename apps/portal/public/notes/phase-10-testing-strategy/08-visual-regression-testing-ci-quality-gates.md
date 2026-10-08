@@ -27,6 +27,17 @@ By completing this chapter, you will be able to:
 ---
 
 ## 3. Historical Evolution
+```mermaid
+timeline
+    title Visual Regression Testing Evolution
+    2012 - 2016 : PhantomJS & Resemble.js : Headless WebKit renders with canvas pixel diffing : Plagued by OS font anti-aliasing drift & high memory
+    2017 - 2021 : Cloud SaaS Platforms (Percy, Chromatic) : Shifted snapshot rendering to cloud browser farms : Solved local OS drift but introduced high costs & network latency
+    2022 - Present : Playwright Visual Testing & Docker : Built-in toHaveScreenshot() with Pixelmatch : Zero cloud fees & reproducible hermetic Linux container runs
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +---------------------------------------------------------------------------------------------------+
 | 2012 - 2016: PhantomJS & Resemble.js                                                              |
@@ -48,6 +59,9 @@ By completing this chapter, you will be able to:
 | containers eliminate OS font rendering drift. High-speed local and CI visual verification.        |
 +---------------------------------------------------------------------------------------------------+
 ```
+
+</details>
+
 
 ---
 
@@ -165,6 +179,27 @@ V8 MEMORY FOOTPRINT DURING PIXEL DIFFING
 ## 8. Visual Diagrams (ASCII / Text)
 
 ### The Visual Diff Triad (Actual, Expected, Diff)
+```mermaid
+flowchart TD
+    Expected["Expected Baseline Image<br/>(Master / Approved)<br/>[ SUBMIT PAYMENT ]"] --> Diff["Pixelmatch Diff Engine<br/>Highlights Pixel Delta (> maxDiffPixelRatio)"]
+    Actual["Actual Result Snapshot<br/>(PR Feature Branch)<br/>[  SUBMIT PAYMENT  ]<br/>(Accidental padding bloat)"] --> Diff
+
+    Diff --> Output["Visual Diff Heatmap<br/>[##SUBMIT PAYMENT##]<br/>(Magenta pixels highlight unintended drift)"]
+
+    classDef baseline fill:#1e293b,stroke:#34d399,stroke-width:1px,color:#f8fafc;
+    classDef actual fill:#1e293b,stroke:#38bdf8,stroke-width:1px,color:#f8fafc;
+    classDef diff fill:#0f172a,stroke:#818cf8,stroke-width:2px,color:#f8fafc;
+    classDef out fill:#1e293b,stroke:#ef4444,stroke-width:1px,color:#f8fafc;
+
+    class Expected baseline;
+    class Actual actual;
+    class Diff diff;
+    class Output out;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 EXPECTED BASELINE (Master)          ACTUAL RESULT (PR Branch)
 +-----------------------+           +-----------------------+
@@ -178,6 +213,9 @@ EXPECTED BASELINE (Master)          ACTUAL RESULT (PR Branch)
                      |  [##SUBMIT PAYMENT##] |  (Magenta bars highlight 
                      +-----------------------+   the horizontal padding drift)
 ```
+
+</details>
+
 
 ---
 

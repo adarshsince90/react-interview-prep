@@ -22,6 +22,20 @@ By mastering this chapter, you will be able to:
 
 ## 3. Historical Evolution
 
+```mermaid
+timeline
+  title Evolution of Web Assets, Next-Gen Media Codecs & Typography
+  1990s : Legacy Raster Era : GIF, JPEG, and PNG : Fixed resolutions, uncompressed weights, zero responsive layout logic
+  2010 : WebP Announced : Google VP8 compression : Lossy and lossless modes slashing 25%–35% off JPEG sizes
+  2014 : Responsive Images Specification : W3C standardizes picture & srcset : Native browser-driven resolution and viewport switching
+  2019 : AVIF Released : Derived from AV1 video codec : Slashes image size by 50% vs JPEG while retaining 10-bit/12-bit HDR color
+  2021 : W3C Font Metric Overrides : size-adjust, ascent-override, descent-override : Calibrates system fallbacks to eradicate font-swap CLS
+  2023+ : Framework Zero-CLS Pipelines : Next.js next/font & automated self-hosting : Build-time metrics injection and Google Font proxying
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +--------------------------------------------------------------------------------------------------+
 |                                    CHRONOLOGICAL EVOLUTION                                       |
@@ -43,6 +57,8 @@ By mastering this chapter, you will be able to:
 |         and CSS size-adjust calculation built directly into framework build pipelines.           |
 +--------------------------------------------------------------------------------------------------+
 ```
+
+</details>
 
 ---
 
@@ -151,6 +167,40 @@ Serving properly resized images tailored to viewport display dimensions protects
 
 ### The Multi-Tier Responsive Image `<picture>` Element
 
+```mermaid
+flowchart TD
+  Browser["Client Browser Engine<br/><i>Inspects Viewport Width &amp; Codec Support</i>"]
+  
+  subgraph Picture["&lt;picture&gt; Resolution &amp; Format Negotiation"]
+    direction TB
+    AVIF{"Supports AVIF format?"}
+    WebP{"Supports WebP format?"}
+    JPEG["Fallback: &lt;img src='hero.jpg'&gt;<br/><i>width='1200' height='675' aspect-ratio: 16/9</i>"]
+
+    AVIF_Src["&lt;source type='image/avif'&gt;<br/><i>hero-mobile.avif (600w) | hero-desktop.avif (1200w)</i>"]
+    WebP_Src["&lt;source type='image/webp'&gt;<br/><i>hero-mobile.webp (600w) | hero-desktop.webp (1200w)</i>"]
+
+    AVIF -- "YES" --> AVIF_Src
+    AVIF -- "NO" --> WebP
+    WebP -- "YES" --> WebP_Src
+    WebP -- "NO" --> JPEG
+  end
+
+  Browser --> AVIF
+
+  classDef browserStyle fill:#1e293b,stroke:#3b82f6,stroke-width:2px,color:#f8fafc;
+  classDef avifStyle fill:#064e3b,stroke:#10b981,stroke-width:2px,color:#a7f3d0;
+  classDef webpStyle fill:#1e293b,stroke:#06b6d4,stroke-width:2px,color:#f8fafc;
+  classDef jpegStyle fill:#451a03,stroke:#f59e0b,stroke-width:1px,color:#fde68a;
+  class Browser browserStyle;
+  class AVIF,AVIF_Src avifStyle;
+  class WebP,WebP_Src webpStyle;
+  class JPEG jpegStyle;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +---------------------------------------------------------------------------------------------+
 |                                  RESPONSIVE PICTURE ELEMENT                                 |
@@ -177,6 +227,8 @@ Serving properly resized images tailored to viewport display dimensions protects
 |                                                                                             |
 +---------------------------------------------------------------------------------------------+
 ```
+
+</details>
 
 ---
 

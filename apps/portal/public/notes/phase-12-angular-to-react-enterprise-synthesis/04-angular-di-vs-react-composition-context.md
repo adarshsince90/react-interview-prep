@@ -178,6 +178,38 @@ REACT CONTEXT HEAP GRAPH:
 
 ### The "Context Hell" Antipattern vs Modular Composition
 
+```mermaid
+flowchart TD
+    subgraph ContextHell["THE 'CONTEXT HELL' ANTIPATTERN (Monolithic Pseudo-DI)"]
+        direction TB
+        P1["ThemeProvider"] --> P2["AuthProvider"]
+        P2 --> P3["UserPreferencesProvider"]
+        P3 --> P4["CartProvider"]
+        P4 --> P5["InventoryProvider"]
+        P5 --> P6["NotificationProvider"]
+        P6 --> P7["ModalProvider"]
+        P7 --> P8["AnalyticsProvider"]
+        P8 --> App["App (Massive Re-renders on any value change)"]
+    end
+
+    subgraph CleanComposition["THE ENTERPRISE CLEAN COMPOSITION PATTERN"]
+        direction TB
+        ESM["1. Pure ESM Singletons for Stateless Services<br/>import { analytics } from '@/shared/analytics'<br/>• Zero Context overhead"]
+        Zustand["2. Atomic External Stores (Zustand)<br/>const user = useUserStore(s =&gt; s.user)<br/>• Zero Provider wrapper required"]
+        Scoped["3. Scoped Subtree Context ONLY for UI State<br/>&lt;CheckoutWizard session={session}&gt;<br/>• Localized re-renders isolated to subtree"]
+        ESM ~~~ Zustand ~~~ Scoped
+    end
+
+    classDef hell fill:#1e293b,stroke:#ef4444,stroke-width:1px,color:#f8fafc;
+    classDef clean fill:#0f172a,stroke:#34d399,stroke-width:2px,color:#f8fafc;
+
+    class P1,P2,P3,P4,P5,P6,P7,P8,App hell;
+    class ESM,Zustand,Scoped clean;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw Comparison Schematic</summary>
+
 ```
 THE "CONTEXT HELL" ANTIPATTERN (Monolithic Pseudo-DI):
 <ThemeProvider>
@@ -212,6 +244,8 @@ THE ENTERPRISE CLEAN COMPOSITION PATTERN:
      <StepOne />
    </CheckoutWizard>
 ```
+
+</details>
 
 ---
 

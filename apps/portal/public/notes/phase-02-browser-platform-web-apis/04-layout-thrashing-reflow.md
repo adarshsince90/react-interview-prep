@@ -38,6 +38,18 @@ If this loop runs 50 times, the browser executes **50 full-document layouts in a
 
 ## 3. Historical Evolution
 
+```mermaid
+timeline
+    title Layout Thrashing & Reflow Mitigation Evolution
+    1995 - 2012 : Procedural DOM & jQuery : $el.width() + $el.height() interleaved reads/writes : Pervasive UI jank & continuous forced synchronous reflows
+    2012 - 2017 : Manual Batching Libraries (FastDOM) : fastdom.measure() and fastdom.mutate() queues : Micro-task queuing separated read passes from write passes
+    2017 - 2022 : Declarative Virtual DOMs : React Virtual DOM & Angular Batched Zone updates : Batched mutations before writes, but real DOM reads still thrashed
+    2022 - Present : Native Modern Platform Observers : ResizeObserver, IntersectionObserver & CSS contain : Asynchronous browser observers & CSS layout containment boundaries
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```text
 ERA 1: Unaware Procedural DOM Manipulation (1995 - 2012)
 ┌────────────────────────────────────────────────────────┐
@@ -74,6 +86,9 @@ ERA 4: Native Modern Platform APIs (2022 - Present)
 │ - Browser engines optimize layout dirty subtrees.      │
 └────────────────────────────────────────────────────────┘
 ```
+
+</details>
+
 
 ---
 
@@ -220,6 +235,37 @@ When Blink encounters a forced reflow inside an element with `contain: layout`:
 
 ### Chrome DevTools Performance Flamechart: Identifying Layout Thrashing
 
+```mermaid
+flowchart TD
+    subgraph Thrashed["UNBATCHED EXECUTION (Layout Thrashing - 340ms Long Task)"]
+        direction TB
+        T_Task["Long Task (340ms) - Red Triangle Warning"]
+        T_W1["Write: el.style.width"] --> T_R1["⚠️ Forced Layout (3.2ms): el.offsetWidth"]
+        T_R1 --> T_W2["Write: el.style.width"] --> T_R2["⚠️ Forced Layout (3.1ms): el.offsetWidth"]
+        T_R2 --> T_More["Repeated 50+ times in single loop!"]
+        T_Task --- T_W1
+    end
+
+    subgraph Batched["BATCHED EXECUTION (Healthy Frame - 4.8ms @ 120 FPS)"]
+        direction TB
+        B_Task["Healthy Frame Task (4.8ms)"]
+        B_Read["Phase 1: Read All Geometry (0.6ms)<br/>Cached layout values retrieved cleanly"]
+        B_Write["Phase 2: Mutate All Styles (1.2ms)<br/>DOM marked dirty in memory"]
+        B_Layout["Phase 3: Consolidated Layout (3.0ms)<br/>Single layout pass executed by browser"]
+        
+        B_Task --- B_Read --> B_Write --> B_Layout
+    end
+
+    classDef bad fill:#1e293b,stroke:#ef4444,stroke-width:1px,color:#f8fafc;
+    classDef good fill:#0f172a,stroke:#34d399,stroke-width:2px,color:#f8fafc;
+
+    class T_Task,T_W1,T_R1,T_W2,T_R2,T_More bad;
+    class B_Task,B_Read,B_Write,B_Layout good;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```text
 TIMELINE FLAMECHART WITH LAYOUT THRASHING:
 ┌────────────────────────────────────────────────────────────────────────┐
@@ -240,6 +286,9 @@ TIMELINE FLAMECHART WITH BATCHED EXECUTION:
 │   └── [ Layout ] (Single consolidated layout) (3.0ms)                  │
 └────────────────────────────────────────────────────────────────────────┘
 ```
+
+</details>
+
 
 ---
 

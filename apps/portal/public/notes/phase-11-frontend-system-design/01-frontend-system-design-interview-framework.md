@@ -24,6 +24,17 @@ By completing this chapter, you will be able to:
 ---
 
 ## 3. Historical Evolution
+```mermaid
+timeline
+    title Frontend System Design Evolution
+    2012 - 2016 : The Widget & Auto-Complete Era : Small isolated widgets (dropdowns, debouncing) : Evaluated basic DOM manipulation & closure tricks
+    2017 - 2020 : SPA Architecture Explosion : Full SPAs (Twitter, Pinterest) : State normalization (normalizr), pagination & client routing
+    2021 - Present : Staff/Principal Scale Systems : Figma canvas, Bloomberg terminals & Netflix engines : CRDTs, Web Workers, WASM, INP & edge compute orchestration
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +---------------------------------------------------------------------------------------------------+
 | 2012 - 2016: The "Can You Build an Auto-Complete?" Era                                            |
@@ -46,6 +57,9 @@ By completing this chapter, you will be able to:
 | Core Web Vitals, Edge Compute, and multi-tenant enterprise governance.                             |
 +---------------------------------------------------------------------------------------------------+
 ```
+
+</details>
+
 
 ---
 
@@ -175,6 +189,55 @@ V8 BROWSER HEAP - CLIENT STATE TAXONOMY ARCHITECTURE
 ## 8. Visual Diagrams (ASCII / Text)
 
 ### The Complete Frontend System Design Blueprint
+```mermaid
+flowchart TD
+    subgraph PresentationTier["CLIENT PRESENTATION TIER"]
+        UI_NAV["Viewport Navigation"]
+        UI_VIRT["Virtualized List / Canvas"]
+        UI_CTRL["User Controls & Forms"]
+    end
+
+    subgraph StateTier["STATE & APPLICATION ORCHESTRATION"]
+        ST_URL["URL State (nuqs)"]
+        ST_CLIENT["Zustand (Client State)"]
+        ST_SERVER["TanStack Query (Server Cache)"]
+    end
+
+    subgraph TransportTier["DATA ACCESS & TRANSPORT TIER"]
+        TR_REPO["Repositories"]
+        TR_GATE["Zod Schema Validation Gate"]
+        TR_HTTP["HTTP / WebSocket Client"]
+    end
+
+    subgraph PersistenceAndEdge["PERSISTENCE & EDGE"]
+        OFFLINE["Offline Storage Tier<br/>(IndexedDB / OPFS)<br/>• Mutation Outbox<br/>• Entity Cache"]
+        EDGE["Network / Edge Gateway<br/>(Cloudflare Worker /<br/>Next.js Edge Middleware)"]
+    end
+
+    BACKEND[("Backend Microservices")]
+
+    PresentationTier --> StateTier
+    StateTier --> TransportTier
+    TransportTier --> OFFLINE
+    TransportTier --> EDGE
+    EDGE --> BACKEND
+
+    classDef pres fill:#1e293b,stroke:#38bdf8,stroke-width:1px,color:#f8fafc;
+    classDef state fill:#1e293b,stroke:#818cf8,stroke-width:1px,color:#f8fafc;
+    classDef trans fill:#0f172a,stroke:#34d399,stroke-width:2px,color:#f8fafc;
+    classDef edge fill:#1e293b,stroke:#f59e0b,stroke-width:1px,color:#f8fafc;
+    classDef backend fill:#1e293b,stroke:#ec4899,stroke-width:1px,color:#f8fafc;
+
+    class UI_NAV,UI_VIRT,UI_CTRL pres;
+    class ST_URL,ST_CLIENT,ST_SERVER state;
+    class TR_REPO,TR_GATE,TR_HTTP trans;
+    class OFFLINE,EDGE edge;
+    class BACKEND backend;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +----------------------------------------------------------------------------+
 |                          CLIENT PRESENTATION TIER                          |
@@ -203,6 +266,9 @@ V8 BROWSER HEAP - CLIENT STATE TAXONOMY ARCHITECTURE
                                                                v
                                                   [ Backend Microservices ]
 ```
+
+</details>
+
 
 ---
 

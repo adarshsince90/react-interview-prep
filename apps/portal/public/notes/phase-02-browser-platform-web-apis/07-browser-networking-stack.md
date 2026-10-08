@@ -30,6 +30,18 @@ Understanding how the browser’s **Network Process** manages connection pools, 
 
 ## 3. Historical Evolution
 
+```mermaid
+timeline
+    title Browser Networking Stack & Protocol Evolution
+    1996 : HTTP/1.0 Non-Persistent Sockets : 1 new TCP connection per file : 50 assets = 50 TCP 3-way handshakes; unsustainable latency
+    1999 - 2015 : HTTP/1.1 Keep-Alive & Sharding : Connection: keep-alive socket reuse : Max 6 TCP sockets per host; Head-of-Line blocking & domain sharding
+    2015 - 2020 : HTTP/2 Binary Multiplexing : Single TCP socket with binary framing : Interleaved parallel streams; TCP packet loss stalls entire connection
+    2020 - Present : HTTP/3 & QUIC over UDP : QUIC protocol running over UDP : Zero TCP HOL blocking; 0-RTT TLS 1.3 resumption & Wi-Fi migration
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```text
 ERA 1: HTTP/1.0 & Non-Persistent Connections (1996)
 ┌────────────────────────────────────────────────────────┐
@@ -64,6 +76,9 @@ ERA 4: HTTP/3 & QUIC over UDP (2020 - Present)
 │ - Connection Migration across Wi-Fi/Cellular handover. │
 └────────────────────────────────────────────────────────┘
 ```
+
+</details>
+
 
 ---
 
@@ -159,6 +174,45 @@ Inside Chromium's **Network Process**:
 
 ### HTTP/1.1 vs. HTTP/2 vs. HTTP/3 Multiplexing Comparison
 
+```mermaid
+flowchart TD
+    subgraph H1["HTTP/1.1: Max 6 TCP Sockets (Head-of-Line Blocking)"]
+        direction TB
+        Conn1["TCP Socket 1: [Req 1] ──► [Req 7] ──► [Req 13] (FIFO queue)"]
+        Conn2["TCP Socket 2: [Req 2] ──► [Req 8] ──► [Req 14] (FIFO queue)"]
+        Conn3["TCP Socket 3: [Req 3] ──► [Req 9] ──► [Req 15] (FIFO queue)"]
+        Note1["Pending requests 16-60 wait idle in line for open socket!"]
+        Conn1 ~~~ Conn2 ~~~ Conn3 ~~~ Note1
+    end
+
+    subgraph H2["HTTP/2: Single TCP Socket (Binary Multiplexing)"]
+        direction TB
+        ConnSingle["Single Shared TCP Socket: [H1][D1][H2][D3][D1][H4][D2] (Interleaved Frames)"]
+        Note2["⚠️ TCP Packet Loss Flaw: If 1 TCP packet drops, ENTIRE connection stalls!"]
+        ConnSingle ~~~ Note2
+    end
+
+    subgraph H3["HTTP/3 (QUIC over UDP): Independent Streams"]
+        direction TB
+        Stream1["Stream 1: [Data Chunk 1] (Packet loss isolated to Stream 1 only)"]
+        Stream2["Stream 2: [Data Chunk 2] (Continues flowing at full speed 🚀)"]
+        Stream3["Stream 3: [Data Chunk 3] (Continues flowing at full speed 🚀)"]
+        Note3["✅ Zero TCP Head-of-Line Blocking across independent UDP streams!"]
+        Stream1 ~~~ Stream2 ~~~ Stream3 ~~~ Note3
+    end
+
+    classDef h1 fill:#1e293b,stroke:#ef4444,stroke-width:1px,color:#f8fafc;
+    classDef h2 fill:#1e293b,stroke:#f59e0b,stroke-width:1px,color:#f8fafc;
+    classDef h3 fill:#0f172a,stroke:#34d399,stroke-width:2px,color:#f8fafc;
+
+    class Conn1,Conn2,Conn3,Note1 h1;
+    class ConnSingle,Note2 h2;
+    class Stream1,Stream2,Stream3,Note3 h3;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```text
 HTTP/1.1: 6 Connections Max (Head-of-Line Blocked)
 Conn 1: [--- Request 1 ---][--- Request 7 ---][--- Request 13 ---]
@@ -175,6 +229,9 @@ Stream 1: [D1][D1][D1] (Dropped packet -> Only Stream 1 retries!)
 Stream 2: [D2][D2][D2] (Continues flowing at full speed! 🚀)
 Stream 3: [D3][D3][D3] (Continues flowing at full speed! 🚀)
 ```
+
+</details>
+
 
 ---
 

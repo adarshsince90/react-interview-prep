@@ -30,6 +30,18 @@ Next.js **Edge Middleware** (`middleware.ts`) solves these challenges. Executing
 
 ## 3. Historical Evolution
 
+```mermaid
+timeline
+  title Evolution of Web Middleware & Edge Routing
+  1995 - 2010 : Era 1 - Web Server Configs : Apache .htaccess, mod_rewrite, Nginx blocks : C-speed routing but rigid logic and requires DevOps deploy
+  2010 - 2019 : Era 2 - Express Monoliths : app.use middleware in Node.js : Programmable JS/TS, but trapped at origin server with latency overhead
+  2018 - 2021 : Era 3 - Standalone Edge Functions : Cloudflare Workers, V8 Isolates at CDN PoPs : Near-zero cold start under 5ms, but decoupled from app repo
+  2021 - Present : Era 4 - Framework-Integrated Edge : Next.js middleware.ts in App Router : Unified TypeScript at project root, executing globally before origin
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```text
 ERA 1: Web Server Configuration Files (1995 - 2010)
 ┌────────────────────────────────────────────────────────┐
@@ -66,6 +78,8 @@ ERA 4: Framework-Integrated Edge Middleware (2021 - Present)
 │ - Executes in V8 Isolates globally before origin hits. │
 └────────────────────────────────────────────────────────┘
 ```
+
+</details>
 
 ---
 
@@ -201,6 +215,39 @@ In the Edge Runtime:
 
 ### Multi-Tenant Edge Routing & Security Header Architecture
 
+```mermaid
+flowchart TD
+  Client["Client Request<br/><code>GET https://acme.enterprise.com/sales</code>"]
+
+  subgraph Edge["Edge Middleware (V8 Isolate)"]
+    direction TB
+    F1["1. Matcher Filter<br/><i>Skip _next/static, images</i>"]
+    F2["2. Jose JWT Verify<br/><i>Verify Cookie HMAC &amp; Claims</i>"]
+    F3["3. Tenant Rewrite<br/><i>acme -&gt; /tenants</i>"]
+    F4["4. Header Injection<br/><code>x-tenant-slug: acme</code><br/><code>x-user-id: usr_8819</code><br/><code>x-nonce: d9a8e23f...</code>"]
+    F5["NextResponse.rewrite(...)"]
+
+    F1 --> F2 --> F3 --> F4 --> F5
+  end
+
+  subgraph Origin["Origin Server Components<br/><code>/app/tenants/[tenant]/sales/page.tsx</code>"]
+    O1["- Receives pre-authenticated request with injected headers<br/>- Queries database directly with tenant isolation<br/>- Injects CSP nonce into script tags"]
+  end
+
+  Client --> Edge
+  Edge --> Origin
+
+  classDef clientStyle fill:#1e293b,stroke:#3b82f6,stroke-width:2px,color:#f8fafc;
+  classDef edgeStyle fill:#0f172a,stroke:#10b981,stroke-width:2px,color:#f8fafc;
+  classDef originStyle fill:#1e293b,stroke:#8b5cf6,stroke-width:2px,color:#f8fafc;
+  class Client clientStyle;
+  class Edge edgeStyle;
+  class Origin originStyle;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```text
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
 │                                   CLIENT REQUEST                                       │
@@ -237,6 +284,8 @@ In the Edge Runtime:
 │   - Injects CSP nonce into script tags                                                 │
 └────────────────────────────────────────────────────────────────────────────────────────┘
 ```
+
+</details>
 
 ---
 

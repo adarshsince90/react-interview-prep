@@ -28,6 +28,17 @@ By completing this chapter, you will be able to:
 ---
 
 ## 3. Historical Evolution
+```mermaid
+timeline
+    title React Testing Library Philosophy Evolution
+    2014 - 2017 : Enzyme Implementation Era : Shallow rendering & wrapper.state() peeking : Brittle tests that broke on internal refactoring
+    2018 - 2021 : React Testing Library Paradigm Shift : Mount real component trees into JSDOM : Queries based on W3C accessibility (getByRole, getByLabelText)
+    2022 - Present : userEvent v14 & Unified Ecosystem : Asynchronous realistic browser event chains : Accurate focus, keyboard tabs, and event loops
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +---------------------------------------------------------------------------------------------------+
 | 2014 - 2017: The Enzyme Era (Shallow Rendering & State Peeking)                                   |
@@ -49,6 +60,9 @@ By completing this chapter, you will be able to:
 | model browser event loops, focus management, text selection, and keyboard accessibility.          |
 +---------------------------------------------------------------------------------------------------+
 ```
+
+</details>
+
 
 ---
 
@@ -169,6 +183,40 @@ RTL evaluates queries against the Accessibility Tree (AOM):
 ## 8. Visual Diagrams (ASCII / Text)
 
 ### The Official RTL Query Priority Hierarchy
+```mermaid
+flowchart TD
+    subgraph HighPriority["Highest Priority (Accessible to Everyone & Assistive Tech)"]
+        direction TB
+        Q1["1. getByRole<br/>Forces semantic HTML (button, heading, dialog, alert)"]
+        Q2["2. getByLabelText<br/>Forces proper label-input associations for forms"]
+        Q3["3. getByPlaceholderText<br/>Fallback for inputs lacking visible labels"]
+        Q4["4. getByText<br/>Non-interactive display text (paragraphs, spans)"]
+        Q5["5. getByDisplayValue<br/>Validates pre-filled form input states"]
+        Q1 --> Q2 --> Q3 --> Q4 --> Q5
+    end
+
+    subgraph LowPriority["Lowest Priority (Implementation Details / Last Resort)"]
+        direction TB
+        Q6["6. getByAltText<br/>Images, SVGs, and graphics alt text"]
+        Q7["7. getByTitle<br/>SVG or button tooltip titles"]
+        Q8["8. getByTestId<br/>LAST RESORT ONLY! Used when element has no semantic role"]
+        Q6 --> Q7 --> Q8
+    end
+
+    Q5 --> Q6
+
+    classDef high fill:#0f172a,stroke:#34d399,stroke-width:2px,color:#f8fafc;
+    classDef mid fill:#1e293b,stroke:#38bdf8,stroke-width:1px,color:#f8fafc;
+    classDef low fill:#1e293b,stroke:#f59e0b,stroke-width:1px,color:#f8fafc;
+
+    class Q1,Q2 high;
+    class Q3,Q4,Q5 mid;
+    class Q6,Q7,Q8 low;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 HIGHEST PRIORITY (Accessible to everyone - Screen Readers, Assistive Tech, and Users)
 +------------------------------------------------------------------------------------+
@@ -199,6 +247,9 @@ LOWEST PRIORITY (Implementation Detail - Not accessible to users)
 |    LAST RESORT ONLY! Used when element has no semantic role or visible text.      |
 +------------------------------------------------------------------------------------+
 ```
+
+</details>
+
 
 ---
 

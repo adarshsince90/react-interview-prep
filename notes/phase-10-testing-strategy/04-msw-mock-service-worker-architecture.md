@@ -26,6 +26,18 @@ By completing this chapter, you will be able to:
 ---
 
 ## 3. Historical Evolution
+```mermaid
+timeline
+    title Mocking Architecture & MSW Evolution
+    2012 - 2016 : Ad-Hoc Global Stubbing : sinon.stub & window.fetch monkeypatching : Test state bleed & bypassed real browser serialization
+    2017 - 2020 : Module Mocking (axios-mock-adapter) : Client-specific mocking libraries : Transport lock-in & fragmented mocks across tests and Storybook
+    2020 - 2023 : MSW v1 (Service Worker Standard) : Network-level interception in browser & Node : Solved client coupling with declarative request matching
+    2023 - Present : MSW v2 (Web Standards Alignment) : Native W3C Request / Response objects : HttpResponse.json() & Node 18+ undici fetch alignment
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +---------------------------------------------------------------------------------------------------+
 | 2012 - 2016: Ad-Hoc Global Stubbing (sinon.stub, window.fetch overwrite)                          |
@@ -54,6 +66,9 @@ By completing this chapter, you will be able to:
 | Standard `http` namespace, `HttpResponse.json()`, and full Node.js 18+ undici fetch alignment.    |
 +---------------------------------------------------------------------------------------------------+
 ```
+
+</details>
+
 
 ---
 
@@ -189,6 +204,28 @@ NODE.JS PROCESS HEAP (MSW INTERCEPTOR REGISTRY)
 ## 8. Visual Diagrams (ASCII / Text)
 
 ### The Unified Handler Architecture across Workflows
+```mermaid
+flowchart TD
+    Registry["shared/mocks/handlers.ts<br/>(Single Source of Truth Mock Registry)"]
+
+    Vitest["Vitest Tests<br/>setupServer()<br/>Node socket interception"]
+    Storybook["Storybook<br/>mswLoader<br/>Service Worker interception"]
+    LocalDev["Local Dev (Vite)<br/>setupWorker()<br/>Service Worker interception"]
+
+    Registry --> Vitest
+    Registry --> Storybook
+    Registry --> LocalDev
+
+    classDef reg fill:#0f172a,stroke:#818cf8,stroke-width:2px,color:#f8fafc;
+    classDef target fill:#1e293b,stroke:#34d399,stroke-width:1px,color:#f8fafc;
+
+    class Registry reg;
+    class Vitest,Storybook,LocalDev target;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
                [ shared/mocks/handlers.ts ]
           (Single Source of Truth Mock Registry)
@@ -200,6 +237,9 @@ NODE.JS PROCESS HEAP (MSW INTERCEPTOR REGISTRY)
           Node socket       Service Worker Service Worker
           interception      interception   interception
 ```
+
+</details>
+
 
 ---
 

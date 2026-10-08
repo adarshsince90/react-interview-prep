@@ -170,6 +170,29 @@ CLEAN ARCHITECTURE MEMORY & MODULE ISOLATION:
 
 ### The Strangler Fig Monolith Migration Pipeline
 
+```mermaid
+flowchart TD
+    Client["GLOBAL CLIENT BROWSER"] --> Proxy["EDGE REVERSE PROXY<br/>(Cloudflare Worker / Vercel / ASP.NET YARP)<br/>Inspects URL Path:"]
+
+    Proxy -->|/legacy/* OR unmigrated routes| Angular["LEGACY ANGULAR MONOLITH<br/>(Angular 14+, Zone.js)<br/>• Shared Header Shell<br/>• Reports Module<br/>• Settings Module"]
+    Proxy -->|/dashboard OR migrated routes| Next["MODERN NEXT.JS APP<br/>(React 19, Server Components)<br/>• Shared Header Shell<br/>• New Dashboard Feature<br/>• User Profile Feature"]
+
+    Angular <-->|STATE BRIDGE (BroadcastChannel / Auth Cookie)<br/>Synchronizes auth tokens, user profiles & theme in real time| Next
+
+    classDef client fill:#1e293b,stroke:#38bdf8,stroke-width:1px,color:#f8fafc;
+    classDef proxy fill:#0f172a,stroke:#818cf8,stroke-width:2px,color:#f8fafc;
+    classDef ng fill:#1e293b,stroke:#ef4444,stroke-width:1px,color:#f8fafc;
+    classDef next fill:#1e293b,stroke:#34d399,stroke-width:2px,color:#f8fafc;
+
+    class Client client;
+    class Proxy proxy;
+    class Angular ng;
+    class Next next;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw Comparison Schematic</summary>
+
 ```
 [ GLOBAL CLIENT BROWSER ]
            │
@@ -199,6 +222,8 @@ CLEAN ARCHITECTURE MEMORY & MODULE ISOLATION:
                    user profiles, and theme tokens
                    across frameworks in real time!
 ```
+
+</details>
 
 ---
 

@@ -30,6 +30,17 @@ Understanding the deep mechanics of capturing, bubbling, `composedPath`, and pas
 
 ## 3. Historical Evolution
 
+```mermaid
+timeline
+    title Browser Event Architecture Evolution
+    1996 - 2000 : Browser Wars Fragmentation : Netscape 4 (Capturing) vs IE 4 (Bubbling) : Incompatible APIs (attachEvent vs addEventListener) & manual polyfills
+    2000 - 2016 : W3C DOM Level 2 Standard : 3-Phase Pipeline: Capture -> Target -> Bubble : Standardized addEventListener, event propagation & preventDefault
+    2016 - Present : Passive Listeners & Off-Thread Scrolling : Touch/wheel scrolling caused severe jank : { passive: true } default enables Compositor thread to scroll immediately
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```text
 ERA 1: The Browser Wars Fragmentation (1996 - 2000)
 ┌────────────────────────────────────────────────────────┐
@@ -57,6 +68,9 @@ ERA 3: Mobile Touch Lag & Passive Listeners (2016 - Present)
 │ - Enables Compositor Thread to scroll immediately.     │
 └────────────────────────────────────────────────────────┘
 ```
+
+</details>
+
 
 ---
 
@@ -208,6 +222,40 @@ In Blink C++ engine memory:
 
 When using Web Components or Micro-Frontends with Shadow DOM:
 
+```mermaid
+flowchart TD
+    subgraph LightDOM["LIGHT DOM (Main Document Scope)"]
+        direction TB
+        Host["&lt;user-avatar&gt; (Custom Element Host)<br/>External listener sees event.target = &lt;user-avatar&gt;"]
+        
+        subgraph ShadowDOM["SHADOW DOM (Encapsulated Subtree)"]
+            direction TB
+            Root["#shadow-root (open)"]
+            Btn["&lt;button class='avatar-btn'&gt;"]
+            Img["&lt;img src='user.png'&gt;<br/>Inner click origin: event.target = &lt;img&gt;"]
+            
+            Root --> Btn --> Img
+        end
+        
+        Host --- ShadowDOM
+    end
+
+    Img -->|Click event bubbles up| Btn
+    Btn -->|Passes shadow boundary| Root
+    Root -->|RETARGETED at boundary| Host
+
+    classDef host fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#f8fafc;
+    classDef shadow fill:#1e293b,stroke:#34d399,stroke-width:1px,color:#f8fafc;
+    classDef node fill:#1e293b,stroke:#818cf8,stroke-width:1px,color:#f8fafc;
+
+    class Host host;
+    class Root,Btn shadow;
+    class Img node;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```text
 LIGHT DOM (Main Document)
 ┌────────────────────────────────────────────────────────┐
@@ -228,6 +276,9 @@ When User clicks <img src="user.png">:
 This preserves component encapsulation: outside code cannot see internal shadow nodes!
 To inspect the true path, use event.composedPath()!
 ```
+
+</details>
+
 
 ---
 

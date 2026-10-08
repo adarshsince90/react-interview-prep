@@ -21,6 +21,18 @@ By completing this chapter, you will be able to:
 ---
 
 ## 3. Historical Evolution
+```mermaid
+timeline
+  title Evolution of Shared Libraries & Package Governance
+  2011 - 2014 : Copy-Paste & Git Submodules : Detached HEAD states, version chaos, fractured local developer setups
+  2015 - 2018 : Multirepo Private Registries : Verdaccio, Artifactory : Multi-step release loops: Code -> PR -> CI -> Publish -> Bump
+  2019 - 2022 : Monorepo Workspaces & Symlinks : Lerna, Yarn, npm workspaces : Fragile transpile boundaries and tsconfig path mapping drift
+  2023 - Present : Modern Package Governance : Standardized exports maps, Changesets SemVer workflows, AST graph validation
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +---------------------------------------------------------------------------------------------------+
 | 2011 - 2014: Copy-Paste & Git Submodules                                                          |
@@ -50,6 +62,8 @@ By completing this chapter, you will be able to:
 | Changesets for automated SemVer PR workflows, and strict AST graph validation via Turborepo/Nx.   |
 +---------------------------------------------------------------------------------------------------+
 ```
+
+</details>
 
 ---
 
@@ -210,6 +224,33 @@ Module Table (Map):
 ## 8. Visual Diagrams (ASCII / Text)
 
 ### The Automated Release Cycle with Changesets
+
+```mermaid
+sequenceDiagram
+  autonumber
+  actor Dev as Developer
+  participant Local as Local Workspace
+  participant PR as GitHub PR
+  participant CI as CI Pipeline
+  participant Action as Changesets Bot
+  participant Reg as Private Registry / npm
+
+  Dev->>Local: Edits code in packages/ui
+  Dev->>Local: Executes 'npx changeset' (Prompts for bump & summary)
+  Local-->>Dev: Creates .changeset/purple-lions-roam.md
+  Dev->>PR: Commits & opens Pull Request
+  PR->>CI: 'changeset status' verifies changeset markdown exists
+  CI-->>PR: CI Passes
+  PR->>Action: PR Merged into main
+  Action->>Action: 'changeset version' updates package.json & CHANGELOG.md
+  Action->>PR: Automatically opens 'Version Packages' Release PR
+  PR->>Action: Release PR Merged
+  Action->>Reg: 'changeset publish' creates Git tags & publishes packages
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 Developer Branch: feature/modal-a11y
        |
@@ -239,6 +280,8 @@ Release PR Merged:
        | - Publishes to Private npm Registry / GitHub Packages
        | - Creates Git Tags (e.g., @acme/ui@2.5.0)
 ```
+
+</details>
 
 ---
 

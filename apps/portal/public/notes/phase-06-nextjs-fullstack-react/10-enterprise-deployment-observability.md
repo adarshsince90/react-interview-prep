@@ -29,6 +29,17 @@ Mastering Next.js **Standalone Output Mode**, multi-stage Docker builds, Kuberne
 
 ## 3. Historical Evolution
 
+```mermaid
+timeline
+  title Evolution of Enterprise Deployment & Infrastructure
+  2010 - 2017 : Era 1 - Bare Metal VMs & Process Managers : Linux VMs + PM2 / systemd : Fragile environment drift, manual rollback nightmares
+  2017 - 2021 : Era 2 - Proprietary Serverless Platforms : Vercel, Netlify, AWS Amplify : Zero-config git deploy, but vendor lock-in and high bandwidth bills
+  2021 - Present : Era 3 - Standalone Docker & Cloud Containers : Next.js output standalone + multi-stage Docker : Sovereign containerized deployment, sub-90MB images, OpenTelemetry
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```text
 ERA 1: Bare Metal VMs & Process Managers (2010 - 2017)
 ┌────────────────────────────────────────────────────────┐
@@ -55,6 +66,8 @@ ERA 3: Next.js Standalone Docker & Cloud Containers (2021 - Present)
 │ - Standardized OpenTelemetry metrics and tracing.      │
 └────────────────────────────────────────────────────────┘
 ```
+
+</details>
 
 ---
 
@@ -179,6 +192,50 @@ Always set `NODE_OPTIONS="--max-old-space-size=1024"` in your container environm
 
 ### Multi-Cloud Enterprise Deployment Architecture (Azure Container Apps)
 
+```mermaid
+flowchart TD
+  Edge["Azure Front Door / Cloudflare CDN<br/><i>Global Edge Ingress, SSL Offload, WAF</i>"]
+
+  subgraph VNet["Azure Virtual Network (Private VNet)"]
+    direction TB
+    subgraph ACA["Azure Container Apps (ACA)"]
+      Pod1["Next.js Standalone Pod 1<br/><i>Size: 84 MB | unprivileged user</i>"]
+      Pod2["Next.js Standalone Pod 2<br/><i>Size: 84 MB | unprivileged user</i>"]
+    end
+
+    Services["Downstream ASP.NET Core Microservices (.NET 9/10)<br/><i>OrderService, IdentityService, BillingService</i>"]
+
+    subgraph Data["Data & Cache Tier"]
+      Redis["Azure Cache for Redis<br/><i>Distributed Next.js Data Cache</i>"]
+      SQL["Azure SQL / Cosmos DB<br/><i>Primary Data Store</i>"]
+    end
+
+    Pod1 --> Services
+    Pod2 --> Services
+    Services --> Redis
+    Services --> SQL
+  end
+
+  Otel["Azure Monitor / Application Insights / Datadog<br/><i>Unified OpenTelemetry Distributed Tracing</i>"]
+
+  Edge -- "HTTPS Traffic" --> ACA
+  VNet -. "Telemetry: Spans, Metrics, Logs" .-> Otel
+
+  classDef edgeStyle fill:#0f172a,stroke:#10b981,stroke-width:2px,color:#f8fafc;
+  classDef podStyle fill:#1e293b,stroke:#3b82f6,stroke-width:2px,color:#f8fafc;
+  classDef svcStyle fill:#1e293b,stroke:#8b5cf6,stroke-width:2px,color:#f8fafc;
+  classDef dataStyle fill:#1e293b,stroke:#f59e0b,stroke-width:2px,color:#f8fafc;
+  classDef otelStyle fill:#0f172a,stroke:#06b6d4,stroke-width:2px,color:#f8fafc;
+  class Edge edgeStyle;
+  class Pod1,Pod2 podStyle;
+  class Services svcStyle;
+  class Redis,SQL dataStyle;
+  class Otel otelStyle;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```text
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
 │                               AZURE FRONT DOOR / CLOUDFLARE CDN                        │
@@ -222,6 +279,8 @@ Always set `NODE_OPTIONS="--max-old-space-size=1024"` in your container environm
 │                    (Unified OpenTelemetry Distributed Tracing)                         │
 └────────────────────────────────────────────────────────────────────────────────────────┘
 ```
+
+</details>
 
 ---
 

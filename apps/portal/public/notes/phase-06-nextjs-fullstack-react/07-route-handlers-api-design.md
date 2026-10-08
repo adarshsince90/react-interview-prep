@@ -32,6 +32,17 @@ Understanding the caching semantics, stream mechanics, and security boundaries o
 
 ## 3. Historical Evolution
 
+```mermaid
+timeline
+  title Evolution of API Design in Full-Stack Web Development
+  2000 - 2016 : Era 1 - Dedicated Backend Monoliths : ASP.NET Web API, Express.js, Rails API, Spring Boot : Separated repos, deployment overhead, complex CORS configurations
+  2016 - 2023 : Era 2 - Pages Router API Routes : pages/api/users.ts with req/res syntax : Colocated with frontend, but tied exclusively to Node.js runtime
+  2023 - Present : Era 3 - Web Standard Route Handlers : app/api/users/route.ts in App Router : Pure Web Standards (Request/Response), portable to Edge and Node.js
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```text
 ERA 1: Dedicated Backend Monoliths (2000 - 2016)
 ┌────────────────────────────────────────────────────────┐
@@ -63,6 +74,8 @@ ERA 3: Web Standard Route Handlers in App Router (2023 - Present)
 │ - Granular method exports and automated static caching.│
 └────────────────────────────────────────────────────────┘
 ```
+
+</details>
 
 ---
 
@@ -187,6 +200,46 @@ By leveraging `ReadableStream`, server memory is decoupled from the size of the 
 
 ### End-to-End Route Handler Architecture & Edge Deployment
 
+### Inbound Request Dispatch & Runtime Selection Architecture
+
+```mermaid
+flowchart TD
+  Req["Inbound HTTP Request<br/><code>GET /api/metrics</code> or <code>POST /api/webhooks/payment</code>"]
+  Router["Next.js Router Dispatch<br/><code>app/api/[...slug]/route.ts</code>"]
+  
+  subgraph Methods["HTTP Method Routing"]
+    direction TB
+    M_GET["GET ──► export async function GET(req)"]
+    M_POST["POST ──► export async function POST(req)"]
+    M_PUT["PUT ──► export async function PUT(req)"]
+    M_DEL["DELETE ──► export async function DELETE(req)"]
+    M_OPT["OPTIONS ──► export async function OPTIONS(req)"]
+  end
+
+  subgraph Runtime["Runtime Selection (export const runtime)"]
+    Node["'nodejs' (Default Origin)<br/>- Full Node.js APIs (fs, buffers)<br/>- Traditional DB ORMs<br/>- Heavyweight computations"]
+    Edge["'edge' (V8 Isolates)<br/>- Web Standards only<br/>- Sub-5ms startup latency<br/>- Lightweight APIs, Geo-IP"]
+  end
+
+  Req --> Router
+  Router --> Methods
+  Methods --> Runtime
+
+  classDef reqStyle fill:#1e293b,stroke:#3b82f6,stroke-width:2px,color:#f8fafc;
+  classDef routerStyle fill:#0f172a,stroke:#10b981,stroke-width:2px,color:#f8fafc;
+  classDef methodStyle fill:#1e293b,stroke:#64748b,stroke-width:1px,color:#f8fafc;
+  classDef nodeStyle fill:#1e293b,stroke:#8b5cf6,stroke-width:2px,color:#f8fafc;
+  classDef edgeStyle fill:#1e293b,stroke:#06b6d4,stroke-width:2px,color:#f8fafc;
+  class Req reqStyle;
+  class Router routerStyle;
+  class M_GET,M_POST,M_PUT,M_DEL,M_OPT methodStyle;
+  class Node nodeStyle;
+  class Edge edgeStyle;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```text
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
 │                                INBOUND HTTP REQUEST                                    │
@@ -218,6 +271,8 @@ By leveraging `ReadableStream`, server memory is decoupled from the size of the 
 │   - Heavyweight computations            │  - Lightweight APIs, Geo-IP, Auth            │
 └────────────────────────────────────────────────────────────────────────────────────────┘
 ```
+
+</details>
 
 ---
 

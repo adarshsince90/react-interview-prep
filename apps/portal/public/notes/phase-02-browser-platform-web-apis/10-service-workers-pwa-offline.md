@@ -21,7 +21,31 @@ By mastering this chapter, you will be able to:
 
 ## 3. Historical Evolution
 
+```mermaid
+timeline
+    title Chronological Evolution of Offline Web & Service Workers
+    section 2008
+        Google Gears : Proprietary NPAPI plugin introducing offline SQLite & worker threads
+    section 2011
+        HTML5 AppCache : Declarative manifest approach (CACHE MANIFEST)
+        Catastrophic Flaws : Rigid updates, zombie app states ('AppCache is a Douchebag')
+    section 2014
+        W3C Service Worker Spec : Imperative JavaScript proxy in isolated worker thread
+        Separation of Concerns : Decoupled network interception from cache storage
+    section 2015
+        Browser Engines Ship : Chrome 40 & Firefox ship Service Workers & Cache Storage API
+    section 2017
+        Web Push & Background Sync : PWA capability matches native mobile background tasks
+    section 2018
+        Apple Safari 11.1 Ships : Service Workers reach universal baseline support
+    section 2020+
+        Navigation Preload & Workbox : Standardized high-performance enterprise PWA toolchains
 ```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
+```text
 +--------------------------------------------------------------------------------------------------+
 |                                    CHRONOLOGICAL EVOLUTION                                       |
 +--------------------------------------------------------------------------------------------------+
@@ -44,6 +68,7 @@ By mastering this chapter, you will be able to:
 |         toolchains for enterprise micro-frontends and multi-gigabyte asset delivery.             |
 +--------------------------------------------------------------------------------------------------+
 ```
+</details>
 
 ---
 
@@ -240,7 +265,49 @@ Cache Storage is backed by LevelDB key-value metadata tables and discrete disk f
 
 ### The Complete Service Worker Interception Topology
 
+```mermaid
+flowchart TD
+    subgraph Clients["Client Application Scope"]
+        Tab1["Browser Tab 1<br/>https://app.com/app"]
+        Tab2["Browser Tab 2<br/>https://app.com/cart"]
+        PWA["PWA Standalone Window<br/>https://app.com/"]
+    end
+
+    subgraph ServiceWorker["Service Worker Scope (https://app.com/)"]
+        subgraph EventLoop["Service Worker Event Loop (WorkerGlobalScope)"]
+            FetchListener["Fetch Event Listener:<br/>self.addEventListener('fetch', (event) => ...)"]
+            Router{"Route Interception Rules"}
+            RuleNav["HTML Navigation: Network-First with Offline Fallback"]
+            RuleStatic["Static JS/CSS/IMG: Cache-First (Immutable Hash)"]
+            RuleAPI["Dynamic JSON API: Stale-While-Revalidate"]
+            RulePost["Mutating POST/PUT: Network-Only + Offline Outbox"]
+        end
+    end
+
+    subgraph Storage["Browser Persistent Storage"]
+        CacheStorage["Cache Storage API<br/>Cache: 'static-assets-v2'<br/>- /app.js, /styles.css<br/>Cache: 'api-runtime-cache'"]
+        IndexedDB["IndexedDB Storage<br/>ObjectStore: 'offline_mutation_queue'<br/>- id: 1, action: 'SUBMIT_ORDER'<br/>- id: 2, action: 'UPDATE_PROFILE'"]
+    end
+
+    Tab1 & Tab2 & PWA --> FetchListener
+    FetchListener --> Router
+    Router --> RuleNav & RuleStatic & RuleAPI & RulePost
+    RuleNav & RuleStatic & RuleAPI --> CacheStorage
+    RulePost --> IndexedDB
+
+    classDef client fill:#6366f115,stroke:#6366f1,stroke-width:2px;
+    classDef sw fill:#ec489915,stroke:#ec4899,stroke-width:2px;
+    classDef storage fill:#10b98115,stroke:#10b981,stroke-width:2px;
+
+    class Tab1,Tab2,PWA,Clients client;
+    class EventLoop,FetchListener,Router,RuleNav,RuleStatic,RuleAPI,RulePost,ServiceWorker sw;
+    class CacheStorage,IndexedDB,Storage storage;
 ```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
+```text
 +---------------------------------------------------------------------------------------------+
 |                                    CLIENT APPLICATION SCOPE                                 |
 |                                                                                             |
@@ -282,6 +349,7 @@ Cache Storage is backed by LevelDB key-value metadata tables and discrete disk f
 |  Cache: 'api-runtime-cache'           |   |                                       |
 +---------------------------------------+   +---------------------------------------+
 ```
+</details>
 
 ---
 

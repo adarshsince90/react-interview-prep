@@ -33,6 +33,26 @@ Mastering the 4 core storage tiers—**Cookies, Web Storage, IndexedDB, and the 
 
 ## 3. Historical Evolution
 
+```mermaid
+timeline
+    title Historical Evolution of Browser Storage Architecture
+    section 1994 - 2005
+        Netscape Cookies & 4KB Limit : document.cookie with max 4KB per cookie
+        HTTP Overhead : Transmitted automatically over every HTTP request, clumsy string parsing
+    section 2009 - 2015
+        HTML5 Web Storage & WebSQL : localStorage / sessionStorage (5MB synchronous)
+        Main Thread Blocking : WebSQL abandoned, localStorage ubiquitous despite synchronous disk IO
+    section 2015 - 2021
+        IndexedDB Standardized NoSQL : Asynchronous transactional LevelDB wrapper
+        Rich Capabilities : Hundreds of megabytes, indexes & cursors, but clunky event-based API
+    section 2021 - Present
+        OPFS & SQLite WASM : Origin Private File System with FileSystemSyncAccessHandle in Workers
+        Near-Native Performance : Full SQLite compiled to WebAssembly running at near-native C speeds
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```text
 ERA 1: Netscape Cookies & The 4KB Limit (1994 - 2005)
 ┌────────────────────────────────────────────────────────┐
@@ -70,6 +90,7 @@ ERA 4: Origin Private File System & SQLite WASM (2021 - Present)
 │   near-native C performance in the browser!            │
 └────────────────────────────────────────────────────────┘
 ```
+</details>
 
 ---
 
@@ -204,6 +225,37 @@ To defeat cookie-injection and subdomain-poisoning attacks, modern browsers enfo
 
 ### OPFS (Origin Private File System) Architecture with SQLite WASM
 
+```mermaid
+flowchart TD
+    subgraph MainThread["Main Browser Thread"]
+        UI["React / Angular UI Component<br/>(100% Free Main Thread, Zero Freezing)"]
+    end
+
+    subgraph WebWorker["Background Web Worker"]
+        WASM["SQLite WebAssembly Engine (.wasm)<br/>Executes SQL: SELECT * FROM Transactions"]
+        SyncHandle["Synchronous File System Access:<br/>const handle = file.createSyncAccessHandle();<br/>handle.read(buffer, { at: 0 });"]
+    end
+
+    subgraph OPFS["Origin Private File System (Sandbox)"]
+        Disk["/db.sqlite (Direct OS Kernel File I/O)<br/>- Sub-millisecond read/write latency<br/>- Zero IPC serialization overhead"]
+    end
+
+    UI -->|"worker.postMessage({ sql: 'SELECT...' })"| WASM
+    WASM --> SyncHandle
+    SyncHandle <-->|"Raw Binary I/O"| Disk
+
+    classDef main fill:#6366f115,stroke:#6366f1,stroke-width:2px;
+    classDef worker fill:#ec489915,stroke:#ec4899,stroke-width:2px;
+    classDef storage fill:#10b98115,stroke:#10b981,stroke-width:2px;
+
+    class UI,MainThread main;
+    class WASM,SyncHandle,WebWorker worker;
+    class Disk,OPFS storage;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```text
 MAIN BROWSER THREAD                                    BACKGROUND WEB WORKER
 ┌──────────────────────────────────────────┐          ┌──────────────────────────────────────────┐
@@ -224,6 +276,7 @@ MAIN BROWSER THREAD                                    BACKGROUND WEB WORKER
                                                       │ - Zero IPC serialization overhead        │
                                                       └──────────────────────────────────────────┘
 ```
+</details>
 
 ---
 

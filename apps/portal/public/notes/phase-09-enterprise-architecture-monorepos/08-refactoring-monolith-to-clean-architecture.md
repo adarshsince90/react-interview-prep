@@ -25,6 +25,17 @@ By completing this chapter, you will be able to:
 ---
 
 ## 3. Historical Evolution
+```mermaid
+timeline
+    title Monolith Refactoring & Migration Evolution
+    2012 - 2016 : The Big Bang Rewrite Trap : Freeze features for 9-18 months for V2 : Requirements shifted & projects were cancelled
+    2017 - 2020 : Monorepo Scaffolding & Iframe Bridges : Legacy views wrapped in iframe shells : Terrible UX & duplicate multi-megabyte runtimes
+    2021 - Present : Modern Strangler Fig & AST Transformations : Incremental vertical slice extraction with edge proxies : Automated jscodeshift codemods & state bridges
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +---------------------------------------------------------------------------------------------------+
 | 2012 - 2016: The "Big Bang" Rewrite Trap                                                          |
@@ -48,6 +59,9 @@ By completing this chapter, you will be able to:
 +---------------------------------------------------------------------------------------------------+
 ```
 
+</details>
+
+
 ---
 
 ## 4. First Principles & Intuitive Physical Analogies (Layer 1)
@@ -70,6 +84,25 @@ Instead, engineers construct parallel high-speed track segments (the modern clea
 ### The Dual-Routing Coexistence Architecture
 To strangulate a legacy Single Page Application (e.g., CRA or legacy SPA), an Edge Reverse Proxy (Cloudflare Workers, Next.js Middleware, or Nginx) routes requests between the legacy application and the modern clean architecture monorepo:
 
+```mermaid
+flowchart TD
+    User["User Browser"] --> Proxy["Edge Reverse Proxy / Next.js Middleware"]
+
+    Proxy -->|Path matches migrated slice<br/>/dashboard/billing/*| Modern["Modern Clean Monorepo<br/>(Next.js / Vite + FSD)<br/>• Fast SSR / Streaming<br/>• Clean Architecture<br/>• High Lighthouse Score"]
+    Proxy -->|Path is unmigrated<br/>/dashboard/settings/*| Legacy["Legacy CRA Monolith<br/>(Legacy Webpack / Redux)<br/>• Client-rendered SPA<br/>• Legacy global state<br/>• Slow bundle"]
+
+    classDef proxy fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#f8fafc;
+    classDef modern fill:#1e293b,stroke:#34d399,stroke-width:2px,color:#f8fafc;
+    classDef legacy fill:#1e293b,stroke:#f59e0b,stroke-width:1px,color:#f8fafc;
+
+    class Proxy proxy;
+    class Modern modern;
+    class Legacy legacy;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
                             [ User Browser ]
                                    |
@@ -88,6 +121,9 @@ To strangulate a legacy Single Page Application (e.g., CRA or legacy SPA), an Ed
    - Clean Architecture                      - Legacy global state
    - High Lighthouse Score                   - Slow bundle
 ```
+
+</details>
+
 
 ### Shared State Bridge Mechanics
 When the user transitions between the modern application and the legacy application, session state (authentication tokens, shopping cart counts) must remain synchronized without re-authenticating:
@@ -159,6 +195,26 @@ acme-monorepo/
 ## 8. Visual Diagrams (ASCII / Text)
 
 ### The 4-Phase Migration Roadmap
+```mermaid
+flowchart TD
+    P1["Phase 1: Foundation & Metrics<br/>• Scaffold Turborepo/Nx Monorepo<br/>• Establish Edge Routing Proxy<br/>• Instrument Core Web Vitals & CI Baselines"] --> P2["Phase 2: Atomic Extractions<br/>• Extract Design System (@acme/ui)<br/>• Extract API Client & Repos (@acme/api)<br/>• Run AST Codemods to replace legacy imports"]
+    P2 --> P3["Phase 3: Vertical Slice Strangulation<br/>• Migrate First Slice: /auth & /onboarding<br/>• Migrate Second Slice: /billing<br/>• Migrate Core Slices: /dashboard<br/>• State Bridge synchronization"]
+    P3 --> P4["Phase 4: Decommissioning<br/>• 100% routes delegated to Modern Monorepo<br/>• Decommission legacy Webpack pipeline<br/>• Delete legacy-spa directory"]
+
+    classDef p1 fill:#1e293b,stroke:#38bdf8,stroke-width:1px,color:#f8fafc;
+    classDef p2 fill:#1e293b,stroke:#818cf8,stroke-width:1px,color:#f8fafc;
+    classDef p3 fill:#1e293b,stroke:#a855f7,stroke-width:1px,color:#f8fafc;
+    classDef p4 fill:#0f172a,stroke:#34d399,stroke-width:2px,color:#f8fafc;
+
+    class P1 p1;
+    class P2 p2;
+    class P3 p3;
+    class P4 p4;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 PHASE 1: FOUNDATION & METRICS
   - Scaffold Turborepo/Nx Monorepo
@@ -182,6 +238,9 @@ PHASE 4: DECOMMISSIONING
   - Delete legacy-spa directory
   - Celebrate with enterprise engineering team!
 ```
+
+</details>
+
 
 ---
 

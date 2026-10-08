@@ -22,7 +22,20 @@ By mastering this chapter, you will be able to:
 
 ## 3. Historical Evolution
 
+```mermaid
+timeline
+    title Chronological Evolution of JWT Storage Security Vectors
+    2010 : LocalStorage Gold Rush : HTML5 Web Storage leads to epidemic levels of XSS token exfiltration
+    2016 : IETF SameSite Cookie : Stops cross-origin cookie leaks, revolutionizing the cookie security balance
+    2019 : In-Memory Storage & Iframes : Tokens stored in closures with hidden iframe renewals to thwart XSS
+    2020 : Third-Party Cookie Crackdown : Safari ITP & Chrome partitioning break iframe renewals; forces RTR adoption
+    2023+ : The BFF Consensus : Storing raw tokens in browser declared anti-pattern; Backend-For-Frontend with __Host- cookies
 ```
+
+<details>
+<summary>📄 View Raw ASCII Schematic</summary>
+
+```text
 +--------------------------------------------------------------------------------------------------+
 |                                    CHRONOLOGICAL EVOLUTION                                       |
 +--------------------------------------------------------------------------------------------------+
@@ -42,6 +55,8 @@ By mastering this chapter, you will be able to:
 |         anti-pattern. Universal recommendation: Backend-For-Frontend with `__Host-` cookies.     |
 +--------------------------------------------------------------------------------------------------+
 ```
+
+</details>
 
 ---
 
@@ -168,9 +183,36 @@ Even if an attacker gains 100% arbitrary JavaScript execution on the Main Thread
 
 ## 8. Visual Diagrams (ASCII / Text)
 
-### The Backend-For-Frontend (BFF) Token Fortress
+```mermaid
+flowchart TD
+    subgraph BrowserZone["BROWSER ENVIRONMENT (Untrusted DOM)"]
+        ReactApp["React Application (Client Window)<br/>• Renders components and user interface<br/>• ZERO knowledge of Access or Refresh Tokens<br/>• Sends requests to relative path: /api/proxy/...<br/>• Browser automatically attaches: __Host-session-id cookie"]
+    end
 
+    subgraph BFFZone["TRUSTED BFF GATEWAY (Confidential Server)"]
+        BFF["Next.js Route Handlers / ASP.NET Core YARP Gateway<br/>1. Decrypts __Host-session-id cookie<br/>2. Retrieves cached Access Token from Redis / Session Store<br/>3. Checks expiration: auto-refreshes with IdP if expired<br/>4. Injects Authorization: Bearer <Real_JWT> into upstream call"]
+    end
+
+    subgraph Microservices["PROTECTED ENTERPRISE BACKEND"]
+        API["Protected Microservices<br/>.NET 10 / Azure Container Apps<br/>• Validates RS256 signature<br/>• Zero client token exposure"]
+    end
+
+    ReactApp -->|"HTTPS with __Host- HttpOnly Cookie"| BFF
+    BFF -->|"Direct Microservice Call: Bearer <Real_JWT>"| API
+
+    classDef client fill:#1e293b,stroke:#f43f5e,stroke-width:2px,color:#f8fafc;
+    classDef bff fill:#1e293b,stroke:#0284c7,stroke-width:2px,color:#f8fafc;
+    classDef api fill:#1e293b,stroke:#10b981,stroke-width:2px,color:#f8fafc;
+
+    class ReactApp client;
+    class BFF bff;
+    class API api;
 ```
+
+<details>
+<summary>📄 View Raw ASCII Architecture Schematic</summary>
+
+```text
 +---------------------------------------------------------------------------------------------+
 |                                    BROWSER ENVIRONMENT                                      |
 |                                                                                             |
@@ -203,6 +245,8 @@ Even if an attacker gains 100% arbitrary JavaScript execution on the Main Thread
 |   Protected Microservices (.NET 10 / Azure Container Apps)                                   |
 +---------------------------------------------------------------------------------------------+
 ```
+
+</details>
 
 ---
 

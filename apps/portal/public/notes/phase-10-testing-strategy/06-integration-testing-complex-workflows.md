@@ -23,6 +23,17 @@ By completing this chapter, you will be able to:
 ---
 
 ## 3. Historical Evolution
+```mermaid
+timeline
+    title Integration Testing & Complex Workflows Evolution
+    2013 - 2017 : Manual Multi-Repo Verification & Selenium : Brittle Selenium end-to-end scripts : Database state collisions & infrastructure instability
+    2018 - 2021 : Component Unit Isolation & Mock Chains : Isolated wizard step tests with state mocks : Workflows passed tests but failed at real state handoffs
+    2022 - Present : In-Memory Feature Slice Integration : RTL + MemoryRouter + MSW : Mount entire feature slices in memory with sub-second execution
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +---------------------------------------------------------------------------------------------------+
 | 2013 - 2017: Multi-Repo Manual Verification & Selenium Tests                                      |
@@ -44,6 +55,9 @@ By completing this chapter, you will be able to:
 | via MSW, and authentic user interactions via @testing-library/user-event. Sub-second workflows.   |
 +---------------------------------------------------------------------------------------------------+
 ```
+
+</details>
+
 
 ---
 
@@ -162,6 +176,28 @@ because RTL queries document.body, regardless of React root hierarchy.
 ## 8. Visual Diagrams (ASCII / Text)
 
 ### Optimistic Mutation & Rollback Cycle Under Test
+```mermaid
+flowchart TD
+    User["User Clicks 'Like' Button"] --> Mutate["1. onMutate: Snapshot Previous State & Optimistically Mutate"]
+    Mutate --> UI1["UI immediately reflects: 'Liked (101)'"]
+    Mutate --> Network["2. HTTP POST /api/likes (Network Request)"]
+    
+    Network -->|MSW returns HTTP 500 Error| Rollback["3. onError: Restore Snapshot from Context"]
+    Rollback --> UI2["UI rolls back count: 'Like (100)'"]
+    Rollback --> Toast["4. Error Notification: 'Could not update like'"]
+
+    classDef action fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#f8fafc;
+    classDef opt fill:#1e293b,stroke:#34d399,stroke-width:1px,color:#f8fafc;
+    classDef err fill:#1e293b,stroke:#ef4444,stroke-width:1px,color:#f8fafc;
+
+    class User action;
+    class Mutate,UI1 opt;
+    class Network,Rollback,UI2,Toast err;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 [ User Clicks 'Like' ]
           |
@@ -180,6 +216,9 @@ because RTL queries document.body, regardless of React root hierarchy.
 [ 4. Error Toast Notification ]
           +---> UI displays: 'Could not update like. Please try again.'
 ```
+
+</details>
+
 
 ---
 

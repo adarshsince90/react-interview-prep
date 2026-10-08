@@ -22,6 +22,19 @@ By mastering this chapter, you will be able to:
 
 ## 3. Historical Evolution
 
+```mermaid
+timeline
+  title Evolution of Browser Performance Profiling & DevTools
+  2008 : Firebug & Early Inspector : console.time and sampling tables : Zero visibility into layout, style, or browser rendering pipelines
+  2013 : Chrome DevTools Timeline : First unified timeline visualizer : Correlated JavaScript execution with Style, Layout, and Paint events
+  2017 : Performance Panel Overhaul : Modern Flamechart UI introduced : Frame rate timelines, CPU throttling, and screenshots filmstrip
+  2021 : Core Web Vitals & Interactions Track : Native CWV markers : Highlights LCP, CLS, and FID/INP inside the recording overview
+  2024+ : Long Animation Frames (LoAF) & AI Insights : Next-gen profiling : Pinpointing script URLs, line numbers, and microtask delays behind frame drops
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +--------------------------------------------------------------------------------------------------+
 |                                    CHRONOLOGICAL EVOLUTION                                       |
@@ -42,6 +55,8 @@ By mastering this chapter, you will be able to:
 |         pinpointing exact script URLs, line numbers, and microtask delays behind frame drops.    |
 +--------------------------------------------------------------------------------------------------+
 ```
+
+</details>
 
 ---
 
@@ -144,6 +159,46 @@ Result: 100ms frozen thread executing redundant layout calculations!
 
 ### DevTools Flamechart Lane Topology
 
+```mermaid
+flowchart TD
+  subgraph DevTools["Chrome DevTools Performance Panel Anatomy"]
+    direction TB
+    subgraph Overview["Overview Track"]
+      O1["FPS Graph (Green 60fps / Red Drops) | CPU Utilization Graph"]
+    end
+    subgraph Interactions["Interactions Track"]
+      I1["INP: Click (185ms) | Keydown (24ms)"]
+    end
+    subgraph Network["Network Track"]
+      N1["HTML (15ms) ──► bundle.js (85ms) ──► hero.avif (42ms)"]
+    end
+    subgraph Flamechart["Main Thread Track (Flamechart)"]
+      direction TB
+      T["Task (124ms) - Long Task Warning ⚠️"]
+      R["React Root Render"]
+      D["DashboardView"]
+      G["DataGrid (Recalc Style + Layout)"]
+      F["FilterBar"]
+      T --> R --> D
+      D --> G
+      D --> F
+    end
+    subgraph Summary["Summary / Bottom-Up Pane"]
+      S1["Scripting: 84ms | Rendering: 28ms | Painting: 6ms | System: 4ms | Idle: 22ms"]
+    end
+  end
+
+  classDef trackStyle fill:#0f172a,stroke:#3b82f6,stroke-width:1px,color:#f8fafc;
+  classDef warnStyle fill:#450a0a,stroke:#ef4444,stroke-width:2px,color:#fecaca;
+  classDef compStyle fill:#1e293b,stroke:#8b5cf6,stroke-width:1px,color:#f8fafc;
+  class O1,I1,N1,S1 trackStyle;
+  class T warnStyle;
+  class R,D,G,F compStyle;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +---------------------------------------------------------------------------------------------+
 |                                CHROME DEVTOOLS PERFORMANCE PANEL                            |
@@ -172,6 +227,8 @@ Result: 100ms frozen thread executing redundant layout calculations!
 | Scripting: 84ms | Rendering: 28ms | Painting: 6ms | System: 4ms | Idle: 22ms                |
 +---------------------------------------------------------------------------------------------+
 ```
+
+</details>
 
 ---
 

@@ -34,6 +34,17 @@ Mastering how the DOM and CSSOM are constructed, how the **Speculative Preload S
 
 ## 3. Historical Evolution
 
+```mermaid
+timeline
+    title HTML Parsing & DOM Tree Construction Evolution
+    1993 - 2004 : SGML & Browser Tag Soup : Netscape & IE4/5 error recovery guessing : Wildly divergent DOM trees & invalid markup battles
+    2000 - 2008 : XHTML Strictness Failure : W3C XML parsing rules attempted : "Yellow Screen of Death" for unclosed tags; failed in real world
+    2008 - Present : HTML5 Standardized Tokenizer : WHATWG/W3C state-machine algorithm : Guaranteed identical DOM trees across all compliant browsers
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```text
 ERA 1: SGML & Fault-Tolerant Browser Tag Soup (1993 - 2004)
 ┌────────────────────────────────────────────────────────┐
@@ -62,6 +73,8 @@ ERA 3: HTML5 Standardized Parsing Algorithm (2008 - Present)
 │ - Introduces the background Speculative Preload Scanner│
 └────────────────────────────────────────────────────────┘
 ```
+
+</details>
 
 ---
 
@@ -185,6 +198,40 @@ In Chromium's Blink engine:
 
 ### Script Loading Behavior: Parser-Blocking vs. Defer vs. Async vs. Module
 
+```mermaid
+flowchart TD
+    subgraph Standard["1. Standard &lt;script src='...'&gt; (Synchronous Blocking)"]
+        direction LR
+        S_Parse1["HTML Parsing"] --> S_Wait["🛑 Parsing BLOCKED<br/>(Network Download + Script Execution)"] --> S_Parse2["HTML Parsing Resumes"]
+    end
+
+    subgraph AsyncScript["2. &lt;script async src='...'&gt; (Asynchronous Interruption)"]
+        direction LR
+        A_Parse1["HTML Parsing Continues<br/>(Parallel Background Download)"] --> A_Exec["⚡ Executes MOMENT download finishes<br/>(Interrupts parser immediately)"] --> A_Parse2["HTML Parsing Resumes"]
+    end
+
+    subgraph DeferScript["3. &lt;script defer src='...'&gt; (Non-Blocking Deferred)"]
+        direction LR
+        D_Parse["HTML Parsing Runs Uninterrupted to Completion<br/>(Parallel Background Download)"] --> D_Exec["✅ Executes strictly AFTER DOM is built<br/>(Preserves document order before DOMContentLoaded)"]
+    end
+
+    subgraph ModuleScript["4. &lt;script type='module'&gt; (ES Module Standard)"]
+        direction LR
+        M_Parse["HTML Parsing Runs Uninterrupted<br/>(Deferred by default; scoped execution)"] --> M_Exec["✅ Executes strictly AFTER HTML parsing finishes"]
+    end
+
+    classDef block fill:#1e293b,stroke:#ef4444,stroke-width:1px,color:#f8fafc;
+    classDef async fill:#1e293b,stroke:#f59e0b,stroke-width:1px,color:#f8fafc;
+    classDef defer fill:#0f172a,stroke:#34d399,stroke-width:2px,color:#f8fafc;
+
+    class S_Parse1,S_Wait,S_Parse2 block;
+    class A_Parse1,A_Exec,A_Parse2 async;
+    class D_Parse,D_Exec,M_Parse,M_Exec defer;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```text
 LEGEND:
 [=== HTML Parsing ===]  [--- Downloading Script ---]  [*** Executing Script ***]
@@ -209,6 +256,9 @@ LEGEND:
                  [--- Download ---]                              [*** Execute ***]
 (Deferred by default; scoped to module; strictly preserves execution order!)
 ```
+
+</details>
+
 
 ---
 

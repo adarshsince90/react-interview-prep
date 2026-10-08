@@ -21,6 +21,17 @@ By completing this chapter, you will be able to:
 ---
 
 ## 3. Historical Evolution
+```mermaid
+timeline
+    title Feature-Sliced Design & Architecture Evolution
+    2013 - 2016 : Technical-Type Grouping (MVC Legacy) : Grouped by role (/components, /hooks, /utils) : High coupling & no feature boundaries
+    2017 - 2020 : Naive Feature Folders (/features/billing, /features/auth) : Domain grouping without shared rules : Spaghetti cross-imports & bloated /shared
+    2021 - Present : Feature-Sliced Design (FSD v2.0 Standard) : 6-layer strict unidirectional hierarchy : Public APIs & ESLint boundary enforcement
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +---------------------------------------------------------------------------------------------------+
 | 2013 - 2016: Technical-Type Grouping (MVC Legacy)                                                 |
@@ -42,6 +53,9 @@ By completing this chapter, you will be able to:
 | Explicit public APIs, formalized segments (ui/model/api), and automated AST lint enforcement.     |
 +---------------------------------------------------------------------------------------------------+
 ```
+
+</details>
+
 
 ---
 
@@ -175,6 +189,40 @@ IMPORT MATRIX VALIDATION:
 ## 8. Visual Diagrams (ASCII / Text)
 
 ### Anatomy of an FSD Directory Structure
+```mermaid
+graph TD
+    subgraph Layers["Feature-Sliced Design 6-Layer Hierarchy (Top to Bottom)"]
+        APP["app (Providers, Root Styles, Routing)"]
+        PAGES["pages (Full Route Composites)"]
+        WIDGETS["widgets (Self-contained UI blocks: Header, ProductGrid)"]
+        FEATURES["features (User actions: add-to-cart, search-products)"]
+        ENTITIES["entities (Business models: product, user)"]
+        SHARED["shared (Reusable UI primitives, HTTP clients, helpers)"]
+    end
+
+    APP --> PAGES
+    PAGES --> WIDGETS
+    PAGES --> FEATURES
+    PAGES --> ENTITIES
+    WIDGETS --> FEATURES
+    WIDGETS --> ENTITIES
+    FEATURES --> ENTITIES
+    WIDGETS --> SHARED
+    FEATURES --> SHARED
+    ENTITIES --> SHARED
+
+    classDef topLayer fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#f8fafc;
+    classDef midLayer fill:#1e293b,stroke:#818cf8,stroke-width:1px,color:#f8fafc;
+    classDef baseLayer fill:#1e293b,stroke:#34d399,stroke-width:1px,color:#f8fafc;
+
+    class APP,PAGES topLayer;
+    class WIDGETS,FEATURES midLayer;
+    class ENTITIES,SHARED baseLayer;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw Directory Tree Schematic</summary>
+
 ```
 src/
 ├── app/
@@ -221,6 +269,9 @@ src/
     └── lib/
         └── formatCurrency.ts
 ```
+
+</details>
+
 
 ---
 

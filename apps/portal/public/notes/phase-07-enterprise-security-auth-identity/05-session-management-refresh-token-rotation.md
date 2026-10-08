@@ -22,7 +22,19 @@ By mastering this chapter, you will be able to:
 
 ## 3. Historical Evolution
 
+```mermaid
+timeline
+    title Chronological Evolution of Session & Refresh Token Rotation
+    2012 : Static Refresh Tokens (RFC 6749) : Reusable refresh tokens; theft in SPAs gives attacker perpetual access
+    2019 : Browser Apps BCP : IETF introduces Refresh Token Rotation (RTR); single-use tokens mandated
+    2020 : Token Family Reuse Detection : IdPs track token lineages; duplicate redemption triggers instant team revocation
+    2022+ : Web Locks API Synchronization : Browser-level mutexes (navigator.locks) replace brittle localStorage hacks
 ```
+
+<details>
+<summary>📄 View Raw ASCII Schematic</summary>
+
+```text
 +--------------------------------------------------------------------------------------------------+
 |                                    CHRONOLOGICAL EVOLUTION                                       |
 +--------------------------------------------------------------------------------------------------+
@@ -39,6 +51,8 @@ By mastering this chapter, you will be able to:
 |         with native OS-level atomic browser locks (`navigator.locks.request`) for token refresh.|
 +--------------------------------------------------------------------------------------------------+
 ```
+
+</details>
 
 ---
 
@@ -167,6 +181,39 @@ This guarantees that even if a tab crashes midway through execution, the browser
 
 ### Cross-Tab Session Synchronization Topology
 
+```mermaid
+flowchart TD
+  subgraph Origin["Client Browser Origin (Same-Origin Realm)"]
+    direction TB
+    subgraph Tabs["Concurrent Browser Contexts"]
+      Tab1["Tab 1: Dashboard<br/><code>V8 Context #1</code>"]
+      Tab2["Tab 2: Analytics<br/><code>V8 Context #2</code>"]
+      Tab3["Tab 3: Settings<br/><code>V8 Context #3</code>"]
+    end
+
+    subgraph Channel["BroadcastChannel: auth_session_channel"]
+      direction TB
+      Evt1["<code>SESSION_REFRESHED</code><br/>Broadcasts new expiry timestamp & updates memory state"]
+      Evt2["<code>SESSION_LOGOUT</code><br/>User logged out in Tab 1; all sibling tabs tear down UI"]
+      Evt3["<code>SESSION_EXPIRED</code><br/>Invalidation triggered; redirects all tabs to login"]
+    end
+
+    Tab1 <--> Channel
+    Tab2 <--> Channel
+    Tab3 <--> Channel
+  end
+
+  classDef tabStyle fill:#1e293b,stroke:#3b82f6,stroke-width:2px,color:#f8fafc;
+  classDef channelStyle fill:#0f172a,stroke:#10b981,stroke-width:2px,color:#f8fafc;
+  classDef evtStyle fill:#1e293b,stroke:#64748b,stroke-width:1px,color:#e2e8f0;
+  class Tab1,Tab2,Tab3 tabStyle;
+  class Channel channelStyle;
+  class Evt1,Evt2,Evt3 evtStyle;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +---------------------------------------------------------------------------------------------+
 |                                    CLIENT BROWSER ORIGIN                                    |
@@ -189,6 +236,8 @@ This guarantees that even if a tab crashes midway through execution, the browser
 |   +-------------------------------------------------------------------------------------+   |
 +---------------------------------------------------------------------------------------------+
 ```
+
+</details>
 
 ---
 

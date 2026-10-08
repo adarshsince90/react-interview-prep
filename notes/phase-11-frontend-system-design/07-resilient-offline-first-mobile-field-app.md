@@ -172,6 +172,51 @@ BROWSER LOCAL STORAGE & HEAP MEMORY TOPOLOGY:
 
 ### The End-to-End Offline-First Outbox Synchronization Loop
 
+```mermaid
+flowchart TD
+    subgraph Client["CLIENT DEVICE (Offline-First Architecture)"]
+        UI["UI Component (User Action)"] --> Txn["ATOMIC INDEXEDDB TRANSACTION<br/>1. Update Local Entity (Instant optimistic UI reflection)<br/>2. Append to mutationOutbox (FIFO Queue)"]
+
+        Txn --> Drain["Sync Drain Engine Worker"]
+        OnlineEvent["'online' Window Event / Background Sync"] -.-> Drain
+
+        Drain --> Read["Read Oldest Pending Mutation (FIFO Order)"]
+        Read --> NetCheck{"Attempt Network Dispatch<br/>(HTTPS POST / PUT)"}
+
+        NetCheck -->|Offline / 5xx Network Failure| Backoff["Backoff Timer<br/>Exponential Retry with Full Jitter"]
+        Backoff -.-> Drain
+
+        NetCheck -->|Success 200 OK| Clean["Delete from mutationOutbox<br/>Update Local Server-Version Stamp"]
+        
+        NetCheck -->|4xx Client Error / Fatal Conflict| DLQ["Move to Dead-Letter Queue (DLQ)<br/>Alert User / Admin via Sync Badge"]
+    end
+
+    subgraph Backend["CLOUD BACKEND (Conflict Resolution Engine)"]
+        OCC{"Check Concurrency Token<br/>(ETag / OCC Version)"}
+        OCC -->|Version Matches| Commit[("Commit to Database<br/>Return 200 OK + New Version")]
+        OCC -->|Version Mismatch| Conflict["Execute 3-Way Merge<br/>or Return 409 Conflict"]
+    end
+
+    NetCheck -->|HTTPS Request| OCC
+    Commit --> Clean
+    Conflict --> DLQ
+
+    classDef ui fill:#1e293b,stroke:#38bdf8,stroke-width:1px,color:#f8fafc;
+    classDef storage fill:#0f172a,stroke:#818cf8,stroke-width:2px,color:#f8fafc;
+    classDef success fill:#1e293b,stroke:#34d399,stroke-width:1px,color:#f8fafc;
+    classDef fail fill:#1e293b,stroke:#ef4444,stroke-width:1px,color:#f8fafc;
+    classDef backend fill:#1e293b,stroke:#f59e0b,stroke-width:1px,color:#f8fafc;
+
+    class UI,OnlineEvent ui;
+    class Txn,Drain,Read storage;
+    class Clean,Commit success;
+    class Backoff,DLQ fail;
+    class OCC,Conflict backend;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +-----------------------------------------------------------------------+
 | CLIENT DEVICE (Offline-First Architecture)                            |
@@ -213,6 +258,8 @@ BROWSER LOCAL STORAGE & HEAP MEMORY TOPOLOGY:
 |   3. If version mismatch -> Executes 3-Way Merge or Returns Conflict  |
 +-----------------------------------------------------------------------+
 ```
+
+</details>
 
 ---
 

@@ -21,6 +21,19 @@ By mastering this chapter, you will be able to:
 
 ## 3. Historical Evolution
 
+```mermaid
+timeline
+  title Evolution of Frontend Web Vulnerabilities & OWASP Standards
+  2003 : First OWASP Top 10 Published : Monolithic focus : SQL injection, buffer overflows, broken server authentication
+  2013 : Rise of Single Page Applications : Client-side attack surface expands : DOM-based XSS inside JavaScript routers and templates
+  2017 : Prototype Pollution Discovered : JavaScript runtime vulnerability : Mutating __proto__ alters behavior across all V8 heap objects
+  2021 : OWASP Top 10 Modern Re-alignment : Broken Access Control rises to #1 : Software & Data Integrity Failures added for npm supply chain
+  2024+ : Zero-Trust Frontend Architecture : Defense-in-depth enforcement : Client sanitization, SRI, Trusted Types, and automated pipeline gates
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +--------------------------------------------------------------------------------------------------+
 |                                    CHRONOLOGICAL EVOLUTION                                       |
@@ -41,6 +54,8 @@ By mastering this chapter, you will be able to:
 |         Subresource Integrity, Trusted Types, and automated security pipeline gates.             |
 +--------------------------------------------------------------------------------------------------+
 ```
+
+</details>
 
 ---
 
@@ -173,6 +188,25 @@ Object.prototype (Base template for ALL JavaScript objects)
 
 ### The Complete Enterprise Browser Defense Headers Shield
 
+```mermaid
+flowchart TD
+  subgraph Headers["Enterprise Browser Defense Headers Shield"]
+    direction TB
+    H1["<b>1. Content-Security-Policy</b><br/><code>default-src 'self'; script-src 'nonce-...' 'strict-dynamic';</code><br/><i>BLOCKS arbitrary script execution & unauthorized network exfiltration</i>"]
+    H2["<b>2. Strict-Transport-Security (HSTS)</b><br/><code>max-age=63072000; includeSubDomains; preload</code><br/><i>ENFORCES HTTPS exclusively for 2 years; eliminates TLS stripping</i>"]
+    H3["<b>3. X-Content-Type-Options</b><br/><code>nosniff</code><br/><i>PREVENTS MIME-sniffing (e.g. executing uploaded images as scripts)</i>"]
+    H4["<b>4. X-Frame-Options / frame-ancestors</b><br/><code>DENY (or CSP frame-ancestors 'none')</code><br/><i>BLOCKS embedding in iframes; prevents Clickjacking entirely</i>"]
+    H5["<b>5. Referrer-Policy</b><br/><code>strict-origin-when-cross-origin</code><br/><i>PREVENTS leaking sensitive URL tokens/params to external third parties</i>"]
+    H6["<b>6. Permissions-Policy</b><br/><code>camera=(), microphone=(), geolocation=(), payment=()</code><br/><i>HARDENS browser sandbox by completely disabling unneeded hardware APIs</i>"]
+  end
+
+  classDef headerStyle fill:#1e293b,stroke:#3b82f6,stroke-width:2px,color:#f8fafc;
+  class H1,H2,H3,H4,H5,H6 headerStyle;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +---------------------------------------------------------------------------------------------+
 |                                  BROWSER HTTP RESPONSE HEADERS                              |
@@ -196,6 +230,8 @@ Object.prototype (Base template for ALL JavaScript objects)
 |    ===> HARDENS browser sandbox by completely disabling unneeded native hardware APIs.     |
 +---------------------------------------------------------------------------------------------+
 ```
+
+</details>
 
 ---
 

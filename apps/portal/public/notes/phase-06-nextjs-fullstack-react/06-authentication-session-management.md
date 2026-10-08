@@ -33,6 +33,18 @@ Mastering how to securely store, verify, and propagate user identity across Edge
 
 ## 3. Historical Evolution
 
+```mermaid
+timeline
+  title Evolution of Web Authentication: From State Cookies to RSC & Edge
+  1995 - 2012 : Era 1 - Monolithic Session Cookies : ASP.NET Forms Auth, PHP, Rails : HttpOnly cookies storing session ID, secure against XSS but stateful
+  2012 - 2021 : Era 2 - SPA localStorage Anti-Pattern : React/Angular SPAs + REST APIs : JWT stored in localStorage, catastrophic XSS risk and client UI flash
+  2021 - 2023 : Era 3 - Backend-For-Frontend (BFF) : Next.js API Routes reverse proxy : Swapped bearer tokens for HttpOnly cookies; client waterfalls remained
+  2023 - Present : Era 4 - Full-Stack RSC & Edge Auth : Unified Server Component & Edge pipeline : Stateless JWT validation at edge, zero flash, server-only cookies
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```text
 ERA 1: Monolithic Server-Side Session Cookies (1995 - 2012)
 ┌────────────────────────────────────────────────────────┐
@@ -71,6 +83,8 @@ ERA 4: Full-Stack React 19 RSC & Edge Auth (2023 - Present)
 │ - Server Actions enforce RBAC before mutations execute.│
 └────────────────────────────────────────────────────────┘
 ```
+
+</details>
 
 ---
 
@@ -209,6 +223,41 @@ Set-Cookie: __Secure-session=eyJhbGciOi...;
 
 ### End-to-End Enterprise Auth & Token Exchange Architecture
 
+```mermaid
+flowchart TD
+  Client["Client Browser<br/><code>HttpOnly Cookie: __Secure-session</code>"]
+  Edge["Tier 1: Edge Middleware (V8)<br/><i>Stateless JWT verify via jose; injects headers or 307 redirects</i>"]
+
+  subgraph Origin["Next.js Node.js Origin Server"]
+    direction TB
+    RSC["React Server Components (Tier 2)<br/>- Validate session from cookies()<br/>- Verify role permissions<br/>- Stream protected RSC Flight payload"]
+    SA["Server Actions (Tier 3)<br/>- Mutate cookies() (set/delete)<br/>- Enforce strict RBAC &amp; IDOR<br/>- Revalidate Next.js cache"]
+  end
+
+  Redis["Redis Session Cache<br/><i>Instant Session Revocation</i>"]
+  DB["Primary Database / OIDC<br/><i>PostgreSQL, Entra ID, Okta</i>"]
+
+  Client -- "HTTP Request (Cookie)" --> Edge
+  Edge -- "Valid: Forward downstream" --> RSC
+  Edge -- "Valid: Forward downstream" --> SA
+  Edge -. "Set-Cookie / Redirect" .-> Client
+  RSC --> DB
+  SA --> Redis
+  SA --> DB
+
+  classDef clientStyle fill:#1e293b,stroke:#3b82f6,stroke-width:2px,color:#f8fafc;
+  classDef edgeStyle fill:#0f172a,stroke:#10b981,stroke-width:2px,color:#f8fafc;
+  classDef originStyle fill:#1e293b,stroke:#8b5cf6,stroke-width:2px,color:#f8fafc;
+  classDef storeStyle fill:#1e293b,stroke:#f59e0b,stroke-width:2px,color:#f8fafc;
+  class Client clientStyle;
+  class Edge edgeStyle;
+  class RSC,SA originStyle;
+  class Redis,DB storeStyle;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```text
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
 │                                   CLIENT BROWSER                                       │
@@ -248,6 +297,8 @@ Set-Cookie: __Secure-session=eyJhbGciOi...;
          │  (Instant Session Revocation)│          │ (PostgreSQL, Entra ID, Okta) │
          └──────────────────────────────┘          └──────────────────────────────┘
 ```
+
+</details>
 
 ---
 

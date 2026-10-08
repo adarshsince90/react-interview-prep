@@ -22,6 +22,19 @@ By mastering this chapter, you will be able to:
 
 ## 3. Historical Evolution
 
+```mermaid
+timeline
+  title Evolution of Real-User Monitoring & Performance Telemetry
+  2005 : The window.onload Era : Basic synthetic monitoring : Measured raw HTTP response times from datacenters, blind to browser rendering
+  2012 : Navigation Timing API (W3C Level 1) : Programmatic network timings : performance.timing enabled early custom client beacons
+  2017 : PerformanceObserver & Resource Timing L2 : Asynchronous buffered observers : Eliminated polling and high-overhead getEntries calls
+  2020 : Google Web Vitals & CrUX Report : Field data formalized : RUM becomes sole authority for Core Web Vitals and SEO rankings
+  2024+ : OpenTelemetry Frontend Tracing : Full-stack distributed observability : Bridges browser user interactions to backend ASP.NET Core microservice spans
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +--------------------------------------------------------------------------------------------------+
 |                                    CHRONOLOGICAL EVOLUTION                                       |
@@ -42,6 +55,8 @@ By mastering this chapter, you will be able to:
 |         browser user interactions to backend ASP.NET Core and microservice spans seamlessly.     |
 +--------------------------------------------------------------------------------------------------+
 ```
+
+</details>
 
 ---
 
@@ -141,6 +156,39 @@ User Browses Dashboard              User Switches Tab / Navigates Away          
 
 ### Full-Stack End-to-End Observability Pipeline
 
+```mermaid
+flowchart TD
+  subgraph Client["Client Browser (RUM)"]
+    direction TB
+    Lib["PerformanceObserver + web-vitals Attribution Library<br/>- Captures INP, LCP, CLS, TTFB<br/>- Identifies culprit DOM selectors <code>button.checkout-btn</code><br/>- Injects W3C <code>traceparent</code> header"]
+    Beacon["navigator.sendBeacon() (Non-blocking background dispatch)"]
+    Lib --> Beacon
+  end
+
+  subgraph Gateway["Telemetry Ingestion Gateway"]
+    direction TB
+    Ingest["Next.js Route Handler / ASP.NET Core Endpoint<br/>- Strips PII (IP masking, user token redaction)<br/>- Streams telemetry to OpenTelemetry Collector / Azure App Insights / Datadog"]
+  end
+
+  subgraph APM["APM Analytics & Correlation Dashboard"]
+    direction TB
+    Dash["- p75 CWV Scorecards & Trendlines<br/>- Correlation Heatmaps: Device / Browser / Geo breakdown<br/>- Distributed Traces: Connects frontend INP/LCP to slow SQL queries"]
+  end
+
+  Client -- "JSON Beacon Payload" --> Gateway
+  Gateway -- "OpenTelemetry OTLP Spans" --> APM
+
+  classDef clientStyle fill:#1e293b,stroke:#3b82f6,stroke-width:2px,color:#f8fafc;
+  classDef gatewayStyle fill:#0f172a,stroke:#10b981,stroke-width:2px,color:#f8fafc;
+  classDef apmStyle fill:#1e293b,stroke:#8b5cf6,stroke-width:2px,color:#f8fafc;
+  class Client,Lib,Beacon clientStyle;
+  class Gateway,Ingest gatewayStyle;
+  class APM,Dash apmStyle;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +---------------------------------------------------------------------------------------------+
 |                                    CLIENT BROWSER (RUM)                                     |
@@ -173,6 +221,8 @@ User Browses Dashboard              User Switches Tab / Navigates Away          
 |   - Distributed Traces: Connects slow frontend LCP directly to SQL slow query span!         |
 +---------------------------------------------------------------------------------------------+
 ```
+
+</details>
 
 ---
 

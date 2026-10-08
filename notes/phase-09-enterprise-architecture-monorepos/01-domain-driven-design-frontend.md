@@ -22,6 +22,19 @@ By mastering this chapter, you will be able to:
 
 ## 3. Historical Evolution
 
+```mermaid
+timeline
+  title Evolution of Frontend Architecture & Domain-Driven Design
+  2003 : Eric Evans Publishes "Domain-Driven Design" : Bounded contexts, ubiquitous language, and layered architecture established
+  2013 : Frontend "Technical Bucket" Era : React apps organized by file type (/components, /actions, /reducers) leading to spaghetti code
+  2018 : Emergence of Domain-Centric Modules : Feature grouping (/features/billing, /features/auth) introduces domain boundaries
+  2021 : Feature-Sliced Design (FSD) Standard : Formalized layered, domain-driven directory conventions across open-source
+  2024+ : Full-Stack Isomorphic DDD with RSC : Shared domain entities and validation invariants across RSC, Server Actions, and UI
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +--------------------------------------------------------------------------------------------------+
 |                                    CHRONOLOGICAL EVOLUTION                                       |
@@ -42,6 +55,8 @@ By mastering this chapter, you will be able to:
 |         reused across Next.js Server Components, Server Actions, and client UI components.      |
 +--------------------------------------------------------------------------------------------------+
 ```
+
+</details>
 
 ---
 
@@ -175,6 +190,38 @@ User Action (Click "Place Order")            Application Service (Use Case)     
 
 ### The Layered Clean Architecture Onion for Frontend
 
+```mermaid
+flowchart TD
+  subgraph Onion["The Frontend Clean Architecture Onion (Dependency Rule: Inwards Only)"]
+    direction TB
+    subgraph UI["1. Framework & UI Layer (Outermost - Volatile)"]
+      direction TB
+      U1["React Components, JSX, Tailwind CSS, Next.js Pages & Routers"]
+      subgraph App["2. Application & Use Case Layer (Orchestration)"]
+        direction TB
+        A1["Use Cases: CheckoutUseCase, AuthenticateUserUseCase<br/>TanStack Query Hooks, Zustand State Stores"]
+        subgraph Domain["3. Domain Core Layer (Innermost - Pure & Framework-Agnostic)"]
+          direction TB
+          D1["Entities: User, Order, Invoice<br/>Value Objects: Email, Money, Currency<br/>Pure Business Rules & Invariants<br/><b>ZERO React! ZERO HTTP! ZERO DOM!</b>"]
+        end
+      end
+    end
+  end
+
+  UI --> App
+  App --> Domain
+
+  classDef uiStyle fill:#1e293b,stroke:#3b82f6,stroke-width:2px,color:#f8fafc;
+  classDef appStyle fill:#0f172a,stroke:#10b981,stroke-width:2px,color:#f8fafc;
+  classDef domStyle fill:#1e1b4b,stroke:#8b5cf6,stroke-width:2px,color:#f8fafc;
+  class UI,U1 uiStyle;
+  class App,A1 appStyle;
+  class Domain,D1 domStyle;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +---------------------------------------------------------------------------------------------+
 |                                  THE CLEAN ARCHITECTURE ONION                               |
@@ -204,6 +251,8 @@ User Action (Click "Place Order")            Application Service (Use Case)     
 |   The Domain Layer knows NOTHING about React, JSX, or HTTP!                                 |
 +---------------------------------------------------------------------------------------------+
 ```
+
+</details>
 
 ---
 

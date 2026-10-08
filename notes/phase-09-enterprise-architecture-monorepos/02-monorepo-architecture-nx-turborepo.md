@@ -22,6 +22,19 @@ By mastering this chapter, you will be able to:
 
 ## 3. Historical Evolution
 
+```mermaid
+timeline
+  title Evolution of JavaScript Monorepos & Build Orchestration
+  2015 : Lerna 1.0 : First popular monorepo tool : Versioning and publishing to npm, but lacked computation caching
+  2016 : Google Bazel & Facebook Buck : High-performance tech giant tooling : Immense build performance, but notorious configuration complexity
+  2017 : Nrwl Launches Nx : Built by former Google Angular team : Bazel-style dependency graph & computation caching for Angular, React, Node
+  2021 : Vercel Releases Turborepo : Jared Palmer's Rust orchestrator : Ultra-fast, zero-config pipeline caching for Next.js & pnpm
+  2024+ : Nx 19+ & Turborepo 2.0 : Deep convergence : Rust-accelerated task graphs, micro-frontend orchestration, automated workspace migrations
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +--------------------------------------------------------------------------------------------------+
 |                                    CHRONOLOGICAL EVOLUTION                                       |
@@ -43,6 +56,8 @@ By mastering this chapter, you will be able to:
 +--------------------------------------------------------------------------------------------------+
 ```
 
+</details>
+
 ---
 
 ## 4. First Principles & Intuitive Physical Analogies (Layer 1)
@@ -54,7 +69,7 @@ Imagine manufacturing a modern automobile:
 
 ### Analogy 2: The High School Math Teacher and The Grading Rubber Stamp (Computation Caching)
 Imagine a teacher grading 500 student calculus exams:
-- **Without Caching:** Every time a student turns in problem #1 ($2 + 2 = 4$), the teacher sits down with a pencil, recalculates $2 + 2$, confirms it is $4$, and marks it correct. The teacher grades 500 identical problems 500 separate times, taking 10 hours.
+- **Without Caching:** Every time a student turns in problem #1 (`2 + 2 = 4`), the teacher sits down with a pencil, recalculates `2 + 2`, confirms it is `4`, and marks it correct. The teacher grades 500 identical problems 500 separate times, taking 10 hours.
 - **With Computation Caching (Nx / Turborepo):** The teacher solves problem #1 once, records the cryptographic hash of the problem and the answer into a ledger, and creates a rubber stamp. When the next 499 students submit the exact same problem with the exact same inputs, the teacher **instantly stamps the cached result in 0.001 seconds without re-solving the problem**!
 
 ---
@@ -161,6 +176,53 @@ Level 2: `apps/web-shop:build` AND `apps/mobile-pwa:build` (Executed concurrentl
 
 ### Enterprise Monorepo Directory Architecture (pnpm Workspaces)
 
+```mermaid
+flowchart TD
+  subgraph Monorepo["Enterprise Monorepo Workspace Topology"]
+    direction TB
+    subgraph Configs["Root Governance & Configs"]
+      P["pnpm-workspace.yaml"]
+      T["turbo.json / nx.json (Task Graphs & Caching)"]
+      R["Root package.json"]
+    end
+
+    subgraph Apps["/apps/ (Deployable Applications)"]
+      A1["customer-portal<br/><i>Next.js 15 App Router</i>"]
+      A2["admin-dashboard<br/><i>React 19 Vite Dashboard</i>"]
+      A3["docs-portal<br/><i>VitePress Documentation</i>"]
+    end
+
+    subgraph Libs["/libs/ (Shared Packages & Domains)"]
+      L1["ui<br/><i>Radix + Tailwind Components</i>"]
+      L2["domain-billing<br/><i>Order, Money, Subscription Entities</i>"]
+      L3["auth-client<br/><i>Entra ID / MSAL Client Wrapper</i>"]
+      L4["utils<br/><i>Date, currency, formatting helpers</i>"]
+    end
+
+    subgraph Tools["/tools/ (Governance & Automation)"]
+      G1["eslint-rules (Architectural Boundaries)"]
+      G2["generators (Scaffolding Templates)"]
+    end
+
+    Apps --> Libs
+    Libs --> Tools
+    Configs -. "Governs" .-> Apps
+    Configs -. "Governs" .-> Libs
+  end
+
+  classDef configStyle fill:#0f172a,stroke:#10b981,stroke-width:1px,color:#f8fafc;
+  classDef appStyle fill:#1e293b,stroke:#3b82f6,stroke-width:2px,color:#f8fafc;
+  classDef libStyle fill:#1e1b4b,stroke:#8b5cf6,stroke-width:1px,color:#f8fafc;
+  classDef toolStyle fill:#1e293b,stroke:#64748b,stroke-width:1px,color:#f8fafc;
+  class P,T,R configStyle;
+  class A1,A2,A3 appStyle;
+  class L1,L2,L3,L4 libStyle;
+  class G1,G2 toolStyle;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +---------------------------------------------------------------------------------------------+
 |                                 ENTERPRISE MONOREPO TOPOLOGY                                |
@@ -187,6 +249,8 @@ Level 2: `apps/web-shop:build` AND `apps/mobile-pwa:build` (Executed concurrentl
 |                                                                                             |
 +---------------------------------------------------------------------------------------------+
 ```
+
+</details>
 
 ---
 

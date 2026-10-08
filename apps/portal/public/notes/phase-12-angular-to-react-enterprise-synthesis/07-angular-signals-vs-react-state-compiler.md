@@ -207,6 +207,38 @@ REACT COMPILER HEAP TOPOLOGY:
 
 ### Fine-Grained Signals vs Compiler Memoization
 
+```mermaid
+flowchart TD
+    subgraph Signals["ANGULAR SIGNALS: SURGICAL RUNTIME EDGES"]
+        direction TB
+        Sig_Title["title = signal('Dashboard')"] -->|Direct Reactive Edge| DOM_H1["H1 TextNode: 'Dashboard'"]
+        Sig_Count["count = signal(0)"] -->|Direct Reactive Edge| DOM_Span["SPAN TextNode: '0'"]
+        Note1["When count updates: H1 is untouched.<br/>Only SPAN receives surgical write without re-executing component."]
+        Sig_Count ~~~ Note1
+    end
+
+    subgraph Compiler["REACT COMPILER: FLAT ARRAY CACHE BAILOUTS"]
+        direction TB
+        CompFn["Component Function Re-executes on State Update"]
+        Slot0["Memo Cache Slot 0 (title): UNCHANGED<br/>Returns $[1] cached JSX reference (Bails out)"]
+        Slot2["Memo Cache Slot 2 (count): CHANGED<br/>Emits fresh &lt;span&gt;{count}&lt;/span&gt; element"]
+        
+        CompFn --> Slot0
+        CompFn --> Slot2
+        Note2["Component runs from top to bottom, but 90% of subtrees<br/>short-circuit via sub-nanosecond array lookups ($[i])."]
+        Slot2 ~~~ Note2
+    end
+
+    classDef ng fill:#1e293b,stroke:#ef4444,stroke-width:1px,color:#f8fafc;
+    classDef react fill:#0f172a,stroke:#34d399,stroke-width:2px,color:#f8fafc;
+
+    class Sig_Title,Sig_Count,DOM_H1,DOM_Span,Note1 ng;
+    class CompFn,Slot0,Slot2,Note2 react;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw Comparison Schematic</summary>
+
 ```
 ANGULAR SIGNALS: SURGICAL RUNTIME EDGES
 Component Class (Heap)
@@ -231,6 +263,8 @@ Component Function
 * The component function runs, but 90% of its computation and JSX trees
   are instantly short-circuited via flat array cache lookups ($[i]).
 ```
+
+</details>
 
 ---
 

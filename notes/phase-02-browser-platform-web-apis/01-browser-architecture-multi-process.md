@@ -29,6 +29,17 @@ Understanding the multi-process model allows Senior and Staff Engineers to diagn
 
 ## 3. Historical Evolution
 
+```mermaid
+timeline
+    title Browser Architecture Evolution
+    1995 - 2008 : Monolithic Single-Process : All tabs, network & UI thread share PID 100 : Single plugin crash or infinite loop kills entire browser
+    2008 - 2018 : Multi-Process Tabs Architecture : Chrome 1.0 multi-process model : Dedicated Renderer per tab + Browser & GPU process isolation
+    2018 - Present : Site Isolation & OOPIFs : Out-of-Process IFrames (eTLD+1 site boundaries) : Hardware MMU defense against Spectre & cross-origin data leaks
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```text
 ERA 1: Monolithic Single-Process Architecture (1995 - 2008)
 ┌────────────────────────────────────────────────────────┐
@@ -60,6 +71,9 @@ ERA 3: Site Isolation & Out-of-Process IFrames (2018 - Present)
 │ - Memory sandboxing eliminates cross-origin data theft. │
 └────────────────────────────────────────────────────────┘
 ```
+
+</details>
+
 
 ---
 
@@ -192,6 +206,48 @@ If a malicious JavaScript exploit escapes V8 execution, it remains trapped insid
 
 ### Out-of-Process IFrame (OOPIF) Site Isolation Topology
 
+```mermaid
+flowchart TD
+    subgraph BrowserUI["PHYSICAL BROWSER WINDOW"]
+        subgraph TabA["Main Document: https://ecommerce.com"]
+            direction TB
+            DOM_A["E-Commerce Catalog DOM<br/>(Renderer Process A - PID: 1050)"]
+            
+            subgraph FrameB["Embedded &lt;iframe&gt;: https://checkout.stripe.com (OOPIF)"]
+                DOM_B["Stripe Card Payment Form DOM<br/>(Renderer Process B - PID: 1051)<br/>[ Credit Card: **** **** **** 1234 ]"]
+            end
+            
+            DOM_A --- FrameB
+        end
+    end
+
+    subgraph OSKernel["OPERATING SYSTEM KERNEL (Memory Sandboxing)"]
+        direction LR
+        MemA["Process PID 1050<br/>Virtual Address Space A<br/>(ecommerce.com)"]
+        Barrier{"HARDWARE MMU BARRIER<br/>Cross-Process Memory Access BLOCKED"}
+        MemB["Process PID 1051<br/>Virtual Address Space B<br/>(checkout.stripe.com)"]
+        
+        MemA -.-> Barrier
+        Barrier <-.- MemB
+    end
+
+    DOM_A --> MemA
+    DOM_B --> MemB
+
+    classDef frame fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#f8fafc;
+    classDef oopif fill:#1e293b,stroke:#34d399,stroke-width:2px,color:#f8fafc;
+    classDef kernel fill:#1e293b,stroke:#818cf8,stroke-width:1px,color:#f8fafc;
+    classDef barrier fill:#1e293b,stroke:#ef4444,stroke-width:2px,color:#f8fafc;
+
+    class DOM_A,BrowserUI frame;
+    class DOM_B,FrameB oopif;
+    class MemA,MemB,OSKernel kernel;
+    class Barrier barrier;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```text
 ┌────────────────────────────────────────────────────────────────────────┐
 │                        PHYSICAL BROWSER WINDOW                         │
@@ -221,6 +277,9 @@ If a malicious JavaScript exploit escapes V8 execution, it remains trapped insid
 │  Spectre attacks from ecommerce.com CANNOT read Stripe card data!      │
 └────────────────────────────────────────────────────────────────────────┘
 ```
+
+</details>
+
 
 ---
 

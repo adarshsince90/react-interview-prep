@@ -157,6 +157,34 @@ REACT HOOKS HEAP TOPOLOGY (Fiber Node & Ephemeral Closures):
 
 ### Safely Connecting RxJS to React via `useSyncExternalStore`
 
+```mermaid
+flowchart TD
+    Stream["EXTERNAL RXJS STREAM (Module or Service Scope)<br/>const marketFeed$ = new BehaviorSubject&lt;PriceTick&gt;(initial)"]
+
+    subgraph Bridge["useSyncExternalStore (React 18/19 Concurrent Bridge)"]
+        Sub["1. subscribe: (callback) => marketFeed$.subscribe(callback)"]
+        Snap["2. getSnapshot: () => marketFeed$.getValue()"]
+        Safety["• Guarantees ZERO UI Tearing under Concurrent Time-Slicing<br/>• Bypasses useEffect latency; synchronous read during render"]
+        Sub --- Snap --- Safety
+    end
+
+    Comp["REACT COMPONENT (Pure Functional Projection)<br/>const price = useSyncExternalStore(subscribe, getSnapshot);<br/>return &lt;div&gt;${price.amount}&lt;/div&gt;;"]
+
+    Stream -->|subscribe(notifyReact)| Bridge
+    Bridge -->|Synchronous Snapshot Read| Comp
+
+    classDef stream fill:#1e293b,stroke:#ef4444,stroke-width:1px,color:#f8fafc;
+    classDef bridge fill:#0f172a,stroke:#818cf8,stroke-width:2px,color:#f8fafc;
+    classDef comp fill:#1e293b,stroke:#34d399,stroke-width:1px,color:#f8fafc;
+
+    class Stream stream;
+    class Sub,Snap,Safety,Bridge bridge;
+    class Comp comp;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw Comparison Schematic</summary>
+
 ```
 +-----------------------------------------------------------------+
 | EXTERNAL RXJS STREAM (Module or Service Scope)                 |
@@ -182,6 +210,8 @@ REACT HOOKS HEAP TOPOLOGY (Fiber Node & Ephemeral Closures):
 | return <div>${price.amount}</div>;                              |
 +-----------------------------------------------------------------+
 ```
+
+</details>
 
 ---
 

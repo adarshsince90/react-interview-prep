@@ -36,6 +36,18 @@ Mastering how data cascades through these four tiers, how each tier is invalidat
 
 ## 3. Historical Evolution
 
+```mermaid
+timeline
+  title Evolution of Caching Architecture in Web Applications
+  1995 - 2015 : Era 1 - Traditional HTTP Caching : Cache-Control headers, proxies : Binary caching without component tree awareness
+  2015 - 2022 : Era 2 - Client-Side State Caching : TanStack Query, SWR, Apollo : Browser in-memory cache, no impact on SSR/build
+  2022 - 2024 : Era 3 - Next.js 13/14 Aggressive Defaults : 4-Tier Hierarchy : fetch cached forever, high performance but developer confusion
+  2024 - Present : Era 4 - Next.js 15 Predictable Defaults : Explicit Opt-In Philosophy : fetch defaults to no-store, GET routes dynamic, 0s dynamic router cache
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```text
 ERA 1: Traditional HTTP Browser Caching (1995 - 2015)
 ┌────────────────────────────────────────────────────────┐
@@ -74,6 +86,8 @@ ERA 4: Next.js 15 Predictable Defaults (2024 - Present)
 │ - Granular control via segment configs and cache tags. │
 └────────────────────────────────────────────────────────┘
 ```
+
+</details>
 
 ---
 
@@ -239,6 +253,33 @@ The beauty of the Next.js cache design is **cascading invalidation**: invalidati
 
 ### Next.js 14 vs. Next.js 15 Caching Defaults Comparison
 
+```mermaid
+flowchart LR
+  subgraph Next14["Next.js 14 (Aggressive Defaults)"]
+    direction TB
+    F14["<code>fetch()</code><br/><b>force-cache</b><br/><i>Cached indefinitely</i>"]
+    R14["<code>GET Route Handlers</code><br/><b>Statically Cached</b><br/><i>Baked at build time</i>"]
+    C14["<code>Client Router Cache</code><br/><b>30s TTL</b><br/><i>Stale dynamic views</i>"]
+    F14 --- R14 --- C14
+  end
+
+  subgraph Next15["Next.js 15 (Predictable Defaults)"]
+    direction TB
+    F15["<code>fetch()</code><br/><b>no-store</b><br/><i>Always dynamic by default</i>"]
+    R15["<code>GET Route Handlers</code><br/><b>Dynamic</b><br/><i>Executes per-request</i>"]
+    C15["<code>Client Router Cache</code><br/><b>0s TTL</b><br/><i>Always fetches fresh</i>"]
+    F15 --- R15 --- C15
+  end
+
+  classDef oldStyle fill:#451a03,stroke:#f59e0b,stroke-width:2px,color:#fef3c7;
+  classDef newStyle fill:#0f172a,stroke:#10b981,stroke-width:2px,color:#f8fafc;
+  class F14,R14,C14 oldStyle;
+  class F15,R15,C15 newStyle;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```text
 NEXT.JS 14 (Aggressive Defaults)
 ┌─────────────────────────────────┬─────────────────────────────────┐
@@ -258,6 +299,8 @@ NEXT.JS 15 (Predictable Defaults)
 │ Client Router Cache (Dynamic)   │ 0s (Always fetches fresh)       │
 └─────────────────────────────────┴─────────────────────────────────┘
 ```
+
+</details>
 
 ---
 

@@ -21,7 +21,20 @@ By mastering this chapter, you will be able to:
 
 ## 3. Historical Evolution
 
+```mermaid
+timeline
+    title Chronological Evolution of Microsoft Enterprise Identity
+    2000 : Active Directory DS (AD DS) : On-premises Kerberos, NTLM & LDAP on domain-joined intranets
+    2014 : Azure Active Directory (v1.0) : Cloud-native identity & ADAL.js with fragile OAuth 2.0 Implicit Flow
+    2018 : Microsoft Identity Platform (v2.0) : Unified Work/Personal accounts & MSAL.js with PKCE
+    2021 : MSAL.js v2 & @azure/msal-react : Modern Authorization Code Flow with PKCE & native React Hooks
+    2023+ : Microsoft Entra ID : Zero-Trust, Conditional Access, Continuous Access Evaluation (CAE)
 ```
+
+<details>
+<summary>📄 View Raw ASCII Schematic</summary>
+
+```text
 +--------------------------------------------------------------------------------------------------+
 |                                    CHRONOLOGICAL EVOLUTION                                       |
 +--------------------------------------------------------------------------------------------------+
@@ -41,6 +54,8 @@ By mastering this chapter, you will be able to:
 |         Access, Continuous Access Evaluation (CAE), and third-party cookie partition resilience.|
 +--------------------------------------------------------------------------------------------------+
 ```
+
+</details>
 
 ---
 
@@ -184,7 +199,31 @@ MSAL decomposes identity data into distinct relational entities in browser stora
 ### On-Behalf-Of (OBO) Flow Architecture
 How a React frontend accesses multiple downstream enterprise microservices securely:
 
+```mermaid
+sequenceDiagram
+    autonumber
+    actor User as User Browser
+    participant SPA as React SPA / Next.js
+    participant BFF as ASP.NET Core API (BFF)
+    participant Entra as Microsoft Entra ID (Token Endpoint)
+    participant Downstream as Billing Microservice (Downstream)
+
+    User->>SPA: 1. Requests Order History
+    SPA->>BFF: 2. HTTP GET /api/orders<br/>Bearer [Frontend_Token] (Audience: Middle_Tier_API)
+    Note over BFF: Validates Frontend Token Signature & Claims
+    BFF->>Entra: 3. OAuth 2.0 On-Behalf-Of (OBO) Request<br/>assertion=[Frontend_Token], scope=api://Billing/Invoices.Read
+    Note over Entra: Validates user identity & middle-tier consent
+    Entra-->>BFF: 4. Returns Downstream_Token
+    BFF->>Downstream: 5. HTTP GET /invoices<br/>Bearer [Downstream_Token]
+    Downstream-->>BFF: 6. Returns Invoices Data
+    BFF-->>SPA: 7. Aggregated Orders & Invoices Response
+    SPA-->>User: 8. Renders Data in React UI
 ```
+
+<details>
+<summary>📄 View Raw ASCII Architecture Schematic</summary>
+
+```text
 +---------------------------------------------------------------------------------------------+
 |                                    ENTERPRISE ARCHITECTURE                                  |
 |                                                                                             |
@@ -216,6 +255,8 @@ How a React frontend accesses multiple downstream enterprise microservices secur
 |   +-------------------------------------------------------+                                 |
 +---------------------------------------------------------------------------------------------+
 ```
+
+</details>
 
 ---
 

@@ -21,6 +21,18 @@ By completing this chapter, you will be able to:
 ---
 
 ## 3. Historical Evolution
+```mermaid
+timeline
+  title Evolution of Micro-Frontends & Runtime Module Federation
+  2014 - 2017 : Iframes & Hyperlink Composition : Guaranteed CSS/JS isolation : Rigid clipping boxes, broken responsive modals, slow page-loads
+  2018 - 2020 : Runtime Orchestrators : Single-SPA, Qiankun : Solved iframe visual limits, but required custom mount lifecycles & duplicated bundles
+  2020 - 2023 : Webpack 5 Native Module Federation : Bundler primitive for runtime module sharing : In-memory singleton negotiation for React, zero wrapper code
+  2024 - Present : Enterprise Federation 2.0 : Rspack Rust bundling & dynamic manifest discovery : Sub-second builds, dynamic remotes, and edge-rendered SSR hydration
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +---------------------------------------------------------------------------------------------------+
 | 2014 - 2017: Iframes & Hyperlink Composition                                                      |
@@ -49,6 +61,8 @@ By completing this chapter, you will be able to:
 | discovery, and edge-rendered micro-frontends with SSR hydration support.                          |
 +---------------------------------------------------------------------------------------------------+
 ```
+
+</details>
 
 ---
 
@@ -175,6 +189,42 @@ V8 HEAP MEMORY - RUNTIME MODULE FEDERATION LAYOUT
 ## 8. Visual Diagrams (ASCII / Text)
 
 ### Micro-Frontend Topologies: Host/Remote vs. Bi-Directional
+
+```mermaid
+flowchart TD
+  subgraph TopA["Topology A: Hub and Spoke (Shell + Remotes)"]
+    direction TB
+    Host["Host Shell (Portal Container)"]
+    R1["Checkout Remote"]
+    R2["Auth Remote"]
+    R3["Catalog Remote"]
+    Host --> R1
+    Host --> R2
+    Host --> R3
+  end
+
+  subgraph TopB["Topology B: Mesh / Bi-Directional Federation"]
+    direction TB
+    Search["Search App<br/><i>Exposes: SearchWidget</i>"]
+    Dash["Dashboard App<br/><i>Exposes: UserBar</i>"]
+    Shop["E-Commerce App<br/><i>Consumes Both</i>"]
+
+    Search <-->|"Consumes UserMenu / Exposes SearchWidget"| Dash
+    Dash <--> Shop
+    Shop -->|"Consumes SearchWidget"| Search
+  end
+
+  classDef hostStyle fill:#0f172a,stroke:#10b981,stroke-width:2px,color:#f8fafc;
+  classDef remoteStyle fill:#1e293b,stroke:#3b82f6,stroke-width:1px,color:#f8fafc;
+  classDef meshStyle fill:#1e1b4b,stroke:#8b5cf6,stroke-width:1px,color:#f8fafc;
+  class Host hostStyle;
+  class R1,R2,R3 remoteStyle;
+  class Search,Dash,Shop meshStyle;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 TOPOLOGY A: HUB AND SPOKE (SHELL + REMOTES)
 
@@ -204,6 +254,8 @@ TOPOLOGY B: MESH / BI-DIRECTIONAL FEDERATION
              | (Exposes: UserBar)|    | (Consumes Both)    |
              +-------------------+    +--------------------+
 ```
+
+</details>
 
 ---
 

@@ -22,6 +22,18 @@ By mastering this chapter, you will be able to:
 
 ## 3. Historical Evolution
 
+```mermaid
+timeline
+  title Evolution of DOM Virtualization & High-Frequency Windowing
+  2014 : react-infinite : Early infinite scrolling library : Struggled with scroll jump bugs and un-recycled DOM elements
+  2016 : react-virtualized : Brian Vaughn establishes windowing standard : Comprehensive but heavyweight with opinionated styling
+  2018 : react-window : Lightweight rewrite by Brian Vaughn : Stripped down to essential fixed and variable size list primitives
+  2021+ : TanStack Virtual : Tanner Linsley introduces headless hooks : useVirtualizer with zero DOM assumptions, table and grid support
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +--------------------------------------------------------------------------------------------------+
 |                                    CHRONOLOGICAL EVOLUTION                                       |
@@ -40,6 +52,8 @@ By mastering this chapter, you will be able to:
 |         HTML tables, grids, dynamic element height measurements, and window scrolling.           |
 +--------------------------------------------------------------------------------------------------+
 ```
+
+</details>
 
 ---
 
@@ -151,6 +165,46 @@ User Scrolls Viewport            Virtualizer Hook               Blink ResizeObse
 
 ### The Overscan Buffer Visualized
 
+```mermaid
+flowchart TD
+  subgraph VirtualScroll["Virtual Scroll Window & Overscan Buffer Layout"]
+    direction TB
+    subgraph UpperOverscan["Upper Overscan Buffer (Rendered off-screen above viewport)"]
+      Item18["Item 18"]
+      Item19["Item 19"]
+      Item20["Item 20"]
+    end
+
+    subgraph Viewport["Visible Viewport Window (User Sees on Screen)"]
+      direction TB
+      Item21["Item 21 (Top of Visible Viewport)"]
+      Item22["Item 22"]
+      Item23["Item 23"]
+      Item24["Item 24"]
+      Item25["Item 25"]
+      Item26["Item 26"]
+      Item27["Item 27 (Bottom of Visible Viewport)"]
+      Item21 --- Item22 --- Item23 --- Item24 --- Item25 --- Item26 --- Item27
+    end
+
+    subgraph LowerOverscan["Lower Overscan Buffer (Rendered off-screen below viewport)"]
+      Item28["Item 28"]
+      Item29["Item 29"]
+      Item30["Item 30"]
+    end
+
+    UpperOverscan --- Viewport --- LowerOverscan
+  end
+
+  classDef overscanStyle fill:#1e1b4b,stroke:#8b5cf6,stroke-width:1px,color:#e0e7ff;
+  classDef viewStyle fill:#0f172a,stroke:#10b981,stroke-width:2px,color:#f8fafc;
+  class Item18,Item19,Item20,Item28,Item29,Item30 overscanStyle;
+  class Item21,Item22,Item23,Item24,Item25,Item26,Item27 viewStyle;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +---------------------------------------------------------------------------------------------+
 |                                 VIRTUAL SCROLL WITH OVERSCAN                                 |
@@ -176,6 +230,8 @@ User Scrolls Viewport            Virtualizer Hook               Blink ResizeObse
 |                                                                                             |
 +---------------------------------------------------------------------------------------------+
 ```
+
+</details>
 
 ---
 

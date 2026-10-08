@@ -23,6 +23,18 @@ By completing this chapter, you will be able to:
 ---
 
 ## 3. Historical Evolution
+```mermaid
+timeline
+    title Frontend Testing Strategy Evolution
+    2005 - 2012 : The Classical Testing Pyramid : 70% Unit, 20% Integration, 10% E2E : Engineered for backend monoliths & slow Selenium
+    2013 - 2017 : The Enzyme Implementation-Testing Era : Shallow rendering & wrapper.state inspection : Brittle tests that broke on internal refactoring
+    2018 - 2022 : React Testing Library & Testing Trophy : Shift to real DOM user interactions : The Testing Trophy: Static -> Unit -> Integration (Largest) -> E2E
+    2023 - Present : Modern Hermetic Testing : Vitest, MSW, and Playwright : Lightning-fast headless runs & network-level mock interception
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +---------------------------------------------------------------------------------------------------+
 | 2005 - 2012: The Classical Testing Pyramid (Mike Cohn / Martin Fowler)                            |
@@ -54,6 +66,9 @@ By completing this chapter, you will be able to:
 +---------------------------------------------------------------------------------------------------+
 ```
 
+</details>
+
+
 ---
 
 ## 4. First Principles & Intuitive Physical Analogies (Layer 1)
@@ -78,6 +93,37 @@ Users do not care what capacitor C12 does; users care that the siren sounds when
 ## 5. Internal Working & Engine Architecture (Layer 2)
 
 ### The Classical Pyramid vs. The Testing Trophy
+```mermaid
+flowchart TD
+    subgraph Pyramid["Classical Pyramid (Backend Focus)"]
+        direction TB
+        E2E_P["E2E Tests (10%)"]
+        INT_P["Integration Tests (20%)"]
+        UNIT_P["Unit Tests (70%)"]
+        E2E_P --- INT_P --- UNIT_P
+    end
+
+    subgraph Trophy["The Testing Trophy (Frontend Focus)"]
+        direction TB
+        E2E_T["E2E Tests (15% - Playwright)"]
+        INT_T["Integration Tests (50% - HIGHEST ROI - RTL + MSW)"]
+        UNIT_T["Unit Tests (20% - Vitest)"]
+        STATIC_T["Static Analysis (15% - TypeScript & ESLint)"]
+        E2E_T --- INT_T --- UNIT_T --- STATIC_T
+    end
+
+    classDef trophyHigh fill:#0f172a,stroke:#34d399,stroke-width:2px,color:#f8fafc;
+    classDef trophy fill:#1e293b,stroke:#38bdf8,stroke-width:1px,color:#f8fafc;
+    classDef pyramid fill:#1e293b,stroke:#f59e0b,stroke-width:1px,color:#f8fafc;
+
+    class INT_T trophyHigh;
+    class E2E_T,UNIT_T,STATIC_T trophy;
+    class E2E_P,INT_P,UNIT_P pyramid;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 CLASSICAL PYRAMID (Backend Focus)         THE TESTING TROPHY (Frontend Focus)
 
@@ -95,6 +141,9 @@ CLASSICAL PYRAMID (Backend Focus)         THE TESTING TROPHY (Frontend Focus)
    /-----------------------\                           |Static| (15% - TS / ESLint)
                                                        '-----'
 ```
+
+</details>
+
 
 ### Why Integration Has the Highest ROI in Frontend
 In frontend architecture:
@@ -175,7 +224,37 @@ V8 MEMORY FOOTPRINT IN JSDOM TEST RUNNER
 
 ## 8. Visual Diagrams (ASCII / Text)
 
-### The Frontend Testing Spectrum Matrix
+```mermaid
+flowchart LR
+    subgraph Speed["Fastest Execution (Milliseconds)"]
+        S["Static Analysis<br/>TypeScript & ESLint<br/>100-500ms"]
+        U["Unit Tests<br/>Vitest<br/>1-5ms"]
+    end
+
+    subgraph Confidence["Highest Production Confidence"]
+        I["Integration Tests<br/>RTL + MSW<br/>20-100ms (High ROI)"]
+        E["End-to-End Tests<br/>Playwright<br/>2-10s (Full Stack)"]
+    end
+
+    S --> U --> I --> E
+
+    classDef fast fill:#1e293b,stroke:#38bdf8,stroke-width:1px,color:#f8fafc;
+    classDef high fill:#0f172a,stroke:#34d399,stroke-width:2px,color:#f8fafc;
+
+    class S,U fast;
+    class I,E high;
+```
+
+| Testing Layer | Scope | Execution Speed | Confidence Level | Primary Tooling |
+| :--- | :--- | :--- | :--- | :--- |
+| **Static** | Type safety, syntax contracts, imports | 100-500 ms (Fast) | Syntax & type leaks only | TypeScript, ESLint |
+| **Unit** | Pure utilities, custom reducers, math functions | 1-5 ms per test | Low (misses UI/DOM integration) | Vitest |
+| **Integration** | Connected features, user workflows, DOM events | 20-100 ms per test | **VERY HIGH** (resembles real user) | React Testing Library + MSW |
+| **End-to-End** | Full real browser, real backend DB, CDN | 2-10 sec per test | **MAXIMUM** (tests production stack) | Playwright |
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +----------------+---------------------+-------------------+---------------------+
 | Testing Layer  | Scope               | Execution Speed   | Confidence Level    |
@@ -193,6 +272,9 @@ V8 MEMORY FOOTPRINT IN JSDOM TEST RUNNER
 | (Playwright)   | backend DB, CDN     | (Slow, high CI $$)| (tests full stack)  |
 +----------------+---------------------+-------------------+---------------------+
 ```
+
+</details>
+
 
 ---
 

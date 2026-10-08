@@ -24,6 +24,18 @@ By completing this chapter, you will be able to:
 ---
 
 ## 3. Historical Evolution
+```mermaid
+timeline
+    title Frontend State & Service Scaffolding Evolution
+    2013 - 2016 : Direct Component Lifecycles : componentDidMount jQuery.ajax & fetch : Hard to test & zero caching
+    2016 - 2019 : Global Redux Thunks & Sagas : Async actions & reducers : Massive boilerplate for basic CRUD
+    2020 - 2022 : React Query / SWR Direct Fetch : Decoupled cache from UI : Inline fetch calls leaked HTTP into views
+    2023 - Present : Clean Repositories + TanStack Query + Zod : Strict 3-tier boundary architecture : Runtime validation & mock-swappable DI
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +---------------------------------------------------------------------------------------------------+
 | 2013 - 2016: Direct Fetch in Component Lifecycles                                                 |
@@ -52,6 +64,9 @@ By completing this chapter, you will be able to:
 | (Application State / Cache) -> Presentational Components (UI). Zero runtime leakage of HTTP.      |
 +---------------------------------------------------------------------------------------------------+
 ```
+
+</details>
+
 
 ---
 
@@ -175,6 +190,33 @@ V8 HEAP MEMORY - SERVICE CONTAINER RESOLUTION
 ## 8. Visual Diagrams (ASCII / Text)
 
 ### Repository Pattern with Runtime Schema Gate
+```mermaid
+flowchart TD
+    API["Backend REST API"] -->|Raw JSON snake_case| HTTP["HTTP Client (Axios / Fetch)"]
+    HTTP --> REPO["Repository Layer (IUserRepository)"]
+    
+    subgraph BoundaryValidation["Validation & Transformation"]
+        REPO --> PARSE["UserSchema.parse(json)<br/>Runtime Zod Gate"]
+        PARSE --> DOMAIN["Clean Domain Entity (camelCase)"]
+    end
+    
+    DOMAIN --> CACHE["TanStack Query Cache (Application State)"]
+    CACHE --> UI["React Component (JSX Presentation)"]
+
+    classDef external fill:#1e293b,stroke:#f59e0b,stroke-width:1px,color:#f8fafc;
+    classDef client fill:#1e293b,stroke:#38bdf8,stroke-width:1px,color:#f8fafc;
+    classDef gate fill:#0f172a,stroke:#818cf8,stroke-width:2px,color:#f8fafc;
+    classDef ui fill:#1e293b,stroke:#34d399,stroke-width:1px,color:#f8fafc;
+
+    class API external;
+    class HTTP,REPO client;
+    class PARSE,DOMAIN gate;
+    class CACHE,UI ui;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 [ Backend REST API ]
         |
@@ -198,6 +240,9 @@ V8 HEAP MEMORY - SERVICE CONTAINER RESOLUTION
         v
 [ React Component (JSX Presentation) ]
 ```
+
+</details>
+
 
 ---
 

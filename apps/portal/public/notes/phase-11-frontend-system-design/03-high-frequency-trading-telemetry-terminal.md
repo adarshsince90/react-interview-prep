@@ -175,6 +175,36 @@ By pre-allocating memory and relying on `TypedArray` views (`Float64Array`, `Int
 
 ### End-to-End Terminal Pipeline Architecture
 
+```mermaid
+flowchart TD
+    subgraph Ingestion["INGESTION LAYER (Dedicated Web Worker Thread)"]
+        WSS["WSS Socket (Raw Binary Stream)"] -->|Binary Chunks| Parser["Binary Parser / Protobuf Decoder"]
+        Parser --> OrderBook["OrderBook State (B-Tree)"]
+        OrderBook <--> Pool["Pre-allocated Delta Buffer Pool<br/>(Zero-Allocation Pooling)"]
+    end
+
+    subgraph Rendering["CONSUMPTION & RENDERING LAYER (Main UI Thread)"]
+        Bridge["Worker Bridge (postMessage / SharedArrayBuffer)"] --> Ring["Circular Ring Buffer (Lock-Free FIFO)"]
+        Ring -->|Drained on V-Sync| RAF["rAF Render Dispatcher (requestAnimationFrame)"]
+        RAF --> Grid["Virtualized Grid<br/>DOM Viewport: 30 rows<br/>(Direct Text Node Mutate)"]
+        RAF --> Canvas["OffscreenCanvas / GPU View<br/>Candlestick Tape & Order Book Depth<br/>(WebGL / 2D Context)"]
+        Grid -.->|User scrolls / zooms| Ring
+    end
+
+    Pool -->|Zero-Copy ArrayBuffer Transfer| Bridge
+
+    classDef worker fill:#0f172a,stroke:#818cf8,stroke-width:2px,color:#f8fafc;
+    classDef main fill:#1e293b,stroke:#34d399,stroke-width:1px,color:#f8fafc;
+    classDef buffer fill:#1e293b,stroke:#f59e0b,stroke-width:1px,color:#f8fafc;
+
+    class WSS,Parser,OrderBook,Pool worker;
+    class Bridge,Ring,RAF buffer;
+    class Grid,Canvas main;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +-----------------------------------------------------------------------+
 | INGESTION LAYER (Web Worker Context)                                  |
@@ -210,6 +240,8 @@ By pre-allocating memory and relying on `TypedArray` views (`Float64Array`, `Int
 |   (Direct text mutate)  (2D / WebGL context)  |                       |
 +-----------------------------------------------------------------------+
 ```
+
+</details>
 
 ---
 

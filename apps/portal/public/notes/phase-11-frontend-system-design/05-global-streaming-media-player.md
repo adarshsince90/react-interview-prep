@@ -190,6 +190,37 @@ MEDIA STREAMING HEAP & BROWSER MEMORY MODEL:
 
 ### Media Source Extensions (MSE) Pipeline & Buffer Sliding Window
 
+```mermaid
+flowchart TD
+    CDN["REMOTE CDN<br/>Segment 1, Segment 2, Segment 3, Segment 4..."] -->|HTTP GET ArrayBuffer| Ctrl["BROWSER JAVASCRIPT CONTROLLER<br/>• ABR Engine evaluates EWMA throughput & buffer health<br/>• Selects rendition (1080p / 720p / 360p)"]
+    
+    subgraph SlidingWindow["SOURCE BUFFER SLIDING WINDOW (Time in Seconds)"]
+        Evict["[0s - 20s] EVICTED / REMOVED<br/>Pruned via sourceBuffer.remove(0, 20)"]
+        Play["[20s - 35s] PLAYED AUDIO/VIDEO"]
+        Playhead(("PLAYHEAD currentTime: 35s"))
+        Forward["[35s - 65s] FORWARD BUFFER<br/>Maintained at 30s ahead of playhead"]
+        Unfetch["[65s+] UNFETCHED / FUTURE"]
+        
+        Evict -.-> Play --> Playhead --> Forward -.-> Unfetch
+    end
+
+    Ctrl -->|sourceBuffer.appendBuffer chunk| Forward
+    Playhead --> GPU["HARDWARE DECODER / GPU DISPLAY<br/>&lt;video&gt; element presents seamless 60 FPS video"]
+
+    classDef cdn fill:#1e293b,stroke:#38bdf8,stroke-width:1px,color:#f8fafc;
+    classDef ctrl fill:#0f172a,stroke:#818cf8,stroke-width:2px,color:#f8fafc;
+    classDef buf fill:#1e293b,stroke:#34d399,stroke-width:1px,color:#f8fafc;
+    classDef gpu fill:#1e293b,stroke:#f59e0b,stroke-width:1px,color:#f8fafc;
+
+    class CDN cdn;
+    class Ctrl ctrl;
+    class Evict,Play,Forward,Unfetch buf;
+    class GPU gpu;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +-----------------------------------------------------------------+
 | REMOTE CDN                                                      |
@@ -227,6 +258,8 @@ MEDIA STREAMING HEAP & BROWSER MEMORY MODEL:
 | <video> element presents seamless 60 FPS output                 |
 +-----------------------------------------------------------------+
 ```
+
+</details>
 
 ---
 

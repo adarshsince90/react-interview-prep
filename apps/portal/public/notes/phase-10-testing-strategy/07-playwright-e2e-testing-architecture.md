@@ -26,6 +26,17 @@ By completing this chapter, you will be able to:
 ---
 
 ## 3. Historical Evolution
+```mermaid
+timeline
+    title Playwright & E2E Testing Architecture Evolution
+    2004 - 2016 : Selenium WebDriver Era : HTTP JSON Wire Protocol to chromedriver : Flaky tests without auto-waiting; relied on explicit sleeps
+    2017 - 2021 : Cypress In-Browser Paradigm : Ran inside iframe alongside application : Great DX but single-tab, iframe sandboxing, and slow workers
+    2020 - Present : Playwright WebSocket Protocol : Out-of-process bi-directional browser control : Multi-browser (Chromium/WebKit/Firefox), multi-tab, auto-waiting & storageState
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +---------------------------------------------------------------------------------------------------+
 | 2004 - 2016: The Selenium WebDriver Era                                                           |
@@ -47,6 +58,9 @@ By completing this chapter, you will be able to:
 | Real multi-browser support (Chromium, WebKit, Firefox), multi-tab, auto-waiting, and fast workers.|
 +---------------------------------------------------------------------------------------------------+
 ```
+
+</details>
+
 
 ---
 
@@ -165,6 +179,23 @@ TEST PROCESS (Node.js)                         BROWSER PROCESS (Chromium / WebKi
 ## 8. Visual Diagrams (ASCII / Text)
 
 ### The Page Object Model (POM) Architecture
+```mermaid
+flowchart TD
+    Suite["E2E Test Suite (checkout.spec.ts)"] -->|Calls clean business actions| POM["Page Object Class (CheckoutPage.ts)<br/>• readonly page: Page<br/>• readonly cardNumberInput<br/>• readonly submitButton<br/>• async fillPaymentDetails()<br/>• async submitOrder()"]
+    POM -->|Interacts via strict accessibility locators| DOM["Live Browser Application DOM<br/>(Chromium / WebKit / Firefox)"]
+
+    classDef suite fill:#1e293b,stroke:#38bdf8,stroke-width:1px,color:#f8fafc;
+    classDef pom fill:#0f172a,stroke:#818cf8,stroke-width:2px,color:#f8fafc;
+    classDef dom fill:#1e293b,stroke:#34d399,stroke-width:1px,color:#f8fafc;
+
+    class Suite suite;
+    class POM pom;
+    class DOM dom;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 [ E2E Test Suite (checkout.spec.ts) ]
                |
@@ -181,6 +212,9 @@ TEST PROCESS (Node.js)                         BROWSER PROCESS (Chromium / WebKi
                v
 [ Live Browser Application DOM ]
 ```
+
+</details>
+
 
 ---
 

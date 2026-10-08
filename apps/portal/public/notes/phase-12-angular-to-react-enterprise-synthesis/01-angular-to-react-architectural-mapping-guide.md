@@ -146,6 +146,30 @@ REACT HEAP TOPOLOGY (Decoupled Fiber + Closure Scope):
 
 ### Content Projection vs Named Props Slot Composition
 
+```mermaid
+flowchart TD
+    subgraph AngularProjection["Angular Content Projection (&lt;ng-content&gt;)"]
+        A_Parent["Parent Template<br/>&lt;app-dialog&gt;<br/>&lt;div header&gt;...&lt;/div&gt;<br/>&lt;div body&gt;...&lt;/div&gt;"]
+        A_Child["Child Template<br/>&lt;ng-content select='[header]'/&gt;<br/>&lt;ng-content select='[body]'/&gt;"]
+        A_Parent -->|DOM Selector Query Match| A_Child
+    end
+
+    subgraph ReactSlots["React Named Slots Composition (First-Class Props)"]
+        R_Parent["Parent Component<br/>&lt;Dialog<br/>header={&lt;h2&gt;...&lt;/h2&gt;}<br/>body={&lt;ConfigControls /&gt;}<br/>footer={&lt;ActionButtons /&gt;} /&gt;"]
+        R_Child["Child Component<br/>({ header, body, footer }: DialogProps)<br/>Renders directly in JSX: {header}, {body}"]
+        R_Parent -->|Passes ReactNode as Object Props| R_Child
+    end
+
+    classDef ng fill:#1e293b,stroke:#ef4444,stroke-width:1px,color:#f8fafc;
+    classDef react fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#f8fafc;
+
+    class A_Parent,A_Child ng;
+    class R_Parent,R_Child react;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw Comparison Schematic</summary>
+
 ```
 ANGULAR CONTENT PROJECTION (<ng-content>):
 Parent Template:
@@ -183,6 +207,8 @@ Child Component (Dialog.tsx):
     </div>
   );
 ```
+
+</details>
 
 ---
 

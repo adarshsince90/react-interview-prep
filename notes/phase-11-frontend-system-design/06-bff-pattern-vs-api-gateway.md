@@ -171,6 +171,26 @@ NODE.JS BFF PROCESS MEMORY MODEL:
 
 ### The Token-Mediating BFF Security Architecture
 
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Browser as Browser (Public Web)<br/>Holds: __Host-session-id (HttpOnly)
+    participant BFF as BFF Tier (Edge / Node)<br/>Maps session -> Encrypted JWT
+    participant Redis as Encrypted Session Store<br/>(Redis Cluster)
+    participant Microservices as Downstream Microservices<br/>(Internal Private Network)
+
+    Browser->>BFF: 1. GET /api/orders (Cookie: __Host-session=xyz)
+    BFF->>Redis: 2. Validate session & lookup accessToken
+    Redis-->>BFF: Return decrypted JWT { accessToken, scopes }
+    BFF->>Microservices: 3. GET /orders (Authorization: Bearer JWT)
+    Microservices-->>BFF: 4. Returns Raw Order Entity (Full Enterprise Model)
+    Note over BFF: 5. BFF Pruning: Shapes response,<br/>strips 80% unused fields & internal IDs
+    BFF-->>Browser: 6. Returns Clean Tailored DTO (Minimal payload)
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 BROWSER (Untrusted Public Web)         BFF TIER (Edge / DMZ)           INTERNAL PRIVATE NETWORK
 +-----------------------------+     +--------------------------+     +--------------------------+
@@ -200,6 +220,8 @@ BROWSER (Untrusted Public Web)         BFF TIER (Edge / DMZ)           INTERNAL 
               | 6. Returns Clean DTO              |                               |
               |<----------------------------------|                               |
 ```
+
+</details>
 
 ---
 

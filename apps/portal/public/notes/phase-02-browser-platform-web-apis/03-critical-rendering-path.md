@@ -32,6 +32,17 @@ Mastering the 5 sequential phases of the rendering pipeline—**Style → Layout
 
 ## 3. Historical Evolution
 
+```mermaid
+timeline
+    title Critical Rendering Path Evolution
+    1995 - 2010 : Software Rendering & Full-Window Repaints : Single CPU framebuffer : Any DOM edit repaints full window; animations &lt; 20 FPS
+    2010 - 2018 : Accelerated Compositing & GPU Layers : WebKit & Chromium GPU compositing : Discrete GPU textures; CSS 3D transforms (translateZ)
+    2018 - Present : Multi-Threaded Raster & Off-Main Compositing : Compositor runs independently of JS Main Thread : Skia parallel raster; 120 FPS transform/opacity animations
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```text
 ERA 1: Software Rendering & Full-Window Repaints (1995 - 2010)
 ┌────────────────────────────────────────────────────────┐
@@ -60,6 +71,9 @@ ERA 3: Multi-Threaded Raster & Off-Main-Thread Compositing (2018 - Present)
 │   even when the JavaScript main thread is blocked!     │
 └────────────────────────────────────────────────────────┘
 ```
+
+</details>
+
 
 ---
 
@@ -214,6 +228,31 @@ When an element is promoted to its own **Compositor Layer** (via `will-change: t
 
 ### Stacking Contexts & Layer Compositing Topology
 
+```mermaid
+flowchart BT
+    L1["Layer 1: Root Document & Body Background<br/>(Default root compositor tile layer)"]
+    L2["Layer 2: Fixed Sticky Navigation Bar<br/>position: sticky<br/>(Stored as independent GPU texture in VRAM)"]
+    L3["Layer 3: Floating Modal Dialog<br/>transform: translateZ(0)<br/>(Stored as independent GPU texture in VRAM)"]
+
+    L1 -->|Composited underneath| L2
+    L2 -->|Composited underneath| L3
+
+    subgraph GPUOutput["FINAL HARDWARE COMPOSITE DISPLAY"]
+        L3
+    end
+
+    classDef l1 fill:#1e293b,stroke:#38bdf8,stroke-width:1px,color:#f8fafc;
+    classDef l2 fill:#1e293b,stroke:#818cf8,stroke-width:1px,color:#f8fafc;
+    classDef l3 fill:#0f172a,stroke:#34d399,stroke-width:2px,color:#f8fafc;
+
+    class L1 l1;
+    class L2 l2;
+    class L3 l3;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```text
 ┌────────────────────────────────────────────────────────────────────────┐
 │                        FINAL DISPLAY COMPOSITION                       │
@@ -235,6 +274,9 @@ When an element is promoted to its own **Compositor Layer** (via `will-change: t
 │                                                                        │
 └────────────────────────────────────────────────────────────────────────┘
 ```
+
+</details>
+
 
 ---
 

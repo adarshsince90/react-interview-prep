@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-08T11:49:01.418Z",
+  "generatedAt": "2026-10-08T18:51:10.766Z",
   "totalPhases": 12,
   "totalTopics": 110,
   "phases": [
@@ -918,8 +918,8 @@
           "phaseId": "phase-02",
           "title": "Chapter 01: Browser Architecture & Multi-Process Model (Browser, Renderer, GPU, Network Processes, IPC & Site Isolation)",
           "relativePath": "notes/phase-02-browser-platform-web-apis/01-browser-architecture-multi-process.md",
-          "wordCount": 3667,
-          "readingTimeMin": 17,
+          "wordCount": 3876,
+          "readingTimeMin": 18,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -1011,8 +1011,8 @@
           "phaseId": "phase-02",
           "title": "Chapter 02: DOM & CSSOM Tree Construction (HTML/CSS Tokenization, Speculative Parsing, C++ Blink Node Allocation & Script Blocking)",
           "relativePath": "notes/phase-02-browser-platform-web-apis/02-dom-cssom-tree-construction.md",
-          "wordCount": 3571,
-          "readingTimeMin": 17,
+          "wordCount": 3797,
+          "readingTimeMin": 18,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -1104,8 +1104,8 @@
           "phaseId": "phase-02",
           "title": "Chapter 03: The Critical Rendering Path (Style Recalculation, Layout / Reflow, Paint, Compositing & GPU Layers)",
           "relativePath": "notes/phase-02-browser-platform-web-apis/03-critical-rendering-path.md",
-          "wordCount": 3591,
-          "readingTimeMin": 17,
+          "wordCount": 3760,
+          "readingTimeMin": 18,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -1197,8 +1197,8 @@
           "phaseId": "phase-02",
           "title": "Chapter 04: Layout Thrashing & Forced Synchronous Reflow (Batching DOM Reads/Writes, requestAnimationFrame, FastDOM Patterns & ResizeObserver)",
           "relativePath": "notes/phase-02-browser-platform-web-apis/04-layout-thrashing-reflow.md",
-          "wordCount": 3281,
-          "readingTimeMin": 15,
+          "wordCount": 3520,
+          "readingTimeMin": 16,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -1290,8 +1290,8 @@
           "phaseId": "phase-02",
           "title": "Chapter 05: Browser Event Architecture & Event Propagation (Capturing, Bubbling, composedPath, Passive Event Listeners & Synthetic Events)",
           "relativePath": "notes/phase-02-browser-platform-web-apis/05-browser-event-architecture.md",
-          "wordCount": 3449,
-          "readingTimeMin": 16,
+          "wordCount": 3631,
+          "readingTimeMin": 17,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -1383,8 +1383,8 @@
           "phaseId": "phase-02",
           "title": "Chapter 06: Event Delegation & Memory Optimization (Ancestor Event Dispatch, closest(), Memory Leak Elimination & React 17/18 Root Migration)",
           "relativePath": "notes/phase-02-browser-platform-web-apis/06-event-delegation-memory-optimization.md",
-          "wordCount": 3292,
-          "readingTimeMin": 15,
+          "wordCount": 3541,
+          "readingTimeMin": 17,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -1476,8 +1476,8 @@
           "phaseId": "phase-02",
           "title": "Chapter 07: Browser Networking & Network Stack (HTTP/1.1 vs HTTP/2 vs HTTP/3 QUIC, TCP Handshakes, Fetch Streams & Connection Pools)",
           "relativePath": "notes/phase-02-browser-platform-web-apis/07-browser-networking-stack.md",
-          "wordCount": 3327,
-          "readingTimeMin": 16,
+          "wordCount": 3633,
+          "readingTimeMin": 17,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -1569,8 +1569,8 @@
           "phaseId": "phase-02",
           "title": "Chapter 08: Same-Origin Policy, CORS & Security Headers (Preflight OPTIONS, CSP Level 3, Nonces, HSTS, X-Frame-Options & Permissions Policy)",
           "relativePath": "notes/phase-02-browser-platform-web-apis/08-cors-csp-security-headers.md",
-          "wordCount": 3271,
-          "readingTimeMin": 15,
+          "wordCount": 3504,
+          "readingTimeMin": 16,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -1662,8 +1662,8 @@
           "phaseId": "phase-02",
           "title": "Chapter 09: Browser Storage Architecture (Cookie Jars & SameSite, Storage Quotas, IndexedDB Transactional Engine & OPFS)",
           "relativePath": "notes/phase-02-browser-platform-web-apis/09-browser-storage-architecture.md",
-          "wordCount": 3362,
-          "readingTimeMin": 16,
+          "wordCount": 3594,
+          "readingTimeMin": 17,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -1755,8 +1755,8 @@
           "phaseId": "phase-02",
           "title": "Topic 10: Service Workers, PWA Architecture & Offline Synchronization",
           "relativePath": "notes/phase-02-browser-platform-web-apis/10-service-workers-pwa-offline.md",
-          "wordCount": 4128,
-          "readingTimeMin": 19,
+          "wordCount": 4404,
+          "readingTimeMin": 21,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -5091,8 +5091,8 @@
           "phaseId": "phase-06",
           "title": "Chapter 04: Static Site Generation (SSG) vs. Incremental Static Regeneration (ISR) (Build-Time Projection, Stale-While-Revalidate Caching & On-Demand Purging)",
           "relativePath": "notes/phase-06-nextjs-fullstack-react/04-ssg-vs-isr.md",
-          "wordCount": 4731,
-          "readingTimeMin": 22,
+          "wordCount": 4997,
+          "readingTimeMin": 23,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -5184,8 +5184,8 @@
           "phaseId": "phase-06",
           "title": "Chapter 05: Middleware & Edge Runtime Mechanics (Edge Routing, Request Interception, Geo-IP, Auth Guards & V8 Isolates)",
           "relativePath": "notes/phase-06-nextjs-fullstack-react/05-middleware-edge-runtime.md",
-          "wordCount": 4057,
-          "readingTimeMin": 19,
+          "wordCount": 4286,
+          "readingTimeMin": 20,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -5277,8 +5277,8 @@
           "phaseId": "phase-06",
           "title": "Chapter 06: Authentication & Session Management in Full-Stack Next.js (JWT vs. Database Sessions, HttpOnly Cookies, Auth.js & Enterprise RBAC)",
           "relativePath": "notes/phase-06-nextjs-fullstack-react/06-authentication-session-management.md",
-          "wordCount": 4437,
-          "readingTimeMin": 21,
+          "wordCount": 4712,
+          "readingTimeMin": 22,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -5370,8 +5370,8 @@
           "phaseId": "phase-06",
           "title": "Chapter 07: Route Handlers & REST/GraphQL API Design (Web Standard Request/Response, Streaming, Webhooks, CORS & File Uploads)",
           "relativePath": "notes/phase-06-nextjs-fullstack-react/07-route-handlers-api-design.md",
-          "wordCount": 3822,
-          "readingTimeMin": 18,
+          "wordCount": 4059,
+          "readingTimeMin": 19,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -5463,8 +5463,8 @@
           "phaseId": "phase-06",
           "title": "Chapter 08: Multi-Tier Caching Architecture (Request Memoization, Data Cache, Full Route Cache & Client Router Cache)",
           "relativePath": "notes/phase-06-nextjs-fullstack-react/08-caching-architecture.md",
-          "wordCount": 3996,
-          "readingTimeMin": 19,
+          "wordCount": 4188,
+          "readingTimeMin": 20,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -5556,8 +5556,8 @@
           "phaseId": "phase-06",
           "title": "Chapter 09: Dynamic Imports, Bundling & Code Splitting Optimization (Webpack / Turbopack Internals, next/dynamic, Tree-Shaking & Bundle Analysis)",
           "relativePath": "notes/phase-06-nextjs-fullstack-react/09-dynamic-imports-bundling-optimization.md",
-          "wordCount": 3402,
-          "readingTimeMin": 16,
+          "wordCount": 3626,
+          "readingTimeMin": 17,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -5649,8 +5649,8 @@
           "phaseId": "phase-06",
           "title": "Chapter 10: Enterprise Next.js Deployment & Observability (Docker Standalone, Azure Container Apps, Vercel, OpenTelemetry & Distributed Tracing)",
           "relativePath": "notes/phase-06-nextjs-fullstack-react/10-enterprise-deployment-observability.md",
-          "wordCount": 3627,
-          "readingTimeMin": 17,
+          "wordCount": 3874,
+          "readingTimeMin": 18,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -5752,8 +5752,8 @@
           "phaseId": "phase-07",
           "title": "Topic 01: Enterprise Authentication & Identity Landscape (OAuth 2.0, OIDC & Identity Providers)",
           "relativePath": "notes/phase-07-enterprise-security-auth-identity/01-enterprise-authentication-identity-landscape.md",
-          "wordCount": 3679,
-          "readingTimeMin": 17,
+          "wordCount": 3968,
+          "readingTimeMin": 19,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -5845,8 +5845,8 @@
           "phaseId": "phase-07",
           "title": "Topic 02: The PKCE Flow in Modern SPAs & Next.js (Proof Key for Code Exchange)",
           "relativePath": "notes/phase-07-enterprise-security-auth-identity/02-pkce-flow-spa-nextjs.md",
-          "wordCount": 3119,
-          "readingTimeMin": 15,
+          "wordCount": 3311,
+          "readingTimeMin": 16,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -5938,8 +5938,8 @@
           "phaseId": "phase-07",
           "title": "Topic 03: Microsoft Entra ID (Azure AD) Enterprise Integration",
           "relativePath": "notes/phase-07-enterprise-security-auth-identity/03-entra-id-azure-ad-integration.md",
-          "wordCount": 2959,
-          "readingTimeMin": 14,
+          "wordCount": 3166,
+          "readingTimeMin": 15,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -6031,8 +6031,8 @@
           "phaseId": "phase-07",
           "title": "Topic 04: JWT Storage Architecture & Security Vectors (LocalStorage vs HttpOnly Cookies vs In-Memory)",
           "relativePath": "notes/phase-07-enterprise-security-auth-identity/04-jwt-storage-security-vectors.md",
-          "wordCount": 3025,
-          "readingTimeMin": 14,
+          "wordCount": 3258,
+          "readingTimeMin": 15,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -6124,8 +6124,8 @@
           "phaseId": "phase-07",
           "title": "Topic 05: Session Management & Refresh Token Rotation (RTR)",
           "relativePath": "notes/phase-07-enterprise-security-auth-identity/05-session-management-refresh-token-rotation.md",
-          "wordCount": 2936,
-          "readingTimeMin": 14,
+          "wordCount": 3120,
+          "readingTimeMin": 15,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -6217,8 +6217,8 @@
           "phaseId": "phase-07",
           "title": "Topic 06: Role-Based & Attribute-Based Access Control (RBAC / ABAC) in React",
           "relativePath": "notes/phase-07-enterprise-security-auth-identity/06-rbac-route-protection.md",
-          "wordCount": 2901,
-          "readingTimeMin": 14,
+          "wordCount": 3137,
+          "readingTimeMin": 15,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -6310,8 +6310,8 @@
           "phaseId": "phase-07",
           "title": "Topic 07: Content Security Policy (CSP Level 3), Nonce Generation & Trusted Types",
           "relativePath": "notes/phase-07-enterprise-security-auth-identity/07-csp-nonce-generation.md",
-          "wordCount": 2863,
-          "readingTimeMin": 14,
+          "wordCount": 3088,
+          "readingTimeMin": 15,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -6403,8 +6403,8 @@
           "phaseId": "phase-07",
           "title": "Topic 08: OWASP Top 10 for Frontend Applications & Enterprise Defense",
           "relativePath": "notes/phase-07-enterprise-security-auth-identity/08-owasp-top-10-frontend.md",
-          "wordCount": 2862,
-          "readingTimeMin": 14,
+          "wordCount": 3081,
+          "readingTimeMin": 15,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -6506,8 +6506,8 @@
           "phaseId": "phase-08",
           "title": "Topic 01: Core Web Vitals Deep Dive (INP, LCP, CLS & TTFB)",
           "relativePath": "notes/phase-08-performance-engineering-web-vitals/01-core-web-vitals-deep-dive.md",
-          "wordCount": 3021,
-          "readingTimeMin": 14,
+          "wordCount": 3279,
+          "readingTimeMin": 15,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -6599,8 +6599,8 @@
           "phaseId": "phase-08",
           "title": "Topic 02: Chrome DevTools Performance Profiling & Flamechart Analysis",
           "relativePath": "notes/phase-08-performance-engineering-web-vitals/02-chrome-devtools-performance-profiling.md",
-          "wordCount": 2795,
-          "readingTimeMin": 13,
+          "wordCount": 3052,
+          "readingTimeMin": 14,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -6692,8 +6692,8 @@
           "phaseId": "phase-08",
           "title": "Topic 03: Memory Leak Diagnosis & V8 Heap Snapshot Analysis",
           "relativePath": "notes/phase-08-performance-engineering-web-vitals/03-memory-leak-diagnosis-v8-heap-snapshots.md",
-          "wordCount": 3014,
-          "readingTimeMin": 14,
+          "wordCount": 3257,
+          "readingTimeMin": 15,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -6785,8 +6785,8 @@
           "phaseId": "phase-08",
           "title": "Topic 04: Long Task Optimization & Main Thread Yielding (scheduler.yield())",
           "relativePath": "notes/phase-08-performance-engineering-web-vitals/04-long-task-optimization-main-thread-yielding.md",
-          "wordCount": 2633,
-          "readingTimeMin": 12,
+          "wordCount": 2831,
+          "readingTimeMin": 13,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -6878,8 +6878,8 @@
           "phaseId": "phase-08",
           "title": "Topic 05: Advanced Bundle Optimization & Tree-Shaking Architecture",
           "relativePath": "notes/phase-08-performance-engineering-web-vitals/05-advanced-bundle-optimization-tree-shaking.md",
-          "wordCount": 2670,
-          "readingTimeMin": 13,
+          "wordCount": 2941,
+          "readingTimeMin": 14,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -6971,8 +6971,8 @@
           "phaseId": "phase-08",
           "title": "Topic 06: Image, Asset & Font Optimization Pipelines",
           "relativePath": "notes/phase-08-performance-engineering-web-vitals/06-image-asset-font-optimization-pipelines.md",
-          "wordCount": 2623,
-          "readingTimeMin": 12,
+          "wordCount": 2859,
+          "readingTimeMin": 13,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -7064,8 +7064,8 @@
           "phaseId": "phase-08",
           "title": "Topic 07: List & Table Virtualization at 60 FPS (@tanstack/react-virtual)",
           "relativePath": "notes/phase-08-performance-engineering-web-vitals/07-list-table-virtualization-60fps.md",
-          "wordCount": 2584,
-          "readingTimeMin": 12,
+          "wordCount": 2793,
+          "readingTimeMin": 13,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -7157,8 +7157,8 @@
           "phaseId": "phase-08",
           "title": "Topic 08: Real-User Monitoring (RUM) & Production Performance Observability",
           "relativePath": "notes/phase-08-performance-engineering-web-vitals/08-rum-performance-observability.md",
-          "wordCount": 2845,
-          "readingTimeMin": 13,
+          "wordCount": 3107,
+          "readingTimeMin": 15,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -7260,8 +7260,8 @@
           "phaseId": "phase-09",
           "title": "Topic 01: Domain-Driven Design (DDD) in Frontend Applications",
           "relativePath": "notes/phase-09-enterprise-architecture-monorepos/01-domain-driven-design-frontend.md",
-          "wordCount": 3019,
-          "readingTimeMin": 14,
+          "wordCount": 3242,
+          "readingTimeMin": 15,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -7353,8 +7353,8 @@
           "phaseId": "phase-09",
           "title": "Topic 02: Monorepo Architecture: Nx vs Turborepo",
           "relativePath": "notes/phase-09-enterprise-architecture-monorepos/02-monorepo-architecture-nx-turborepo.md",
-          "wordCount": 2669,
-          "readingTimeMin": 13,
+          "wordCount": 2916,
+          "readingTimeMin": 14,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -7446,8 +7446,8 @@
           "phaseId": "phase-09",
           "title": "Topic 03: Shared Libraries, Package Governance & SemVer",
           "relativePath": "notes/phase-09-enterprise-architecture-monorepos/03-shared-libraries-package-governance.md",
-          "wordCount": 3242,
-          "readingTimeMin": 15,
+          "wordCount": 3449,
+          "readingTimeMin": 16,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -7560,8 +7560,8 @@
           "phaseId": "phase-09",
           "title": "Topic 04: Micro-Frontends & Module Federation",
           "relativePath": "notes/phase-09-enterprise-architecture-monorepos/04-micro-frontends-module-federation.md",
-          "wordCount": 3100,
-          "readingTimeMin": 15,
+          "wordCount": 3305,
+          "readingTimeMin": 16,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -7674,8 +7674,8 @@
           "phaseId": "phase-09",
           "title": "Topic 05: Design System Architecture & Component Libraries",
           "relativePath": "notes/phase-09-enterprise-architecture-monorepos/05-design-system-architecture-component-libraries.md",
-          "wordCount": 3161,
-          "readingTimeMin": 15,
+          "wordCount": 3357,
+          "readingTimeMin": 16,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -7788,7 +7788,7 @@
           "phaseId": "phase-09",
           "title": "Topic 06: Feature-Sliced Design (FSD) Architectural Standard",
           "relativePath": "notes/phase-09-enterprise-architecture-monorepos/06-feature-sliced-design-architecture.md",
-          "wordCount": 3102,
+          "wordCount": 3285,
           "readingTimeMin": 15,
           "headings": [
             {
@@ -7902,8 +7902,8 @@
           "phaseId": "phase-09",
           "title": "Topic 07: Scalable State & Service Scaffolding",
           "relativePath": "notes/phase-09-enterprise-architecture-monorepos/07-scalable-state-service-scaffolding.md",
-          "wordCount": 2977,
-          "readingTimeMin": 14,
+          "wordCount": 3160,
+          "readingTimeMin": 15,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -8016,8 +8016,8 @@
           "phaseId": "phase-09",
           "title": "Topic 08: Case Study: Refactoring Monolith to Clean Architecture",
           "relativePath": "notes/phase-09-enterprise-architecture-monorepos/08-refactoring-monolith-to-clean-architecture.md",
-          "wordCount": 3247,
-          "readingTimeMin": 15,
+          "wordCount": 3532,
+          "readingTimeMin": 17,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -8140,8 +8140,8 @@
           "phaseId": "phase-10",
           "title": "Topic 01: The Modern Frontend Testing Pyramid & Testing Trophy",
           "relativePath": "notes/phase-10-testing-strategy/01-modern-frontend-testing-pyramid.md",
-          "wordCount": 3469,
-          "readingTimeMin": 16,
+          "wordCount": 3845,
+          "readingTimeMin": 18,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -8254,8 +8254,8 @@
           "phaseId": "phase-10",
           "title": "Topic 02: Vitest & Jest Runner Architecture",
           "relativePath": "notes/phase-10-testing-strategy/02-vitest-jest-runner-architecture.md",
-          "wordCount": 3220,
-          "readingTimeMin": 15,
+          "wordCount": 3420,
+          "readingTimeMin": 16,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -8368,8 +8368,8 @@
           "phaseId": "phase-10",
           "title": "Topic 03: React Testing Library Philosophy & User-Centric Testing",
           "relativePath": "notes/phase-10-testing-strategy/03-react-testing-library-philosophy.md",
-          "wordCount": 3191,
-          "readingTimeMin": 15,
+          "wordCount": 3404,
+          "readingTimeMin": 16,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -8482,8 +8482,8 @@
           "phaseId": "phase-10",
           "title": "Topic 04: Mock Service Worker (MSW v2) Network Mocking Architecture",
           "relativePath": "notes/phase-10-testing-strategy/04-msw-mock-service-worker-architecture.md",
-          "wordCount": 3049,
-          "readingTimeMin": 14,
+          "wordCount": 3207,
+          "readingTimeMin": 15,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -8596,8 +8596,8 @@
           "phaseId": "phase-10",
           "title": "Topic 05: Testing Asynchronous React Hooks & Stores",
           "relativePath": "notes/phase-10-testing-strategy/05-testing-async-react-hooks-stores.md",
-          "wordCount": 3214,
-          "readingTimeMin": 15,
+          "wordCount": 3403,
+          "readingTimeMin": 16,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -8710,8 +8710,8 @@
           "phaseId": "phase-10",
           "title": "Topic 06: Integration Testing Complex User Workflows",
           "relativePath": "notes/phase-10-testing-strategy/06-integration-testing-complex-workflows.md",
-          "wordCount": 3242,
-          "readingTimeMin": 15,
+          "wordCount": 3420,
+          "readingTimeMin": 16,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -8824,8 +8824,8 @@
           "phaseId": "phase-10",
           "title": "Topic 07: Playwright End-to-End (E2E) Testing Architecture",
           "relativePath": "notes/phase-10-testing-strategy/07-playwright-e2e-testing-architecture.md",
-          "wordCount": 3068,
-          "readingTimeMin": 14,
+          "wordCount": 3218,
+          "readingTimeMin": 15,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -8938,7 +8938,7 @@
           "phaseId": "phase-10",
           "title": "Topic 08: Visual Regression Testing & CI Quality Gates",
           "relativePath": "notes/phase-10-testing-strategy/08-visual-regression-testing-ci-quality-gates.md",
-          "wordCount": 3093,
+          "wordCount": 3261,
           "readingTimeMin": 15,
           "headings": [
             {
@@ -9062,8 +9062,8 @@
           "phaseId": "phase-11",
           "title": "Topic 01: The Frontend System Design Interview Framework",
           "relativePath": "notes/phase-11-frontend-system-design/01-frontend-system-design-interview-framework.md",
-          "wordCount": 3411,
-          "readingTimeMin": 16,
+          "wordCount": 3623,
+          "readingTimeMin": 17,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -9180,8 +9180,8 @@
           "phaseId": "phase-11",
           "title": "Topic 02: Real-Time Collaborative Canvas (Figma / Miro Scale)",
           "relativePath": "notes/phase-11-frontend-system-design/02-realtime-collaborative-canvas-crdts.md",
-          "wordCount": 3837,
-          "readingTimeMin": 18,
+          "wordCount": 4055,
+          "readingTimeMin": 19,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -9298,8 +9298,8 @@
           "phaseId": "phase-11",
           "title": "03: System Design: High-Frequency Trading & Telemetry Terminal",
           "relativePath": "notes/phase-11-frontend-system-design/03-high-frequency-trading-telemetry-terminal.md",
-          "wordCount": 4605,
-          "readingTimeMin": 21,
+          "wordCount": 4730,
+          "readingTimeMin": 22,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -9391,8 +9391,8 @@
           "phaseId": "phase-11",
           "title": "04: System Design: Multi-Tenant Enterprise SaaS Dashboard",
           "relativePath": "notes/phase-11-frontend-system-design/04-multi-tenant-enterprise-saas-dashboard.md",
-          "wordCount": 4614,
-          "readingTimeMin": 21,
+          "wordCount": 4742,
+          "readingTimeMin": 22,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -9484,8 +9484,8 @@
           "phaseId": "phase-11",
           "title": "05: System Design: Global Streaming Media Player",
           "relativePath": "notes/phase-11-frontend-system-design/05-global-streaming-media-player.md",
-          "wordCount": 4610,
-          "readingTimeMin": 21,
+          "wordCount": 4742,
+          "readingTimeMin": 22,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -9577,8 +9577,8 @@
           "phaseId": "phase-11",
           "title": "06: System Design: Backend-For-Frontend (BFF) vs API Gateway",
           "relativePath": "notes/phase-11-frontend-system-design/06-bff-pattern-vs-api-gateway.md",
-          "wordCount": 4558,
-          "readingTimeMin": 21,
+          "wordCount": 4663,
+          "readingTimeMin": 22,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -9670,8 +9670,8 @@
           "phaseId": "phase-11",
           "title": "07: System Design: Resilient Offline-First Mobile Field Worker App",
           "relativePath": "notes/phase-11-frontend-system-design/07-resilient-offline-first-mobile-field-app.md",
-          "wordCount": 4519,
-          "readingTimeMin": 21,
+          "wordCount": 4703,
+          "readingTimeMin": 22,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -9763,7 +9763,7 @@
           "phaseId": "phase-11",
           "title": "08: System Design: Global CDN Edge Compute & Caching Strategy",
           "relativePath": "notes/phase-11-frontend-system-design/08-global-cdn-edge-compute-caching.md",
-          "wordCount": 4453,
+          "wordCount": 4553,
           "readingTimeMin": 21,
           "headings": [
             {
@@ -9955,8 +9955,8 @@
           "phaseId": "phase-12",
           "title": "01: Angular to React Architectural Mapping Guide",
           "relativePath": "notes/phase-12-angular-to-react-enterprise-synthesis/01-angular-to-react-architectural-mapping-guide.md",
-          "wordCount": 3910,
-          "readingTimeMin": 18,
+          "wordCount": 3986,
+          "readingTimeMin": 19,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -10048,8 +10048,8 @@
           "phaseId": "phase-12",
           "title": "02: Angular Change Detection (Zone.js/Signals) vs React Reconciliation (Fiber)",
           "relativePath": "notes/phase-12-angular-to-react-enterprise-synthesis/02-angular-change-detection-vs-react-reconciliation.md",
-          "wordCount": 3901,
-          "readingTimeMin": 18,
+          "wordCount": 4015,
+          "readingTimeMin": 19,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -10141,7 +10141,7 @@
           "phaseId": "phase-12",
           "title": "03: RxJS Reactive Streams vs React Hooks & State Primitives",
           "relativePath": "notes/phase-12-angular-to-react-enterprise-synthesis/03-rxjs-reactive-streams-vs-react-hooks.md",
-          "wordCount": 3762,
+          "wordCount": 3858,
           "readingTimeMin": 18,
           "headings": [
             {
@@ -10234,7 +10234,7 @@
           "phaseId": "phase-12",
           "title": "04: Angular Hierarchical Dependency Injection vs React Composition & Context",
           "relativePath": "notes/phase-12-angular-to-react-enterprise-synthesis/04-angular-di-vs-react-composition-context.md",
-          "wordCount": 3582,
+          "wordCount": 3703,
           "readingTimeMin": 17,
           "headings": [
             {
@@ -10420,7 +10420,7 @@
           "phaseId": "phase-12",
           "title": "06: Angular Route Guards & Interceptors vs React Routers & Middleware",
           "relativePath": "notes/phase-12-angular-to-react-enterprise-synthesis/06-angular-route-guards-interceptors-vs-react.md",
-          "wordCount": 3750,
+          "wordCount": 3872,
           "readingTimeMin": 18,
           "headings": [
             {
@@ -10513,8 +10513,8 @@
           "phaseId": "phase-12",
           "title": "07: Angular Signals (Fine-Grained) vs React State & React Compiler",
           "relativePath": "notes/phase-12-angular-to-react-enterprise-synthesis/07-angular-signals-vs-react-state-compiler.md",
-          "wordCount": 3892,
-          "readingTimeMin": 18,
+          "wordCount": 4020,
+          "readingTimeMin": 19,
           "headings": [
             {
               "title": "1. Why This Topic Exists",
@@ -10606,8 +10606,8 @@
           "phaseId": "phase-12",
           "title": "08: Enterprise Clean Architecture: Scalable Angular vs Scalable React Applications",
           "relativePath": "notes/phase-12-angular-to-react-enterprise-synthesis/08-enterprise-clean-architecture-angular-vs-react.md",
-          "wordCount": 4352,
-          "readingTimeMin": 20,
+          "wordCount": 4457,
+          "readingTimeMin": 21,
           "headings": [
             {
               "title": "1. Why This Topic Exists",

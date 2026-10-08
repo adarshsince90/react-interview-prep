@@ -32,6 +32,26 @@ Understanding how the browser’s **Network Process** enforces the SOP, how pref
 
 ## 3. Historical Evolution
 
+```mermaid
+timeline
+    title Historical Evolution of Web Security & Origin Isolation
+    section 1995 - 2005
+        Netscape 2.0 & Same-Origin Policy : Total origin isolation
+        Zero Cross-Origin APIs : sitea.com cannot read cookies or DOM of siteb.com
+    section 2005 - 2014
+        Web 2.0 & JSONP Hacks : script tag bypasses SOP with callback=fn
+        Security Risks : Remote code execution risk, GET-only, no error handling
+    section 2014 - 2020
+        W3C Standardized CORS : Standardized HTTP handshake headers
+        Preflight & Credentials : Preflight OPTIONS requests and credentialed requests
+    section 2020 - Present
+        CSP Level 3 & Isolation Headers : Cryptographic nonces replace brittle domain lists
+        COOP & COEP : Process memory isolation against Spectre attacks
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```text
 ERA 1: Netscape 2.0 & The Same-Origin Policy (1995 - 2005)
 ┌────────────────────────────────────────────────────────┐
@@ -68,6 +88,7 @@ ERA 4: Modern CSP Level 3 & Isolation Headers (2020 - Present)
 │   process memory against Spectre attacks.              │
 └────────────────────────────────────────────────────────┘
 ```
+</details>
 
 ---
 
@@ -213,6 +234,39 @@ In **CSP Level 3**:
 
 ### Clickjacking Defense: `X-Frame-Options` vs. `frame-ancestors`
 
+```mermaid
+flowchart TD
+    subgraph AttackerSite["Malicious Attacker Site (https://evil.com)"]
+        Bait["Visual Bait: 'Click here to win a free iPhone!'"]
+        subgraph HiddenFrame["Hidden Invisible Iframe (opacity: 0.001)"]
+            Bank["Embedded: https://bank.com/transfer?to=evil&amount=10000<br/>Confirm Wire Transfer Button aligned under bait"]
+        end
+    end
+
+    subgraph BrowserDefense["Browser Security Policy Enforcement"]
+        HeaderCheck{"Does bank.com send<br/>frame-ancestors 'none'<br/>or X-Frame-Options: DENY?"}
+        Block["Browser REFUSES to render bank.com inside iframe<br/>Clickjacking Attack Neutralized!"]
+        Allow["Vulnerable: Iframe renders transparently<br/>Victim clicks bait and authorizes transfer!"]
+    end
+
+    AttackerSite --> HeaderCheck
+    HeaderCheck -->|Protected: CSP / XFO Present| Block
+    HeaderCheck -->|Vulnerable: No Protection Headers| Allow
+
+    classDef attacker fill:#ef444415,stroke:#ef4444,stroke-width:2px;
+    classDef safe fill:#10b98115,stroke:#10b981,stroke-width:2px;
+    classDef danger fill:#f59e0b15,stroke:#f59e0b,stroke-width:2px;
+    classDef check fill:#6366f115,stroke:#6366f1,stroke-width:2px;
+
+    class AttackerSite,HiddenFrame attacker;
+    class Block safe;
+    class Allow danger;
+    class HeaderCheck check;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```text
 MALICIOUS ATTACKER SITE: https://evil.com
 ┌────────────────────────────────────────────────────────────────────────┐
@@ -232,6 +286,7 @@ Content-Security-Policy: frame-ancestors 'none';  (or X-Frame-Options: DENY)
 The browser immediately REFUSES to render bank.com inside the iframe!
 Clickjacking attack completely neutralized!
 ```
+</details>
 
 ---
 

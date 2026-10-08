@@ -185,6 +185,23 @@ V8 ISOLATE AT THE CDN EDGE POP:
 
 ### Dynamic Edge Personalization with HTMLRewriter
 
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Browser as Browser (London)<br/>Visits /dashboard with JWT cookie
+    participant Edge as CDN Edge PoP (London)<br/>V8 Isolate + SSD Cache
+    participant Origin as Origin Server (Virginia)<br/>Static Shell with Placeholders
+
+    Browser->>Edge: 1. GET /dashboard (Cookie: auth_token=jwt_xyz)
+    Note over Edge: 2. Cache HIT! Reads generic cached HTML shell<br/>3. Web Crypto verifies JWT -> user: "Adarsh"
+    Note over Edge: 4. HTMLRewriter streaming parser rewrites on-the-fly:<br/>&lt;span id="user"&gt;Guest&lt;/span&gt; -> &lt;span id="user"&gt;Adarsh&lt;/span&gt;
+    Edge-->>Browser: 5. Streams personalized HTML directly to client (&lt; 5ms)
+    Note over Edge,Origin: Zero origin roundtrip required! Origin remains idle in Virginia.
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 BROWSER (London)                     CDN EDGE POP (London)               ORIGIN SERVER (Virginia)
 +--------------+                   +----------------------+             +-----------------------+
@@ -210,6 +227,8 @@ BROWSER (London)                     CDN EDGE POP (London)               ORIGIN 
        | 4. Streams Personalized HTML (< 5ms) |
        |<-------------------------------------|
 ```
+
+</details>
 
 ---
 

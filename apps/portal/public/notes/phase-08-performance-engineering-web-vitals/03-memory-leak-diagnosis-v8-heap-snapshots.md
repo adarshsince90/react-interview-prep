@@ -22,6 +22,19 @@ By mastering this chapter, you will be able to:
 
 ## 3. Historical Evolution
 
+```mermaid
+timeline
+  title Evolution of JavaScript Garbage Collection & Memory Diagnostics
+  2005 : IE6 Circular Reference Crisis : COM objects & JScript DOM wrappers caused permanent OS memory leaks
+  2010 : V8 Mark-Sweep Garbage Collector : Chrome adopted generational mark-sweep GC, exposing closure retention leaks
+  2015 : SPA Proliferation & Detached DOM Epidemic : Client routers retain destroyed component trees in uncleaned listeners
+  2021 : WeakRef & FinalizationRegistry (ES2021) : Native weak referencing and GC lifecycle notifications
+  2024+ : DevTools Memory Automation : Detached element badging and automated leak assistants
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +--------------------------------------------------------------------------------------------------+
 |                                    CHRONOLOGICAL EVOLUTION                                       |
@@ -42,6 +55,8 @@ By mastering this chapter, you will be able to:
 |         DOM leak diagnostic assistants integrated directly into DevTools Elements & Memory.     |
 +--------------------------------------------------------------------------------------------------+
 ```
+
+</details>
 
 ---
 
@@ -158,6 +173,48 @@ To fix the leak, you cut the string at any point in the retainer chain (e.g., re
 
 ### DevTools Memory Panel: Three-Snapshot Matrix
 
+```mermaid
+flowchart TD
+  subgraph SnapshotOverview["Heap Snapshot Progression (Three-Snapshot Matrix)"]
+    direction LR
+    S1["Snapshot 1 (Initial)<br/><b>24.2 MB</b>"]
+    S2["Snapshot 2 (Action 1)<br/><b>38.6 MB</b>"]
+    S3["Snapshot 3 (Action 2)<br/><b>52.9 MB ⚠️ Leaking!</b>"]
+    S1 --> S2 --> S3
+  end
+
+  subgraph LeakBreakdown["Objects Between Snapshots (Retained Heap Drivers)"]
+    direction TB
+    D1["<b>Detached HTMLDivElement</b><br/>Shallow: 144 B | Retained: 14.2 MB (26.8%)"]
+    D2["<b>Detached Canvas</b><br/>Shallow: 288 B | Retained: 12.1 MB (22.8%)"]
+    D3["<b>Array Buffers</b><br/>Shallow: 4,096 B | Retained: 8.4 MB (15.8%)"]
+    D4["<b>Closure Contexts</b><br/>Shallow: 64 B | Retained: 5.1 MB (9.6%)"]
+  end
+
+  subgraph RetainerChain["Retainer Graph (Root to Leaked Node)"]
+    direction BT
+    Leaf["Detached HTMLDivElement (@182947)"]
+    Scope["modalNode in Scope (@192841)"]
+    Handler["handler in EventListener 'click'"]
+    Root["window.listeners ──► GC ROOT"]
+
+    Leaf --> Scope --> Handler --> Root
+  end
+
+  S3 --> LeakBreakdown
+  LeakBreakdown --> RetainerChain
+
+  classDef snapStyle fill:#1e293b,stroke:#3b82f6,stroke-width:1px,color:#f8fafc;
+  classDef leakStyle fill:#450a0a,stroke:#ef4444,stroke-width:1px,color:#fee2e2;
+  classDef rootStyle fill:#0f172a,stroke:#10b981,stroke-width:2px,color:#f8fafc;
+  class S1,S2,S3 snapStyle;
+  class D1,D2,D3,D4,Leaf,Scope,Handler leakStyle;
+  class Root rootStyle;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw ASCII Schematic</summary>
+
 ```
 +---------------------------------------------------------------------------------------------+
 |                                CHROME DEVTOOLS HEAP SNAPSHOT                                |
@@ -182,6 +239,8 @@ To fix the leak, you cut the string at any point in the retainer chain (e.g., re
 |        v window.listeners                                                                   |
 +---------------------------------------------------------------------------------------------+
 ```
+
+</details>
 
 ---
 

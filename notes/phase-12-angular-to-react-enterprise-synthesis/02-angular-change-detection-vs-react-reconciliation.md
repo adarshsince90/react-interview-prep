@@ -212,6 +212,38 @@ REACT HEAP MODEL (Double Buffering Fiber Architecture):
 
 ### The ExpressionChangedAfterItHasBeenCheckedError Explained
 
+```mermaid
+flowchart TD
+    subgraph Pass1["Pass 1: Regular Change Detection"]
+        Root1["Root Component<br/>Renders child with [status]='ready'"] --> Child1["Child Component<br/>ngAfterViewInit() executes:<br/>parent.status = 'modified' (Mutation)"]
+        Child1 --> DOM1["DOM Painted with 'ready'"]
+    end
+
+    subgraph Pass2["Pass 2: Dev-Mode Verification Pass (Angular)"]
+        Root2["Root Component Checked Again"] --> Check{"Does value match Pass 1?<br/>Expected: 'ready'<br/>Actual: 'modified'"}
+        Check -->|Mismatch Detected| Err["💥 FATAL RUNTIME EXCEPTION<br/>ExpressionChangedAfterItHasBeenCheckedError"]
+    end
+
+    subgraph ReactWay["The React Architectural Invariant"]
+        R_Render["Component Render (Pure Function)<br/>Direct mutations forbidden during render"]
+        R_Schedule["setState schedules update for NEXT frame<br/>Fiber double buffering guarantees single stable frame"]
+        R_Render --> R_Schedule
+    end
+
+    DOM1 --> Root2
+
+    classDef ngErr fill:#1e293b,stroke:#ef4444,stroke-width:2px,color:#f8fafc;
+    classDef ngPass fill:#1e293b,stroke:#f59e0b,stroke-width:1px,color:#f8fafc;
+    classDef react fill:#0f172a,stroke:#34d399,stroke-width:2px,color:#f8fafc;
+
+    class Root1,Child1,DOM1,Root2 ngPass;
+    class Check,Err ngErr;
+    class R_Render,R_Schedule react;
+```
+
+<details className="raw-schematic-details">
+<summary>📄 View Raw Comparison Schematic</summary>
+
 ```
 ANGULAR UNIDIRECTIONAL DATA FLOW VIOLATION:
 
@@ -244,6 +276,8 @@ Mutations are dispatched to future render passes:
 setParentStatus('modified') schedules a subsequent update,
 guaranteeing complete frame consistency without runtime exceptions.
 ```
+
+</details>
 
 ---
 
