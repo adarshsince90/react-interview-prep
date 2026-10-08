@@ -1,4 +1,4 @@
-import { CodePlayground } from './features/playground/CodePlayground';
+import { ChallengesArena } from './features/challenges/ChallengesArena';
 import { useState, useMemo, useEffect } from 'react';
 import manifestData from './assets/manifest.json';
 import type { ManifestData, TopicItem } from './core/types/manifest';
@@ -19,7 +19,8 @@ import {
   Sun,
   Moon,
   CheckCircle2,
-  Award
+  Award,
+  Code2
 } from 'lucide-react';
 import {
   getStoredTheme,
@@ -30,8 +31,51 @@ import { formatTopicBadgeAndTitle } from './core/utils/slugify';
 
 const manifest = manifestData as unknown as ManifestData;
 
+// Flattened topic list across all phases for global sequential ordering
+const allTopics: TopicItem[] = manifest.phases.flatMap(p => p.topics);
+
+// Resolve initial SPA route synchronously from URL search params on mount
+function resolveInitialRoute(defaultTopic: TopicItem): {
+  view: 'dashboard' | 'reader' | 'labs' | 'challenges' | 'flashcards' | 'quizzes';
+  topic: TopicItem;
+  labId: string | null;
+} {
+  if (typeof window === 'undefined') {
+    return { view: 'dashboard', topic: defaultTopic, labId: null };
+  }
+  const params = new URLSearchParams(window.location.search);
+  const topicId = params.get('topic');
+  const view = params.get('view');
+  const labId = params.get('lab');
+
+  if (topicId) {
+    const match = allTopics.find(t => t.id === topicId);
+    if (match) {
+      return { view: 'reader', topic: match, labId: null };
+    }
+  }
+
+  if (view === 'labs') {
+    return { view: 'labs', topic: defaultTopic, labId: labId || null };
+  }
+
+  if (view === 'challenges') {
+    return { view: 'challenges', topic: defaultTopic, labId: null };
+  }
+
+  if (view === 'flashcards') {
+    return { view: 'flashcards', topic: defaultTopic, labId: null };
+  }
+
+  if (view === 'quizzes') {
+    return { view: 'quizzes', topic: defaultTopic, labId: null };
+  }
+
+  return { view: 'dashboard', topic: defaultTopic, labId: null };
+}
+
+
 export function App() {
-  const [activeView, setActiveView] = useState<'dashboard' | 'reader' | 'labs' | 'flashcards' | 'quizzes' | 'playground'>('dashboard');
   const [theme, setTheme] = useState<'light' | 'dark'>(() => getStoredTheme());
   const [completedIds, setCompletedIds] = useState<string[]>(() => getCompletedTopicIds());
   const [isSearchModalOpen, setIsSearchModalOpen] = useState<boolean>(false);
@@ -42,13 +86,14 @@ export function App() {
     return phase03?.topics[0] || manifest.phases[0]?.topics[0];
   }, []);
 
-  const [selectedTopic, setSelectedTopic] = useState<TopicItem>(initialTopic);
-  const [selectedLabId, setSelectedLabId] = useState<string | null>(null);
+  // Synchronously compute initial view and parameters from URL to prevent flash of dashboard on refresh
+  const [initialRoute] = useState(() => resolveInitialRoute(initialTopic));
+
+  const [activeView, setActiveView] = useState<'dashboard' | 'reader' | 'labs' | 'challenges' | 'flashcards' | 'quizzes'>(initialRoute.view);
+  const [selectedTopic, setSelectedTopic] = useState<TopicItem>(initialRoute.topic);
+  const [selectedLabId, setSelectedLabId] = useState<string | null>(initialRoute.labId);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(true);
-
-  // Flattened topic list across all phases for global sequential ordering
-  const allTopics = useMemo(() => manifest.phases.flatMap(p => p.topics), []);
 
   // History stack for back navigation
   const [topicHistory, setTopicHistory] = useState<TopicItem[]>([]);
@@ -91,9 +136,14 @@ export function App() {
         }
       }
 
-      if (view === 'labs') {
+            if (view === 'labs') {
         if (labId) setSelectedLabId(labId);
         setActiveView('labs');
+        return;
+      }
+
+      if (view === 'challenges') {
+        setActiveView('challenges');
         return;
       }
 
@@ -499,6 +549,35 @@ export function App() {
               <Layers size={15} /> Labs
             </button>
 
+                        <button
+              onClick={() => {
+                setActiveView('challenges');
+                setSearchQuery('');
+                const url = new URL(window.location.href);
+                url.searchParams.set('view', 'challenges');
+                url.searchParams.delete('topic');
+                url.searchParams.delete('lab');
+                url.hash = '';
+                window.history.pushState({ view: 'challenges' }, '', url.pathname + '?' + url.searchParams.toString());
+              }}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.4rem',
+                padding: '0.45rem 0.85rem',
+                borderRadius: '6px',
+                background: activeView === 'challenges' ? 'var(--bg-secondary)' : 'transparent',
+                color: activeView === 'challenges' ? 'var(--react-cyan)' : 'var(--text-secondary)',
+                border: 'none',
+                fontWeight: 600,
+                fontSize: '0.82rem',
+                cursor: 'pointer',
+                boxShadow: activeView === 'challenges' ? 'var(--shadow-sm)' : 'none'
+              }}
+            >
+              <Code2 size={15} /> Challenges
+            </button>
+
             <button
               onClick={handleSwitchToFlashcards}
               style={{
@@ -735,8 +814,8 @@ export function App() {
             <QuizArena />
           )}
 
-          {activeView === 'playground' && (
-            <CodePlayground />
+          {activeView === 'challenges' && (
+            <ChallengesArena />
           )}
         </main>
       </div>

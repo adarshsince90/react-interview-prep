@@ -29,6 +29,7 @@ interface LabMeta {
 }
 
 const LABS_CONFIG: LabMeta[] = [
+  
   {
     id: 'lab-20-memory-retainer',
     number: '20',
@@ -264,6 +265,7 @@ export const VisualizerHub: React.FC<VisualizerHubProps> = ({ initialLabId }) =>
           {activeLab === 'lab-20-memory-retainer' && <MemoryRetainerLab />}
           {activeLab === 'lab-21-query-cache' && <QueryCacheLab />}
           {activeLab === 'lab-22-virtualization' && <VirtualizationLab />}
+          
 
         </div>
       </div>

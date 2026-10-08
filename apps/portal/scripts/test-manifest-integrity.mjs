@@ -50,7 +50,7 @@ if (manifestData) {
   assert(missingFiles === 0, `All ${manifestData.totalTopics} topic markdown files exist in public/notes`);
 
   // 3. Verify Registered Labs Have Component Files
-  const LAB_COMPONENT_MAP = {
+    const LAB_COMPONENT_MAP = {
     'lab-10-jsx-compiler': 'topic-03-jsx/JsxCompilerLab.tsx',
     'lab-11-component-purity': 'topic-04-purity/ComponentPurityLab.tsx',
     'lab-12-render-cycle-stepper': 'topic-05-render/RenderCycleLab.tsx',
@@ -61,6 +61,12 @@ if (manifestData) {
     'lab-20-memory-retainer': 'topic-09-memory/MemoryRetainerLab.tsx',
     'lab-21-query-cache': 'topic-04-state/QueryCacheLab.tsx',
     'lab-22-virtualization': 'topic-08-performance/VirtualizationLab.tsx'
+  };
+
+  const CHALLENGE_COMPONENT_MAP = {
+    'ch-01-virtualizer': '../challenges/virtualizer/VirtualizerChallengeArena.tsx',
+    'ch-02-concurrent-store': '../challenges/store/ConcurrentStoreChallengeArena.tsx',
+    'ch-03-offline-outbox': '../challenges/outbox/OfflineOutboxChallengeArena.tsx'
   };
 
   for (const [labId, relativePath] of Object.entries(LAB_COMPONENT_MAP)) {

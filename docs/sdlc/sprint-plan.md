@@ -49,9 +49,9 @@ flowchart TD
     S13 --> S14["Sprint 14: Learning Engine: Flashcards, Quizzes & Search (v0.13.0) ✅"]
     S14 --> S15["Sprint 15: CI/CD Automation & GitHub Pages Deployment (v0.14.0) ✅"]
     S15 --> S16["Sprint 16: Portal Wayfinding, Deep Search & Generalization (v0.15.0) ✅"]
-    S16 --> S17["Sprint 17: Advanced Simulation Labs & Playground (v0.16.0) 📋"]
-    S17 --> S18["Sprint 18: Staff Machine Coding Challenges (v0.17.0) 📋"]
-    S18 --> S19["Sprint 19: Staff Architect Mock Interviews & Technical Defenses 📋"]
+    S16 --> S17["Sprint 17: Advanced Simulation Labs & Staff Challenges Arena (v0.16.0) ✅"]
+    S17 --> S18["Sprint 18: Staff Machine Coding Challenges (v0.17.0) ✅"]
+    S18 --> S19["Sprint 19: Staff Architect Mock Interviews & Technical Defenses (v0.18.0) 🚀"]
     S19 --> S20["Sprint 20: Enterprise Production Post-Mortems & Case Studies 📋"]
 ```
 
@@ -73,9 +73,9 @@ flowchart TD
 | **Sprint 14** | **Portal Learning Engine: Flashcards, Quizzes & Search** | [x] **Complete** (v0.13.0) | `portal-developer` | Implemented Flashcards Arena (`FEAT-LEARN-01`) with memory anchors, Staff Scenario Quizzes (`FEAT-LEARN-02`), and Global Instant Full-Text Search (`FEAT-LEARN-03`) with `Ctrl+K`. CI passed 100%. |
 | **Sprint 15** | **CI/CD Automation, GitHub Actions & Public Deployment** | [x] **Complete** (v0.14.0) | DevOps / Agent | Configured automated GitHub Actions CI/CD workflow (`.github/workflows/deploy.yml`) for automated manifest sync, test validation, typecheck, build, and static deployment (`FEAT-LEARN-04`). CI passed 100%. |
 | **Sprint 16** | **Portal Wayfinding, Deep Search & Generalization** | [x] **Complete** (v0.15.0) | `portal-developer` / Agent | Dynamic 4-card Dashboard with Next Recommended Chapter (`FEAT-DASH-01`), 2,382-entry Deep Section Heading & Keyword Search (`FEAT-SEARCH-01`), Smart Architectural Term Hover Cards & In-Situ Peek (`FEAT-HOVER-01`, `FEAT-NAV-05`), Senior Backend Engineer Generalization across 110 chapters (`REFACTOR-EXP-01`). |
-| **Sprint 17** | **Advanced Simulation Labs & In-Browser Playground** | [ ] **Planned** (v0.16.0) | `portal-developer` | Memory Retainer Lab (`FEAT-LAB-20`), TanStack Query Cache Simulator (`FEAT-LAB-21`), Virtualization Culling Lab (`FEAT-LAB-22`), SM-2 Spaced Repetition (`FEAT-LEARN-05`), In-Browser TSX Playground (`FEAT-LEARN-06`). |
-| **Sprint 18** | **Staff-Level Frontend Machine Coding Challenges** | [ ] **Planned** (v0.17.0) | Hands-on Coding / Mentor | Dynamic-Height Virtualized Windowing Engine (`CHALLENGE-01`), Concurrent Reactive State Store via `useSyncExternalStore` (`CHALLENGE-02`), Resilient Optimistic Mutation Queue (`CHALLENGE-03`). |
-| **Sprint 19** | **Staff & Principal Architect Mock Interviews & Defenses** | [ ] **Planned** | Technical Mentor | Real-Time HFT Terminal System Design (`MOCK-01`), Multi-Tenant SaaS MFE Dashboard (`MOCK-02`), React 19 Internals Defense (`MOCK-03`), Enterprise Angular/.NET to React Migration Defense (`MOCK-04`). |
+| **Sprint 17** | **Advanced Simulation Labs & Staff Challenges Arena** | [x] **Complete** (v0.16.0) | `portal-developer` / Machine Coding | Memory Retainer Lab (`FEAT-LAB-20`), TanStack Query Cache Simulator (`FEAT-LAB-21`), Virtualization Culling Lab (`FEAT-LAB-22`), SM-2 Spaced Repetition (`FEAT-LEARN-05`), Dedicated Staff Machine Coding Arena (`?view=challenges`) featuring Dynamic Virtualizer (`CHALLENGE-01`), Concurrent State Store (`CHALLENGE-02`), and Resilient Mutation Outbox (`CHALLENGE-03`) with interactive simulators, interview rubrics, and architectural deep dives. |
+| **Sprint 18** | **Staff-Level Frontend Machine Coding Challenges** | [x] **Complete** (v0.17.0) | Hands-on Coding / Mentor | Dynamic-Height Virtualized Windowing Engine (`CHALLENGE-01`), Concurrent Reactive State Store via `useSyncExternalStore` (`CHALLENGE-02`), Resilient Optimistic Mutation Queue (`CHALLENGE-03`). |
+| **Sprint 19** | **Staff & Principal Architect Mock Interviews & Defenses** | [ ] **In Progress** (v0.18.0) | Technical Mentor | Real-Time HFT Terminal System Design (`MOCK-01`), Multi-Tenant SaaS MFE Dashboard (`MOCK-02`), React 19 Internals Defense (`MOCK-03`), Enterprise Angular/.NET to React Migration Defense (`MOCK-04`). |
 | **Sprint 20** | **Enterprise Production Post-Mortems & Incident Drills** | [ ] **Planned** | Technical Mentor | Heap Snapshot Memory Leak Post-Mortem (`CASE-01`), INP Main-Thread Yielding Drill (`CASE-02`), Enterprise Auth/Token Vulnerability Remediation (`CASE-03`), MFE Dependency Drift Regression (`CASE-04`). |
 
 ---
@@ -122,7 +122,7 @@ Epic 16 in [`docs/sdlc/backlog/backlog.md`](./backlog/backlog.md). Primary Skill
 
 ---
 
-## 6. Sprint 17 Detailed Work Breakdown: Advanced Simulation Labs & Playground (Planned - v0.16.0)
+## 6. Sprint 17 Detailed Work Breakdown: Advanced Simulation Labs & Staff Challenges Arena (Complete - v0.16.0)
 
 ### Backlog Reference:
 Epic 17 in [`docs/sdlc/backlog/backlog.md`](./backlog/backlog.md). Primary Skill: `portal-developer`.
@@ -142,9 +142,9 @@ Epic 17 in [`docs/sdlc/backlog/backlog.md`](./backlog/backlog.md). Primary Skill
 Epic 18 in [`docs/sdlc/backlog/backlog.md`](./backlog/backlog.md). Primary Skill: Mentorship / Machine Coding.
 
 ### Challenges:
-- [ ] **TASK-CODE-01 (Dynamic Virtualizer):** Handcraft a virtual list component from scratch supporting dynamic row heights via ResizeObserver, binary search O(log N) offset indexing, and scroll FPS meters.
-- [ ] **TASK-CODE-02 (Concurrent Reactive Store):** Build a zero-dependency reactive state store using `useSyncExternalStore` guaranteeing zero tearing during React 18/19 concurrent transitions.
-- [ ] **TASK-CODE-03 (Resilient Optimistic Outbox):** Implement an offline mutation outbox backed by IndexedDB with exponential jittered retries, network listener recovery, and rollback snapshots.
+- [x] **TASK-CODE-01 (Dynamic Virtualizer):** Handcrafted `useDynamicVirtualizer.ts` & `VirtualizerChallengeArena.tsx` supporting dynamic variable row heights via ResizeObserver, cumulative prefix-sum offset cache, O(log N) binary search item lookup, and overscan padding.
+- [x] **TASK-CODE-02 (Concurrent Reactive Store):** Build a zero-dependency reactive state store using `useSyncExternalStore` guaranteeing zero tearing during React 18/19 concurrent transitions (`useConcurrentStore.ts` & `ConcurrentStoreChallengeArena.tsx`).
+- [x] **TASK-CODE-03 (Resilient Optimistic Outbox):** Implement an offline mutation outbox backed by IndexedDB with exponential jittered retries, network listener recovery, and rollback snapshots (`useOfflineOutbox.ts` & `OfflineOutboxChallengeArena.tsx`).
 
 ---
 

@@ -12,6 +12,62 @@
 
 ### Recently Resolved & Promoted Items
 
+#### ✅ [RESOLVED] BUG-ROUTE-REFRESH-FLASH: SPA Route Initial Render Flash on Reload
+- **Date Reported:** 2026-10-08
+- **Evidence / User Observation:** Reported in unplanned backlog: *"?view=challenges url when refreshed, initially loads the dashboard screen for a moment and then display challenges page, is it intended behavior?"*
+- **Affected Area:** `apps/portal/src/App.tsx` (State initialization & URL synchronization).
+- **Observed Behavior:**
+  - Refreshing or directly loading `?view=challenges`, `?view=labs`, or `?topic=...` caused a momentary visible flash of the root Dashboard before switching to the requested view.
+- **Root Cause:**
+  - `activeView` in `App.tsx` was statically initialized to `'dashboard'` (`useState('dashboard')`).
+  - URL parameter synchronization only executed asynchronously inside `useEffect` after the initial DOM paint, forcing an unnecessary secondary render and visible layout flash.
+- **Resolution:**
+  - Added synchronous `resolveInitialRoute(defaultTopic)` helper in `App.tsx` that inspects `window.location.search` on initial component instantiation.
+  - Initialized `activeView`, `selectedTopic`, and `selectedLabId` with synchronous URL parameters on frame 0.
+  - Retained `popstate` listener for smooth back/forward browser history navigation with zero flicker.
+
+#### ✅ [RESOLVED] FEAT-CHALLENGE-THEORY-DEEPDIVE: Publication-Grade Architectural Deep Dive, Code Walkthroughs & Path Leak Removal
+- **Date Reported:** 2026-10-08
+- **Evidence / User Observation:** User feedback: *"in all these challenges, in '3. Architectural Deep Dive & Theory' section, there is very little details, but there is link to tsx file of the the repo for implementation detail, but we will not be able to access that file from web app right, also it can be security concern to show the raw path in there? should we add more theory and important code snippet, explanations with our standard way of explanation..."*
+- **Affected Area:** `apps/portal/src/features/challenges/ChallengesArena.tsx`.
+- **Observed Behavior:**
+  - Tab 3 displayed brief bullet points and a terminal box linking to raw local filesystem paths (e.g. `apps/portal/src/features/challenges/virtualizer/useDynamicVirtualizer.ts`).
+  - Raw filesystem paths are inaccessible in deployed static web applications (GitHub Pages) and expose repository internal directory structures.
+- **Root Cause:**
+  - Experimental challenge view used minimal placeholder theory and referenced local filesystem source paths instead of self-contained in-situ explanations.
+- **Resolution:**
+  - **Removed Raw Filesystem Paths:** Eliminated all local file path disclosures from UI.
+  - **Embedded Syntax-Highlighted Core Implementations:** Added self-contained production code snippets with copy button and line-by-line annotations for all 3 challenges:
+    1. *Dynamic Virtualizer:* Binary search `findStartIndex` ($O(\\log N)$) + cumulative prefix-sum recalculation + non-blocking `ResizeObserver` measurement.
+    2. *Concurrent Store:* `createStore` engine with `queueMicrotask` coalescing + `useStore` hook using `useSyncExternalStore` with referential equality memoization.
+    3. *Offline Outbox:* FIFO queue worker + Amazon/Google Full-Jitter Exponential Backoff formula ($t = \\text{random}(0, \\min(C, b \\cdot 2^i))$) + optimistic atomic snapshot rollback.
+  - **Architectural Pillars & Trade-off Matrix:** Added comparative tables evaluating alternative approaches against our architecture.
+  - **Staff Interview Defense Guide:** Added Socratic interview probing traps with authoritative Staff/Principal defense rebuttals.
+
+#### ✅ [RESOLVED] UX-CHALLENGES-SEPARATION: Dedicated Staff Machine Coding Arena & Clean Phase Labs Taxonomy
+- **Date Reported:** 2026-10-08
+- **Evidence / User Observation:** Screenshot `media_1791444605591.png` showing out-of-sync Sprint 17 challenge in Labs sidebar and query regarding Playground route navigation.
+- **Affected Area:** `App.tsx`, `VisualizerHub.tsx`, `features/challenges/*`.
+- **Observed Behavior:**
+  - "Playground" tab routed back to homepage without distinct value or interactive workspace.
+  - In Labs, the experimental machine coding challenge was titled "Sprint 17: Machine Coding" while all other 12 items were phase-prefixed (Phase 01 through Phase 11), creating taxonomic inconsistency.
+  - Challenge item lacked problem specifications, constraints, Staff-level evaluation rubrics, and algorithmic architectural theory.
+- **Root Cause:**
+  - Machine coding challenge was prematurely attached to `VisualizerHub.tsx` which is reserved for theoretical runtime simulations.
+  - Lack of dedicated master-detail view for hands-on Staff engineering challenges.
+- **Resolution:**
+  - **Phantom Playground Retired:** Replaced generic empty Playground link in navbar with dedicated **Challenges** (`<Code2 size={15} /> Challenges`) route mapped to `?view=challenges`.
+  - **Visualizer Hub Restored:** Removed experimental sprint challenge from `VisualizerHub.tsx`, strictly restoring the 12 phase-mapped simulations (Phases 01–11).
+  - **Dedicated Challenges Hub Created:** Built `apps/portal/src/features/challenges/ChallengesArena.tsx` with 3 Staff Machine Coding Challenges:
+    1. **CH-01: Dynamic-Height Virtual Windowing Engine** (Prefix-sum offset cache, O(log N) binary search, ResizeObserver measurement).
+    2. **CH-02: Zero-Dependency Concurrent State Store** (Microtask batching, `useSyncExternalStore` zero-tearing guarantee, referential selector memoization).
+    3. **CH-03: Resilient Offline Mutation Outbox** (IndexedDB FIFO queue, full-jitter exponential backoff, optimistic cache snapshotting).
+  - **3-Pillar Challenge Architecture:** Every challenge contains:
+    - *🎮 1. Interactive Solution Arena:* Live dynamic controls, telemetry metrics, and real-time execution.
+    - *📋 2. Problem Spec & Staff Rubric:* Target level, problem statement, technical requirements, evaluation rubric, and edge cases.
+    - *📐 3. Architectural Deep Dive & Theory:* Algorithmic foundations, architectural trade-offs, and annotated source code references.
+  - Verified with `npm test` (100% pass), `npm run build` (0 errors), and browser subagent end-to-end verification.
+
 #### ✅ [RESOLVED] BUG-LATEX-ARROWS: Raw LaTeX Arrow Syntax (`\to` / `\rightarrow`) in Notes and Labs
 - **Date Reported:** 2026-10-07
 - **Evidence / User Screenshot:** `image-1.png`
@@ -101,7 +157,9 @@ When capturing a new unplanned issue or bug, copy and fill out the template belo
 
 ### Raw Intake Log Archive
 
-*(All historical screenshot items have been triaged and resolved:)*
+*(All historical screenshot and feedback items have been triaged and resolved:)*
 - **`image-1.png`:** Resolved via `BUG-LATEX-ARROWS` (Chapter 01 Learning Objectives & 19 markdown notes).
 - **`image-2.png`:** Resolved via `UI-LABS-VERTICAL` (VisualizerHub master-detail vertical navigation).
 - **`image-3.png`:** Resolved via `BUG-THEME-CONTRAST` (Simulation labs light-theme text contrast).
+- **`media_1791444605591.png`:** Resolved via `UX-CHALLENGES-SEPARATION` (Dedicated Challenges Arena & Clean Labs Taxonomy).
+- **User Feedback 2026-10-08:** Resolved via `BUG-ROUTE-REFRESH-FLASH` and `FEAT-CHALLENGE-THEORY-DEEPDIVE`.

@@ -289,19 +289,19 @@
 
 ### Epic 17: Staff-Level Frontend Machine Coding Challenges (Sprint 17 - v0.16.0) 📋
 *Location:* `notes/challenges/` & `apps/portal/src/challenges/` | *Primary Skill:* Mentorship / Hands-On Machine Coding
-- [ ] `CHALLENGE-01`: Dynamic-Height Virtualized Windowing Engine from Scratch
+- [x] `CHALLENGE-01`: Dynamic-Height Virtualized Windowing Engine (`useDynamicVirtualizer.ts` & `VirtualizerChallengeArena.tsx`) from Scratch
   - *Problem Statement:* Implement a high-performance virtual list from first principles supporting dynamic row heights, binary search offset indexing, and scroll thrashing prevention without external libraries.
   - *Acceptance Criteria:*
     - Dynamic measurement via ResizeObserver with cached height lookups.
     - Binary search for initial visible index calculation in O(log N).
     - Zero-layout-thrashing scroll performance maintaining 60 FPS across 100,000 items.
-- [ ] `CHALLENGE-02`: Concurrent Reactive State Store & Cache via `useSyncExternalStore`
+- [x] `CHALLENGE-02`: Concurrent Reactive State Store & Cache via `useSyncExternalStore`
   - *Problem Statement:* Implement an atomic reactive store supporting selectors, structural sharing, batching, and concurrent React 18/19 rendering without tearing.
   - *Acceptance Criteria:*
     - Store interface: `createStore(initialState)`, `subscribe`, `getState`, `setState`.
     - Custom React hook `useStore(selector, equalityFn)` utilizing `useSyncExternalStore`.
     - Verification that high-frequency updates never cause tearing in concurrent transitions.
-- [ ] `CHALLENGE-03`: Resilient Optimistic Mutation Queue & Offline Outbox
+- [x] `CHALLENGE-03`: Resilient Optimistic Mutation Queue & Offline Outbox
   - *Problem Statement:* Build an enterprise-grade offline mutation manager with FIFO queueing, retry with exponential backoff and jitter, and optimistic rollback.
   - *Acceptance Criteria:*
     - IndexedDB storage for offline mutation persistence across page reloads.
