@@ -54,6 +54,7 @@ flowchart TD
     S18 --> S19["Sprint 19: Staff Architect Mock Interviews & Technical Defenses (v0.18.0) ✅"]
     S19 --> S20["Sprint 20: Enterprise Production Post-Mortems & Incident Drills (v0.19.0) ✅"]
     S20 --> S21["Sprint 21: Full-Spectrum Responsive Design & UI/UX Polish (v0.20.0) ✅"]
+    S21 --> S22["Sprint 22: Fluid Diagram Canvas & AOT Vector Diagram System (v0.21.0) 🚀"]
 ```
 
 | Sprint | Goal & Scope | Status | Primary Skill | Deliverables |
@@ -79,6 +80,7 @@ flowchart TD
 | **Sprint 19** | **Staff & Principal Architect Mock Interviews & Defenses** | [x] **Complete** (v0.18.0) | Technical Mentor | Dedicated Staff Mock Interviews Arena (`?view=interviews`) with 45-min timer, Socratic simulation turns, rubrics, and defense transcripts for Real-Time HFT Terminal (`MOCK-01`), Multi-Tenant SaaS MFE (`MOCK-02`), React 19 Internals (`MOCK-03`), and Angular/.NET Migration (`MOCK-04`). |
 | **Sprint 20** | **Enterprise Production Post-Mortems & Incident Drills** | [x] **Complete** (v0.19.0) | Technical Mentor | Interactive Incident War Room live at `?view=incidents` with 4 production scenarios (`INC-01` to `INC-04`), DevTools diagnostics, diffs, and 5-Whys RCAs. |
 | **Sprint 21** | **Full-Spectrum Responsive Design, UI/UX Polish & Cross-Platform Alignment** | [x] **Complete** (v0.20.0) | `portal-developer` / Senior Architect | Hero action grid symmetry fix (`UI-HERO-ALIGNMENT`), Responsive navigation topbar with slide-out drawer (`FEAT-RESPONSIVE-SHELL`), TopicReader fluid canvas & off-canvas drawer (`UI-READER-FLUID`), Adaptive single-column arena stacks (`UI-ARENA-STACK`), Touch scroll wrappers across all simulation labs (`UI-LAB-TOUCH-SCROLL`), Automated multi-viewport verification (`TEST-RESPONSIVE-INTEGRITY`). |
+| **Sprint 22** | **Fluid Diagram Canvas & AOT Vector Diagram Compiler** | [ ] **Active** (v0.21.0) | `portal-developer` / Senior Architect | Part A: Desktop diagram width & monospace density tuning ([x]). Part B: Ahead-of-Time (AOT) vector diagram compilation engine pipeline ([ ]). |
 
 ---
 
@@ -194,7 +196,20 @@ Epic 21 in [`docs/sdlc/backlog/backlog.md`](./backlog/backlog.md). Primary Skill
 
 ---
 
-## 11. Verification Checklist for Closing Sprints
+## 11. Sprint 22 Detailed Work Breakdown: Fluid Diagram Canvas & AOT Vector Diagram System (Active - v0.21.0)
+
+### Backlog Reference:
+Sprint 22 plan in [`docs/sdlc/plans/sprint-22-diagram-system-plan.md`](./plans/sprint-22-diagram-system-plan.md). Primary Skill: `portal-developer` / Senior Architect.
+
+### Tasks:
+- [x] **TASK-22-01 (Part A - Immediate Quick Fix):** Widen `.topic-reader-main-grid` to `minmax(0, 920px) 290px` (and `minmax(0, 960px) 290px` on wide screens). Widen `.prose-reading-container` to `900px` (`940px` on screens >= 1440px). Tune monospace pre-block typography (`font-size: 0.84rem`, `line-height: 1.48`). Eliminate horizontal scrollbar on ASCII diagrams.
+- [ ] **TASK-22-02 (Part B Specification & Pilot):** Create pilot script `scripts/generate-diagrams.mjs` targeting Section 3 timelines across Phase 07 and Phase 06.
+- [ ] **TASK-22-03 (Part B Mermaid & SVG Compiler):** Build automated translator from ASCII box graphs to Mermaid `timeline` / `flowchart TD` blocks.
+- [ ] **TASK-22-04 (Quality Gates & Multi-Device Check):** Run `npm test`, verify 0 regressions across all 110 topics, and inspect desktop & mobile rendering.
+
+---
+
+## 12. Verification Checklist for Closing Sprints
 
 Every sprint milestone must pass this automated checklist:
 1. `npm run manifest` exits with code 0.

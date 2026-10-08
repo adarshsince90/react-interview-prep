@@ -6,7 +6,17 @@
 
 ### Active Intake Queue
 
-*(No pending active intake issues. All intake issues triaged, implemented, and verified).*
+### [UNPLANNED-DIAGRAM-WIDTH-AND-AOT]: TopicReader Desktop Diagram Width & Next-Gen AOT Diagram Conversion
+- **Date Reported:** 2026-10-08
+- **Affected Area / Route:** TopicReader (`TopicReader.tsx`, `.topic-reader-main-grid`, `.prose-reading-container`, Section 3 Historical Evolution, Section 8 Visual Diagrams across all 110 chapters).
+- **Observed Behavior:**
+  - On desktop viewports (1440px/1920px), ASCII diagrams and wide code boxes (e.g. Section 3 timeline boxes) exhibit slight horizontal scrollbars (~20–40px) due to a constrained `800px` `.prose-reading-container`.
+  - User requested:
+    1. **Part A (Immediate Quick Fix):** Widen the desktop center reading section and optimize code typography so ASCII boxes fit completely without horizontal scrollbars.
+    2. **Part B (Next Phase Architectural Feature):** Design and build an Ahead-Of-Time (AOT) diagram interception and compilation system that converts ASCII diagrams into web-focused, colorful vector/Mermaid diagrams once at build time, saving and reusing them with zero runtime performance overhead.
+- **Proposed Resolution / Notes:**
+  - Part A: Update `apps/portal/src/index.css` to expand `.topic-reader-main-grid` (`minmax(0, 920px) 290px`), `.prose-reading-container` (`max-width: 900px`), and fine-tune monospace pre-block typography (`font-size: 0.84rem`, `line-height: 1.48`).
+  - Part B: Author detailed architectural specification in `docs/sdlc/plans/sprint-22-diagram-system-plan.md` defining AOT pipeline, file storage in `apps/portal/public/diagrams/`, and zero-client-overhead rendering.
 
 ---
 
